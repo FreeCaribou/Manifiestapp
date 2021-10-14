@@ -22,11 +22,13 @@ export class SubprogrammePage implements OnInit {
       this.list = [
         {
           title: 'Main stage',
+          favorite: true,
           description: 'Le show principal avec les discours',
           imageSrc: 'https://www.manifiesta.be/sites/default/files/styles/node_full_view/public/programma/image%20%2830%29_1.png?itok=gRkUWXTg'
         },
         {
           title: 'Musique',
+          favorite: false,
           description: 'On chante et on danse',
           imageSrc: 'https://www.manifiesta.be/sites/default/files/styles/node_full_view/public/programma/BRLRS%20in%20leffinge.jpg?itok=QAlQZKeS'
         },
@@ -38,6 +40,7 @@ export class SubprogrammePage implements OnInit {
         {
           title: 'Syndicat',
           description: '',
+          favorite: true,
           imageSrc: 'https://www.manifiesta.be/sites/default/files/styles/node_full_view/public/programma/Organizing%20%3A%20toekomst%20van%20de%20vakbond%3F.png?itok=MpYXYJKq'
         },
         {

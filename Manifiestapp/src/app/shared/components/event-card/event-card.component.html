@@ -1,10 +1,11 @@
 <ion-card>
   <img [src]="event.imageSrc" height="100" />
   <ion-card-header>
-    <ion-card-title color="secondary">{{event.title}}</ion-card-title>
+    <ion-card-title color="tertiary">{{event.title}}</ion-card-title>
   </ion-card-header>
-  <ion-card-content>
+  <ion-card-content (click)="event.favorite = !event.favorite">
     {{event.description}}
+    <ion-icon color="secondary" [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-card-content>
   <!-- <ion-item>
     <ion-button [routerLink]="['detail', event.id]" fill="outline" slot="start">Detail</ion-button>

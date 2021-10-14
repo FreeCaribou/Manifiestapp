@@ -9,12 +9,8 @@ export class EventListCardComponent implements OnInit {
   @Input()
   list: EventInterface[];
 
-  constructor() {
-    console.log('listee')
-  }
-
   ngOnInit() {
-    console.log('list', this.list)
+
   }
 
 }
