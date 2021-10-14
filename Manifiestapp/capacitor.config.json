@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "Manifiestapp",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
