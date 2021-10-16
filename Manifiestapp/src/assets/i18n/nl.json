@@ -1,0 +1,17 @@
+{
+  "General": {
+    "HelloWorld": "Hallo Wereld",
+    "Welcome": "Welkom op het feest van de solidariteit"
+  },
+  "Menu": {
+    "Home": "Home",
+    "Programme": "Programma",
+    "Favorite": "Favoriet",
+    "About": "Over - Info",
+    "Saturday": "Zaterdag",
+    "Sunday": "Zondag"
+  },
+  "Programme": {
+    "NoFavorites": "U heeft geen favoriet voor dit moment"
+  }
+}

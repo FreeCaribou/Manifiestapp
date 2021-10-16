@@ -1,3 +1,4 @@
 export enum LocalStorageEnum {
-  FavoriteId = 'favoriteId'
+  FavoriteId = 'favoriteId',
+  Language = 'language',
 }

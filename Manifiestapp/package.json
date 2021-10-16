@@ -32,6 +32,8 @@
     "@ionic/angular-toolkit": "^4.0.0",
     "@ionic/app-scripts": "^3.2.4",
     "@ionic/pwa-elements": "^3.0.2",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "@types/lodash": "^4.14.175",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",

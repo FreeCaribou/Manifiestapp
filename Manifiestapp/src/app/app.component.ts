@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -11,5 +12,19 @@ export class AppComponent {
     { title: 'Favorite', url: 'favorite', icon: 'star' },
     { title: 'About', url: 'about', icon: 'information-circle' },
   ];
-  constructor() { }
+
+  constructor(private languageCommunication: LanguageCommunicationService,) {
+    this.init();
+  }
+
+  init() {
+    this.languageCommunication.init();
+
+    console.log(this.languageCommunication.selectedLanguage)
+  }
+
+  languageSegmentChanged(event) {
+    console.log(event);
+    this.languageCommunication.changeLanguage(event.detail.value)
+  }
 }

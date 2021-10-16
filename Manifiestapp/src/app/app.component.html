@@ -4,16 +4,29 @@
       <ion-content>
         <ion-list id="inbox-list">
           <ion-list-header>Manifiestapp</ion-list-header>
-          <ion-note>Welcome to the solidarity feast</ion-note>
+          <ion-note>{{ 'General.Welcome' | translate }}</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
               routerLinkActive="selected">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+              <ion-label>{{ 'Menu.' + p.title | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+
+        <ion-segment (ionChange)="languageSegmentChanged($event)" [value]="languageCommunication.selectedLanguage"
+          color='primary' class="m-top-16 m-bt-16">
+          <ion-segment-button value="fr">
+            <ion-label>Fr</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="nl">
+            <ion-label>Nl</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="en">
+            <ion-label>En</ion-label>
+          </ion-segment-button>
+        </ion-segment>
 
         <ion-img src="assets/pictures/manifiesta-logo.jpg" alt="logo"></ion-img>
 

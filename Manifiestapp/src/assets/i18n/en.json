@@ -1,0 +1,17 @@
+{
+  "General": {
+    "HelloWorld": "Hello World",
+    "Welcome": "Welcome to the solidarity feast"
+  },
+  "Menu": {
+    "Home": "Home",
+    "Programme": "Programme",
+    "Favorite": "Favorite",
+    "About": "About - info",
+    "Saturday": "Saturday",
+    "Sunday": "Sunday"
+  },
+  "Programme": {
+    "NoFavorites": "You don't have favorite for the moment"
+  }
+}
