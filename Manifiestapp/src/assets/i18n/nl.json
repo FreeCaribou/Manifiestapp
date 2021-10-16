@@ -13,5 +13,11 @@
   },
   "Programme": {
     "NoFavorites": "U heeft geen favoriet voor dit moment"
+  },
+  "Info": {
+    "GeneralInfo": "Algemene informatie",
+    "HowToCome": "Hoe te komen ?",
+    "Rules": "Regels",
+    "Contact": "Contact"
   }
 }

@@ -13,5 +13,11 @@
   },
   "Programme": {
     "NoFavorites": "Vous n'avez pas de favoris pour le moment"
+  },
+  "Info": {
+    "GeneralInfo": "Information générale",
+    "HowToCome": "Comment venir ?",
+    "Rules": "Règlement",
+    "Contact": "Contact"
   }
 }
