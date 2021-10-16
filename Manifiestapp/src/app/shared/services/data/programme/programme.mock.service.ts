@@ -12,11 +12,15 @@ import { IProgrammeService } from './programme.service.interface';
 export class ProgrammeMockService implements IProgrammeService {
 
   getAllProgramme(): Observable<EventInterface[]> {
-    return of(MOCK_GET_ALL_PROGRAMME)
+    return of(cloneDeep(MOCK_GET_ALL_PROGRAMME))
   }
 
   getProgrammeOfTheDay(day: EventDayEnum): Observable<EventInterface[]> {
     return of(cloneDeep(MOCK_GET_ALL_PROGRAMME).filter(x => x.day === day))
+  }
+
+  getFavoriteProgramme(): Observable<EventInterface[]> {
+    return of(cloneDeep(MOCK_GET_ALL_PROGRAMME));
   }
 
 }

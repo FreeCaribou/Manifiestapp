@@ -17,4 +17,8 @@ export class ProgrammeDataService implements IProgrammeService {
     throw new Error('Method not implemented.');
   }
 
+  getFavoriteProgramme(): Observable<EventInterface[]> {
+    throw new Error('Method not implemented.');
+  }
+
 }

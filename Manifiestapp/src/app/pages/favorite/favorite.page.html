@@ -1,0 +1,8 @@
+<app-header [title]="'Favorite'"></app-header>
+
+<ion-content>
+
+  <h1 *ngIf="list.length === 0">You don't have favorite for the moment</h1>
+  <app-event-list-card [list]="list"></app-event-list-card>
+
+</ion-content>

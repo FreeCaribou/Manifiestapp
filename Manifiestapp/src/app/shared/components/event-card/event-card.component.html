@@ -3,7 +3,7 @@
   <ion-card-header>
     <ion-card-title color="tertiary">{{event.title}}</ion-card-title>
   </ion-card-header>
-  <ion-card-content (click)="event.favorite = !event.favorite">
+  <ion-card-content (click)="onCardHeartClick(event)">
     {{event.description}}
     <ion-icon color="secondary" [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-card-content>

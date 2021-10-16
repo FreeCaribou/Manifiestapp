@@ -12,6 +12,16 @@ const routes: Routes = [
     loadChildren: () => import('./pages/programme/programme.module').then(m => m.ProgrammePageModule)
   },
   {
+    path: 'favorite',
+    loadChildren: () => import('./pages/favorite/favorite.module').then(m => m.FavoritePageModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
+  },
+
+  // failback routes
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
@@ -20,7 +30,7 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({
