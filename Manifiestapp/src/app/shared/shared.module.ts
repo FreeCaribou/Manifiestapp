@@ -6,6 +6,7 @@ import { EventCardComponent } from './components/event-card/event-card.component
 import { EventListCardComponent } from './components/event-list-card/event-list-card.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { MapCommunicationService } from './services/communication/map.communication.service';
 
 @NgModule({
   declarations: [
@@ -27,5 +28,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     EventListCardComponent,
     TranslateModule,
   ],
+  providers: [
+    MapCommunicationService
+  ]
 })
 export class SharedModule { }
