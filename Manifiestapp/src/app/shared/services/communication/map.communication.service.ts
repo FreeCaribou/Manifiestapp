@@ -45,7 +45,6 @@ export class MapCommunicationService {
       this.doc.querySelector('#link-' + id)
         .addEventListener('click', (e) => {
           const id = e.target.getAttribute('data-id');
-          console.log('on popup click id', id)
         });
     })
   }

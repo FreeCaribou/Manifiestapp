@@ -20,12 +20,9 @@ export class AppComponent {
 
   init() {
     this.languageCommunication.init();
-
-    console.log(this.languageCommunication.selectedLanguage)
   }
 
   languageSegmentChanged(event) {
-    console.log(event);
     this.languageCommunication.changeLanguage(event.detail.value)
   }
 }
