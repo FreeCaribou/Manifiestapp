@@ -1,8 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import { icon, latLng, Layer, marker, tileLayer } from 'leaflet';
 import * as L from 'leaflet';
-import { MarkerPopupComponent } from 'src/app/shared/components/marker-popup/marker-popup.component';
-import { NgElement, WithProperties } from '@angular/elements';
 
 @Component({
   selector: 'app-map',
