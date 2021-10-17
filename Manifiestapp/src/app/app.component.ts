@@ -10,6 +10,7 @@ export class AppComponent {
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'Programme', url: 'programme', icon: 'receipt' },
     { title: 'Favorite', url: 'favorite', icon: 'star' },
+    { title: 'Map', url: 'map', icon: 'map' },
     { title: 'About', url: 'about', icon: 'information-circle' },
   ];
 

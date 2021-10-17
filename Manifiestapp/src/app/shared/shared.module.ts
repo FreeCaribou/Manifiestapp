@@ -5,6 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { EventCardComponent } from './components/event-card/event-card.component';
 import { EventListCardComponent } from './components/event-list-card/event-list-card.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { TranslateModule } from '@ngx-translate/core';
     CommonModule,
     IonicModule,
     TranslateModule,
+    LeafletModule,
   ],
   exports: [
     IonicModule,
@@ -24,6 +26,6 @@ import { TranslateModule } from '@ngx-translate/core';
     EventCardComponent,
     EventListCardComponent,
     TranslateModule,
-  ]
+  ],
 })
 export class SharedModule { }
