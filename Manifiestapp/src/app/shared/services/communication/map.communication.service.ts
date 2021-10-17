@@ -13,7 +13,7 @@ export class MapCommunicationService {
     return {
       layers: [
         tileLayer(
-          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
           {
             minZoom: minZoom,
             attribution: `Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> 
@@ -27,22 +27,27 @@ export class MapCommunicationService {
 
   getMainMapMarker(): Layer[] {
     return [
-      marker(
-        [51.22427, 2.89793],
-        {
-          icon: icon({
-            iconSize: [25, 41],
-            iconUrl: 'leaflet/marker-icon.png',
-          })
-        }
-      ).bindPopup('<p id="link" data-id="test">Entrance</p>').on('popupopen', () => {
-        this.doc.querySelector('#link')
-          .addEventListener('click', (e) => {
-            const id = e.target.getAttribute('data-id');
-            console.log('on popup click id', id)
-          });
-      })
+      this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
+      this.createMarker(51.22353, 2.90210, 'main-stage', 'main-stage'),
     ]
+  }
+
+  createMarker(lat: number, lng: number, label: string, id: string): Layer {
+    return marker(
+      [lat, lng],
+      {
+        icon: icon({
+          iconSize: [25, 41],
+          iconUrl: 'leaflet/marker-icon.png',
+        })
+      }
+    ).bindPopup('<p id="link-' + id + '" data-id=" ' + id + '">' + label + '</p>').on('popupopen', () => {
+      this.doc.querySelector('#link-' + id)
+        .addEventListener('click', (e) => {
+          const id = e.target.getAttribute('data-id');
+          console.log('on popup click id', id)
+        });
+    })
   }
 
 }
