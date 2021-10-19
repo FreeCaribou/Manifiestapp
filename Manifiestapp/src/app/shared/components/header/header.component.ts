@@ -9,6 +9,8 @@ import { Platform } from '@ionic/angular';
 export class HeaderComponent implements OnInit {
   @Input()
   title: string;
+  @Input()
+  defaultHref: string;
 
   constructor() { }
 

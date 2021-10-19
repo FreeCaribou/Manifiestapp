@@ -1,0 +1,12 @@
+<app-header [title]="'Programme'" [defaultHref]="defaultHref"></app-header>
+
+<ion-content>
+  <div *ngIf="event">
+    <h1>{{event.title}}</h1>
+    <h2>{{event.description}}</h2>
+    <h3>{{event.day}}</h3>
+  </div>
+
+  <div *ngIf="options" class="main-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
+  </div>
+</ion-content>

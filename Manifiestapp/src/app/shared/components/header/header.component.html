@@ -1,7 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button *ngIf="!defaultHref"></ion-menu-button>
+      <ion-back-button *ngIf="defaultHref" [defaultHref]="defaultHref"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ 'Menu.' + title | translate }}</ion-title>
   </ion-toolbar>

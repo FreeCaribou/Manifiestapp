@@ -7,7 +7,7 @@
     {{event.description}}
     <ion-icon color="secondary" [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-card-content>
-  <!-- <ion-item>
-    <ion-button [routerLink]="['detail', event.id]" fill="outline" slot="start">Detail</ion-button>
-  </ion-item> -->
+  <ion-item>
+    <ion-button [routerLink]="['/programme', 'event', event.id]" fill="outline" slot="start">Detail</ion-button>
+  </ion-item>
 </ion-card>

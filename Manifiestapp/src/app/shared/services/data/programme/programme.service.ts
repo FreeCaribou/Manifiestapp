@@ -35,6 +35,10 @@ export class ProgrammeService implements IProgrammeService {
     )
   }
 
+  getEvent(id: string): Observable<EventInterface> {
+    return this.service.getEvent(id);
+  }
+
   // no data call method
 
   getFavoriteId(): string[] {

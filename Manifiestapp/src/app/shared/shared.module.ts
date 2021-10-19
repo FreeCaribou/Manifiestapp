@@ -7,6 +7,7 @@ import { EventListCardComponent } from './components/event-list-card/event-list-
 import { TranslateModule } from '@ngx-translate/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapCommunicationService } from './services/communication/map.communication.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { MapCommunicationService } from './services/communication/map.communicat
     IonicModule,
     TranslateModule,
     LeafletModule,
+    RouterModule
   ],
   exports: [
     IonicModule,
@@ -27,6 +29,7 @@ import { MapCommunicationService } from './services/communication/map.communicat
     EventCardComponent,
     EventListCardComponent,
     TranslateModule,
+    LeafletModule,
   ],
   providers: [
     MapCommunicationService

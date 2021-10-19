@@ -7,4 +7,10 @@ export interface EventInterface {
   imageSrc?: string;
   favorite?: boolean;
   day: EventDayEnum;
+
+  // TODO in an object place ?
+  position?: {
+    lat: number,
+    lng: number
+  }
 }

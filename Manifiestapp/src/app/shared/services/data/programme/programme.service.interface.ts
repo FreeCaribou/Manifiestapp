@@ -6,4 +6,5 @@ export interface IProgrammeService {
   getAllProgramme(): Observable<EventInterface[]>;
   getProgrammeOfTheDay(day: EventDayEnum): Observable<EventInterface[]>;
   getFavoriteProgramme(): Observable<EventInterface[]>;
+  getEvent(id: string): Observable<EventInterface>;
 }

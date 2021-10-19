@@ -23,4 +23,8 @@ export class ProgrammeMockService implements IProgrammeService {
     return of(cloneDeep(MOCK_GET_ALL_PROGRAMME));
   }
 
+  getEvent(id: string): Observable<EventInterface> {
+    return of(cloneDeep(MOCK_GET_ALL_PROGRAMME.find(x => x.id === id)));
+  }
+
 }

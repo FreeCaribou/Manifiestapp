@@ -28,6 +28,10 @@ const routes: Routes = [
       },
     ]
   },
+  {
+    path: 'event/:id',
+    loadChildren: () => import('../event-detail/event-detail.module').then(m => m.EventDetailPageModule)
+  },
 ];
 
 @NgModule({

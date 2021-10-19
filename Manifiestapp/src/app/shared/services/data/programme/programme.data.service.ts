@@ -21,4 +21,8 @@ export class ProgrammeDataService implements IProgrammeService {
     throw new Error('Method not implemented.');
   }
 
+  getEvent(id: string): Observable<EventInterface> {
+    throw new Error('Method not implemented.');
+  }
+
 }
