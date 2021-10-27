@@ -23,6 +23,14 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
   },
+  {
+    path: 'buy-ticket',
+    loadChildren: () => import('./pages/buy-ticket/buy-ticket.module').then(m => m.BuyTicketPageModule)
+  },
+  {
+    path: 'playlist',
+    loadChildren: () => import('./pages/playlist/playlist.module').then(m => m.PlaylistPageModule)
+  },
 
   // failback routes
   {

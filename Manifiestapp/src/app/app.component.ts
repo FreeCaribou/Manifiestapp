@@ -12,6 +12,7 @@ export class AppComponent {
     { title: 'Favorite', url: 'favorite', icon: 'star' },
     { title: 'Map', url: 'map', icon: 'map' },
     { title: 'About', url: 'about', icon: 'information-circle' },
+    { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
   ];
 
   constructor(private languageCommunication: LanguageCommunicationService,) {

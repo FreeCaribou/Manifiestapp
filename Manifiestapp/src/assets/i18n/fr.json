@@ -10,7 +10,9 @@
     "About": "À propos - info",
     "Map": "Plan",
     "Saturday": "Samedi",
-    "Sunday": "Dimanche"
+    "Sunday": "Dimanche",
+    "BuyTicket": "Acheter le ticket",
+    "Playlist": "Playlist"
   },
   "Programme": {
     "NoFavorites": "Vous n'avez pas de favoris pour le moment"
