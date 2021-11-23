@@ -1,12 +1,23 @@
 import { EventDayEnum } from "./EventDay.enum";
 
+export interface RenderedInterface {
+  rendered: string;
+}
+
 export interface EventInterface {
   id?: string;
-  title: string;
-  description: string;
+  // title: string;
+  description?: string;
   imageSrc?: string;
-  favorite?: boolean;
   day: EventDayEnum;
+
+  title: RenderedInterface,
+  tags?: number[],
+  categories?: number[],
+  content?: RenderedInterface,
+  _embedded?: any,
+
+  favorite?: boolean,
 
   // TODO in an object place ?
   position?: {

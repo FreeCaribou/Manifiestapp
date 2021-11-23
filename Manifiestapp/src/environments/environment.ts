@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  dataMock: true,
+  dataMock: false,
 };
