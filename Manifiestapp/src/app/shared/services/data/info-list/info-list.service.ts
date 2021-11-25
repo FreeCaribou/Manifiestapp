@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { InfoListDataService } from './info-list.data.service';
 import { IInfoListService } from './info-list.service.interface';
 
@@ -13,9 +13,11 @@ export class InfoListService implements IInfoListService {
 
   venues: any[];
   getVenues(): Observable<any[]> {
+    console.log(this.venues)
     if (!this.venues) {
       return this.service.getVenues().pipe(
-        tap(v => this.venues = v.venues)
+        map(v => v.venues),
+        tap(v => this.venues = v),
       );
     } else {
       return of(this.venues);
@@ -26,7 +28,8 @@ export class InfoListService implements IInfoListService {
   getOrganizers(): Observable<any[]> {
     if (!this.organizers) {
       return this.service.getOrganizers().pipe(
-        tap(o => this.organizers = o.organizers)
+        map(o => o.organizers),
+        tap(o => this.organizers = o),
       );
     } else {
       return of(this.organizers);
@@ -36,8 +39,9 @@ export class InfoListService implements IInfoListService {
   eventCategories: any[];
   getEventCategories(): Observable<any[]> {
     if (!this.eventCategories) {
-      return this.service.getVenues().pipe(
-        tap(c => this.eventCategories = c.categories)
+      return this.service.getEventCategories().pipe(
+        map(c => c.categories),
+        tap(c => this.eventCategories = c),
       );
     } else {
       return of(this.eventCategories);
