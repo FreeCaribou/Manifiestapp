@@ -15,6 +15,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from 'src/environments/environment';
 import { ProgrammeDataService } from './shared/services/data/programme/programme.data.service';
 import { ProgrammeMockService } from './shared/services/data/programme/programme.mock.service';
+import { InfoListDataService } from './shared/services/data/info-list/info-list.data.service';
+import { InfoListMockService } from './shared/services/data/info-list/info-list.mock.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -40,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     environment.dataMock ? { provide: ProgrammeDataService, useClass: ProgrammeMockService } : ProgrammeDataService,
+    environment.dataMock ? { provide: InfoListDataService, useClass: InfoListMockService } : InfoListDataService,
   ],
   bootstrap: [AppComponent],
 })

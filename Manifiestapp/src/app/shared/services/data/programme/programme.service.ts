@@ -24,10 +24,10 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   getAllProgrammeFilter(day: EventDayEnum): Observable<EventArrayInterface> {
-    return this.service.getAllProgramme();
+    return this.service.getAllProgrammeFilter(day);
   }
 
-  // TODo map the favorite
+  // TODO map the favorite
   getFavoriteProgramme(): Observable<EventArrayInterface> {
     // return this.service.getFavoriteProgramme().pipe(
     //   map(e => this.filterFavorite(e)),
