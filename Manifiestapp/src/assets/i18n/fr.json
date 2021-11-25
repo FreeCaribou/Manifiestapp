@@ -1,7 +1,8 @@
 {
   "General": {
     "HelloWorld": "Bonjour le monde",
-    "Welcome": "Bienvenue à la fête de la solidarité"
+    "Welcome": "Bienvenue à la fête de la solidarité",
+    "All": "Tout"
   },
   "Menu": {
     "Home": "Accueil",

@@ -1,3 +1,29 @@
 <ion-content>
+
+  <ion-item *ngIf="venues">
+    <ion-label position="floating">Venues</ion-label>
+    <ion-select [(ngModel)]="venueSelected" (ionChange)="onSelectChange()" interface="popover">
+      <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+      <ion-select-option *ngFor="let v of venues" [value]="v.id">{{v.venue}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="organizers">
+    <ion-label position="floating">Organizers</ion-label>
+    <ion-select [(ngModel)]="organizerSelected" (ionChange)="onSelectChange()" interface="popover">
+      <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+      <ion-select-option *ngFor="let o of organizers" [value]="o.id">{{o.organizer}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="eventCategories">
+    <ion-label position="floating">EventCategories</ion-label>
+    <ion-select [(ngModel)]="eventCategorieSelected" (ionChange)="onSelectChange()" interface="popover">
+      <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+      <ion-select-option *ngFor="let ec of eventCategories" [value]="ec.id">{{ec.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
   <app-event-list-card [list]="list"></app-event-list-card>
+
 </ion-content>

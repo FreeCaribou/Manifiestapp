@@ -15,8 +15,11 @@ export class SubprogrammePage implements OnInit {
   day: EventDayEnum;
   list: EventInterface[];
   venues: any[];
+  venueSelected: any;
   organizers: any[];
+  organizerSelected: any;
   eventCategories: any[];
+  eventCategorieSelected: any;
 
   isLoading = true;
 
@@ -35,13 +38,21 @@ export class SubprogrammePage implements OnInit {
       this.infoListService.getOrganizers(),
       this.infoListService.getEventCategories(),
     ]).subscribe(datas => {
-      console.log('datas', datas)
+      console.log('datas', datas, this.venueSelected, this.organizerSelected, this.eventCategorieSelected)
       this.list = datas[0].events;
       this.venues = datas[1];
       this.organizers = datas[2];
       this.eventCategories = datas[3];
 
       this.isLoading = false;
+    });
+  }
+
+  onSelectChange() {
+    console.log('on select change', this.venueSelected, this.organizerSelected, this.eventCategorieSelected)
+    this.isLoading = true;
+    this.programmeService.getAllProgrammeFilter(this.day).subscribe(data => {
+      this.list = data.events;
     });
   }
 

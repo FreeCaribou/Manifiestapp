@@ -1,7 +1,8 @@
 {
   "General": {
     "HelloWorld": "Hello World",
-    "Welcome": "Welcome to the solidarity feast"
+    "Welcome": "Welcome to the solidarity feast",
+    "All": "All"
   },
   "Menu": {
     "Home": "Home",
