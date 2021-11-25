@@ -21,9 +21,9 @@ export class SubprogrammePage implements OnInit {
   ngOnInit() {
     this.day = this.activatedRoute.snapshot.data.day;
 
-    this.programmeService.getProgrammeOfTheDay(this.day).subscribe(data => {
-      console.log('data', data, data[0], data[0]._embedded?.['wp:featuredmedia']?.[0]?.source_url)
-      this.list = data;
+    this.programmeService.getAllProgrammeFilter(this.day).subscribe(data => {
+      console.log('data', data, data.events[0])
+      this.list = data.events;
     });
   }
 

@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
-import { EventInterface } from 'src/app/shared/models/Event.interface';
+import { EventArrayInterface, EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
@@ -16,23 +16,24 @@ export class ProgrammeService implements IProgrammeService {
 
   constructor(private service: ProgrammeDataService) { }
 
-  getAllProgramme(): Observable<EventInterface[]> {
-    return this.service.getAllProgramme().pipe(
-      map(e => this.mapToFavorite(e))
-    );
+  getAllProgramme(): Observable<EventArrayInterface> {
+    // return this.service.getAllProgramme().pipe(
+    //   map(e => this.mapToFavorite(e))
+    // );
+    return this.service.getAllProgramme();
   }
 
-  getProgrammeOfTheDay(day: EventDayEnum): Observable<EventInterface[]> {
-    return this.service.getProgrammeOfTheDay(day).pipe(
-      map(e => this.mapToFavorite(e))
-    );
+  getAllProgrammeFilter(day: EventDayEnum): Observable<EventArrayInterface> {
+    return this.service.getAllProgramme();
   }
 
-  getFavoriteProgramme(): Observable<EventInterface[]> {
-    return this.service.getFavoriteProgramme().pipe(
-      map(e => this.filterFavorite(e)),
-      map(e => this.mapToFavorite(e))
-    )
+  // TODo map the favorite
+  getFavoriteProgramme(): Observable<EventArrayInterface> {
+    // return this.service.getFavoriteProgramme().pipe(
+    //   map(e => this.filterFavorite(e)),
+    //   map(e => this.mapToFavorite(e))
+    // )
+    return this.service.getAllProgramme();
   }
 
   getEvent(id: string): Observable<EventInterface> {

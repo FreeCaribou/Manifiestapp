@@ -19,7 +19,7 @@ export class FavoritePage implements OnInit {
 
   fetchData() {
     this.programmeService.getFavoriteProgramme().subscribe(data => {
-      this.list = data;
+      this.list = data.events;
     });
   }
 

@@ -1,10 +1,10 @@
 import { Observable } from 'rxjs';
-import { EventInterface } from 'src/app/shared/models/Event.interface';
+import { EventArrayInterface, EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 
 export interface IProgrammeService {
-  getAllProgramme(): Observable<EventInterface[]>;
-  getProgrammeOfTheDay(day: EventDayEnum): Observable<EventInterface[]>;
-  getFavoriteProgramme(): Observable<EventInterface[]>;
+  getAllProgramme(): Observable<EventArrayInterface>;
+  getAllProgrammeFilter(day: EventDayEnum): Observable<EventArrayInterface>;
+  getFavoriteProgramme(): Observable<EventArrayInterface>;
   getEvent(id: string): Observable<EventInterface>;
 }

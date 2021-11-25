@@ -10,12 +10,17 @@ export interface EventInterface {
   description?: string;
   imageSrc?: string;
   day: EventDayEnum;
-
-  title: RenderedInterface,
+  title: string,
   tags?: number[],
   categories?: number[],
-  content?: RenderedInterface,
+  content?: string,
   _embedded?: any,
+
+  // TODO rework more precise
+  image?: { url: string };
+
+  start_date?: string;
+  end_date?: string;
 
   favorite?: boolean,
 
@@ -24,4 +29,8 @@ export interface EventInterface {
     lat: number,
     lng: number
   }
+}
+
+export interface EventArrayInterface {
+  events: EventInterface[];
 }

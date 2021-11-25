@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EventInterface } from 'src/app/shared/models/Event.interface';
+import { EventArrayInterface, EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { IProgrammeService } from './programme.service.interface';
 
@@ -10,20 +10,21 @@ import { IProgrammeService } from './programme.service.interface';
 })
 export class ProgrammeDataService implements IProgrammeService {
 
+  baseUrl = 'http://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/';
+
   constructor(private httpClient: HttpClient) { }
 
-  getAllProgramme(): Observable<EventInterface[]> {
-    throw new Error('Method not yet implemented.');
+  getAllProgramme(): Observable<EventArrayInterface> {
+    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events`);
   }
 
-  getProgrammeOfTheDay(day: EventDayEnum): Observable<EventInterface[]> {
-    return this.httpClient.get<EventInterface[]>(
-      'https://testwordpress.gerardweb.eu/wp-json/wp/v2/posts?_fields=title,content,categories,author,tags,_links,%20_embedded,id&_embed=wp:featuredmedia,wp:term'
-    )
+  // TODO set all the filter needed
+  getAllProgrammeFilter(date: string): Observable<EventArrayInterface> {
+    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events`);
   }
 
-  getFavoriteProgramme(): Observable<EventInterface[]> {
-    throw new Error('Method not implemented.');
+  getFavoriteProgramme(): Observable<EventArrayInterface> {
+    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events`);
   }
 
   getEvent(id: string): Observable<EventInterface> {
