@@ -2,7 +2,8 @@
   "General": {
     "HelloWorld": "Hallo Wereld",
     "Welcome": "Welkom op het feest van de solidariteit",
-    "All": "Alle"
+    "All": "Alle",
+    "Filters": "Filters"
   },
   "Menu": {
     "Home": "Home",

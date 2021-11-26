@@ -2,7 +2,8 @@
   "General": {
     "HelloWorld": "Hello World",
     "Welcome": "Welcome to the solidarity feast",
-    "All": "All"
+    "All": "All",
+    "Filters": "Filter"
   },
   "Menu": {
     "Home": "Home",

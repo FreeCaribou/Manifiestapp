@@ -12,8 +12,8 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   styleUrls: ['./subprogramme.page.scss'],
 })
 export class SubprogrammePage implements OnInit {
-  day: EventDayEnum;
   list: EventInterface[];
+  day: EventDayEnum;
   venues: any[];
   venueSelected: any;
   organizers: any[];
@@ -21,6 +21,7 @@ export class SubprogrammePage implements OnInit {
   eventCategories: any[];
   eventCategorieSelected: any;
 
+  showFilters = false;
   isLoading = true;
 
   constructor(
