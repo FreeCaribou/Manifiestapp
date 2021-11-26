@@ -1,4 +1,7 @@
 export const environment = {
-  production: false,
-  dataMock: false,
+   apiBaseUrl: '',
+   apiUrl: 'www.test.com',
+   nodeEnv: 'undefined',
+   production: 'false',
+   dataMock: 'false'
 };
