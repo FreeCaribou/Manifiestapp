@@ -38,7 +38,6 @@ export class SubprogrammePage implements OnInit {
       this.infoListService.getOrganizers(),
       this.infoListService.getEventCategories(),
     ]).subscribe(datas => {
-      console.log('datas', datas, this.venueSelected, this.organizerSelected, this.eventCategorieSelected)
       this.list = datas[0].events;
       this.venues = datas[1];
       this.organizers = datas[2];
@@ -49,9 +48,13 @@ export class SubprogrammePage implements OnInit {
   }
 
   onSelectChange() {
-    console.log('on select change', this.venueSelected, this.organizerSelected, this.eventCategorieSelected)
     this.isLoading = true;
-    this.programmeService.getAllProgrammeFilter(this.day).subscribe(data => {
+    this.programmeService.getAllProgrammeFilter(
+      this.day,
+      this.venueSelected ? [this.venueSelected] : null,
+      this.organizerSelected ? [this.organizerSelected] : null,
+      this.eventCategorieSelected ? [this.eventCategorieSelected] : null
+    ).subscribe(data => {
       this.list = data.events;
     });
   }

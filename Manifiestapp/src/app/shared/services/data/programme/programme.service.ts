@@ -23,8 +23,8 @@ export class ProgrammeService implements IProgrammeService {
     return this.service.getAllProgramme();
   }
 
-  getAllProgrammeFilter(day: EventDayEnum): Observable<EventArrayInterface> {
-    return this.service.getAllProgrammeFilter(day);
+  getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventArrayInterface> {
+    return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId);
   }
 
   // TODO map the favorite

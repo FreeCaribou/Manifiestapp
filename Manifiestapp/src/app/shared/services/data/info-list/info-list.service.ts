@@ -13,7 +13,6 @@ export class InfoListService implements IInfoListService {
 
   venues: any[];
   getVenues(): Observable<any[]> {
-    console.log(this.venues)
     if (!this.venues) {
       return this.service.getVenues().pipe(
         map(v => v.venues),

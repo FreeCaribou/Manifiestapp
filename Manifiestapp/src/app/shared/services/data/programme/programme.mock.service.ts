@@ -15,7 +15,7 @@ export class ProgrammeMockService implements IProgrammeService {
     return of(cloneDeep(MOCK_GET_ALL_PROGRAMME));
   }
 
-  getAllProgrammeFilter(day: EventDayEnum): Observable<EventArrayInterface> {
+  getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventArrayInterface> {
     return of(cloneDeep(MOCK_GET_ALL_PROGRAMME));
   }
 
