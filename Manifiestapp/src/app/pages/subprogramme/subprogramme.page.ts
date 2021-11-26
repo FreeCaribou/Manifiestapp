@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
+import { LoaderCommunicationService } from 'src/app/shared/services/communication/loader.communication.service';
 import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
@@ -22,17 +23,18 @@ export class SubprogrammePage implements OnInit {
   eventCategorieSelected: any;
 
   showFilters = false;
-  isLoading = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
     private infoListService: InfoListService,
+    public loaderCommunication: LoaderCommunicationService
   ) { }
 
   ngOnInit() {
     this.day = this.activatedRoute.snapshot.data.day;
 
+    this.loaderCommunication.isLoading = true;
     forkJoin([
       this.programmeService.getAllProgrammeFilter(this.day),
       this.infoListService.getVenues(),
@@ -44,12 +46,12 @@ export class SubprogrammePage implements OnInit {
       this.organizers = datas[2];
       this.eventCategories = datas[3];
 
-      this.isLoading = false;
+      this.loaderCommunication.isLoading = false;
     });
   }
 
   onSelectChange() {
-    this.isLoading = true;
+    this.loaderCommunication.isLoading = true;
     this.programmeService.getAllProgrammeFilter(
       this.day,
       this.venueSelected ? [this.venueSelected] : null,
@@ -57,6 +59,7 @@ export class SubprogrammePage implements OnInit {
       this.eventCategorieSelected ? [this.eventCategorieSelected] : null
     ).subscribe(data => {
       this.list = data.events;
+      this.loaderCommunication.isLoading = false;
     });
   }
 

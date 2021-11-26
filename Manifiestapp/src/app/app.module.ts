@@ -17,13 +17,14 @@ import { ProgrammeDataService } from './shared/services/data/programme/programme
 import { ProgrammeMockService } from './shared/services/data/programme/programme.mock.service';
 import { InfoListDataService } from './shared/services/data/info-list/info-list.data.service';
 import { InfoListMockService } from './shared/services/data/info-list/info-list.mock.service';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoaderComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
