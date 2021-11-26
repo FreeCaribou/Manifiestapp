@@ -36,7 +36,7 @@ export class ProgrammeDataService implements IProgrammeService {
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventArrayInterface> {
-    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events?include=${ids.toString()}`);
+    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events?include=${ids?.toString()}`);
   }
 
   getEvent(id: string): Observable<EventInterface> {

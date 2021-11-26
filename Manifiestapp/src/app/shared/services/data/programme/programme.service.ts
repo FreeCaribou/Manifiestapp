@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { EventArrayInterface, EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
@@ -29,13 +29,20 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventArrayInterface> {
-    return this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
-      map(e => this.mapToFavorite(e))
-    )
+    return this.getFavoriteId() ?
+      this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
+        map(e => this.mapToFavorite(e))
+      )
+      : of({ events: [] })
   }
 
   getEvent(id: string): Observable<EventInterface> {
-    return this.service.getEvent(id);
+    return this.service.getEvent(id).pipe(
+      map(x => {
+        x.favorite = this.isFavorite(id);
+        return x;
+      })
+    );
   }
 
   // no data call method
