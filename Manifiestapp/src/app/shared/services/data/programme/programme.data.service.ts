@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EventArrayInterface, EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
+import { environment } from 'src/environments/environment';
 import { IProgrammeService } from './programme.service.interface';
 
 @Injectable({
@@ -10,12 +11,12 @@ import { IProgrammeService } from './programme.service.interface';
 })
 export class ProgrammeDataService implements IProgrammeService {
 
-  baseUrl = 'https://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/';
+  baseUrl = `${environment.baseUrl}events`;
 
   constructor(private httpClient: HttpClient) { }
 
   getAllProgramme(): Observable<EventArrayInterface> {
-    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events`);
+    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}`);
   }
 
   // TODO see for the date
@@ -32,15 +33,15 @@ export class ProgrammeDataService implements IProgrammeService {
       params = params.append('categories', eventCategoriesId.toString());
     }
 
-    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events?${params.toString()}`);
+    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}?${params.toString()}`);
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventArrayInterface> {
-    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}events?include=${ids?.toString()}`);
+    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}?include=${ids?.toString()}`);
   }
 
   getEvent(id: string): Observable<EventInterface> {
-    return this.httpClient.get<EventInterface>(`${this.baseUrl}events/${id}`);
+    return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}`);
   }
 
 }

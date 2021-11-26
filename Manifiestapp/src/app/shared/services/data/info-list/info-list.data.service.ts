@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { IInfoListService } from './info-list.service.interface';
 
 @Injectable({
@@ -8,7 +9,7 @@ import { IInfoListService } from './info-list.service.interface';
 })
 export class InfoListDataService implements IInfoListService {
 
-  baseUrl = 'https://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/';
+  baseUrl = environment.baseUrl;
 
   constructor(private httpClient: HttpClient) { }
 

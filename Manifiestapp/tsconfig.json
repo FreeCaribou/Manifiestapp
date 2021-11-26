@@ -15,9 +15,6 @@
     "lib": [
       "es2018",
       "dom"
-    ],
-    "types": [
-      "node"
     ]
   },
   "angularCompilerOptions": {
@@ -25,5 +22,5 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  },
+  }
 }

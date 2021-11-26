@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   dataMock: false,
-  url: '',
+  baseUrl: 'https://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/',
 };

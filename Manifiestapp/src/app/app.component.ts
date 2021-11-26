@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
 import { LoaderCommunicationService } from './shared/services/communication/loader.communication.service';
 @Component({
@@ -30,7 +29,7 @@ export class AppComponent {
   }
 
   init() {
-    console.log('You use the platform: ', this.platform.platforms(), environment);
+    console.log('You use the platform: ', this.platform.platforms());
     this.languageCommunication.init();
 
     this.subscription = this.platform.backButton.subscribe(() => {
