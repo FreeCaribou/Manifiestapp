@@ -17,23 +17,21 @@ export class ProgrammeService implements IProgrammeService {
   constructor(private service: ProgrammeDataService) { }
 
   getAllProgramme(): Observable<EventArrayInterface> {
-    // return this.service.getAllProgramme().pipe(
-    //   map(e => this.mapToFavorite(e))
-    // );
-    return this.service.getAllProgramme();
+    return this.service.getAllProgramme().pipe(
+      map(e => this.mapToFavorite(e))
+    );
   }
 
   getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventArrayInterface> {
-    return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId);
+    return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId).pipe(
+      map(e => this.mapToFavorite(e))
+    );
   }
 
-  // TODO map the favorite
-  getFavoriteProgramme(): Observable<EventArrayInterface> {
-    // return this.service.getFavoriteProgramme().pipe(
-    //   map(e => this.filterFavorite(e)),
-    //   map(e => this.mapToFavorite(e))
-    // )
-    return this.service.getAllProgramme();
+  getFavoriteProgramme(ids?: string[]): Observable<EventArrayInterface> {
+    return this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
+      map(e => this.mapToFavorite(e))
+    )
   }
 
   getEvent(id: string): Observable<EventInterface> {
@@ -51,13 +49,13 @@ export class ProgrammeService implements IProgrammeService {
     const favoriteId: string[] = this.getFavoriteId();
 
     if (isChangedToFavorite && !favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId, [event.id].toString())
+      localStorage.setItem(LocalStorageEnum.FavoriteId, [event.id.toString()].toString())
     } else if (isChangedToFavorite && favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId, [...favoriteId, event.id].toString())
+      localStorage.setItem(LocalStorageEnum.FavoriteId, [...favoriteId, event.id.toString()].toString())
     } else if (!isChangedToFavorite && favoriteId) {
-      const favoriteIdFiltered = favoriteId.filter(x => x !== event.id);
+      const favoriteIdFiltered = favoriteId.filter(x => x !== event.id.toString());
       if (favoriteIdFiltered.length > 0) {
-        localStorage.setItem(LocalStorageEnum.FavoriteId, favoriteId.filter(x => x !== event.id).toString())
+        localStorage.setItem(LocalStorageEnum.FavoriteId, favoriteId.filter(x => x !== event.id.toString()).toString())
       } else {
         localStorage.removeItem(LocalStorageEnum.FavoriteId);
       }
@@ -67,13 +65,14 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   isFavorite(id: string): boolean {
-    return this.getFavoriteId()?.includes(id);
+    return this.getFavoriteId()?.includes(id.toString());
   }
 
-  mapToFavorite(events: EventInterface[]): EventInterface[] {
-    events.map(
-      x => x.favorite = this.isFavorite(x.id)
-    );
+  mapToFavorite(events: EventArrayInterface): EventArrayInterface {
+    events.events = events.events.map(x => {
+      x.favorite = this.isFavorite(x.id);
+      return x;
+    });
     return events;
   }
 

@@ -19,7 +19,7 @@ export class ProgrammeMockService implements IProgrammeService {
     return of(cloneDeep(MOCK_GET_ALL_PROGRAMME));
   }
 
-  getFavoriteProgramme(): Observable<EventArrayInterface> {
+  getFavoriteProgramme(ids?: string[]): Observable<EventArrayInterface> {
     return of(cloneDeep(MOCK_GET_ALL_PROGRAMME));
   }
 

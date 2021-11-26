@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
@@ -7,13 +8,15 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   templateUrl: './favorite.page.html',
   styleUrls: ['./favorite.page.scss'],
 })
-export class FavoritePage implements OnInit {
+export class FavoritePage implements OnInit, OnDestroy {
   list: EventInterface[];
+
+  favorieChangeEmit: Subscription;
 
   constructor(private programmeService: ProgrammeService) { }
 
   ngOnInit() {
-    this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchData())
+    this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchData())
     this.fetchData();
   }
 
@@ -21,6 +24,12 @@ export class FavoritePage implements OnInit {
     this.programmeService.getFavoriteProgramme().subscribe(data => {
       this.list = data.events;
     });
+  }
+
+  ngOnDestroy() {
+    if (this.favorieChangeEmit) {
+      this.favorieChangeEmit.unsubscribe();
+    }
   }
 
 }
