@@ -10,7 +10,7 @@ import { IProgrammeService } from './programme.service.interface';
 })
 export class ProgrammeDataService implements IProgrammeService {
 
-  baseUrl = 'http://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/';
+  baseUrl = 'https://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/';
 
   constructor(private httpClient: HttpClient) { }
 

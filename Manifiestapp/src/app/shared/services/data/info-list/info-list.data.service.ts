@@ -8,7 +8,7 @@ import { IInfoListService } from './info-list.service.interface';
 })
 export class InfoListDataService implements IInfoListService {
 
-  baseUrl = 'http://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/';
+  baseUrl = 'https://testwordpress.gerardweb.eu/wp-json/tribe/events/v1/';
 
   constructor(private httpClient: HttpClient) { }
 
