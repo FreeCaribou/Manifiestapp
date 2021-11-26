@@ -40,7 +40,7 @@ export class ProgrammeDataService implements IProgrammeService {
   }
 
   getEvent(id: string): Observable<EventInterface> {
-    throw new Error('Method not implemented.');
+    return this.httpClient.get<EventInterface>(`${this.baseUrl}events/${id}`);
   }
 
 }

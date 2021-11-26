@@ -1,4 +1,4 @@
-import { ElementRef, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -21,7 +21,6 @@ import { InfoListMockService } from './shared/services/data/info-list/info-list.
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
-
 
 @NgModule({
   declarations: [AppComponent],

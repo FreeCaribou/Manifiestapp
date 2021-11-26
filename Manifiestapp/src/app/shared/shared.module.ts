@@ -8,12 +8,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapCommunicationService } from './services/communication/map.communication.service';
 import { RouterModule } from '@angular/router';
+import { SimpleDatePipe } from './pipe/simple-date.pipe';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     EventCardComponent,
     EventListCardComponent,
+    SimpleDatePipe,
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { RouterModule } from '@angular/router';
     EventListCardComponent,
     TranslateModule,
     LeafletModule,
+    SimpleDatePipe,
   ],
   providers: [
     MapCommunicationService

@@ -3,9 +3,11 @@
   <ion-card-header>
     <ion-card-title [innerHtml]="event.title" color="tertiary"></ion-card-title>
   </ion-card-header>
-  <ion-card-content (click)="onCardHeartClick(event)">
+  <ion-card-content>
     <div [innerHtml]="event.description"></div>
-    <ion-icon color="secondary" [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
+    {{event.start_date | simpleDatePipe}}
+    <ion-icon (click)="onCardHeartClick(event)" color="secondary" [name]="event.favorite ? 'heart' : 'heart-outline'">
+    </ion-icon>
   </ion-card-content>
   <ion-item>
     <ion-button [routerLink]="['/programme', 'event', event.id]" fill="outline" slot="start">Detail</ion-button>

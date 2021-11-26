@@ -48,4 +48,8 @@ export class EventDetailPage implements OnInit {
     });
   }
 
+  onCardHeartClick(event: EventInterface) {
+    this.programmeService.changeFavorite(event);
+  }
+
 }
