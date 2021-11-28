@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+    {% if categories|length > 0 %}
+        {% for c in categories %}
+
+            <h4>{{ c.code }}</h4>
+            <small>
+                {{ c.label }}
+            </small>
+        {% endfor %}
+    {% else %}
+        <div>No category for the moment</div>
+    {% endif %}
+{% endblock %}
