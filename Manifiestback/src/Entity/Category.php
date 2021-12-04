@@ -4,13 +4,11 @@ namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
-use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @ApiResource()
  */
 class Category
 {
@@ -18,32 +16,37 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"get_item", "get_item_trans"})
+     * @Groups({"category", "category:i18n"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=10)
-     * @Groups({"get_item", "get_item_trans"})
+     * @Groups({"category", "category:i18n"})
      */
     private $code;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_item"})
+     * @Groups({"category"})
      */
     private $label_fr;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"get_item"})
+     * @Groups({"category"})
      */
     private $label_nl;
 
     /**
-     * @Groups({"get_item", "get_item_trans"})
+     * @Groups({"category", "category:i18n"})
      */
     private $label;
+
+    public function __toString()
+    {
+        return (string) $this->getCode();
+    }
 
     public function getId(): ?int
     {

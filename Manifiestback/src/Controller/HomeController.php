@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Repository\CategoryRepository;
+use App\Repository\GuestRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 use Twig\Environment;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,7 +20,7 @@ class HomeController extends AbstractController
    */
   public function indexNoLocale(): Response
   {
-    return $this->redirectToRoute('home', ['_locale' => 'nl']);
+    return $this->redirectToRoute('home', ['_locale' => 'fr']);
   }
 
   /**
@@ -34,14 +35,29 @@ class HomeController extends AbstractController
   }
 
   /**
-   * @Route("/{_locale<%app.supported_locales%>}/test", name="test", methods={"GET"})
+   * @Route("/{_locale<%app.supported_locales%>}/category", name="category", methods={"GET"})
    */
-  public function test(SerializerInterface $serializer, CategoryRepository $repo, Request $request): JsonResponse
+  public function category(SerializerInterface $serializer, CategoryRepository $repo, Request $request): JsonResponse
   {
     $result = $repo->findAllWithTrans($request);
 
     return new JsonResponse(
-      $serializer->serialize($result, 'json', ['groups' => 'get_item_trans']),
+      $serializer->serialize($result, 'json', ['groups' => 'category:i18n']),
+      Response::HTTP_OK,
+      [],
+      true
+    );
+  }
+
+  /**
+   * @Route("/{_locale<%app.supported_locales%>}/guest", name="guest", methods={"GET"})
+   */
+  public function guest(SerializerInterface $serializer, GuestRepository $repo, Request $request): JsonResponse
+  {
+    $result = $repo->findAllWithTrans($request);
+
+    return new JsonResponse(
+      $serializer->serialize($result, 'json', ['groups' => ['guest:i18n', 'category:i18n']]),
       Response::HTTP_OK,
       [],
       true
