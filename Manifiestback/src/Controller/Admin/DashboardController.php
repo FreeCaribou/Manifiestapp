@@ -19,15 +19,14 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        $routeBuilder = $this->get(AdminUrlGenerator::class);
-        $url = $routeBuilder->setController(GuestCrudController::class)->generateUrl();
-        return $this->redirect($url);
+        $guestCount = $this->getDoctrine()->getRepository(Guest::class)->count([]);
+        return $this->render('admin/dashboard.html.twig', ['guestCount' => $guestCount]);
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Manifiestback');
+            ->setTitle('Manifiestback Admin Panel');
     }
 
     public function configureMenuItems(): iterable
