@@ -6,6 +6,8 @@ use App\Repository\EventRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @ORM\Entity(repositoryClass=EventRepository::class)
@@ -16,41 +18,59 @@ class Event
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"event"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"event"})
      */
     private $title_fr;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"event"})
      */
     private $title_nl;
 
     /**
+     * @Groups({"event", "event:i18n"})
+     */
+    private $title;
+
+    /**
      * @ORM\Column(type="text")
+     * @Groups({"event"})
      */
     private $description_fr;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"event"})
      */
     private $description_nl;
 
     /**
+     * @Groups({"event", "event:i18n"})
+     */
+    private $description;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Place::class, inversedBy="events")
+     * @Groups({"event", "event:i18n"})
      */
     private $place;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="events")
+     * @Groups({"event", "event:i18n"})
      */
     private $categories;
 
     /**
      * @ORM\ManyToMany(targetEntity=Guest::class, inversedBy="events")
+     * @Groups({"event", "event:i18n"})
      */
     private $guests;
 
@@ -94,6 +114,22 @@ class Event
         return $this;
     }
 
+    public function setTitle(Request $request): self
+    {
+        $o = get_object_vars($this);
+        $k = "title_{$request->getLocale()}";
+        $this->title = array_key_exists($k, $o) ?
+            $o[$k]
+            : null;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
     public function getDescriptionFr(): ?string
     {
         return $this->description_fr;
@@ -116,6 +152,22 @@ class Event
         $this->description_nl = $description_nl;
 
         return $this;
+    }
+
+    public function setDescription(Request $request): self
+    {
+        $o = get_object_vars($this);
+        $k = "description_{$request->getLocale()}";
+        $this->description = array_key_exists($k, $o) ?
+            $o[$k]
+            : null;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 
     public function getPlace(): ?place

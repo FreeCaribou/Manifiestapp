@@ -6,6 +6,7 @@ use App\Repository\PlaceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PlaceRepository::class)
@@ -16,21 +17,25 @@ class Place
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"place"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"place"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"place"})
      */
     private $lat;
 
     /**
      * @ORM\Column(type="float", nullable=true)
+     * @Groups({"place"})
      */
     private $lng;
 

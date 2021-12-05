@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Event;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method Event|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,32 +20,24 @@ class EventRepository extends ServiceEntityRepository
         parent::__construct($registry, Event::class);
     }
 
-    // /**
-    //  * @return Event[] Returns an array of Event objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllWithTrans(Request $request)
     {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('e.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $result = parent::findAll();
+        foreach ($result as $value) {
+            $value->setDescription($request);
+            $value->setTitle($request);
 
-    /*
-    public function findOneBySomeField($value): ?Event
-    {
-        return $this->createQueryBuilder('e')
-            ->andWhere('e.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            foreach ($value->getCategories() as $cat) {
+                $cat->setLabel($request);
+            }
+
+            foreach ($value->getGuests() as $guest) {
+                $guest->setDescription($request);
+                foreach ($guest->getCategories() as $guestCat) {
+                    $guestCat->setLabel($request);
+                }
+            }
+        }
+        return $result;
     }
-    */
 }
