@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\Guest;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 
 class GuestCrudController extends AbstractCrudController
@@ -19,8 +20,8 @@ class GuestCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name'),
-            TextField::new('description_fr'),
-            TextField::new('description_nl'),
+            TextareaField::new('description_fr'),
+            TextareaField::new('description_nl'),
             AssociationField::new('categories')->onlyOnForms(),
             TextField::new('categoriesToString', 'Categories')->hideOnForm(),
         ];

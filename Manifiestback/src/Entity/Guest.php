@@ -51,9 +51,20 @@ class Guest
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Event::class, mappedBy="guests")
+     */
+    private $events;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->events = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getName();
     }
 
     public function getId(): ?int
@@ -123,7 +134,7 @@ class Guest
 
     public function getCategoriesToString(): ?string
     {
-        return  implode(" / ", $this->categories->toArray());
+        return implode(" / ", $this->categories->toArray());
     }
 
     public function addCategory(Category $category): self
@@ -138,6 +149,33 @@ class Guest
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Event[]
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events[] = $event;
+            $event->addGuest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            $event->removeGuest($this);
+        }
 
         return $this;
     }
