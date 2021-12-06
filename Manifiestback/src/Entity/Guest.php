@@ -56,6 +56,11 @@ class Guest
      */
     private $events;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picture;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -176,6 +181,18 @@ class Guest
         if ($this->events->removeElement($event)) {
             $event->removeGuest($this);
         }
+
+        return $this;
+    }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture($picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

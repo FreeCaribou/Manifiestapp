@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class GuestCrudController extends AbstractCrudController
 {
@@ -24,6 +25,7 @@ class GuestCrudController extends AbstractCrudController
             TextareaField::new('description_nl'),
             AssociationField::new('categories')->onlyOnForms(),
             TextField::new('categoriesToString', 'Categories')->hideOnForm(),
+            ImageField::new('picture')->setUploadDir('/public'),
         ];
     }
 }
