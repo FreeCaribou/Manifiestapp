@@ -58,6 +58,7 @@ class Guest
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"guest", "guest:i18n"})
      */
     private $picture;
 

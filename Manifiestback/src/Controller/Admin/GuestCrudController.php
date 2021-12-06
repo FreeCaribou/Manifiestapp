@@ -25,7 +25,7 @@ class GuestCrudController extends AbstractCrudController
             TextareaField::new('description_nl'),
             AssociationField::new('categories')->onlyOnForms(),
             TextField::new('categoriesToString', 'Categories')->hideOnForm(),
-            ImageField::new('picture')->setUploadDir('/public'),
+            ImageField::new('picture')->setBasePath('images/guests')->setUploadDir('/public/images/guests')->setUploadedFileNamePattern("[name].[extension]"),
         ];
     }
 }
