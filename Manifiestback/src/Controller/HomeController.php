@@ -28,11 +28,11 @@ class HomeController extends AbstractController
   /**
    * @Route("/{_locale<%app.supported_locales%>}/", name="home")
    */
-  public function index(Environment $twig, CategoryRepository $repo, Request $request): Response
+  public function index(Environment $twig, GuestRepository $repo, Request $request): Response
   {
     // $request->getLocale();
     return new Response($twig->render('home/index.html.twig', [
-      'categories' => $repo->findAllWithTrans($request),
+      'guests' => $repo->findAllWithTrans($request),
     ]));
   }
 

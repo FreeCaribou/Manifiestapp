@@ -3,15 +3,17 @@
 {% block title %}Home{% endblock %}
 
 {% block body %}
-    {% if categories|length > 0 %}
-        {% for c in categories %}
-
-            <h4>{{ c.code }}</h4>
+    <h1>{{'hello' | trans}}</h1>
+    <h2>{{'guests' | trans}}</h2>
+    {% if guests|length > 0 %}
+        {% for g in guests %}
+            <h4>{{ g.name }}</h4>
             <small>
-                {{ c.label }}
+                {{ g.description }}
             </small>
+            <img src="/{{ g.picture }}" alt="{{ g.name }} - {{ g.description }}" height="100">
         {% endfor %}
     {% else %}
-        <div>No category for the moment</div>
+        <div>{{'no guests' | trans}}</div>
     {% endif %}
 {% endblock %}
