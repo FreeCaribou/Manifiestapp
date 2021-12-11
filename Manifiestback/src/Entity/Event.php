@@ -74,6 +74,12 @@ class Event
      */
     private $guests;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"event", "event:i18n"})
+     */
+    private $picture;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -243,5 +249,17 @@ class Event
     public function getGuestsToString(): ?string
     {
         return implode(" / ", $this->guests->toArray());
+    }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture($picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
     }
 }

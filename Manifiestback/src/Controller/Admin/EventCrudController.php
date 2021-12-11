@@ -7,6 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 
 class EventCrudController extends AbstractCrudController
 {
@@ -25,6 +26,7 @@ class EventCrudController extends AbstractCrudController
             AssociationField::new('guests')->onlyOnForms(),
             TextEditorField::new('description_fr'),
             TextEditorField::new('description_nl'),
+            ImageField::new('picture')->setUploadDir('/public/images/events')->setUploadedFileNamePattern("images/events/[name].[extension]"),
 
             TextField::new('placeToString', 'Place')->hideOnForm(),
             TextField::new('categoriesToString', 'Categories')->hideOnForm(),
