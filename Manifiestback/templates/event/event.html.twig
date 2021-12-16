@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Event {{ event.title }}{% endblock %}
+
+{% block body %}
+    <h1>{{'hello' | trans}}</h1>
+    <h2>{{'event' | trans}}</h2>
+
+    <div class="card" style="width: 18rem;">
+      <img src="/images/events/{{ event.picture }}" class="card-img-top" alt="{{ event.title }} - {{ event.description }}" height="250">
+      <div class="card-body">
+      <h5 class="card-title">{{ event.title }}</h5>
+        <p class="card-text">{{ event.description }}</p>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

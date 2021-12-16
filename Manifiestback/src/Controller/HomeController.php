@@ -30,24 +30,59 @@ class HomeController extends AbstractController
    */
   public function index(Environment $twig, GuestRepository $repo, Request $request): Response
   {
-    // $request->getLocale();
     return new Response($twig->render('home/index.html.twig', [
       'guests' => $repo->findAllWithTrans($request),
     ]));
   }
 
   /**
-   * @Route("/category", name="category-no-locale")
+   * @Route("/events", name="events-no-locale")
    */
-  public function categoryNoLocale(): Response
+  public function eventsNoLocale(): Response
+  {
+    return $this->redirectToRoute('events', ['_locale' => 'fr']);
+  }
+
+  /**
+   * @Route("/{_locale<%app.supported_locales%>}/events", name="events")
+   */
+  public function events(Environment $twig, EventRepository $repo, Request $request): Response
+  {
+    return new Response($twig->render('event/events.html.twig', [
+      'events' => $repo->findAllWithTrans($request),
+    ]));
+  }
+
+  /**
+   * @Route("/event/{id}", name="event-no-locale")
+   */
+  public function eventNoLocale(string $id): Response
+  {
+    return $this->redirectToRoute('event', ['_locale' => 'fr', 'id' => $id]);
+  }
+
+  /**
+   * @Route("/{_locale<%app.supported_locales%>}/event/{id}", name="event")
+   */
+  public function event(Environment $twig, EventRepository $repo, Request $request, string $id): Response
+  {
+    return new Response($twig->render('event/event.html.twig', [
+      'event' => $repo->find($id),
+    ]));
+  }
+
+  /**
+   * @Route("api/category", name="api-category-no-locale")
+   */
+  public function apiCategoryNoLocale(): Response
   {
     return $this->redirectToRoute('category', ['_locale' => 'fr']);
   }
 
   /**
-   * @Route("/{_locale<%app.supported_locales%>}/category", name="category", methods={"GET"})
+   * @Route("/{_locale<%app.supported_locales%>}/api/category", name="api-category", methods={"GET"})
    */
-  public function category(SerializerInterface $serializer, CategoryRepository $repo, Request $request): JsonResponse
+  public function apiCategory(SerializerInterface $serializer, CategoryRepository $repo, Request $request): JsonResponse
   {
     $result = $repo->findAllWithTrans($request);
 
@@ -60,17 +95,17 @@ class HomeController extends AbstractController
   }
 
   /**
-   * @Route("/guest", name="guest-no-locale")
+   * @Route("api/guest", name="api-guest-no-locale")
    */
-  public function guestNoLocale(): Response
+  public function apiGuestNoLocale(): Response
   {
     return $this->redirectToRoute('guest', ['_locale' => 'fr']);
   }
 
   /**
-   * @Route("/{_locale<%app.supported_locales%>}/guest", name="guest", methods={"GET"})
+   * @Route("/{_locale<%app.supported_locales%>}/api/guest", name="api-guest", methods={"GET"})
    */
-  public function guest(SerializerInterface $serializer, GuestRepository $repo, Request $request): JsonResponse
+  public function apiGuest(SerializerInterface $serializer, GuestRepository $repo, Request $request): JsonResponse
   {
     $result = $repo->findAllWithTrans($request);
 
@@ -83,17 +118,17 @@ class HomeController extends AbstractController
   }
 
   /**
-   * @Route("/place", name="place-no-locale")
+   * @Route("api/place", name="api-place-no-locale")
    */
-  public function placeNoLocale(): Response
+  public function apiPlaceNoLocale(): Response
   {
     return $this->redirectToRoute('place', ['_locale' => 'fr']);
   }
 
   /**
-   * @Route("/{_locale<%app.supported_locales%>}/place", name="place", methods={"GET"})
+   * @Route("/{_locale<%app.supported_locales%>}/api/place", name="api-place", methods={"GET"})
    */
-  public function place(SerializerInterface $serializer, PlaceRepository $repo): JsonResponse
+  public function apiPlace(SerializerInterface $serializer, PlaceRepository $repo): JsonResponse
   {
     $result = $repo->findAll();
 
@@ -106,17 +141,17 @@ class HomeController extends AbstractController
   }
 
   /**
-   * @Route("/event", name="event-no-locale")
+   * @Route("api/event", name="api-event-no-locale")
    */
-  public function eventNoLocale(): Response
+  public function apiEventNoLocale(): Response
   {
     return $this->redirectToRoute('event', ['_locale' => 'fr']);
   }
 
   /**
-   * @Route("/{_locale<%app.supported_locales%>}/event", name="event", methods={"GET"})
+   * @Route("/{_locale<%app.supported_locales%>}/api/event", name="api-event", methods={"GET"})
    */
-  public function event(SerializerInterface $serializer, EventRepository $repo, Request $request): JsonResponse
+  public function apiEvent(SerializerInterface $serializer, EventRepository $repo, Request $request): JsonResponse
   {
     $result = $repo->findAllWithTrans($request);
 
