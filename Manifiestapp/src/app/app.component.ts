@@ -22,7 +22,7 @@ export class AppComponent {
 
   constructor(
     public platform: Platform,
-    private languageCommunication: LanguageCommunicationService,
+    public languageCommunication: LanguageCommunicationService,
     public loaderCommunication: LoaderCommunicationService
   ) {
     this.init();
