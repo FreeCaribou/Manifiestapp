@@ -5,6 +5,7 @@
   "homepage": "",
   "scripts": {
     "ng": "ng",
+    "ionic serve": "ionic serve",
     "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
