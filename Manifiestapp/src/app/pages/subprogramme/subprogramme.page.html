@@ -1,41 +1,39 @@
 <ion-content>
 
-  <ion-toolbar>
-    <ion-title>
-      {{'General.Filters' | translate}}
-    </ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="showFilters = !showFilters">
-        <ion-icon [name]="showFilters ? 'chevron-up-circle-outline' : 'chevron-down-circle-outline'"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
+  <ion-accordion-group>
+    <ion-accordion value="filter">
+      <ion-item slot="header">
+        <ion-label>Filter</ion-label>
+      </ion-item>
 
-  <div *ngIf="showFilters">
-    <ion-item *ngIf="venues">
-      <ion-label position="floating">Venues</ion-label>
-      <ion-select [(ngModel)]="venueSelected" (ionChange)="onSelectChange()" interface="popover">
-        <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-        <ion-select-option *ngFor="let v of venues" [value]="v.id">{{v.venue}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+      <ion-list slot="content">
+        <ion-item *ngIf="venues">
+          <ion-label position="floating">Venues</ion-label>
+          <ion-select [(ngModel)]="venueSelected" (ionChange)="onSelectChange()" interface="popover">
+            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+            <ion-select-option *ngFor="let v of venues" [value]="v.id">{{v.venue}}</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-    <ion-item *ngIf="organizers">
-      <ion-label position="floating">Organizers</ion-label>
-      <ion-select [(ngModel)]="organizerSelected" (ionChange)="onSelectChange()" interface="popover">
-        <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-        <ion-select-option *ngFor="let o of organizers" [value]="o.id">{{o.organizer}}</ion-select-option>
-      </ion-select>
-    </ion-item>
+        <ion-item *ngIf="organizers">
+          <ion-label position="floating">Organizers</ion-label>
+          <ion-select [(ngModel)]="organizerSelected" (ionChange)="onSelectChange()" interface="popover">
+            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+            <ion-select-option *ngFor="let o of organizers" [value]="o.id">{{o.organizer}}</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-    <ion-item *ngIf="eventCategories">
-      <ion-label position="floating">EventCategories</ion-label>
-      <ion-select [(ngModel)]="eventCategorieSelected" (ionChange)="onSelectChange()" interface="popover">
-        <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-        <ion-select-option *ngFor="let ec of eventCategories" [value]="ec.id">{{ec.name}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </div>
+        <ion-item *ngIf="eventCategories">
+          <ion-label position="floating">EventCategories</ion-label>
+          <ion-select [(ngModel)]="eventCategorieSelected" (ionChange)="onSelectChange()" interface="popover">
+            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+            <ion-select-option *ngFor="let ec of eventCategories" [value]="ec.id">{{ec.name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+    </ion-accordion>
+  </ion-accordion-group>
 
 
   <app-event-list-card [list]="list"></app-event-list-card>
