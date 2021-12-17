@@ -21,11 +21,14 @@ export class ProgrammeDataService implements IProgrammeService {
   }
 
   // TODO see for the date
-  getAllProgrammeFilter(day: EventDayEnum, locatiesId?: string[], categoriesId?: string[], organizersId?: string[]): Observable<EventInterface[]> {
+  getAllProgrammeFilter(day?: string[], locatiesId?: string[], categoriesId?: string[], organizersId?: string[]): Observable<EventInterface[]> {
     let params = new HttpParams();
 
     params = params.append('_embed', this.embed);
 
+    if (day?.length > 0) {
+      params = params.append('dag', day.toString());
+    }
     if (locatiesId?.length > 0) {
       params = params.append('locatie', locatiesId.toString());
     }

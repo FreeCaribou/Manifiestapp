@@ -4,7 +4,7 @@ import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 
 export interface IProgrammeService {
   getAllProgramme(): Observable<EventInterface[]>;
-  getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]>;
+  getAllProgrammeFilter(day: string[], venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]>;
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]>;
   getEvent(id: string): Observable<EventInterface>;
 }

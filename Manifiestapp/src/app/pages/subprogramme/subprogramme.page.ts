@@ -13,6 +13,7 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   styleUrls: ['./subprogramme.page.scss'],
 })
 export class SubprogrammePage implements OnInit {
+  dayId: string;
   list: EventInterface[];
   day: EventDayEnum;
   locaties: any[];
@@ -28,15 +29,17 @@ export class SubprogrammePage implements OnInit {
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
     private infoListService: InfoListService,
-    public loaderCommunication: LoaderCommunicationService
+    public loaderCommunication: LoaderCommunicationService,
   ) { }
 
   ngOnInit() {
-    this.day = this.activatedRoute.snapshot.data.day;
+    this.dayId = this.activatedRoute.snapshot.params.dayId;
+
+    console.log('the day id', this.dayId)
 
     this.loaderCommunication.isLoading = true;
     forkJoin([
-      this.programmeService.getAllProgrammeFilter(this.day),
+      this.programmeService.getAllProgrammeFilter([this.dayId]),
       this.infoListService.getVenues(),
       this.infoListService.getEventCategories(),
       // this.infoListService.getOrganizers(),
@@ -53,7 +56,7 @@ export class SubprogrammePage implements OnInit {
   onSelectChange() {
     this.loaderCommunication.isLoading = true;
     this.programmeService.getAllProgrammeFilter(
-      this.day,
+      [this.dayId],
       this.locatieSelected ? [this.locatieSelected] : null,
       this.categorieSelected ? [this.categorieSelected] : null,
       this.organizerSelected ? [this.organizerSelected] : null,

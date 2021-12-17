@@ -3,11 +3,9 @@
 <ion-content>
   <ion-tabs>
     <ion-tab-bar slot="top">
-      <ion-tab-button tab="subprogramme-saturday">
-        <ion-label>{{ 'Menu.Saturday' | translate }}</ion-label>
-      </ion-tab-button>
-      <ion-tab-button tab="subprogramme-sunday">
-        <ion-label>{{ 'Menu.Sunday' | translate }}</ion-label>
+      <ion-tab-button *ngFor="let d of days" [tab]="'subprogramme/'+d.id"
+        [class.custom-tab-selected]="isTabSelected(d)">
+        <ion-label>{{ d.name }}</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

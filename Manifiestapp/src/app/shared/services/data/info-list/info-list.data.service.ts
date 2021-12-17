@@ -13,16 +13,20 @@ export class InfoListDataService implements IInfoListService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getVenues(): Observable<any> {
-    return this.httpClient.get<any>(`${this.baseUrl}locatie`);
+  getVenues(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}locatie`);
   }
 
-  getOrganizers(): Observable<any> {
-    return this.httpClient.get<any>(`${this.baseUrl}organizers`);
+  getOrganizers(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}organizers`);
   }
 
-  getEventCategories(): Observable<any> {
-    return this.httpClient.get<any>(`${this.baseUrl}categories`);
+  getEventCategories(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}categories`);
+  }
+
+  getDays(): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}dag`);
   }
 
 }

@@ -9,22 +9,8 @@ const routes: Routes = [
     component: ProgrammePage,
     children: [
       {
-        path: 'subprogramme-saturday',
-        data: {
-          day: 'saturday'
-        },
+        path: 'subprogramme/:dayId',
         loadChildren: () => import('../subprogramme/subprogramme.module').then(m => m.SubprogrammePageModule)
-      },
-      {
-        path: 'subprogramme-sunday',
-        data: {
-          day: 'sunday'
-        },
-        loadChildren: () => import('../subprogramme/subprogramme.module').then(m => m.SubprogrammePageModule)
-      },
-      {
-        path: '',
-        redirectTo: 'subprogramme-saturday',
       },
     ]
   },

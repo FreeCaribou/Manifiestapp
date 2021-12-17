@@ -44,4 +44,8 @@ export class InfoListService implements IInfoListService {
     }
   }
 
+  getDays(): Observable<any[]> {
+    return this.service.getDays();
+  }
+
 }

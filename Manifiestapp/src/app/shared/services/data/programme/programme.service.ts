@@ -22,7 +22,7 @@ export class ProgrammeService implements IProgrammeService {
     );
   }
 
-  getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]> {
+  getAllProgrammeFilter(day: string[], venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]> {
     return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId).pipe(
       map(e => this.mapToFavorite(e))
     );

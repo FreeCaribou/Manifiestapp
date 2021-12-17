@@ -7,13 +7,17 @@ import { IInfoListService } from './info-list.service.interface';
 })
 export class InfoListMockService implements IInfoListService {
 
-  getVenues(): Observable<any> {
+  getVenues(): Observable<any[]> {
     return of([]);
   }
-  getOrganizers(): Observable<any> {
+  getOrganizers(): Observable<any[]> {
     return of([]);
   }
-  getEventCategories(): Observable<any> {
+  getEventCategories(): Observable<any[]> {
+    return of([]);
+  }
+
+  getDays(): Observable<any[]> {
     return of([]);
   }
 

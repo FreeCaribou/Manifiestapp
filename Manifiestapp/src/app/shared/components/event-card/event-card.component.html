@@ -4,8 +4,7 @@
     <ion-card-title [innerHtml]="event.title.rendered" color="tertiary"></ion-card-title>
   </ion-card-header>
   <ion-card-content>
-    <!-- <div [innerHtml]="event.content.rendered"></div> -->
-    <!-- {{event.start_date | simpleDatePipe}} -->
+    {{event.start_date | simpleDatePipe}}
     <ion-icon (click)="onCardHeartClick(event)" color="secondary" [name]="event.favorite ? 'heart' : 'heart-outline'">
     </ion-icon>
   </ion-card-content>

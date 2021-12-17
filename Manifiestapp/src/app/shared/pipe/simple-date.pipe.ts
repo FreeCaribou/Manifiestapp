@@ -6,6 +6,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class SimpleDatePipe implements PipeTransform {
   transform(value: Date, args: any[]): any {
-    return formatDate(value, 'dd/MM hh:mm', 'en');
+    if (value && value instanceof Date) {
+      return formatDate(value, 'dd/MM hh:mm', 'en');
+    } else {
+      return 'No date'
+    }
   }
 }
