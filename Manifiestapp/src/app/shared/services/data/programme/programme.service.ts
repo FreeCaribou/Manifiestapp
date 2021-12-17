@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators'
-import { EventArrayInterface, EventInterface } from 'src/app/shared/models/Event.interface';
+import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
@@ -16,24 +16,24 @@ export class ProgrammeService implements IProgrammeService {
 
   constructor(private service: ProgrammeDataService) { }
 
-  getAllProgramme(): Observable<EventArrayInterface> {
+  getAllProgramme(): Observable<EventInterface[]> {
     return this.service.getAllProgramme().pipe(
       map(e => this.mapToFavorite(e))
     );
   }
 
-  getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventArrayInterface> {
+  getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]> {
     return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId).pipe(
       map(e => this.mapToFavorite(e))
     );
   }
 
-  getFavoriteProgramme(ids?: string[]): Observable<EventArrayInterface> {
+  getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
     return this.getFavoriteId() ?
       this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
         map(e => this.mapToFavorite(e))
       )
-      : of({ events: [] })
+      : of([])
   }
 
   getEvent(id: string): Observable<EventInterface> {
@@ -75,8 +75,8 @@ export class ProgrammeService implements IProgrammeService {
     return this.getFavoriteId()?.includes(id.toString());
   }
 
-  mapToFavorite(events: EventArrayInterface): EventArrayInterface {
-    events.events = events.events.map(x => {
+  mapToFavorite(events: EventInterface[]): EventInterface[] {
+    events = events.map(x => {
       x.favorite = this.isFavorite(x.id);
       return x;
     });

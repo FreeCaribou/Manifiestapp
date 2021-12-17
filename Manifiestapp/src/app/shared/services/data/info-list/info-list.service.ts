@@ -15,7 +15,6 @@ export class InfoListService implements IInfoListService {
   getVenues(): Observable<any[]> {
     if (!this.venues) {
       return this.service.getVenues().pipe(
-        map(v => v.venues),
         tap(v => this.venues = v),
       );
     } else {
@@ -27,7 +26,6 @@ export class InfoListService implements IInfoListService {
   getOrganizers(): Observable<any[]> {
     if (!this.organizers) {
       return this.service.getOrganizers().pipe(
-        map(o => o.organizers),
         tap(o => this.organizers = o),
       );
     } else {
@@ -39,7 +37,6 @@ export class InfoListService implements IInfoListService {
   getEventCategories(): Observable<any[]> {
     if (!this.eventCategories) {
       return this.service.getEventCategories().pipe(
-        map(c => c.categories),
         tap(c => this.eventCategories = c),
       );
     } else {

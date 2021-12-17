@@ -15,12 +15,12 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
 export class SubprogrammePage implements OnInit {
   list: EventInterface[];
   day: EventDayEnum;
-  venues: any[];
-  venueSelected: any;
+  locaties: any[];
+  locatieSelected: any;
   organizers: any[];
   organizerSelected: any;
-  eventCategories: any[];
-  eventCategorieSelected: any;
+  categories: any[];
+  categorieSelected: any;
 
   showFilters = false;
 
@@ -38,13 +38,13 @@ export class SubprogrammePage implements OnInit {
     forkJoin([
       this.programmeService.getAllProgrammeFilter(this.day),
       this.infoListService.getVenues(),
-      this.infoListService.getOrganizers(),
       this.infoListService.getEventCategories(),
+      // this.infoListService.getOrganizers(),
     ]).subscribe(datas => {
-      this.list = datas[0].events;
-      this.venues = datas[1];
-      this.organizers = datas[2];
-      this.eventCategories = datas[3];
+      this.list = datas[0];
+      this.locaties = datas[1];
+      this.categories = datas[2];
+      // this.organizers = datas[3];
 
       this.loaderCommunication.isLoading = false;
     });
@@ -54,11 +54,11 @@ export class SubprogrammePage implements OnInit {
     this.loaderCommunication.isLoading = true;
     this.programmeService.getAllProgrammeFilter(
       this.day,
-      this.venueSelected ? [this.venueSelected] : null,
+      this.locatieSelected ? [this.locatieSelected] : null,
+      this.categorieSelected ? [this.categorieSelected] : null,
       this.organizerSelected ? [this.organizerSelected] : null,
-      this.eventCategorieSelected ? [this.eventCategorieSelected] : null
     ).subscribe(data => {
-      this.list = data.events;
+      this.list = data;
       this.loaderCommunication.isLoading = false;
     });
   }

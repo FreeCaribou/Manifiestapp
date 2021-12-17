@@ -2,10 +2,10 @@
 
 <ion-content>
   <div *ngIf="event">
-    <h1 [innerHtml]="event.title"></h1>
-    <img [src]="event.image?.url" height="100" />
-    <h2 [innerHtml]="event.description"></h2>
-    <h3>{{event.start_date | simpleDatePipe}} - {{event.end_date | simpleDatePipe}}</h3>
+    <h1 [innerHtml]="event.title.rendered"></h1>
+    <img [src]="event['toolset-meta']?.['info-evenement']?.afbeelding?.raw" height="100" />
+    <h2 [innerHtml]="event.content.rendered"></h2>
+    <!-- <h3>{{event.start_date | simpleDatePipe}} - {{event.end_date | simpleDatePipe}}</h3> -->
     <ion-icon (click)="onCardHeartClick(event)" color="secondary" [name]="event.favorite ? 'heart' : 'heart-outline'">
     </ion-icon>
   </div>

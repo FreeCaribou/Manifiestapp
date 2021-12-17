@@ -7,27 +7,27 @@
       </ion-item>
 
       <ion-list slot="content">
-        <ion-item *ngIf="venues">
-          <ion-label position="floating">Venues</ion-label>
-          <ion-select [(ngModel)]="venueSelected" (ionChange)="onSelectChange()" interface="popover">
+        <ion-item *ngIf="locaties">
+          <ion-label position="floating">Location</ion-label>
+          <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-            <ion-select-option *ngFor="let v of venues" [value]="v.id">{{v.venue}}</ion-select-option>
+            <ion-select-option *ngFor="let v of locaties" [value]="v.id">{{v.name}}</ion-select-option>
           </ion-select>
         </ion-item>
 
-        <ion-item *ngIf="organizers">
+        <!-- <ion-item *ngIf="organizers">
           <ion-label position="floating">Organizers</ion-label>
           <ion-select [(ngModel)]="organizerSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-            <ion-select-option *ngFor="let o of organizers" [value]="o.id">{{o.organizer}}</ion-select-option>
+            <ion-select-option *ngFor="let o of organizers" [value]="o.id">{{o.name}}</ion-select-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
 
-        <ion-item *ngIf="eventCategories">
-          <ion-label position="floating">EventCategories</ion-label>
-          <ion-select [(ngModel)]="eventCategorieSelected" (ionChange)="onSelectChange()" interface="popover">
+        <ion-item *ngIf="categories">
+          <ion-label position="floating">Categories</ion-label>
+          <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-            <ion-select-option *ngFor="let ec of eventCategories" [value]="ec.id">{{ec.name}}</ion-select-option>
+            <ion-select-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>

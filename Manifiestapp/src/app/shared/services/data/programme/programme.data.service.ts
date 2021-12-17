@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EventArrayInterface, EventInterface } from 'src/app/shared/models/Event.interface';
+import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { environment } from 'src/environments/environment';
 import { IProgrammeService } from './programme.service.interface';
@@ -11,37 +11,40 @@ import { IProgrammeService } from './programme.service.interface';
 })
 export class ProgrammeDataService implements IProgrammeService {
 
-  baseUrl = `${environment.baseUrl}events`;
+  baseUrl = `${environment.baseUrl}evenement`;
+  embed = 'wp:attachment,wp:term';
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllProgramme(): Observable<EventArrayInterface> {
-    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}`);
+  getAllProgramme(): Observable<EventInterface[]> {
+    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}`);
   }
 
   // TODO see for the date
-  getAllProgrammeFilter(day: EventDayEnum, venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventArrayInterface> {
+  getAllProgrammeFilter(day: EventDayEnum, locatiesId?: string[], categoriesId?: string[], organizersId?: string[]): Observable<EventInterface[]> {
     let params = new HttpParams();
 
-    if (venuesId?.length > 0) {
-      params = params.append('venue', venuesId.toString());
+    params = params.append('_embed', this.embed);
+
+    if (locatiesId?.length > 0) {
+      params = params.append('locatie', locatiesId.toString());
     }
     if (organizersId?.length > 0) {
       params = params.append('organizer', organizersId.toString());
     }
-    if (eventCategoriesId?.length > 0) {
-      params = params.append('categories', eventCategoriesId.toString());
+    if (categoriesId?.length > 0) {
+      params = params.append('categories', categoriesId.toString());
     }
 
-    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}?${params.toString()}`);
+    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}`);
   }
 
-  getFavoriteProgramme(ids?: string[]): Observable<EventArrayInterface> {
-    return this.httpClient.get<EventArrayInterface>(`${this.baseUrl}?include=${ids?.toString()}`);
+  getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
+    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}`);
   }
 
   getEvent(id: string): Observable<EventInterface> {
-    return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}`);
+    return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}?_embed=${this.embed}`);
   }
 
 }

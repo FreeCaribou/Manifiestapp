@@ -6,31 +6,43 @@ export interface RenderedInterface {
 
 export interface EventInterface {
   id?: string;
-  // title: string;
-  description?: string;
-  imageSrc?: string;
-  day: EventDayEnum;
-  title: string,
-  tags?: number[],
-  categories?: number[],
-  content?: string,
-  _embedded?: any,
 
-  // TODO rework more precise
+  title?: RenderedInterface;
+  // title?: string;
+
+  content?: RenderedInterface;
+  // content?: string;
+
+  categories?: number[];
+
+  locatie?: number[];
+
   image?: { url: string };
 
+  _links?: { "wp:attachement": { href: string }[] };
+
+  // TODO ask for english name
+  "toolset-meta"?: {
+    "info-evenement": {
+      afbeelding: {
+        raw: string;
+      },
+      "facebook-pagina": {
+        raw: string;
+      }
+    }
+  };
+
+  description?: string;
+  imageSrc?: string;
+  day?: EventDayEnum;
+  tags?: number[];
+  _embedded?: any;
   start_date?: string;
   end_date?: string;
 
-  favorite?: boolean,
+  favorite?: boolean;
 
-  // TODO in an object place ?
-  position?: {
-    lat: number,
-    lng: number
-  }
-}
-
-export interface EventArrayInterface {
-  events: EventInterface[];
+  // probably delete one day
+  position: { lat: number, lng: number };
 }

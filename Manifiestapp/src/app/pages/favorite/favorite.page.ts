@@ -27,7 +27,7 @@ export class FavoritePage implements OnInit, OnDestroy {
   fetchData() {
     this.loaderCommunication.isLoading = true;
     this.programmeService.getFavoriteProgramme().subscribe(data => {
-      this.list = data.events;
+      this.list = data;
       this.loaderCommunication.isLoading = false;
     });
   }
