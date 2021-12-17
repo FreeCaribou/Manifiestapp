@@ -65,6 +65,13 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  // custom color
+  --ion-color-facebook: #1178f2;
+}
+
+.ion-color-facebook {
+  --ion-color-base: var(--ion-color-facebook);
 }
 
 // disabled for the moment dark mode because

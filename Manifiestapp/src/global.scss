@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -26,13 +26,21 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 .main-map {
-  width: 100%; 
-  height: 100%
+  width: 100%;
+  height: 100%;
 }
 
-.event-detail-map{ 
-  width: 80%; 
+.event-detail-map {
+  width: 80%;
   height: 500px;
+}
+
+.fake-mouse-select {
+  cursor: pointer;
+}
+
+ion-icon.medium-icon {
+  font-size: 32px;
 }
 
 .m-16 {
@@ -46,4 +54,3 @@
 .m-top-16 {
   margin-top: 16px;
 }
-
