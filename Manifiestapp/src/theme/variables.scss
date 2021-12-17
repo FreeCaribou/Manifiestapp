@@ -1,8 +1,24 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
 
+@font-face {
+  font-family: "Proxima Nova";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../assets/font/proxima_ssv/ProximaNova-Regular.otf");
+}
+
+@font-face {
+  font-family: "Proxima Nova";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../assets/font/proxima_ssv/ProximaNova-Bold.otf");
+}
+
 /** Ionic CSS Variables **/
 :root {
+  --ion-font-family: "Proxima Nova";
+
   --ion-color-primary: #009da9;
   --ion-color-primary-rgb: 0, 157, 169;
   --ion-color-primary-contrast: #ffffff;
