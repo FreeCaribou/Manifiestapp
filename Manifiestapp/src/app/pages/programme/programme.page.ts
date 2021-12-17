@@ -18,7 +18,6 @@ export class ProgrammePage implements OnInit {
   ngOnInit() {
     this.infoListService.getDays().subscribe(data => {
       this.days = data;
-      console.log('hello dags?', data, data[0].id, this.router.url)
       if (!this.router.url.includes('subprogramme')) {
         this.router.navigate(['programme', 'subprogramme', data[0].id]);
       }

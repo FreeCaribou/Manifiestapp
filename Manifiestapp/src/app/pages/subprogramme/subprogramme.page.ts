@@ -35,8 +35,6 @@ export class SubprogrammePage implements OnInit {
   ngOnInit() {
     this.dayId = this.activatedRoute.snapshot.params.dayId;
 
-    console.log('the day id', this.dayId)
-
     this.loaderCommunication.isLoading = true;
     forkJoin([
       this.programmeService.getAllProgrammeFilter([this.dayId]),
