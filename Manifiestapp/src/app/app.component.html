@@ -7,6 +7,28 @@
           <ion-list-header>Manifiestapp</ion-list-header>
           <ion-note>{{ 'General.Welcome' | translate }}</ion-note>
 
+          <div class="flex-horizontal-space-around">
+            <a [href]="'https://www.instagram.com/manifiesta.' + languageCommunication.translate.currentLang"
+              alt="instagram" target="_blank">
+              <ion-icon name="logo-instagram" color="instagram" class="big-icon">
+              </ion-icon>
+            </a>
+            <a href="https://www.facebook.com/manifiesta.be" alt="facebook" target="_blank">
+              <ion-icon name="logo-facebook" color="facebook" class="big-icon">
+              </ion-icon>
+            </a>
+            <!-- TODO have the spotify icon -->
+            <a href="https://open.spotify.com/user/manifiesta.be" alt="spotify" target="_blank">
+              <ion-icon name="musical-note-outline" color="spotify" class="big-icon">
+              </ion-icon>
+            </a>
+            <!-- TODO Make the youtube account back alive please -->
+            <a href="https://twitter.com/manifiesta_be" alt="twitter" target="_blank">
+              <ion-icon name="logo-twitter" color="twitter" class="big-icon">
+              </ion-icon>
+            </a>
+          </div>
+
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
               routerLinkActive="selected">
@@ -24,9 +46,9 @@
           <ion-segment-button value="nl">
             <ion-label>Nl</ion-label>
           </ion-segment-button>
-          <ion-segment-button value="en">
+          <!-- <ion-segment-button value="en">
             <ion-label>En</ion-label>
-          </ion-segment-button>
+          </ion-segment-button> -->
         </ion-segment>
 
         <ion-img src="assets/pictures/manifiesta-logo.jpg" alt="logo"></ion-img>

@@ -68,10 +68,25 @@
 
   // custom color
   --ion-color-facebook: #1178f2;
+  --ion-color-spotify: #18d860;
+  --ion-color-instagram: #8943c1;
+  --ion-color-twitter: #17a3f2;
 }
 
 .ion-color-facebook {
   --ion-color-base: var(--ion-color-facebook);
+}
+
+.ion-color-spotify {
+  --ion-color-base: var(--ion-color-spotify);
+}
+
+.ion-color-instagram {
+  --ion-color-base: var(--ion-color-instagram);
+}
+
+.ion-color-twitter {
+  --ion-color-base: var(--ion-color-twitter);
 }
 
 // disabled for the moment dark mode because

@@ -7,7 +7,7 @@
     <p [innerHtml]="event.content.rendered"></p>
     <h3>{{event.start_date | simpleDatePipe}} - {{event.end_date | simpleDatePipe}}</h3>
     <a *ngIf="event['toolset-meta']?.['info-evenement']?.['facebook-pagina']?.raw"
-      [href]="event['toolset-meta']?.['info-evenement']?.['facebook-pagina']?.raw">
+      [href]="event['toolset-meta']?.['info-evenement']?.['facebook-pagina']?.raw" target="_blank">
       <ion-icon name="logo-facebook" color="facebook" class="medium-icon">
       </ion-icon>
     </a>

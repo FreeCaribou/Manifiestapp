@@ -20,9 +20,11 @@ export class LoaderComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(change) {
-    if (change.show) {
-      this.haveShowChange(change.show.currentValue);
-    }
+    // Bugging for the moment
+    // TODO fix later
+    // if (change.show) {
+    //   this.haveShowChange(change.show.currentValue);
+    // }
   }
 
   async haveShowChange(value) {

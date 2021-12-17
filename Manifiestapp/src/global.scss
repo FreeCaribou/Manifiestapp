@@ -40,7 +40,16 @@
 }
 
 ion-icon.medium-icon {
-  font-size: 32px;
+  font-size: 24px;
+}
+
+ion-icon.big-icon {
+  font-size: 36px;
+}
+
+.flex-horizontal-space-around {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .m-16 {

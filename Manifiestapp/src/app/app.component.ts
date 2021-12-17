@@ -29,8 +29,8 @@ export class AppComponent {
   }
 
   init() {
-    console.log('You use the platform: ', this.platform.platforms());
     this.languageCommunication.init();
+    console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang);
 
     this.subscription = this.platform.backButton.subscribe(() => {
       const app = 'app';
