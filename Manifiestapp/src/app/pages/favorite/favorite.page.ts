@@ -1,7 +1,6 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
-import { LoaderCommunicationService } from 'src/app/shared/services/communication/loader.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
 @Component({
@@ -14,9 +13,10 @@ export class FavoritePage implements OnInit, OnDestroy {
 
   favorieChangeEmit: Subscription;
 
+  isLoading = true;
+
   constructor(
     private programmeService: ProgrammeService,
-    public loaderCommunication: LoaderCommunicationService
   ) { }
 
   ngOnInit() {
@@ -25,10 +25,9 @@ export class FavoritePage implements OnInit, OnDestroy {
   }
 
   fetchData() {
-    this.loaderCommunication.isLoading = true;
     this.programmeService.getFavoriteProgramme().subscribe(data => {
       this.list = data;
-      this.loaderCommunication.isLoading = false;
+      this.isLoading = false;
     });
   }
 

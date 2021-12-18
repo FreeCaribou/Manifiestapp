@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
-import { LoaderCommunicationService } from './shared/services/communication/loader.communication.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -26,7 +26,6 @@ export class AppComponent {
   constructor(
     public platform: Platform,
     public languageCommunication: LanguageCommunicationService,
-    public loaderCommunication: LoaderCommunicationService,
     public router: Router
   ) {
     this.init();

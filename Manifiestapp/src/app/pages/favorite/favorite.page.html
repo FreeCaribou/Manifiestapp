@@ -1,5 +1,7 @@
 <app-header [title]="'Favorite'"></app-header>
 
+<app-loader [show]="isLoading"></app-loader>
+
 <ion-content>
 
   <h1 *ngIf="list?.length === 0">{{ 'Programme.NoFavorites' | translate }}</h1>

@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
-import { LoaderCommunicationService } from 'src/app/shared/services/communication/loader.communication.service';
 import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
@@ -25,17 +24,17 @@ export class SubprogrammePage implements OnInit {
 
   showFilters = false;
 
+  isLoading = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
     private infoListService: InfoListService,
-    public loaderCommunication: LoaderCommunicationService,
   ) { }
 
   ngOnInit() {
     this.dayId = this.activatedRoute.snapshot.params.dayId;
 
-    this.loaderCommunication.isLoading = true;
     forkJoin([
       this.programmeService.getAllProgrammeFilter([this.dayId]),
       this.infoListService.getVenues(),
@@ -47,12 +46,12 @@ export class SubprogrammePage implements OnInit {
       this.categories = datas[2];
       // this.organizers = datas[3];
 
-      this.loaderCommunication.isLoading = false;
+      this.isLoading = false;
     });
   }
 
   onSelectChange() {
-    this.loaderCommunication.isLoading = true;
+    this.isLoading = true;
     this.programmeService.getAllProgrammeFilter(
       [this.dayId],
       this.locatieSelected ? [this.locatieSelected] : null,
@@ -60,7 +59,7 @@ export class SubprogrammePage implements OnInit {
       this.organizerSelected ? [this.organizerSelected] : null,
     ).subscribe(data => {
       this.list = data;
-      this.loaderCommunication.isLoading = false;
+      this.isLoading = false;
     });
   }
 

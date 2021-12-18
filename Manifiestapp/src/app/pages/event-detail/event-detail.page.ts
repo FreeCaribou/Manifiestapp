@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MapOptions, Layer } from 'leaflet';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
-import { LoaderCommunicationService } from 'src/app/shared/services/communication/loader.communication.service';
 import { MapCommunicationService } from 'src/app/shared/services/communication/map.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
@@ -19,11 +18,12 @@ export class EventDetailPage implements OnInit {
   options: MapOptions;
   markers: Layer[];
 
+  isLoading = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
     private mapCommunication: MapCommunicationService,
-    public loaderCommunication: LoaderCommunicationService
   ) { }
 
   ngOnInit() {
@@ -31,7 +31,6 @@ export class EventDetailPage implements OnInit {
 
   ionViewDidEnter() {
     this.id = this.activatedRoute.snapshot.params.id;
-    this.loaderCommunication.isLoading = true;
     this.programmeService.getEvent(this.id).subscribe(data => {
       this.event = data;
 
@@ -49,7 +48,7 @@ export class EventDetailPage implements OnInit {
         ]
       }
 
-      this.loaderCommunication.isLoading = false;
+      this.isLoading = false;
     });
   }
 

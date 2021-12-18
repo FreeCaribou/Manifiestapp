@@ -10,6 +10,8 @@ import { InfoListService } from 'src/app/shared/services/data/info-list/info-lis
 export class ProgrammePage implements OnInit {
   days: any[];
 
+  isLoading = true;
+
   constructor(
     private infoListService: InfoListService,
     private router: Router
@@ -21,6 +23,7 @@ export class ProgrammePage implements OnInit {
       if (!this.router.url.includes('subprogramme')) {
         this.router.navigate(['programme', 'subprogramme', data[0].id]);
       }
+      this.isLoading = false;
     });
   }
 
