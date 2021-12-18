@@ -58,8 +58,8 @@
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button routerLink="playlist" color="secondary">
+  <ion-fab *ngIf="showPlaylistButton" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="manifiesta-playlist" color="secondary">
       <ion-icon name="musical-notes"></ion-icon>
     </ion-fab-button>
   </ion-fab>

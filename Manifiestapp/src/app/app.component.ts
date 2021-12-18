@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
@@ -18,12 +19,15 @@ export class AppComponent {
     { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
   ];
 
-  subscription: Subscription;
+  subscriptionBackButton: Subscription;
+  subscriptionRouter: Subscription;
+  showPlaylistButton = true;
 
   constructor(
     public platform: Platform,
     public languageCommunication: LanguageCommunicationService,
-    public loaderCommunication: LoaderCommunicationService
+    public loaderCommunication: LoaderCommunicationService,
+    public router: Router
   ) {
     this.init();
   }
@@ -32,10 +36,16 @@ export class AppComponent {
     this.languageCommunication.init();
     console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang);
 
-    this.subscription = this.platform.backButton.subscribe(() => {
+    this.subscriptionBackButton = this.platform.backButton.subscribe(() => {
       const app = 'app';
       navigator[app].exitApp();
     });
+
+    this.subscriptionRouter = this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showPlaylistButton = !event.urlAfterRedirects.includes('/manifiesta-playlist');
+      }
+    })
   }
 
   languageSegmentChanged(event) {
@@ -43,6 +53,7 @@ export class AppComponent {
   }
 
   ionViewWillLeave() {
-    this.subscription?.unsubscribe();
+    this.subscriptionBackButton?.unsubscribe();
+    this.subscriptionRouter?.unsubscribe();
   }
 }

@@ -28,7 +28,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/buy-ticket/buy-ticket.module').then(m => m.BuyTicketPageModule)
   },
   {
-    path: 'playlist',
+    path: 'manifiesta-playlist',
     loadChildren: () => import('./pages/playlist/playlist.module').then(m => m.PlaylistPageModule)
   },
 
