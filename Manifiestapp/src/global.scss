@@ -59,6 +59,7 @@ ion-menu {
   ion-list {
     /* optional, but it needs when you use gradient as a background color.*/
     background: transparent;
+    padding-top: 0 !important;
   }
 
   ion-segment-button {
@@ -70,6 +71,9 @@ ion-menu {
       color: var(--ion-color-dark-tint);
       ion-icon {
         color: var(--ion-color-dark-tint) !important;
+      }
+      :hover {
+        color: var(--ion-color-tertiary) !important;
       }
     }
 
