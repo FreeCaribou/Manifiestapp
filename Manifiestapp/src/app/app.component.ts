@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { MenuController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
 
@@ -26,7 +26,8 @@ export class AppComponent {
   constructor(
     public platform: Platform,
     public languageCommunication: LanguageCommunicationService,
-    public router: Router
+    public router: Router,
+    public menu: MenuController
   ) {
     this.init();
   }
@@ -34,12 +35,6 @@ export class AppComponent {
   init() {
     this.languageCommunication.init();
     console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang);
-
-    this.subBackButton = this.platform.backButton.subscribe(() => {
-      const app = 'app';
-      navigator[app].exitApp();
-    });
-
 
     // when the user tap on the physical back button of the device, we want to close the app
     // but not for all page !
@@ -54,7 +49,12 @@ export class AppComponent {
         if (!pageWithoutBackButton.find(x => event.urlAfterRedirects.includes(x))) {
           this.subBackButton = this.platform.backButton.subscribe(() => {
             const app = 'app';
-            navigator[app].exitApp();
+            this.menu.isOpen().then(data => {
+              if (!data) {
+                navigator[app].exitApp();
+              }
+            });
+
           });
         }
 
