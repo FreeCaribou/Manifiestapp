@@ -52,6 +52,50 @@ ion-icon.big-icon {
   justify-content: space-evenly;
 }
 
+ion-menu {
+  --ion-background-color: var(--ion-color-primary);
+  --ion-text-color: var(--ion-color-primary-contrast);
+
+  ion-list {
+    /* optional, but it needs when you use gradient as a background color.*/
+    background: transparent;
+  }
+
+  ion-segment-button {
+    color: var(--ion-color-dark-tint);
+  }
+
+  ion-menu-toggle {
+    ion-item {
+      color: var(--ion-color-dark-tint);
+      ion-icon {
+        color: var(--ion-color-dark-tint) !important;
+      }
+    }
+
+    ion-item.selected {
+      color: var(--ion-color-tertiary);
+      background-color: rgba(var(--ion-color-tertiary-rgb), 0.14);
+
+      :hover {
+        color: var(--ion-color-tertiary) !important;
+      }
+
+      ion-icon {
+        color: var(--ion-color-tertiary) !important;
+      }
+    }
+  }
+
+  ion-list-header {
+    color: var(--ion-color-tertiary);
+  }
+
+  ion-note {
+    color: var(--ion-color-tertiary-shade) !important;
+  }
+}
+
 .m-16 {
   margin: 16px;
 }
