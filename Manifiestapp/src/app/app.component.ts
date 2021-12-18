@@ -48,12 +48,10 @@ export class AppComponent {
     ];
     this.subRouter = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('change page', event)
         this.showPlaylistButton = !event.urlAfterRedirects.includes('/manifiesta-playlist');
 
         this.subBackButton?.unsubscribe();
         if (!pageWithoutBackButton.find(x => event.urlAfterRedirects.includes(x))) {
-          console.log('back button please')
           this.subBackButton = this.platform.backButton.subscribe(() => {
             const app = 'app';
             navigator[app].exitApp();
