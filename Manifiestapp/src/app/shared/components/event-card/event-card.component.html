@@ -1,5 +1,5 @@
 <ion-card>
-  <div [routerLink]="['/programme', 'event', event.id]" class="fake-mouse-select">
+  <div [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
     <ion-img [src]="event['toolset-meta']?.['info-evenement']?.afbeelding?.raw" height="100"></ion-img>
     <ion-card-header>
       <ion-card-subtitle> {{event.start_date | simpleDatePipe}} </ion-card-subtitle>

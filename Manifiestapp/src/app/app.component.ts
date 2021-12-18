@@ -19,8 +19,8 @@ export class AppComponent {
     { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
   ];
 
-  subscriptionBackButton: Subscription;
-  subscriptionRouter: Subscription;
+  subBackButton: Subscription;
+  subRouter: Subscription;
   showPlaylistButton = true;
 
   constructor(
@@ -35,14 +35,31 @@ export class AppComponent {
     this.languageCommunication.init();
     console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang);
 
-    this.subscriptionBackButton = this.platform.backButton.subscribe(() => {
+    this.subBackButton = this.platform.backButton.subscribe(() => {
       const app = 'app';
       navigator[app].exitApp();
     });
 
-    this.subscriptionRouter = this.router.events.subscribe(event => {
+
+    // when the user tap on the physical back button of the device, we want to close the app
+    // but not for all page !
+    const pageWithoutBackButton = [
+      '/programme/event-detail'
+    ];
+    this.subRouter = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
+        console.log('change page', event)
         this.showPlaylistButton = !event.urlAfterRedirects.includes('/manifiesta-playlist');
+
+        this.subBackButton?.unsubscribe();
+        if (!pageWithoutBackButton.find(x => event.urlAfterRedirects.includes(x))) {
+          console.log('back button please')
+          this.subBackButton = this.platform.backButton.subscribe(() => {
+            const app = 'app';
+            navigator[app].exitApp();
+          });
+        }
+
       }
     })
   }
@@ -52,7 +69,7 @@ export class AppComponent {
   }
 
   ionViewWillLeave() {
-    this.subscriptionBackButton?.unsubscribe();
-    this.subscriptionRouter?.unsubscribe();
+    this.subRouter?.unsubscribe();
+    this.subBackButton?.unsubscribe();
   }
 }
