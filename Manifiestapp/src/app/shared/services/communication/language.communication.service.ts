@@ -20,12 +20,12 @@ export class LanguageCommunicationService {
       this.changeLanguage(localStorage.getItem(LocalStorageEnum.Language));
     }
 
-    this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang('nl');
   }
 
   changeLanguage(language: string) {
     if (!this.acceptedLanguages.includes(language)) {
-      language = 'en';
+      language = 'nl';
     }
     localStorage.setItem(LocalStorageEnum.Language, language);
     this.translate.use(localStorage.getItem(LocalStorageEnum.Language));
