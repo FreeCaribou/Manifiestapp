@@ -6,7 +6,7 @@ import { LocalStorageEnum } from '../../models/LocalStorage.enum';
   providedIn: 'root'
 })
 export class LanguageCommunicationService {
-  acceptedLanguages = ['en', 'fr', 'nl'];
+  acceptedLanguages = ['fr', 'nl'];
   selectedLanguage: string;
 
   constructor(public translate: TranslateService) { }
