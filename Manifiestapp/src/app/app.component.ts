@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { MenuController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
@@ -9,7 +10,7 @@ import { LanguageCommunicationService } from './shared/services/communication/la
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'Programme', url: 'programme', icon: 'receipt' },
@@ -29,11 +30,16 @@ export class AppComponent {
     public router: Router,
     public menu: MenuController
   ) {
-    this.init();
   }
 
-  init() {
+  async ngOnInit() {
+    this.init();
+    await LocalNotifications.requestPermissions();
+  }
+
+  async init() {
     this.languageCommunication.init();
+
     console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang);
 
     // when the user tap on the physical back button of the device, we want to close the app

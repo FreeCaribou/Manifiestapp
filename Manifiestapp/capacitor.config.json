@@ -1,6 +1,13 @@
 {
-	"appId": "io.ionic.starter",
-	"appName": "Manifiestapp",
-	"webDir": "www",
-	"bundledWebRuntime": false
+  "appId": "be.manifiesta.app",
+  "appName": "Manifiestapp",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "icon",
+      "iconColor": "#01b2b8"
+    }
+  }
 }
