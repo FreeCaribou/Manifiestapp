@@ -7,6 +7,7 @@ import { ProgrammeDataService } from './programme.data.service';
 import { IProgrammeService } from './programme.service.interface';
 
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -69,21 +70,22 @@ export class ProgrammeService implements IProgrammeService {
       }
     }
 
-    // TODO better notification message and see for the date
-    const notifs = await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: 'Event is coming',
-          id: parseInt(event.id) || 1,
-          body: event?.title?.rendered || 'Check it',
-          schedule: { at: new Date(Date.now() + 1000 * 120) },
-          autoCancel: true,
-          summaryText: 'One of your favorite event is coming to start',
-        }
-      ]
-    })
-
-    console.log('hello event fav', event, notifs)
+    if (event.favorite) {
+      // TODO better notification message and see for the date
+      const notifs = await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: 'Event is coming',
+            id: parseInt(event.id) || 1,
+            body: event?.title?.rendered || 'Check it',
+            schedule: { at: new Date(Date.now() + 1000 * 300), allowWhileIdle: true },
+            autoCancel: true,
+            summaryText: 'One of your favorite event is coming to start',
+            actionTypeId: NotificationEventEnum.EventFav
+          }
+        ]
+      })
+    }
 
     this.favoriteChangeEmit.emit(event);
   }

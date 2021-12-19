@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { MenuController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { NotificationEventEnum } from './shared/models/NotificationEvent.enum';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
 
 @Component({
@@ -35,6 +36,13 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     this.init();
     await LocalNotifications.requestPermissions();
+    LocalNotifications.addListener('localNotificationActionPerformed', (n) => {
+      if (n.actionId === 'tap') {
+        if (n.notification.actionTypeId === NotificationEventEnum.EventFav) {
+          this.router.navigate(['/programme', 'event-detail', n.notification.id])
+        }
+      }
+    })
   }
 
   async init() {
