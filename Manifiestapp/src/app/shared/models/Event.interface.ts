@@ -20,6 +20,11 @@ export interface EventInterface {
   image?: { url: string };
 
   _links?: { "wp:attachement": { href: string }[] };
+  _embedded?: { "wp:term": any[] };
+  // wp:term transform to more beautifull variable prop
+  categoriesTerm?: any[];
+  dayTerm?: any;
+  locationTerm?: any;
 
   // TODO ask for english name
   "toolset-meta"?: {
@@ -33,16 +38,19 @@ export interface EventInterface {
     }
   };
 
+  // A kind of fake id from WordPress
+  slug: string;
+
+  favorite?: boolean;
+
+
+
   description?: string;
   imageSrc?: string;
   day?: EventDayEnum;
   tags?: number[];
-  _embedded?: any;
   start_date?: string;
   end_date?: string;
-
-  favorite?: boolean;
-
   // probably delete one day
   position: { lat: number, lng: number };
 }

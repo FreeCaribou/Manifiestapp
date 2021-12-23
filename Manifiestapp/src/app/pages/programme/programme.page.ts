@@ -20,7 +20,12 @@ export class ProgrammePage {
   ionViewWillEnter() {
     this.isLoading = true;
     this.infoListService.getDays().subscribe(data => {
-      this.days = data;
+      // The data from WP don't come always in right order for the days
+      // We look for the slug, kind of WP id
+      // Slug will be day-<number of the day event>-lang(nl||fr)
+      this.days = data.sort((a, b) => {
+        return a.slug < b.slug ? -1 : 1;
+      });
       if (!this.router.url.includes('subprogramme')) {
         this.router.navigate(['programme', 'subprogramme', data[0].id]);
       }
