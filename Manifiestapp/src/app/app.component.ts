@@ -42,7 +42,11 @@ export class AppComponent implements OnInit {
           this.router.navigate(['/programme', 'event-detail', n.notification.id])
         }
       }
-    })
+    });
+
+    this.languageCommunication.langHasChangeEvent.subscribe(l => {
+      this.menu.close();
+    });
   }
 
   async init() {

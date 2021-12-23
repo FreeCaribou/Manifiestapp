@@ -18,7 +18,9 @@
     "Playlist": "Playlist"
   },
   "Programme": {
-    "NoFavorites": "U heeft geen favoriet voor dit moment"
+    "NoFavorites": "U heeft geen favoriet voor dit moment",
+    "Locations": "Locaties",
+    "Categories": "Categories"
   },
   "Info": {
     "GeneralInfo": "Algemene informatie",

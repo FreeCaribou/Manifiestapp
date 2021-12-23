@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
@@ -11,7 +11,7 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   templateUrl: './subprogramme.page.html',
   styleUrls: ['./subprogramme.page.scss'],
 })
-export class SubprogrammePage implements OnInit {
+export class SubprogrammePage {
   dayId: string;
   list: EventInterface[];
   day: EventDayEnum;
@@ -32,7 +32,8 @@ export class SubprogrammePage implements OnInit {
     private infoListService: InfoListService,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    this.isLoading = true;
     this.dayId = this.activatedRoute.snapshot.params.dayId;
 
     forkJoin([
@@ -61,6 +62,10 @@ export class SubprogrammePage implements OnInit {
       this.list = data;
       this.isLoading = false;
     });
+  }
+
+  ionViewWillLeave() {
+    this.list = [];
   }
 
 }

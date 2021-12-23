@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { environment } from 'src/environments/environment';
+import { LanguageCommunicationService } from '../../communication/language.communication.service';
 import { IProgrammeService } from './programme.service.interface';
 
 @Injectable({
@@ -14,13 +15,15 @@ export class ProgrammeDataService implements IProgrammeService {
   baseUrl = `${environment.baseUrl}evenement`;
   embed = 'wp:attachment,wp:term';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private languageService: LanguageCommunicationService,
+  ) { }
 
   getAllProgramme(): Observable<EventInterface[]> {
     return this.httpClient.get<EventInterface[]>(`${this.baseUrl}`);
   }
 
-  // TODO see for the date
   getAllProgrammeFilter(day?: string[], locatiesId?: string[], categoriesId?: string[], organizersId?: string[]): Observable<EventInterface[]> {
     let params = new HttpParams();
 
@@ -39,15 +42,15 @@ export class ProgrammeDataService implements IProgrammeService {
       params = params.append('categories', categoriesId.toString());
     }
 
-    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}`);
+    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`);
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
-    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}`);
+    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
   }
 
   getEvent(id: string): Observable<EventInterface> {
-    return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}?_embed=${this.embed}`);
+    return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}?_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
   }
 
 }

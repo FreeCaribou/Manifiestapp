@@ -8,7 +8,7 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   templateUrl: './favorite.page.html',
   styleUrls: ['./favorite.page.scss'],
 })
-export class FavoritePage implements OnInit, OnDestroy {
+export class FavoritePage implements OnDestroy {
   list: EventInterface[];
 
   favorieChangeEmit: Subscription;
@@ -19,7 +19,8 @@ export class FavoritePage implements OnInit, OnDestroy {
     private programmeService: ProgrammeService,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    this.isLoading = true;
     this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchData())
     this.fetchData();
   }
@@ -29,6 +30,10 @@ export class FavoritePage implements OnInit, OnDestroy {
       this.list = data;
       this.isLoading = false;
     });
+  }
+
+  ionViewWillLeave() {
+    this.list = [];
   }
 
   ngOnDestroy() {

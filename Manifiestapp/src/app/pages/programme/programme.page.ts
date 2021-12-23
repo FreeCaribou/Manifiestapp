@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 
@@ -7,7 +7,7 @@ import { InfoListService } from 'src/app/shared/services/data/info-list/info-lis
   templateUrl: './programme.page.html',
   styleUrls: ['./programme.page.scss'],
 })
-export class ProgrammePage implements OnInit {
+export class ProgrammePage {
   days: any[];
 
   isLoading = true;
@@ -17,7 +17,8 @@ export class ProgrammePage implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
+    this.isLoading = true;
     this.infoListService.getDays().subscribe(data => {
       this.days = data;
       if (!this.router.url.includes('subprogramme')) {
@@ -25,6 +26,10 @@ export class ProgrammePage implements OnInit {
       }
       this.isLoading = false;
     });
+  }
+
+  ionViewWillLeave() {
+    this.days = [];
   }
 
   isTabSelected(d): boolean {
