@@ -87,15 +87,16 @@ export class AppComponent implements OnInit {
   async languageSegmentChanged(event) {
     // this.languageCommunication.changeLanguage(event.detail.value);
 
-    this.presentModalSelectLang(event);
+    await this.presentModalSelectLang(event);
   }
 
   async presentModalSelectLang(event) {
+    this.menu.close();
     const modal = await this.modalController.create({
       component: SelectLangComponent
     });
-    await modal.present();
-    const { data } = await modal.onWillDismiss() || null;
+    modal.present();
+    const { data } = await modal.onDidDismiss();
 
     if (data?.change) {
       this.languageCommunication.changeLanguage(event);

@@ -20,10 +20,10 @@
 
           <!-- Must have own ion-segment because we can't stop propagation of click event -->
           <ion-list class="btn-lang-box">
-            <button [disabled]="languageCommunication.selectedLanguage === 'fr'" (click)="languageSegmentChanged('fr')">
+            <button [disabled]="languageCommunication.selectedLanguage === 'fr'" (click)="presentModalSelectLang('fr')">
               FR
             </button>
-            <button [disabled]="languageCommunication.selectedLanguage === 'nl'" (click)="languageSegmentChanged('nl')">
+            <button [disabled]="languageCommunication.selectedLanguage === 'nl'" (click)="presentModalSelectLang('nl')">
               NL
             </button>
           </ion-list>
