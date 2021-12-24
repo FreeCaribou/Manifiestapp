@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { MenuController, Platform } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { MenuController, ModalController, Platform } from '@ionic/angular';
+import { of, Subscription } from 'rxjs';
+import { SelectLangComponent } from './shared/components/select-lang/select-lang.component';
 import { NotificationEventEnum } from './shared/models/NotificationEvent.enum';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
 
@@ -25,11 +26,14 @@ export class AppComponent implements OnInit {
   subRouter: Subscription;
   showPlaylistButton = true;
 
+  openLangModal = false;
+
   constructor(
     public platform: Platform,
     public languageCommunication: LanguageCommunicationService,
     public router: Router,
-    public menu: MenuController
+    public menu: MenuController,
+    public modalController: ModalController
   ) {
   }
 
@@ -80,8 +84,29 @@ export class AppComponent implements OnInit {
     })
   }
 
-  languageSegmentChanged(event) {
-    this.languageCommunication.changeLanguage(event.detail.value)
+  async languageSegmentChanged(event) {
+    // this.languageCommunication.changeLanguage(event.detail.value);
+
+    this.presentModalSelectLang(event);
+  }
+
+  async presentModalSelectLang(event) {
+    const modal = await this.modalController.create({
+      component: SelectLangComponent
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss() || null;
+
+    if (data?.change) {
+      this.languageCommunication.changeLanguage(event);
+
+      // Problem with id data from wp backend
+      // The id is not same for the same event depending of the lang
+      // Forcing go home to force each page to reload the data, right data
+      this.router.navigate(['/home']);
+
+      // TODO erase favorite and notif
+    }
   }
 
   ionViewWillLeave() {

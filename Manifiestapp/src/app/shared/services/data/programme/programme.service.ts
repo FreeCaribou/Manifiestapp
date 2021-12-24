@@ -70,21 +70,30 @@ export class ProgrammeService implements IProgrammeService {
       }
     }
 
+    const allNotif = await (await LocalNotifications.getPending()).notifications;
     if (event.favorite) {
       // TODO better notification message and see for the date
-      const notifs = await LocalNotifications.schedule({
-        notifications: [
-          {
-            title: 'Event is coming',
-            id: parseInt(event.id) || 1,
-            body: event?.title?.rendered || 'Check it',
-            schedule: { at: new Date(Date.now() + 1000 * 300), allowWhileIdle: true },
-            autoCancel: true,
-            summaryText: 'One of your favorite event is coming to start',
-            actionTypeId: NotificationEventEnum.EventFav
-          }
-        ]
-      })
+      if (!allNotif.find(x => x.id == parseInt(event.id))) {
+        await LocalNotifications.schedule({
+          notifications: [
+            {
+              title: 'Event is coming',
+              id: parseInt(event.id) || 1,
+              body: event?.title?.rendered || 'Check it',
+              schedule: { at: new Date(Date.now() + 1000 * 300), allowWhileIdle: true },
+              autoCancel: true,
+              summaryText: 'One of your favorite event is coming to start',
+              actionTypeId: NotificationEventEnum.EventFav
+            }
+          ]
+        })
+      }
+    } else {
+      await allNotif.forEach(async n => {
+        if (n.id == parseInt(event.id)) {
+          await LocalNotifications.cancel({ notifications: [n] });
+        }
+      });
     }
 
     this.favoriteChangeEmit.emit(event);

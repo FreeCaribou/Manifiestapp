@@ -14,7 +14,6 @@ export class LanguageCommunicationService {
 
   constructor(
     public translate: TranslateService,
-    public router: Router,
   ) { }
 
   init() {
@@ -38,10 +37,5 @@ export class LanguageCommunicationService {
     this.selectedLanguage = localStorage.getItem(LocalStorageEnum.Language);
 
     this.langHasChangeEvent.emit(this.selectedLanguage);
-
-    // Problem with id data from wp backend
-    // The id is not same for the same event depending of the lang
-    // Forcing go home to force each page to reload the data, right data
-    this.router.navigate(['/home']);
   }
 }
