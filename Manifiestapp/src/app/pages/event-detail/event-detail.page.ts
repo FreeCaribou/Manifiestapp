@@ -52,8 +52,6 @@ export class EventDetailPage implements OnInit {
         ]
       }
 
-      console.log('the event', this.event)
-
       this.isLoading = false;
     });
   }

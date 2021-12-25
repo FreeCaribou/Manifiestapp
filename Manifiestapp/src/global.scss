@@ -111,10 +111,21 @@ ion-menu {
     font-size: 14px;
   }
 
+  // bug with mobile, an weird css focus appear
+  :focus {
+    outline: none;
+    box-shadow: none;
+  }
+
   :disabled {
     color: var(--ion-color-tertiary);
     border-bottom: solid var(--ion-color-tertiary) 2px;
   }
+}
+
+.separator-line {
+  margin: 10px 15px;
+  border-bottom: solid var(--ion-color-primary) 1px;
 }
 
 .m-16 {

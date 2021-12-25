@@ -1,7 +1,53 @@
-<div>TODO (in both lang and more beautiful)</div>
+<ion-header translucent>
+  <ion-toolbar color="warning">
+    <ion-title>Taal / Langue</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="select(false)">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-<div>Do you really want to change lang ?</div>
-<div>It will erase your favorite</div>
+<ion-content>
+  <ion-grid>
+    <!-- Are you sur to change lang ? -->
+    <ion-row>
+      <ion-col>
+        Wil je echt je taal veranderen?
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        Voulez vous vraiment changer de langue ?
+      </ion-col>
+    </ion-row>
 
-<ion-button (click)="select(true)">Ok</ion-button>
-<ion-button (click)="select(false)">Cancel</ion-button>
+    <hr class="separator-line">
+
+    <!-- It will reset your favorite and notification -->
+    <ion-row>
+      <ion-col>
+        Dit zal uw favorieten en toekomstige meldingen resetten
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        Cela remettra à zéro vos favoris et les futurs notification
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" color="success" (click)="select(true)">
+          Ok <ion-icon name="checkmark-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="block" color="danger" (click)="select(false)">
+          Nee / Non <ion-icon name="close-circle-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
