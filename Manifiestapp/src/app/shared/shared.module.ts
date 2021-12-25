@@ -10,6 +10,7 @@ import { MapCommunicationService } from './services/communication/map.communicat
 import { RouterModule } from '@angular/router';
 import { SimpleDatePipe } from './pipe/simple-date.pipe';
 import { LoaderComponent } from './components/loader/loader.component';
+import { SelectLangComponent } from './components/select-lang/select-lang.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     EventListCardComponent,
     SimpleDatePipe,
     LoaderComponent,
+    SelectLangComponent,
   ],
   imports: [
     CommonModule,

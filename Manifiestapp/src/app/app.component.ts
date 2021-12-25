@@ -100,13 +100,16 @@ export class AppComponent implements OnInit {
 
     if (data?.change) {
       this.languageCommunication.changeLanguage(event);
-      await LocalNotifications.cancel({ notifications: await (await LocalNotifications.getPending()).notifications });
-      localStorage.removeItem('favoriteId');
+      LocalNotifications.getPending().then(n => {
+        LocalNotifications.cancel({ notifications: n.notifications }).finally(() => {
+          localStorage.removeItem('favoriteId');
 
-      // Problem with id data from wp backend
-      // The id is not same for the same event depending of the lang
-      // Forcing go home to force each page to reload the data, right data
-      this.router.navigate(['/home']);
+          // Problem with id data from wp backend
+          // The id is not same for the same event depending of the lang
+          // Forcing go home to force each page to reload the data, right data
+          this.router.navigate(['/home']);
+        });
+      });
     }
   }
 
