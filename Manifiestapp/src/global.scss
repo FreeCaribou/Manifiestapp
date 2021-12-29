@@ -128,6 +128,38 @@ ion-menu {
   border-bottom: solid var(--ion-color-primary) 1px;
 }
 
+// TODO with more image exemple
+.programme-card-body {
+  margin: 0;
+  height: 100%;
+
+  ion-thumbnail {
+    height: 150px;
+    width: 100%;
+  }
+
+  // ::part(image) {
+  //   height: 150px;
+  // }
+
+  ion-card-header {
+    padding: 0 5px;
+  }
+
+  ion-card-content {
+    padding: 5px;
+  }
+
+  // TODO Must decide if we let long text or cut (cut for the moment)
+  ion-card-title {
+    // max-height: 48px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 18px;
+  }
+}
+
 .m-16 {
   margin: 16px;
 }
