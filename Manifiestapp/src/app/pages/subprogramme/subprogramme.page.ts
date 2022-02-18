@@ -49,6 +49,8 @@ export class SubprogrammePage {
 
       this.isLoading = false;
     });
+
+    this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.isLoading = load);
   }
 
   onSelectChange() {

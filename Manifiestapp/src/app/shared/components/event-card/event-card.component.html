@@ -5,8 +5,8 @@
     </ion-thumbnail>
 
     <ion-card-header>
-      <ion-card-subtitle> {{event.start_date | simpleDatePipe}} </ion-card-subtitle>
-      <ion-card-title [innerHtml]="event.title.rendered" color="tertiary"></ion-card-title>
+      <ion-card-subtitle> {{event.startDate | simpleDatePipe}} - {{event.endDate | simpleDatePipe}}</ion-card-subtitle>
+      <ion-card-title [innerHtml]="event.headline" color="tertiary"></ion-card-title>
     </ion-card-header>
   </div>
 

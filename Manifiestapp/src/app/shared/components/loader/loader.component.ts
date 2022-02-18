@@ -33,6 +33,7 @@ export class LoaderComponent implements OnInit, OnChanges {
       await this.loader.dismiss();
     }
     if (value) {
+      await this.createLoading();
       await this.loader.present();
     }
   }

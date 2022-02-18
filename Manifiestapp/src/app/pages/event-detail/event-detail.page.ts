@@ -10,7 +10,7 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   templateUrl: './event-detail.page.html',
   styleUrls: ['./event-detail.page.scss'],
 })
-export class EventDetailPage implements OnInit {
+export class EventDetailPage {
   id: string;
   event: EventInterface;
   defaultHref = '/programme';
@@ -25,9 +25,6 @@ export class EventDetailPage implements OnInit {
     private programmeService: ProgrammeService,
     private mapCommunication: MapCommunicationService,
   ) { }
-
-  ngOnInit() {
-  }
 
   ionViewDidEnter() {
     this.id = this.activatedRoute.snapshot.params.id;
@@ -54,6 +51,8 @@ export class EventDetailPage implements OnInit {
 
       this.isLoading = false;
     });
+
+    this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.isLoading = load);
   }
 
   onCardHeartClick(event: EventInterface) {

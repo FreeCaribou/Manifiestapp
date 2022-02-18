@@ -49,6 +49,7 @@
     "document-register-element": "^1.7.2",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "morgan": "^1.10.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",

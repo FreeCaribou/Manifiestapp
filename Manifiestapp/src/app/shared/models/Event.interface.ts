@@ -8,10 +8,14 @@ export interface EventInterface {
   id?: string;
 
   title?: RenderedInterface;
+  headline?: string;
   // title?: string;
 
   content?: RenderedInterface;
   // content?: string;
+
+  startDate?: Date;
+  endDate?: Date;
 
   categories?: number[];
 
@@ -34,6 +38,12 @@ export interface EventInterface {
       },
       "facebook-pagina": {
         raw: string;
+      },
+      "start-hour": {
+        raw: string;
+      },
+      "end-hour": {
+        raw: string;
       }
     }
   };
@@ -49,8 +59,6 @@ export interface EventInterface {
   imageSrc?: string;
   day?: EventDayEnum;
   tags?: number[];
-  start_date?: string;
-  end_date?: string;
   // probably delete one day
   position: { lat: number, lng: number };
 }

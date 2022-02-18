@@ -6,8 +6,11 @@ import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
 import { IProgrammeService } from './programme.service.interface';
 
-import { LocalNotifications } from '@capacitor/local-notifications';
+import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
+import { wpDateToRealDate } from 'src/app/shared/utils/wp-date-to-real-date';
+import * as moment from 'moment';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
@@ -15,35 +18,43 @@ import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.e
 export class ProgrammeService implements IProgrammeService {
 
   favoriteChangeEmit = new EventEmitter<EventInterface>();
+  verificationFavoriteLoadEmit = new EventEmitter<boolean>();
 
-  constructor(private service: ProgrammeDataService) { }
+  constructor(
+    private service: ProgrammeDataService,
+    private toastController: ToastController,
+  ) { }
 
   getAllProgramme(): Observable<EventInterface[]> {
     return this.service.getAllProgramme().pipe(
-      map(e => this.mapToFavorite(e))
+      map(e => this.mapArrayRawWpDataToClearData(e)),
+      map(e => this.mapToFavorite(e)),
     );
   }
 
   getAllProgrammeFilter(day: string[], venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]> {
     return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId).pipe(
-      map(e => this.mapToFavorite(e))
+      map(e => this.mapArrayRawWpDataToClearData(e)),
+      map(e => this.mapToFavorite(e)),
     );
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
     return this.getFavoriteId() ?
       this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
-        map(e => this.mapToFavorite(e))
+        map(e => this.mapArrayRawWpDataToClearData(e)),
+        map(e => this.mapToFavorite(e)),
       )
       : of([])
   }
 
   getEvent(id: string): Observable<EventInterface> {
     return this.service.getEvent(id).pipe(
+      map(e => this.mapRawWpDataToClearData(e)),
       map(x => {
         x.favorite = this.isFavorite(id);
         return x;
-      })
+      }),
     );
   }
 
@@ -72,31 +83,66 @@ export class ProgrammeService implements IProgrammeService {
 
     const allNotif = await (await LocalNotifications.getPending()).notifications;
     if (event.favorite) {
-      // TODO better notification message and see for the date
+      await this.verifyEventHourConflictForNewFav(event);
       if (!allNotif.find(x => x.id == parseInt(event.id))) {
-        await LocalNotifications.schedule({
-          notifications: [
-            {
-              title: 'Event is coming',
-              id: parseInt(event.id) || 1,
-              body: event?.title?.rendered || 'Check it',
-              schedule: { at: new Date(Date.now() + 1000 * 300), allowWhileIdle: true },
-              autoCancel: true,
-              summaryText: 'One of your favorite event is coming to start',
-              actionTypeId: NotificationEventEnum.EventFav
-            }
-          ]
-        })
+        await this.addOneEventNotif(event);
       }
     } else {
-      await allNotif.forEach(async n => {
-        if (n.id == parseInt(event.id)) {
-          await LocalNotifications.cancel({ notifications: [n] });
-        }
-      });
+      await this.cancelOneEventNotif(event, allNotif);
     }
 
     this.favoriteChangeEmit.emit(event);
+  }
+
+  async verifyEventHourConflictForNewFav(event: EventInterface) {
+    this.verificationFavoriteLoadEmit.emit(true);
+    const favs = await this.getFavoriteProgramme().toPromise();
+    if (favs.length > 1) {
+      const conflicts = favs.filter(e => {
+        return e.id !== event.id &&
+          (moment(event.startDate).isBetween(e.startDate, e.endDate) || moment(event.endDate).isBetween(e.startDate, e.endDate));
+      });
+      if (conflicts.length > 0) {
+        let message = '';
+        conflicts.forEach((x, k) => {
+          message += `"${x.headline}"${k + 1 === conflicts.length ? '' : ' and '}`;
+        });
+        const toast = await this.toastController.create({
+          header: 'You have conflict with other event in your favoris',
+          message,
+          icon: 'alert-circle-outline',
+          color: 'warning',
+          duration: 5000
+        });
+        toast.present();
+      }
+    }
+    this.verificationFavoriteLoadEmit.emit(false);
+  }
+
+  // TODO better notification message and see for the date
+  async addOneEventNotif(event: EventInterface) {
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: 'Event is coming',
+          id: parseInt(event.id) || 1,
+          body: event?.title?.rendered || 'Check it',
+          schedule: { at: new Date(Date.now() + 1000 * 300), allowWhileIdle: true },
+          autoCancel: true,
+          summaryText: 'One of your favorite event is coming to start',
+          actionTypeId: NotificationEventEnum.EventFav
+        }
+      ]
+    });
+  }
+
+  async cancelOneEventNotif(event: EventInterface, notifs: PendingLocalNotificationSchema[]) {
+    await notifs.forEach(async n => {
+      if (n.id == parseInt(event.id)) {
+        await LocalNotifications.cancel({ notifications: [n] });
+      }
+    });
   }
 
   isFavorite(id: string): boolean {
@@ -113,6 +159,17 @@ export class ProgrammeService implements IProgrammeService {
 
   filterFavorite(events: EventInterface[]): EventInterface[] {
     return events.filter(x => this.isFavorite(x.id));
+  }
+
+  mapArrayRawWpDataToClearData(events: EventInterface[]): EventInterface[] {
+    return events.map(e => { return this.mapRawWpDataToClearData(e) });
+  }
+
+  mapRawWpDataToClearData(event: EventInterface): EventInterface {
+    event.startDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['start-hour']?.raw);
+    event.endDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['end-hour']?.raw);
+    event.headline = event.title?.rendered
+    return event;
   }
 
 }
