@@ -37,6 +37,10 @@ export class FavoritePage implements OnDestroy {
     });
   }
 
+  onCardHeartClick(event: EventInterface) {
+    this.programmeService.changeFavorite(event);
+  }
+
   ionViewWillLeave() {
     this.list = [];
   }
