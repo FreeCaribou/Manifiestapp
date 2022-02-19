@@ -8,6 +8,8 @@ import { EventInterface } from '../../models/Event.interface';
 export class EventListCardComponent implements OnInit {
   @Input()
   list: EventInterface[];
+  @Input()
+  dateJustWithHour = true;
 
   ngOnInit() {
 

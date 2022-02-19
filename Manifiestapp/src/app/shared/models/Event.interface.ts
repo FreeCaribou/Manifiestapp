@@ -24,7 +24,7 @@ export interface EventInterface {
   image?: { url: string };
 
   _links?: { "wp:attachement": { href: string }[] };
-  _embedded?: { "wp:term": any[] };
+  _embedded?: { "wp:term": any[], "wp:featuredmedia": any[] };
   // wp:term transform to more beautifull variable prop
   categoriesTerm?: any[];
   dayTerm?: any;
@@ -47,6 +47,8 @@ export interface EventInterface {
       }
     }
   };
+
+  mainPictureUrl: string;
 
   // A kind of fake id from WordPress
   slug: string;

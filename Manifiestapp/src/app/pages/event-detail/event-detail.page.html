@@ -5,10 +5,10 @@
 <ion-content>
   <div *ngIf="event">
     <h1 [innerHtml]="event.headline"></h1>
-    <img [src]="event['toolset-meta']?.['info-evenement']?.afbeelding?.raw" height="100" />
+    <img [src]="event.mainPictureUrl" height="100" />
     <p [innerHtml]="event.content.rendered"></p>
     <h3>{{event.dayTerm?.name}}</h3>
-    <h3>{{event.startDate | simpleDatePipe}} - {{event.endDate | simpleDatePipe}}</h3>
+    <h3>{{event.startDate | simpleDatePipe:true}} - {{event.endDate | simpleDatePipe:true}}</h3>
     <h4>{{event.locationTerm?.name}}</h4>
     <h5 *ngFor="let c of event.categoriesTerm">
       {{c.name}}

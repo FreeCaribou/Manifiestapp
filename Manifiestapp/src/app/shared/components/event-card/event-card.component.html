@@ -1,11 +1,11 @@
 <ion-card class="programme-card-body">
   <div [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
     <ion-thumbnail>
-      <ion-img [src]="event['toolset-meta']?.['info-evenement']?.afbeelding?.raw"></ion-img>
+      <ion-img [src]="event.mainPictureUrl"></ion-img>
     </ion-thumbnail>
 
     <ion-card-header>
-      <ion-card-subtitle> {{event.startDate | simpleDatePipe}} - {{event.endDate | simpleDatePipe}}</ion-card-subtitle>
+      <ion-card-subtitle> {{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate | simpleDatePipe:dateJustWithHour}}</ion-card-subtitle>
       <ion-card-title [innerHtml]="event.headline" color="tertiary"></ion-card-title>
     </ion-card-header>
   </div>

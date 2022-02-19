@@ -168,7 +168,8 @@ export class ProgrammeService implements IProgrammeService {
   mapRawWpDataToClearData(event: EventInterface): EventInterface {
     event.startDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['start-hour']?.raw);
     event.endDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['end-hour']?.raw);
-    event.headline = event.title?.rendered
+    event.headline = event.title?.rendered;
+    event.mainPictureUrl = event._embedded?.['wp:featuredmedia'] ? event._embedded?.['wp:featuredmedia'][0]?.source_url : '';
     return event;
   }
 

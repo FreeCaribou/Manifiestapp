@@ -1,7 +1,7 @@
 <ion-grid>
   <ion-row>
     <ion-col *ngFor="let item of list" size-xs="6" size-sm="6" size-lg="4">
-      <app-event-card [event]="item">
+      <app-event-card [event]="item" [dateJustWithHour]="dateJustWithHour">
       </app-event-card>
     </ion-col>
   </ion-row>

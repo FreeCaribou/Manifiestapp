@@ -7,13 +7,15 @@ import { wpDateToRealDate } from '../utils/wp-date-to-real-date';
   name: 'simpleDatePipe'
 })
 export class SimpleDatePipe implements PipeTransform {
-  transform(value: Date | string, args: any[] = []): any {
+  transform(value: Date | string, withoutDay: any): any {
+    console.log('args', value, withoutDay)
+    const stringFormat = withoutDay ? 'HH:mm' : 'dd/MM HH:mm';
     if (value && value instanceof Date) {
-      return formatDate(value, 'dd/MM HH:mm', 'en', '+00');
+      return formatDate(value, stringFormat, 'en', '+00');
     } else if (value && typeof value === 'string' && parseFloat(value)) {
       // GMT +00 because the back wp do not look like to manage this kind of thing
       const correctDate = wpDateToRealDate(value);
-      return correctDate ? formatDate(correctDate, 'dd/MM HH:mm', 'en', '+00') : 'No hour';
+      return correctDate ? formatDate(correctDate, stringFormat, 'en', '+00') : 'No hour';
     } else {
       return 'No hour'
     }

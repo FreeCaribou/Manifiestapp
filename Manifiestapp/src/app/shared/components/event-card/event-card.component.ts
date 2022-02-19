@@ -9,6 +9,8 @@ import { ProgrammeService } from '../../services/data/programme/programme.servic
 export class EventCardComponent implements OnInit {
   @Input()
   event: EventInterface;
+  @Input()
+  dateJustWithHour = true;
 
   constructor(private programmeService: ProgrammeService) { }
 

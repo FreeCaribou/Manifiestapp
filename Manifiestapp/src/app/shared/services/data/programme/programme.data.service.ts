@@ -13,7 +13,7 @@ import { IProgrammeService } from './programme.service.interface';
 export class ProgrammeDataService implements IProgrammeService {
 
   baseUrl = `${environment.baseUrl}evenement`;
-  embed = 'wp:attachment,wp:term';
+  embed = 'wp:attachment,wp:term,wp:featuredmedia';
 
   constructor(
     private httpClient: HttpClient,

@@ -15,6 +15,8 @@ export class FavoritePage implements OnDestroy {
 
   isLoading = true;
 
+  dateJustWithHour = false;
+
   constructor(
     private programmeService: ProgrammeService,
   ) { }
