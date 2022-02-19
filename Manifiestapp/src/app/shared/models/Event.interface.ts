@@ -54,6 +54,7 @@ export interface EventInterface {
   slug: string;
 
   favorite?: boolean;
+  inFavoriteConflict?: boolean;
 
 
 

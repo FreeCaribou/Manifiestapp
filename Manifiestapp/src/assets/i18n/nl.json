@@ -20,7 +20,8 @@
   "Programme": {
     "NoFavorites": "U heeft geen favoriet voor dit moment",
     "Locations": "Locaties",
-    "Categories": "Categories"
+    "Categories": "Categories",
+    "HaveConflict": "Er zijn conflicten in uw favorieten"
   },
   "Info": {
     "GeneralInfo": "Algemene informatie",

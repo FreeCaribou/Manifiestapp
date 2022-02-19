@@ -29,6 +29,7 @@ export class ProgrammeService implements IProgrammeService {
     return this.service.getAllProgramme().pipe(
       map(e => this.mapArrayRawWpDataToClearData(e)),
       map(e => this.mapToFavorite(e)),
+      map(e => this.mapOrderByStartDate(e)),
     );
   }
 
@@ -36,6 +37,7 @@ export class ProgrammeService implements IProgrammeService {
     return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId).pipe(
       map(e => this.mapArrayRawWpDataToClearData(e)),
       map(e => this.mapToFavorite(e)),
+      map(e => this.mapOrderByStartDate(e)),
     );
   }
 
@@ -44,6 +46,8 @@ export class ProgrammeService implements IProgrammeService {
       this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
         map(e => this.mapArrayRawWpDataToClearData(e)),
         map(e => this.mapToFavorite(e)),
+        map(e => this.mapVerifyFavoriteConflict(e)),
+        map(e => this.mapOrderByStartDate(e)),
       )
       : of([])
   }
@@ -160,6 +164,25 @@ export class ProgrammeService implements IProgrammeService {
   filterFavorite(events: EventInterface[]): EventInterface[] {
     return events.filter(x => this.isFavorite(x.id));
   }
+
+  mapVerifyFavoriteConflict(events: EventInterface[]): EventInterface[] {
+    return events.map(e => {
+      e.inFavoriteConflict = events.findIndex(i => {
+        return i.id !== e.id &&
+          (moment(e.startDate).isBetween(i.startDate, i.endDate) || moment(e.endDate).isBetween(i.startDate, i.endDate));
+      }) > -1;
+      return e;
+    })
+  }
+
+  mapOrderByStartDate(events: EventInterface[]): EventInterface[] {
+    return events.sort((a, b) => {
+      return a.startDate?.getTime() - b.startDate?.getTime();
+    });
+  }
+
+
+  // Mapping the data from WordPress to cleaner data for the app
 
   mapArrayRawWpDataToClearData(events: EventInterface[]): EventInterface[] {
     return events.map(e => { return this.mapRawWpDataToClearData(e) });

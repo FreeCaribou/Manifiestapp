@@ -20,7 +20,8 @@
   "Programme": {
     "NoFavorites": "Vous n'avez pas de favoris pour le moment",
     "Locations": "Lieux",
-    "Categories": "Catégories"
+    "Categories": "Catégories",
+    "HaveConflict": "Il y a des conflits dans vos favoris"
   },
   "Info": {
     "GeneralInfo": "Information générale",

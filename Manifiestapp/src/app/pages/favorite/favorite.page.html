@@ -5,6 +5,33 @@
 <ion-content>
 
   <h1 *ngIf="list?.length === 0">{{ 'Programme.NoFavorites' | translate }}</h1>
+  <ion-toolbar *ngIf="haveConflict" color="warning">
+    <ion-title>
+      <ion-icon name="alert-circle-outline"></ion-icon> {{ 'Programme.HaveConflict' | translate }}
+    </ion-title>
+  </ion-toolbar>
   <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card>
+
+  <br />
+
+  <!-- Try with a list view what it's look like -->
+  <ion-list>
+    <ion-item *ngFor="let event of list">
+      <ion-avatar>
+        <ion-img [src]="event.mainPictureUrl"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        <h1 [innerHtml]="event.headline" color="tertiary"></h1>
+        <p>
+          <span>{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate |
+            simpleDatePipe:dateJustWithHour}}</span>
+          <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
+        </p>
+      </ion-label>
+      <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="secondary"
+        [name]="event.favorite ? 'heart' : 'heart-outline'">
+      </ion-icon>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

@@ -17,6 +17,8 @@ export class FavoritePage implements OnDestroy {
 
   dateJustWithHour = false;
 
+  haveConflict = false;
+
   constructor(
     private programmeService: ProgrammeService,
   ) { }
@@ -30,6 +32,7 @@ export class FavoritePage implements OnDestroy {
   fetchData() {
     this.programmeService.getFavoriteProgramme().subscribe(data => {
       this.list = data;
+      this.haveConflict = this.list.findIndex(e => e.inFavoriteConflict) > -1;
       this.isLoading = false;
     });
   }
