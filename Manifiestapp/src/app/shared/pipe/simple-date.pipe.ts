@@ -8,7 +8,6 @@ import { wpDateToRealDate } from '../utils/wp-date-to-real-date';
 })
 export class SimpleDatePipe implements PipeTransform {
   transform(value: Date | string, withoutDay: any): any {
-    console.log('args', value, withoutDay)
     const stringFormat = withoutDay ? 'HH:mm' : 'dd/MM HH:mm';
     if (value && value instanceof Date) {
       return formatDate(value, stringFormat, 'en', '+00');
