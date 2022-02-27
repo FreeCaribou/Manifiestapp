@@ -42,14 +42,15 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
-    return this.getFavoriteId() ?
+    console.log('zeze', this.getFavoriteId())
+    return this.getFavoriteId().length > 0 ?
       this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
         map(e => this.mapArrayRawWpDataToClearData(e)),
         map(e => this.mapToFavorite(e)),
         map(e => this.mapVerifyFavoriteConflict(e)),
         map(e => this.mapOrderByStartDate(e)),
       )
-      : of([])
+      : of([]);
   }
 
   getEvent(id: string): Observable<EventInterface> {
@@ -65,7 +66,7 @@ export class ProgrammeService implements IProgrammeService {
   // no data call method
 
   getFavoriteId(): string[] {
-    return localStorage.getItem(LocalStorageEnum.FavoriteId)?.split(',');
+    return localStorage.getItem(LocalStorageEnum.FavoriteId)?.split(',') || [];
   }
 
   async changeFavorite(event: EventInterface) {

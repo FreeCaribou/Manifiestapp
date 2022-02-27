@@ -22,7 +22,8 @@
     "NoFavorites": "Vous n'avez pas de favoris pour le moment",
     "Locations": "Lieux",
     "Categories": "Catégories",
-    "HaveConflict": "Il y a des conflits dans vos favoris"
+    "HaveConflict": "Il y a des conflits dans vos favoris",
+    "YourFavoris": "Vos favoris"
   },
   "Info": {
     "GeneralInfo": "Information générale",

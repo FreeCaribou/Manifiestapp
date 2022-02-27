@@ -6,7 +6,7 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss'],
 })
-export class LoaderComponent implements OnInit, OnChanges {
+export class LoaderComponent implements OnChanges {
   @Input()
   show;
 
@@ -15,24 +15,23 @@ export class LoaderComponent implements OnInit, OnChanges {
     public loadingController: LoadingController
   ) { }
 
-  ngOnInit() {
-
-  }
-
-  ngOnChanges(change) {
+  async ngOnChanges(change) {
     if (change.show) {
-      this.haveShowChange(change.show.currentValue);
+      // await this.haveShowChange(change.show.currentValue);
     }
   }
 
   async haveShowChange(value) {
-    if (!this.loader) {
-      await this.createLoading();
-    }
-    if (!value) {
+    console.log('ask have show change', value, this.loader)
+    // if (!this.loader) {
+    //   await this.createLoading();
+    // }
+    if (!value && this.loader) {
+      console.log('dismiss')
       await this.loader.dismiss();
     }
     if (value) {
+      console.log('show')
       await this.createLoading();
       await this.loader.present();
     }
