@@ -4,11 +4,11 @@ import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
 @Component({
-  selector: 'app-favorite',
-  templateUrl: './favorite.page.html',
-  styleUrls: ['./favorite.page.scss'],
+  selector: 'app-my-manifiesta',
+  templateUrl: './my-manifiesta.page.html',
+  styleUrls: ['./my-manifiesta.page.scss'],
 })
-export class FavoritePage implements OnDestroy {
+export class MyManifiestaPage implements OnDestroy {
   list: EventInterface[];
 
   favorieChangeEmit: Subscription;

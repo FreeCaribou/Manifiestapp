@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { FavoritePageRoutingModule } from './favorite-routing.module';
+import { MyManifiestaPageRoutingModule } from './my-manifiesta-routing.module';
 
-import { FavoritePage } from './favorite.page';
+import { MyManifiestaPage } from './my-manifiesta.page';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
@@ -14,9 +14,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     CommonModule,
     FormsModule,
     IonicModule,
-    FavoritePageRoutingModule,
+    MyManifiestaPageRoutingModule,
     SharedModule
   ],
-  declarations: [FavoritePage]
+  declarations: [MyManifiestaPage]
 })
-export class FavoritePageModule { }
+export class MyManifiestaPageModule { }

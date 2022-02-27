@@ -12,8 +12,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/programme/programme.module').then(m => m.ProgrammePageModule)
   },
   {
-    path: 'favorite',
-    loadChildren: () => import('./pages/favorite/favorite.module').then(m => m.FavoritePageModule)
+    path: 'my-manifiesta',
+    loadChildren: () => import('./pages/my-manifiesta/my-manifiesta.module').then(m => m.MyManifiestaPageModule)
   },
   {
     path: 'map',
