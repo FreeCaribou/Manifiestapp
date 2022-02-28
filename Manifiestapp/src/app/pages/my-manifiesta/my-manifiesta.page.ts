@@ -57,10 +57,7 @@ export class MyManifiestaPage implements OnDestroy {
   }
 
   async languageSegmentChanged(event) {
-    console.log('eee', event)
-    // this.languageCommunication.changeLanguage(event.detail.value);
-
-    await this.presentModalSelectLang(event.detail.value);
+    await this.presentModalSelectLang(event);
   }
 
   async presentModalSelectLang(event) {

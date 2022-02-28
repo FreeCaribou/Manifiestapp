@@ -103,6 +103,7 @@ ion-menu {
 
 .btn-lang-box {
   display: flex;
+  padding-top: 0;
 
   button {
     flex: 1;
@@ -128,7 +129,6 @@ ion-menu {
   border-bottom: solid var(--ion-color-primary) 1px;
 }
 
-// TODO with more image exemple
 .programme-card-body {
   margin: 0;
   height: 100%;

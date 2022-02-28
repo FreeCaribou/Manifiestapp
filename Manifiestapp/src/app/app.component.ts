@@ -84,35 +84,6 @@ export class AppComponent implements OnInit {
     })
   }
 
-  async languageSegmentChanged(event) {
-    // this.languageCommunication.changeLanguage(event.detail.value);
-
-    await this.presentModalSelectLang(event);
-  }
-
-  async presentModalSelectLang(event) {
-    this.menu.close();
-    const modal = await this.modalController.create({
-      component: SelectLangComponent
-    });
-    modal.present();
-    const { data } = await modal.onDidDismiss();
-
-    if (data?.change) {
-      this.languageCommunication.changeLanguage(event);
-      LocalNotifications.getPending().then(n => {
-        LocalNotifications.cancel({ notifications: n.notifications }).finally(() => {
-          localStorage.removeItem('favoriteId');
-
-          // Problem with id data from wp backend
-          // The id is not same for the same event depending of the lang
-          // Forcing go home to force each page to reload the data, right data
-          this.router.navigate(['/home']);
-        });
-      });
-    }
-  }
-
   ionViewWillLeave() {
     this.subRouter?.unsubscribe();
     this.subBackButton?.unsubscribe();

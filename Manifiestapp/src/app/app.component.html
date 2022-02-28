@@ -8,26 +8,6 @@
 
           <img src="assets/pictures/manifiesta-title-logo.jpg" alt="logo" />
 
-          <!-- <ion-segment (ionChange)="languageSegmentChanged($event)" [value]="languageCommunication.selectedLanguage"
-            color='tertiary' class="m-bt-16">
-            <ion-segment-button value="fr">
-              <ion-label>Fr</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="nl">
-              <ion-label>Nl</ion-label>
-            </ion-segment-button>
-          </ion-segment> -->
-
-          <!-- Must have own ion-segment because we can't stop propagation of click event -->
-          <!-- <ion-list class="btn-lang-box">
-            <button [disabled]="languageCommunication.selectedLanguage === 'fr'" (click)="presentModalSelectLang('fr')">
-              FR
-            </button>
-            <button [disabled]="languageCommunication.selectedLanguage === 'nl'" (click)="presentModalSelectLang('nl')">
-              NL
-            </button>
-          </ion-list> -->
-
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
               routerLinkActive="selected">
