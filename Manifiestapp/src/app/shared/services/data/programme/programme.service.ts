@@ -42,7 +42,6 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
-    console.log('zeze', this.getFavoriteId())
     return this.getFavoriteId().length > 0 ?
       this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
         map(e => this.mapArrayRawWpDataToClearData(e)),

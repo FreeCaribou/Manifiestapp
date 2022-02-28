@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
+import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
 @Component({
@@ -15,36 +16,30 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
 })
 export class MyManifiestaPage implements OnDestroy {
   list: EventInterface[] = [];
-
   favorieChangeEmit: Subscription;
-
-  isLoading = true;
-
   dateJustWithHour = false;
-
   haveConflict = false;
 
   constructor(
     private programmeService: ProgrammeService,
     public languageCommunication: LanguageCommunicationService,
+    public loadingCommunication: LoadingCommunicationService,
     public router: Router,
     public menu: MenuController,
     public modalController: ModalController
   ) { }
 
   ionViewWillEnter() {
-    this.isLoading = true;
     this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchData())
     this.fetchData();
   }
 
   fetchData() {
+    this.loadingCommunication.changeLoaderTo(true);
     this.programmeService.getFavoriteProgramme().subscribe(data => {
-   
       this.list = data;
       this.haveConflict = this.list.findIndex(e => e.inFavoriteConflict) > -1;
-      this.isLoading = false;
-      console.log('data', data, this.isLoading)
+      this.loadingCommunication.changeLoaderTo(false);
     });
   }
 

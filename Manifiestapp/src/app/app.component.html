@@ -41,8 +41,15 @@
 
       </ion-content>
     </ion-menu>
+
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
+
+  <div *ngIf="loadingCommunication.isLoading?.length > 0" class="loading-block">
+    <div class="loading-inside">
+      <ion-spinner name="lines" color="primary"></ion-spinner>
+    </div>
+  </div>
 
   <ion-fab *ngIf="showPlaylistButton" vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="manifiesta-playlist" color="secondary">

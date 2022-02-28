@@ -9,7 +9,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { MapCommunicationService } from './services/communication/map.communication.service';
 import { RouterModule } from '@angular/router';
 import { SimpleDatePipe } from './pipe/simple-date.pipe';
-import { LoaderComponent } from './components/loader/loader.component';
 import { SelectLangComponent } from './components/select-lang/select-lang.component';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { SelectLangComponent } from './components/select-lang/select-lang.compon
     EventCardComponent,
     EventListCardComponent,
     SimpleDatePipe,
-    LoaderComponent,
     SelectLangComponent,
   ],
   imports: [
@@ -37,7 +35,6 @@ import { SelectLangComponent } from './components/select-lang/select-lang.compon
     TranslateModule,
     LeafletModule,
     SimpleDatePipe,
-    LoaderComponent,
   ],
   providers: [
     MapCommunicationService

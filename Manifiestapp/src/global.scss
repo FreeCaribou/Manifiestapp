@@ -171,3 +171,23 @@ ion-menu {
 .m-top-16 {
   margin-top: 16px;
 }
+
+.loading-block {
+  z-index: 1000;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(#000, 0.75);
+}
+
+.loading-inside {
+  display: block;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
