@@ -18,9 +18,9 @@
     </ion-title>
   </ion-toolbar>
 
-  <h2 *ngIf="list?.length > 0 && loadingCommunication.isLoading > 0">{{'Programme.YourFavoris' | translate }}</h2>
+  <h2 *ngIf="list?.length > 0 && loadingCommunication.isLoading?.length > 0">{{'Programme.YourFavoris' | translate }}</h2>
   <a [routerLink]="['/programme']">
-    <h2 *ngIf="list?.length === 0 && loadingCommunication.isLoading > 0">{{ 'Programme.NoFavorites' | translate }}</h2>
+    <h2 *ngIf="list?.length === 0 && loadingCommunication.isLoading?.length > 0">{{ 'Programme.NoFavorites' | translate }}</h2>
   </a>
   <!-- TODO have button to switch list to card -->
   <!-- <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card> -->
