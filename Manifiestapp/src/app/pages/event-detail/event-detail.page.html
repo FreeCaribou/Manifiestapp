@@ -5,12 +5,10 @@
     <h1 [innerHtml]="event.headline"></h1>
     <img [src]="event.mainPictureUrl" height="100" />
     <p [innerHtml]="event.content.rendered"></p>
-    <h3>{{event.dayTerm?.name}}</h3>
+    <h3>{{event.day?.name}}</h3>
     <h3>{{event.startDate | simpleDatePipe:true}} - {{event.endDate | simpleDatePipe:true}}</h3>
-    <h4>{{event.locationTerm?.name}}</h4>
-    <h5 *ngFor="let c of event.categoriesTerm">
-      {{c.name}}
-    </h5>
+    <h4>{{event.localisation?.name}}</h4>
+    <h5>{{event.category?.name}}</h5>
     <a *ngIf="event['toolset-meta']?.['info-evenement']?.['facebook-pagina']?.raw"
       [href]="event['toolset-meta']?.['info-evenement']?.['facebook-pagina']?.raw" target="_blank">
       <ion-icon name="logo-facebook" color="facebook" class="medium-icon">

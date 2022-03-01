@@ -10,6 +10,7 @@
        <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>
       <ion-card-title [innerHtml]="event.headline" color="tertiary"></ion-card-title>
+      {{event.localisation?.name}} - {{event.category?.name}}
     </ion-card-header>
   </div>
 

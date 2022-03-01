@@ -32,10 +32,6 @@ export class EventDetailPage {
     this.programmeService.getEvent(this.id).subscribe(data => {
       this.event = data;
 
-      this.event.categoriesTerm = this.event._embedded['wp:term'].find(x => x.find(y => y.taxonomy == 'category')) || [];
-      this.event.dayTerm = this.event._embedded['wp:term'].find(x => x.find(y => y.taxonomy == 'dag'))[0];
-      this.event.locationTerm = this.event._embedded['wp:term'].find(x => x.find(y => y.taxonomy == 'locatie'))[0];
-
       if (this.event.position) {
         this.options = this.mapCommunication.getOptionsMap(
           this.event.position.lat,

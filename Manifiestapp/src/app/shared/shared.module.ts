@@ -10,12 +10,14 @@ import { MapCommunicationService } from './services/communication/map.communicat
 import { RouterModule } from '@angular/router';
 import { SimpleDatePipe } from './pipe/simple-date.pipe';
 import { SelectLangComponent } from './components/select-lang/select-lang.component';
+import { EventListComponent } from './components/event-list/event-list.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     EventCardComponent,
     EventListCardComponent,
+    EventListComponent,
     SimpleDatePipe,
     SelectLangComponent,
   ],
@@ -35,6 +37,7 @@ import { SelectLangComponent } from './components/select-lang/select-lang.compon
     TranslateModule,
     LeafletModule,
     SimpleDatePipe,
+    EventListComponent,
   ],
   providers: [
     MapCommunicationService

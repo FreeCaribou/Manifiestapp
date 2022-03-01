@@ -1,0 +1,19 @@
+<ion-list>
+  <ion-item *ngFor="let event of list">
+    <ion-avatar [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
+      <ion-img [src]="event.mainPictureUrl"></ion-img>
+    </ion-avatar>
+    <ion-label [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
+      <h1 [innerHtml]="event.headline" color="tertiary"></h1>
+      <p>
+        <span>{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate |
+          simpleDatePipe:dateJustWithHour}}</span>
+        <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
+        <span class="m-left-16">{{event.localisation?.name}}</span>
+      </p>
+    </ion-label>
+    <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="secondary"
+      [name]="event.favorite ? 'heart' : 'heart-outline'">
+    </ion-icon>
+  </ion-item>
+</ion-list>

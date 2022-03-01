@@ -15,7 +15,7 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   styleUrls: ['./my-manifiesta.page.scss'],
 })
 export class MyManifiestaPage implements OnDestroy {
-  list: EventInterface[] = [];
+  list: EventInterface[];
   favorieChangeEmit: Subscription;
   dateJustWithHour = false;
   haveConflict = false;
@@ -41,10 +41,6 @@ export class MyManifiestaPage implements OnDestroy {
       this.haveConflict = this.list.findIndex(e => e.inFavoriteConflict) > -1;
       this.loadingCommunication.changeLoaderTo(false);
     });
-  }
-
-  onCardHeartClick(event: EventInterface) {
-    this.programmeService.changeFavorite(event);
   }
 
   ionViewWillLeave() {

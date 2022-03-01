@@ -18,17 +18,27 @@ export interface EventInterface {
   endDate?: Date;
 
   categories?: number[];
+  category: {
+    id: number,
+    name: string,
+  }
 
   locatie?: number[];
+  localisation: {
+    id: number,
+    name: string,
+  }
+
+  day: {
+    id: number,
+    name: string,
+  }
 
   image?: { url: string };
 
   _links?: { "wp:attachement": { href: string }[] };
   _embedded?: { "wp:term": any[], "wp:featuredmedia": any[] };
   // wp:term transform to more beautifull variable prop
-  categoriesTerm?: any[];
-  dayTerm?: any;
-  locationTerm?: any;
 
   // TODO ask for english name
   "toolset-meta"?: {
@@ -60,7 +70,6 @@ export interface EventInterface {
 
   description?: string;
   imageSrc?: string;
-  day?: EventDayEnum;
   tags?: number[];
   // probably delete one day
   position: { lat: number, lng: number };
