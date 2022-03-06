@@ -169,7 +169,12 @@ export class ProgrammeService implements IProgrammeService {
     return events.map(e => {
       e.inFavoriteConflict = events.findIndex(i => {
         return i.id !== e.id &&
-          (moment(e.startDate).isBetween(i.startDate, i.endDate) || moment(e.endDate).isBetween(i.startDate, i.endDate));
+          (
+            moment(e.startDate).isBetween(i.startDate, i.endDate, 'minutes', '[]')
+          || moment(e.endDate).isBetween(i.startDate, i.endDate, 'minutes', '[]')
+          || (moment(e.startDate).isSameOrAfter(i.startDate) && moment(e.endDate).isSameOrBefore(i.endDate))
+          || (moment(e.startDate).isSameOrBefore(i.startDate) && moment(e.endDate).isSameOrAfter(i.endDate))
+          );
       }) > -1;
       return e;
     })
