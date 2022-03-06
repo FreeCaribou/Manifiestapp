@@ -18,19 +18,50 @@
     </ion-title>
   </ion-toolbar>
 
-  <ng-container *ngIf="list">
-    <a [routerLink]="['/programme']">
-      <h2 *ngIf="list?.length === 0">{{ 'Programme.NoFavorites' | translate }}</h2>
-    </a>
-    <ng-container *ngIf="list?.length > 0">
-      <h2 >{{'Programme.YourFavoris' | translate }}</h2>
-      <!-- TODO have button to switch list to card -->
-      <!-- <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card> -->
-      <!-- Try with a list view what it's look like -->
-      <app-event-list [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list>
-    </ng-container>
-  </ng-container>
+  <!-- Options -->
+  <ion-accordion-group>
+    <ion-accordion value="opties">
+      <ion-item slot="header">
+        <ion-label>{{'General.Options' | translate }}</ion-label>
+      </ion-item>
+      <div slot="content">
+        TODO - Select lang - Notif autorisation
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 
+  <!-- Favorite Programme -->
+  <ion-accordion-group>
+    <ion-accordion value="favoriteProgramme">
+      <ion-item slot="header">
+        <ion-label>{{'Programme.YourFavoris' | translate }}</ion-label>
+      </ion-item>
+      <div slot="content">
+        <div *ngIf="list">
+          <a [routerLink]="['/programme']">
+            <h2 *ngIf="list?.length === 0">{{ 'Programme.NoFavorites' | translate }}</h2>
+          </a>
+          <div *ngIf="list?.length > 0">
+            <!-- TODO have button to switch list to card -->
+            <!-- <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card> -->
+            <!-- Try with a list view what it's look like -->
+            <app-event-list [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list>
+          </div>
+        </div>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 
+  <!-- Shifts Volunteers -->
+  <ion-accordion-group>
+    <ion-accordion value="shiftsVolunteers">
+      <ion-item slot="header">
+        <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
+      </ion-item>
+      <div slot="content">
+        TODO - Form to enter their shifts + List + Can Update / Remove
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 
 </ion-content>
