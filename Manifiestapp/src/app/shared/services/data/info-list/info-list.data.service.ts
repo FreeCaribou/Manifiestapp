@@ -26,7 +26,7 @@ export class InfoListDataService implements IInfoListService {
   }
 
   getEventCategories(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.baseUrl}categories?lang=${this.languageService.selectedLanguage}`);
+    return this.httpClient.get<any[]>(`${this.baseUrl}programmacategorie?lang=${this.languageService.selectedLanguage}`);
   }
 
   getDays(): Observable<any[]> {

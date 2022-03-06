@@ -39,7 +39,7 @@ export class ProgrammeDataService implements IProgrammeService {
       params = params.append('organizer', organizersId.toString());
     }
     if (categoriesId?.length > 0) {
-      params = params.append('categories', categoriesId.toString());
+      params = params.append('programmacategorie', categoriesId.toString());
     }
 
     return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`);
