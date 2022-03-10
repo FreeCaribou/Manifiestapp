@@ -5,6 +5,10 @@ app = Flask(__name__)
 app.config.from_pyfile('settings.py')
 
 @app.route("/")
+def home():
+    return {'name': 'hello world'}
+
+@app.route("/excel")
 def hello_world():
     file = pd.read_excel(app.config.get("EXCEL_URL"))
     jsonArray = []
