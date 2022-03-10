@@ -8,6 +8,7 @@ import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
+import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 
 @Component({
   selector: 'app-my-manifiesta',
@@ -26,12 +27,17 @@ export class MyManifiestaPage implements OnDestroy {
     public loadingCommunication: LoadingCommunicationService,
     public router: Router,
     public menu: MenuController,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private volunteerShiftService: VolunteerShiftService,
   ) { }
 
   ionViewWillEnter() {
     this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchData())
     this.fetchData();
+
+    this.volunteerShiftService.get().subscribe(d => {
+      console.log('data!', d)
+    })
   }
 
   fetchData() {

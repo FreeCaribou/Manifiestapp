@@ -17,6 +17,7 @@ import { ProgrammeDataService } from './shared/services/data/programme/programme
 import { ProgrammeMockService } from './shared/services/data/programme/programme.mock.service';
 import { InfoListDataService } from './shared/services/data/info-list/info-list.data.service';
 import { InfoListMockService } from './shared/services/data/info-list/info-list.mock.service';
+import { VolunteerShiftService } from './shared/services/data/volunteer-shift/volunteer-shift.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -40,6 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    VolunteerShiftService,
     environment.dataMock ? { provide: ProgrammeDataService, useClass: ProgrammeMockService } : ProgrammeDataService,
     environment.dataMock ? { provide: InfoListDataService, useClass: InfoListMockService } : InfoListDataService,
   ],
