@@ -11,6 +11,13 @@ import { RouterModule } from '@angular/router';
 import { SimpleDatePipe } from './pipe/simple-date.pipe';
 import { SelectLangComponent } from './components/select-lang/select-lang.component';
 import { EventListComponent } from './components/event-list/event-list.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { VolunteerShiftService } from './services/data/volunteer-shift/volunteer-shift.service';
+import { environment } from 'src/environments/environment';
+import { InfoListDataService } from './services/data/info-list/info-list.data.service';
+import { InfoListMockService } from './services/data/info-list/info-list.mock.service';
+import { ProgrammeDataService } from './services/data/programme/programme.data.service';
+import { ProgrammeMockService } from './services/data/programme/programme.mock.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +33,9 @@ import { EventListComponent } from './components/event-list/event-list.component
     IonicModule,
     TranslateModule,
     LeafletModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     IonicModule,
@@ -38,9 +47,14 @@ import { EventListComponent } from './components/event-list/event-list.component
     LeafletModule,
     SimpleDatePipe,
     EventListComponent,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
-    MapCommunicationService
+    MapCommunicationService,
+    VolunteerShiftService,
+    environment.dataMock ? { provide: ProgrammeDataService, useClass: ProgrammeMockService } : ProgrammeDataService,
+    environment.dataMock ? { provide: InfoListDataService, useClass: InfoListMockService } : InfoListDataService,
   ]
 })
 export class SharedModule { }

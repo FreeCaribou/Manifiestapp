@@ -53,13 +53,52 @@
   </ion-accordion-group>
 
   <!-- Shifts Volunteers -->
-  <ion-accordion-group>
+  <ion-accordion-group value="shiftsVolunteers">
     <ion-accordion value="shiftsVolunteers">
       <ion-item slot="header">
         <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
       </ion-item>
       <div slot="content">
-        TODO - Form to enter their shifts + List + Can Update / Remove
+
+        <form *ngIf="!isConnected && loginForm" [formGroup]="loginForm">
+          <ion-grid>
+
+            <ion-item>
+              <ion-label color="primary" position="floating">
+                {{"User.Email" | translate}}
+              </ion-label>
+              <ion-input clearInput type="email" formControlName="email" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label color="primary" position="floating">
+                {{"User.Password" | translate}}
+              </ion-label>
+              <ion-input clearInput type="password" formControlName="password" required></ion-input>
+            </ion-item>
+
+            <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="tertiary" expand="block"
+              [disabled]="!loginForm.valid">
+              {{'User.Login' | translate}}
+              <ion-icon slot="end" icon="person"></ion-icon>
+            </ion-button>
+
+          </ion-grid>
+        </form>
+
+        <div *ngIf="isConnected">
+          <ion-button color="danger" (click)="clickOnLogout()">Logout</ion-button>
+          <ion-list >
+            <ion-item *ngFor="let s of shifts">
+              <p>Titre: {{s.team.full_name}}</p>
+              <p>Location: {{s.team.subproject}}</p>
+              <p>Function: {{s.team.function?.name}}</p>
+              <p>Hour Begin: {{s.team.shifts[0]?.start_datetime | date:'short' }}</p>
+              <p>Hour End: {{s.team.shifts[0]?.end_datetime | date:'short' }}</p>
+            </ion-item>
+          </ion-list>
+        </div>
+ 
       </div>
     </ion-accordion>
   </ion-accordion-group>

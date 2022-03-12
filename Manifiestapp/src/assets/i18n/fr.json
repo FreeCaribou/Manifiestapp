@@ -32,5 +32,10 @@
     "HowToCome": "Comment venir ?",
     "Rules": "Règlement",
     "Contact": "Contact"
+  },
+  "User": {
+    "Login": "Connection à Beeple",
+    "Password": "Mot de passe",
+    "Email": "Email"
   }
 }

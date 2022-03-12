@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { MenuController, ModalController } from '@ionic/angular';
@@ -20,6 +21,9 @@ export class MyManifiestaPage implements OnDestroy {
   favorieChangeEmit: Subscription;
   dateJustWithHour = false;
   haveConflict = false;
+  shifts = [];
+  loginForm: FormGroup;
+  isConnected = false;
 
   constructor(
     private programmeService: ProgrammeService,
@@ -32,15 +36,28 @@ export class MyManifiestaPage implements OnDestroy {
   ) { }
 
   ionViewWillEnter() {
-    this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchData())
-    this.fetchData();
-
-    this.volunteerShiftService.get().subscribe(d => {
-      console.log('data!', d)
-    })
+    this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
+    this.loginForm = this.volunteerShiftService.buildLoginForm();
+    this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
+    this.fetchFavoriteProgramme();
+    this.fetchShifts();
   }
 
-  fetchData() {
+  fetchShifts() {
+    if (this.volunteerShiftService.isConnectedToBeeple()) {
+      this.loadingCommunication.changeLoaderTo(true);
+      this.volunteerShiftService.getShifts().subscribe(d => {
+        // TODO manage error, also with backend
+        if (d.error) {
+
+        } else {
+          this.shifts = d;
+        }
+      }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
+    }
+  }
+
+  fetchFavoriteProgramme() {
     this.loadingCommunication.changeLoaderTo(true);
     this.programmeService.getFavoriteProgramme().subscribe(data => {
       this.list = data;
@@ -78,6 +95,19 @@ export class MyManifiestaPage implements OnDestroy {
         });
       });
     }
+  }
+
+  clickOnLogin() {
+    this.loadingCommunication.changeLoaderTo(true)
+    this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
+      this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
+      this.fetchShifts();
+    }).add(() => {this.loadingCommunication.changeLoaderTo(false)})
+  }
+
+  clickOnLogout() {
+    this.volunteerShiftService.logout();
+    this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
   }
 
   ngOnDestroy() {

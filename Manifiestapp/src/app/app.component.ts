@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { MenuController, ModalController, Platform } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { NotificationEventEnum } from './shared/models/NotificationEvent.enum';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from './shared/services/communication/loading.communication.service';
@@ -59,7 +60,7 @@ export class AppComponent implements OnInit {
 
   async init() {
     this.languageCommunication.init();
-    console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang);
+    console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang, environment.production);
     // when the user tap on the physical back button of the device, we want to close the app
     // but not for all page !
     const pageWithoutBackButton = [
