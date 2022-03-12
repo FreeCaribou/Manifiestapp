@@ -47,6 +47,7 @@ export class MyManifiestaPage implements OnDestroy {
     if (this.volunteerShiftService.isConnectedToBeeple()) {
       this.loadingCommunication.changeLoaderTo(true);
       this.volunteerShiftService.getShifts().subscribe(d => {
+        console.log('shifts', d)
         // TODO manage error, also with backend
         if (d.error) {
 
@@ -107,6 +108,7 @@ export class MyManifiestaPage implements OnDestroy {
 
   clickOnLogout() {
     this.volunteerShiftService.logout();
+    this.shifts = [];
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
   }
 

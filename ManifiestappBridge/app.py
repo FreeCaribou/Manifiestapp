@@ -20,7 +20,7 @@ def home():
 def collaborator_enrolments(id):
     url = '{}admin/collaborators/{}/enrolments'.format(
         app.config.get('BEEPLE_URL'), id)
-    headers = {'Token': request.headers.get('Token')}
+    headers = {'Token': app.config.get('BEEPLE_TOKEN')}
     response = http_request.get(url, headers=headers)
 
     jResponseEnrolments = json.loads(response.text)['enrolments']
