@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { MenuController, ModalController } from '@ionic/angular';
@@ -10,6 +10,7 @@ import { LanguageCommunicationService } from 'src/app/shared/services/communicat
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-my-manifiesta',
@@ -33,11 +34,12 @@ export class MyManifiestaPage implements OnDestroy {
     public menu: MenuController,
     public modalController: ModalController,
     private volunteerShiftService: VolunteerShiftService,
+    private formBuilder: FormBuilder
   ) { }
 
   ionViewWillEnter() {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
-    this.loginForm = this.volunteerShiftService.buildLoginForm();
+    this.loginForm = this.buildLoginForm();
     this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
     this.fetchFavoriteProgramme();
     this.fetchShifts();
@@ -47,7 +49,6 @@ export class MyManifiestaPage implements OnDestroy {
     if (this.volunteerShiftService.isConnectedToBeeple()) {
       this.loadingCommunication.changeLoaderTo(true);
       this.volunteerShiftService.getShifts().subscribe(d => {
-        console.log('shifts', d)
         // TODO manage error, also with backend
         if (d.error) {
 
@@ -96,6 +97,13 @@ export class MyManifiestaPage implements OnDestroy {
         });
       });
     }
+  }
+
+  buildLoginForm() {
+    return this.formBuilder.group({
+      email: [environment.dataMock ? 'samy.gnu@manifiestapp.be' : '', [Validators.required]],
+      password: [environment.dataMock ? 'babyDontHurtMeNoMore' : '', Validators.required],
+    });
   }
 
   clickOnLogin() {

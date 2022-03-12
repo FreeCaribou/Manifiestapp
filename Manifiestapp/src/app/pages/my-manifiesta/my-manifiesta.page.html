@@ -31,7 +31,7 @@
   </ion-accordion-group>
 
   <!-- Favorite Programme -->
-  <ion-accordion-group>
+  <ion-accordion-group value="favoriteProgramme">
     <ion-accordion value="favoriteProgramme">
       <ion-item slot="header">
         <ion-label>{{'Programme.YourFavoris' | translate }}</ion-label>
@@ -91,7 +91,6 @@
           <ion-list >
             <ion-item *ngFor="let s of shifts">
               <p>Titre: {{s.team.full_name}}</p>
-              <p>Location: {{s.team.subproject}}</p>
               <p>Function: {{s.team.function?.name}}</p>
               <p>Hour Begin: {{s.team.shifts[0]?.start_datetime | date:'short' }}</p>
               <p>Hour End: {{s.team.shifts[0]?.end_datetime | date:'short' }}</p>

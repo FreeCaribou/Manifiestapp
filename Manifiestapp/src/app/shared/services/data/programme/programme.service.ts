@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { map, switchMap, tap } from 'rxjs/operators'
 import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
@@ -11,6 +11,7 @@ import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.e
 import { wpDateToRealDate } from 'src/app/shared/utils/wp-date-to-real-date';
 import * as moment from 'moment';
 import { ToastController } from '@ionic/angular';
+import { VolunteerShiftService } from '../volunteer-shift/volunteer-shift.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class ProgrammeService implements IProgrammeService {
 
   constructor(
     private service: ProgrammeDataService,
+    private volunteerShiftService: VolunteerShiftService,
     private toastController: ToastController,
   ) { }
 
@@ -42,12 +44,18 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
+    let shiftsList = [];
     return this.getFavoriteId().length > 0 ?
-      this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
-        map(e => this.mapArrayRawWpDataToClearData(e)),
-        map(e => this.mapToFavorite(e)),
-        map(e => this.mapVerifyFavoriteConflict(e)),
-        map(e => this.mapOrderByStartDate(e)),
+      this.volunteerShiftService.getShifts().pipe(
+        tap(data => { shiftsList = data }),
+        switchMap(e => {
+          return this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
+            map(e => this.mapArrayRawWpDataToClearData(e)),
+            map(e => this.mapToFavorite(e)),
+            map(e => this.mapVerifyFavoriteConflict(e, shiftsList)),
+            map(e => this.mapOrderByStartDate(e)),
+          )
+        })
       )
       : of([]);
   }
@@ -98,13 +106,14 @@ export class ProgrammeService implements IProgrammeService {
     this.favoriteChangeEmit.emit(event);
   }
 
+  // TODO the translate
+  // TODO divide the code please ...
   async verifyEventHourConflictForNewFav(event: EventInterface) {
     this.verificationFavoriteLoadEmit.emit(true);
     const favs = await this.getFavoriteProgramme().toPromise();
     if (favs.length > 1) {
       const conflicts = favs.filter(e => {
-        return e.id !== event.id &&
-          (moment(event.startDate).isBetween(e.startDate, e.endDate) || moment(event.endDate).isBetween(e.startDate, e.endDate));
+        return e.id !== event.id && this.verifyConflictBetweenToRangeOfDate(e, event);
       });
       if (conflicts.length > 0) {
         let message = '';
@@ -119,6 +128,26 @@ export class ProgrammeService implements IProgrammeService {
           duration: 5000
         });
         toast.present();
+      }
+
+      if (this.volunteerShiftService.getBeepleVolunteerId()) {
+        const shifts = await this.volunteerShiftService.getShifts().toPromise();
+        const shiftConflict = shifts.filter(s => { return this.verifyConflictBetweenToRangeOfDate(this.convertShiftTime(s), event) });
+        console.log('hello shift conflict', shiftConflict)
+        if (shiftConflict.length > 0) {
+          let message = '';
+          shiftConflict.forEach((x, k) => {
+            message += `"${x.team?.full_name}"${k + 1 === shiftConflict.length ? '' : ' and '}`;
+          });
+          const toast = await this.toastController.create({
+            header: 'You have conflict some of your shifts',
+            message,
+            icon: 'alert-circle-outline',
+            color: 'danger',
+            duration: 5000
+          });
+          toast.present();
+        }
       }
     }
     this.verificationFavoriteLoadEmit.emit(false);
@@ -165,19 +194,36 @@ export class ProgrammeService implements IProgrammeService {
     return events.filter(x => this.isFavorite(x.id));
   }
 
-  mapVerifyFavoriteConflict(events: EventInterface[]): EventInterface[] {
+  // TODO seriously, better code is needed here ...
+  mapVerifyFavoriteConflict(events: EventInterface[], shifts = []): EventInterface[] {
     return events.map(e => {
-      e.inFavoriteConflict = events.findIndex(i => {
-        return i.id !== e.id &&
-          (
-            moment(e.startDate).isBetween(i.startDate, i.endDate, 'minutes', '[]')
-          || moment(e.endDate).isBetween(i.startDate, i.endDate, 'minutes', '[]')
-          || (moment(e.startDate).isSameOrAfter(i.startDate) && moment(e.endDate).isSameOrBefore(i.endDate))
-          || (moment(e.startDate).isSameOrBefore(i.startDate) && moment(e.endDate).isSameOrAfter(i.endDate))
-          );
-      }) > -1;
+      e.inFavoriteConflict =
+        events.findIndex(i => {
+          return i.id !== e.id && this.verifyConflictBetweenToRangeOfDate(e, i);
+        }) > -1
+        ||
+        shifts.findIndex(s => {
+          return this.verifyConflictBetweenToRangeOfDate(e, this.convertShiftTime(s));
+        }) > -1;
       return e;
     })
+  }
+
+  // TODO type that
+  convertShiftTime(shift): any {
+    let shiftDate = shift.team?.shifts[0];
+    shiftDate.startDate = shiftDate.start_datetime;
+    shiftDate.endDate = shiftDate.end_datetime;
+    return shiftDate;
+  }
+
+  verifyConflictBetweenToRangeOfDate(a, b): boolean {
+    return (
+      moment(a.startDate).isBetween(b.startDate, b.endDate, 'minutes', '[]')
+      || moment(a.endDate).isBetween(b.startDate, b.endDate, 'minutes', '[]')
+      || (moment(a.startDate).isSameOrAfter(b.startDate) && moment(a.endDate).isSameOrBefore(b.endDate))
+      || (moment(a.startDate).isSameOrBefore(b.startDate) && moment(a.endDate).isSameOrAfter(b.endDate))
+    );
   }
 
   mapOrderByStartDate(events: EventInterface[]): EventInterface[] {
