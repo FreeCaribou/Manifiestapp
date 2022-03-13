@@ -1,10 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { LocalStorageEnum } from "src/app/shared/models/LocalStorage.enum";
 import { environment } from "src/environments/environment";
 
+// TODO typing
 @Injectable({
   providedIn: 'root'
 })
@@ -12,18 +13,21 @@ export class VolunteerShiftService {
 
   constructor(
     private httpClient: HttpClient,
-  ) {}
+  ) { }
 
-  getShifts(): Observable<any> {
+  // TODO maybe also a mapping of data here ?
+  getShifts(): Observable<any[]> {
     if (this.isConnectedToBeeple()) {
-      return this.httpClient.get(
+      return this.httpClient.get<any[]>(
         `${environment.beepleBridgeUrl}collaborators/${this.getBeepleVolunteerId()}/enrolments`,
         { headers: { Token: this.getBeepleVolunteerToken() } }
+      ).pipe(
+        map(e => { return this.mapShiftsRemoveOldFromPreviousYear(e); }),
+        map(e => { return this.mapSortShiftsByStartDatetime(e); })
       )
     } else {
       return of([])
     }
-
   }
 
   login(session): Observable<any> {
@@ -35,6 +39,8 @@ export class VolunteerShiftService {
       })
     );
   }
+
+  // no data call method
 
   logout() {
     localStorage.removeItem(LocalStorageEnum.BeepleId);
@@ -51,6 +57,22 @@ export class VolunteerShiftService {
 
   isConnectedToBeeple(): boolean {
     return (this.getBeepleVolunteerId() && this.getBeepleVolunteerToken()) as unknown as boolean;
+  }
+
+  mapShiftsRemoveOldFromPreviousYear(shifts: any[]): any[] {
+    const yearNow = new Date().getFullYear();
+    return shifts.filter(s => {
+      const yearStart = new Date(s.team.shifts[0]?.start_datetime).getFullYear();
+      return yearNow === yearStart;
+    });
+  }
+
+  mapSortShiftsByStartDatetime(shifts: any[]): any[] {
+    return shifts.sort((a, b) => {
+      const aDate = new Date(a.team.shifts[0]?.start_datetime).getTime();
+      const bDate = new Date(b.team.shifts[0]?.start_datetime).getTime();
+      return aDate - bDate;
+    });
   }
 
 }

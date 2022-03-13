@@ -37,6 +37,7 @@ export class MyManifiestaPage implements OnDestroy {
     private formBuilder: FormBuilder
   ) { }
 
+  // TODO improve the fetch, avoid some double fetching
   ionViewWillEnter() {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.loginForm = this.buildLoginForm();
@@ -50,10 +51,11 @@ export class MyManifiestaPage implements OnDestroy {
       this.loadingCommunication.changeLoaderTo(true);
       this.volunteerShiftService.getShifts().subscribe(d => {
         // TODO manage error, also with backend
-        if (d.error) {
+        if (d['error']) {
 
         } else {
           this.shifts = d;
+          this.fetchFavoriteProgramme();
         }
       }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
     }
@@ -118,6 +120,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.volunteerShiftService.logout();
     this.shifts = [];
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
+    this.fetchFavoriteProgramme();
   }
 
   ngOnDestroy() {
