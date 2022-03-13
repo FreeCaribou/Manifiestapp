@@ -133,7 +133,6 @@ export class ProgrammeService implements IProgrammeService {
       if (this.volunteerShiftService.getBeepleVolunteerId()) {
         const shifts = await this.volunteerShiftService.getShifts().toPromise();
         const shiftConflict = shifts.filter(s => { return this.verifyConflictBetweenToRangeOfDate(this.convertShiftTime(s), event) });
-        console.log('hello shift conflict', shiftConflict)
         if (shiftConflict.length > 0) {
           let message = '';
           shiftConflict.forEach((x, k) => {

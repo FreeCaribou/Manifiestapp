@@ -46,7 +46,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.fetchShifts();
   }
 
-  fetchShifts() {
+  fetchShifts(reloadFav = false) {
     if (this.volunteerShiftService.isConnectedToBeeple()) {
       this.loadingCommunication.changeLoaderTo(true);
       this.volunteerShiftService.getShifts().subscribe(d => {
@@ -55,7 +55,9 @@ export class MyManifiestaPage implements OnDestroy {
 
         } else {
           this.shifts = d;
-          this.fetchFavoriteProgramme();
+          if (reloadFav) {
+            this.fetchFavoriteProgramme();
+          }
         }
       }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
     }
@@ -112,7 +114,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.loadingCommunication.changeLoaderTo(true)
     this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
-      this.fetchShifts();
+      this.fetchShifts(true);
     }).add(() => {this.loadingCommunication.changeLoaderTo(false)})
   }
 
