@@ -74,30 +74,30 @@ ion-menu {
         color: var(--ion-color-dark-tint) !important;
       }
       :hover {
-        color: var(--ion-color-tertiary) !important;
+        color: var(--ion-color-secondary) !important;
       }
     }
 
     ion-item.selected {
-      color: var(--ion-color-tertiary);
-      background-color: rgba(var(--ion-color-tertiary-rgb), 0.14);
+      color: var(--ion-color-secondary);
+      background-color: rgba(var(--ion-color-secondary-rgb), 0.14);
 
       :hover {
-        color: var(--ion-color-tertiary) !important;
+        color: var(--ion-color-secondary) !important;
       }
 
       ion-icon {
-        color: var(--ion-color-tertiary) !important;
+        color: var(--ion-color-secondary) !important;
       }
     }
   }
 
   ion-list-header {
-    color: var(--ion-color-tertiary);
+    color: var(--ion-color-secondary);
   }
 
   ion-note {
-    color: var(--ion-color-tertiary-shade) !important;
+    color: var(--ion-color-secondary-shade) !important;
   }
 }
 
@@ -119,8 +119,8 @@ ion-menu {
   }
 
   :disabled {
-    color: var(--ion-color-tertiary);
-    border-bottom: solid var(--ion-color-tertiary) 2px;
+    color: var(--ion-color-secondary);
+    border-bottom: solid var(--ion-color-secondary) 2px;
   }
 }
 
@@ -194,4 +194,13 @@ ion-menu {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+// the tab selected button color
+ion-tab-button {
+  --color-selected: var(--ion-color-secondary);
+  --color-focused: var(--ion-color-secondary);
+}
+.custom-tab-selected {
+  color: var(--ion-color-secondary) !important;
 }

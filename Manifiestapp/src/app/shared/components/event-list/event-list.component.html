@@ -4,7 +4,7 @@
       <ion-img [src]="event.mainPictureUrl"></ion-img>
     </ion-avatar>
     <ion-label [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
-      <h1 [innerHtml]="event.headline" color="tertiary"></h1>
+      <h1 [innerHtml]="event.headline" color="secondary"></h1>
       <p>
         <span>{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate |
           simpleDatePipe:dateJustWithHour}}</span>
@@ -12,7 +12,7 @@
         <span class="m-left-16">{{event.localisation?.name}}</span>
       </p>
     </ion-label>
-    <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="secondary"
+    <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="tertiary"
       [name]="event.favorite ? 'heart' : 'heart-outline'">
     </ion-icon>
   </ion-item>

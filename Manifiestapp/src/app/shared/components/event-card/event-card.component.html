@@ -9,13 +9,13 @@
        <span>{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate | simpleDatePipe:dateJustWithHour}}</span> 
        <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>
-      <ion-card-title [innerHtml]="event.headline" color="tertiary"></ion-card-title>
+      <ion-card-title [innerHtml]="event.headline" color="secondary"></ion-card-title>
       {{event.localisation?.name}} - {{event.category?.name}}
     </ion-card-header>
   </div>
 
   <ion-card-content>
-    <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="secondary"
+    <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="tertiary"
       [name]="event.favorite ? 'heart' : 'heart-outline'">
     </ion-icon>
   </ion-card-content>
