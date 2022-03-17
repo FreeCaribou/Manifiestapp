@@ -6,7 +6,7 @@
           <!-- <ion-list-header>Manifiestapp</ion-list-header>
           <ion-note>{{ 'General.Welcome' | translate }}</ion-note> -->
 
-          <img src="assets/pictures/manifiesta-title-logo.jpg" alt="logo" />
+          <img src="assets/pictures/manifiesta-logo-alpha.png" alt="logo" />
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
             <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false"
@@ -56,11 +56,5 @@
       <ion-icon name="musical-notes"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-  <!-- <ion-modal [isOpen]="openLangModal">
-    <ng-template>
-      hello Peter
-    </ng-template>
-  </ion-modal> -->
 
 </ion-app>
