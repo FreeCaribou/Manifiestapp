@@ -5,7 +5,6 @@
     <img [src]="event.mainPictureUrl" width="100%" />
 
     <div class="m-right-16 m-left-16">
-      <!-- <h2 [innerHtml]="event.headline"></h2> -->
       <div class="event-detail-maininfo">
         <div class="event-detail-maininfo-detail">
           <h5 class="secondary-color disabled-margin">
@@ -18,6 +17,8 @@
         <ion-icon (click)="onCardHeartClick(event)" color="tertiary" [name]="event.favorite ? 'heart' : 'heart-outline'">
         </ion-icon>
       </div>
+
+      <h3 class="secondary-color disabled-margin" [innerHtml]="event.headline"></h3>
 
       <p [innerHtml]="event.content.rendered"></p>
 
