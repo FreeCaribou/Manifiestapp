@@ -77,19 +77,22 @@ ion-menu {
       ion-icon {
         color: var(--ion-color-dark-tint) !important;
       }
-      :hover {
-        color: var(--ion-color-secondary) !important;
-      }
     }
 
     ion-item.selected {
       color: var(--ion-color-secondary);
       background-color: rgba(var(--ion-color-secondary-rgb), 0.14);
 
-      :hover {
+      ion-icon {
         color: var(--ion-color-secondary) !important;
       }
+    }
 
+    // Fix bug of not all in the menu item in secondary color when we hover
+    :hover {
+      ion-label {
+        color: var(--ion-color-secondary) !important;
+      }
       ion-icon {
         color: var(--ion-color-secondary) !important;
       }
