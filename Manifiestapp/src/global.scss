@@ -25,6 +25,10 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+* {
+  --ion-font-family: "Proxima Nova";
+}
+
 .main-map {
   width: 100%;
   height: 100%;
@@ -174,6 +178,26 @@ ion-menu {
 
 .m-left-16 {
   margin-left: 16px;
+}
+
+.m-right-16 {
+  margin-right: 16px;
+}
+
+.disabled-margin {
+  margin: 0 !important;
+}
+
+.primary-color {
+  color: var(--ion-color-primary);
+}
+
+.secondary-color {
+  color: var(--ion-color-secondary);
+}
+
+.tertiary-color {
+  color: var(--ion-color-tertiary);
 }
 
 .loading-block {

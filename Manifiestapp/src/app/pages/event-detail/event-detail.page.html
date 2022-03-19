@@ -2,7 +2,7 @@
 
 <ion-content>
   <div *ngIf="event">
-    <h1 [innerHtml]="event.headline"></h1>
+    <h2 [innerHtml]="event.headline"></h2>
     <img [src]="event.mainPictureUrl" height="100" />
     <p [innerHtml]="event.content.rendered"></p>
     <h3>{{event.day?.name}}</h3>

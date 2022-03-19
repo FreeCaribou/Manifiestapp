@@ -3,22 +3,18 @@
 
 @font-face {
   font-family: "Proxima Nova";
-  font-style: normal;
-  font-weight: normal;
   src: url("../assets/font/proxima_ssv/ProximaNova-Regular.otf");
 }
 
-@font-face {
-  font-family: "Proxima Nova";
-  font-style: normal;
-  font-weight: bold;
-  src: url("../assets/font/proxima_ssv/ProximaNova-Bold.otf");
-}
+// @font-face {
+//   font-family: "Proxima Nova";
+//   font-style: normal;
+//   font-weight: bold;
+//   src: url("../assets/font/proxima_ssv/ProximaNova-Bold.otf");
+// }
 
 /** Ionic CSS Variables **/
 :root {
-  --ion-font-family: "Proxima Nova";
-
   // Manifiesta primary 2022
   --ion-color-primary: #f18904;
 	--ion-color-primary-rgb: 241,137,4;

@@ -90,7 +90,7 @@
           <ion-list >
             <ion-item *ngFor="let s of shifts">
               <ion-label>
-                <h1>{{s.team.happening}}</h1>
+                <h2>{{s.team.happening}}</h2>
                 <p>
                   {{s.team.function?.name}}:
                   {{s.team.shifts[0]?.start_datetime | date:'dd/MM HH:mm' }} - {{s.team.shifts[0]?.end_datetime | date:'dd/MM HH:mm' }}

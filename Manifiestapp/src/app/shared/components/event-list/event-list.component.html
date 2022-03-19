@@ -4,7 +4,7 @@
       <ion-img [src]="event.mainPictureUrl"></ion-img>
     </ion-avatar>
     <ion-label [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
-      <h1 [innerHtml]="event.headline" color="secondary"></h1>
+      <h2 [innerHtml]="event.headline" color="secondary"></h2>
       <p>
         <span>{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate |
           simpleDatePipe:dateJustWithHour}}</span>
