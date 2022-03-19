@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'Programme', url: 'programme', icon: 'receipt' },
     { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
-    { title: 'Map', url: 'map', icon: 'map' },
+    // { title: 'Map', url: 'map', icon: 'map' },
     { title: 'About', url: 'about', icon: 'information-circle' },
     { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
   ];

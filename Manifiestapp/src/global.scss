@@ -231,3 +231,17 @@ ion-tab-button {
 .custom-tab-selected {
   color: var(--ion-color-secondary) !important;
 }
+
+.event-detail-maininfo {
+  display: flex;
+
+  .event-detail-maininfo-detail {
+    flex: 11;
+  }
+
+  ion-icon {
+    align-self: center;
+    flex: 1;
+    font-size: 35px;
+  }
+}

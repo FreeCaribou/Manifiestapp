@@ -10,6 +10,8 @@ export class HeaderComponent {
   title: string;
   @Input()
   defaultHref: string;
+  @Input()
+  withoutI18n = false;
 
   constructor() { }
 

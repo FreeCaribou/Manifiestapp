@@ -4,7 +4,8 @@
       <ion-menu-button *ngIf="!defaultHref"></ion-menu-button>
       <ion-back-button *ngIf="defaultHref" [defaultHref]="defaultHref"></ion-back-button>
     </ion-buttons>
-    <ion-title *ngIf="title">{{ 'Menu.' + title | translate }}</ion-title>
+    <ion-title *ngIf="title && !withoutI18n">{{ 'Menu.' + title | translate }}</ion-title>
     <ion-title *ngIf="!title">Manifiesta</ion-title>
+    <ion-title *ngIf="title && withoutI18n" [title]="title">{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>
