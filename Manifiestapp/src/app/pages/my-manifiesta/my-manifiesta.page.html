@@ -39,7 +39,7 @@
       <div slot="content">
         <div *ngIf="list">
           <a [routerLink]="['/programme']">
-            <h2 *ngIf="list?.length === 0">{{ 'Programme.NoFavorites' | translate }}</h2>
+            <h4 *ngIf="list?.length === 0" class="m-right-16 m-left-16">{{ 'Programme.NoFavorites' | translate }}</h4>
           </a>
           <div *ngIf="list?.length > 0">
             <!-- TODO have button to switch list to card -->
@@ -64,17 +64,17 @@
           <ion-grid>
 
             <ion-item>
-              <ion-label color="primary" position="floating">
+              <ion-label color="primary" position="stacked">
                 {{"User.Email" | translate}}
               </ion-label>
-              <ion-input clearInput type="email" formControlName="email" required></ion-input>
+              <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be"></ion-input>
             </ion-item>
 
             <ion-item>
-              <ion-label color="primary" position="floating">
+              <ion-label color="primary" position="stacked">
                 {{"User.Password" | translate}}
               </ion-label>
-              <ion-input clearInput type="password" formControlName="password" required></ion-input>
+              <ion-input clearInput type="password" formControlName="password" required placeholder="azerty1234"></ion-input>
             </ion-item>
 
             <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="secondary" expand="block"
