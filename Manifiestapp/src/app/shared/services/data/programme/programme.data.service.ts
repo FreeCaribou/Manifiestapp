@@ -5,6 +5,7 @@ import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { environment } from 'src/environments/environment';
 import { LanguageCommunicationService } from '../../communication/language.communication.service';
+import { BaseService } from '../base.service';
 import { IProgrammeService } from './programme.service.interface';
 
 @Injectable({
@@ -18,6 +19,7 @@ export class ProgrammeDataService implements IProgrammeService {
   constructor(
     private httpClient: HttpClient,
     private languageService: LanguageCommunicationService,
+    private baseService: BaseService,
   ) { }
 
   getAllProgramme(): Observable<EventInterface[]> {
@@ -42,14 +44,17 @@ export class ProgrammeDataService implements IProgrammeService {
       params = params.append('programmacategorie', categoriesId.toString());
     }
 
+    return this.baseService.get(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`);
     return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`);
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
+    return this.baseService.get(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
     return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
   }
 
   getEvent(id: string): Observable<EventInterface> {
+    return this.baseService.get(`${this.baseUrl}/${id}?_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
     return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}?_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
   }
 
