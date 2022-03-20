@@ -8,6 +8,11 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config.from_pyfile('settings.py')
 
+@app.route('/testcors')
+def testcors():
+    response = http_request.get('https://mf.sakado.be/?rest_route=/wp/v2/evenement')
+    return jsonify(json.loads(http_request.get('https://mf.sakado.be/?rest_route=/wp/v2/evenement').text))
+
 
 @app.route('/')
 def home():
