@@ -1,12 +1,21 @@
 <app-header [title]="'Home'"></app-header>
 
 <ion-content>
-  <img alt="manifiesta-front-page-2022" width="100%" src="assets/pictures/front-page.jpg"><img>
+  <!-- <div class="banner-container">
+    <img alt="manifiesta-front-page-2022" width="100%" src="assets/pictures/front-page.jpg"><img>
+    <div class="banner-container-text">
+      <h2 class="secondary-color disabled-margin">{{'Info.HomeSubtitle' | translate }}</h2>
+      <h1 class="primary-color disabled-margin">MANIFIESTA</h1>
+      <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
+    </div>
+  </div> -->
+  <div class="banner-picture-container">
+  </div>
   <div class="m-right-16 m-left-16">
-    <h2 class="secondary-color disabled-margin">{{'Info.HomeSubtitle' | translate }}</h2>
-    <h1 class="primary-color disabled-margin">MANIFIESTA</h1>
+    <h2 class="secondary-color disabled-margin home-main-text">{{'Info.HomeSubtitle' | translate }}</h2>
+    <h1 class="primary-color disabled-margin home-main-text">MANIFIESTA</h1>
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
-    <h6 class="disabled-margin">{{'Info.HomePresentation' | translate }}</h6>
+    <h6 class="disabled-margin home-description-text">{{'Info.HomePresentation' | translate }}</h6>
   </div>
   <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

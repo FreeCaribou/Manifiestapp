@@ -245,3 +245,31 @@ ion-tab-button {
     font-size: 35px;
   }
 }
+
+.banner-picture-container {
+  background-image: url('./assets/pictures/front-page.jpg');
+  background-position: bottom right;
+  height: 125px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+// .banner-container {
+//   position: relative;
+// }
+
+// .banner-container-text {
+//   position: absolute;
+//   top: 10px;
+//   left: 10px;
+//   font-weight: bold !important;
+//   color: white !important;
+// }
+
+.home-main-text {
+  font-weight: bold;
+}
+
+.home-description-text {
+  color: var(--ion-color-medium);
+}

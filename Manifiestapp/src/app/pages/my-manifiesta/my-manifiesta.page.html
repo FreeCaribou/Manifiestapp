@@ -19,13 +19,15 @@
   </ion-toolbar>
 
   <!-- Options -->
-  <ion-accordion-group>
+  <ion-accordion-group value="opties">
     <ion-accordion value="opties">
       <ion-item slot="header">
         <ion-label>{{'General.Options' | translate }}</ion-label>
       </ion-item>
       <div slot="content">
-        TODO - Select lang - Notif autorisation
+        <div class="m-right-16 m-left-16">
+          TODO - Select lang - Notif autorisation
+        </div>
       </div>
     </ion-accordion>
   </ion-accordion-group>
@@ -39,7 +41,7 @@
       <div slot="content">
         <div *ngIf="list">
           <a [routerLink]="['/programme']">
-            <h4 *ngIf="list?.length === 0" class="m-right-16 m-left-16">{{ 'Programme.NoFavorites' | translate }}</h4>
+            <p *ngIf="list?.length === 0" class="m-right-16 m-left-16">{{ 'Programme.NoFavorites' | translate }}</p>
           </a>
           <div *ngIf="list?.length > 0">
             <!-- TODO have button to switch list to card -->
