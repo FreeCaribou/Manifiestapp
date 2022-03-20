@@ -8,6 +8,7 @@
     "ionic-serve": "ionic serve",
     "resources-app-icon-android": "cordova-res android --skip-config --copy",
     "build-for-app-android": "ionic build --prod && ionic cap copy && ionic cap sync && ionic capacitor build --prod android",
+    "build-for-app-ios": "ionic build --prod && ionic cap copy && ionic cap sync && ionic capacitor build --prod ios",
     "open-android": "ionic cap open android",
     "start-live-android": "ionic cap run android -l --external",
     "start": "node server.js",
