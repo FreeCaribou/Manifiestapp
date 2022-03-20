@@ -9,6 +9,9 @@
       <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
     </div>
   </div> -->
+  <p *ngFor="let i of list">
+    hello {{i?.id}}
+  </p>
   <div class="banner-picture-container">
   </div>
   <div class="m-right-16 m-left-16">
@@ -20,4 +23,5 @@
   <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   allowfullscreen></iframe>
+
 </ion-content>
