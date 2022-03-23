@@ -3,16 +3,13 @@
 
 @font-face {
   font-family: "Proxima Nova";
-    src: url("../assets/font/proxima_ssv/MainProximaNovaBold.otf");
-  // src: url("../assets/font/proxima_ssv/MainProximaNovaReg.otf");
+  src: url("../assets/font/proxima_ssv/MainProximaNovaReg.otf");
 }
 
-// @font-face {
-//   font-family: "Proxima Nova";
-//   font-style: normal;
-//   font-weight: bold;
-//   src: url("../assets/font/proxima_ssv/ProximaNova-Bold.otf");
-// }
+@font-face {
+  font-family: "Proxima Nova Bold";
+    src: url("../assets/font/proxima_ssv/MainProximaNovaBold.otf");
+}
 
 /** Ionic CSS Variables **/
 :root {
