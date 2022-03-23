@@ -7,15 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
-  list = [];
-
-  constructor(private httpClient: HttpClient) {}
-
-  ionViewWillEnter() {
-    this.httpClient.get<any[]>('https://manifiestback.herokuapp.com/testcors').subscribe(data => {
-      console.log('hello', data)
-      this.list = data;
-    });
-  }
 
 }
