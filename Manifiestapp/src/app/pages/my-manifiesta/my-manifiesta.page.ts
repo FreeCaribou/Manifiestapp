@@ -68,8 +68,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.programmeService.getFavoriteProgramme().subscribe(data => {
       this.list = data;
       this.haveConflict = this.list.findIndex(e => e.inFavoriteConflict) > -1;
-      this.loadingCommunication.changeLoaderTo(false);
-    });
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
   ionViewWillLeave() {
@@ -115,7 +114,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       this.fetchShifts(true);
-    }).add(() => {this.loadingCommunication.changeLoaderTo(false)})
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false) })
   }
 
   clickOnLogout() {

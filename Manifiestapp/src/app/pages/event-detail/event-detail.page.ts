@@ -45,9 +45,7 @@ export class EventDetailPage {
             this.event.id)
         ]
       }
-
-      this.loadingCommunication.changeLoaderTo(false);
-    });
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
 
     this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.loadingCommunication.changeLoaderTo(load));
   }

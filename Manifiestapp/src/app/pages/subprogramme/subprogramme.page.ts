@@ -46,9 +46,7 @@ export class SubprogrammePage {
       this.locaties = datas[1];
       this.categories = datas[2];
       // this.organizers = datas[3];
-
-      this.loadingCommunication.changeLoaderTo(false);
-    });
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
 
     this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.loadingCommunication.changeLoaderTo(load));
   }
@@ -62,8 +60,7 @@ export class SubprogrammePage {
       this.organizerSelected ? [this.organizerSelected] : null,
     ).subscribe(data => {
       this.list = data;
-      this.loadingCommunication.changeLoaderTo(false);
-    });
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
   ionViewWillLeave() {

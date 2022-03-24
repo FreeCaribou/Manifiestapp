@@ -30,8 +30,7 @@ export class ProgrammePage {
       if (!this.router.url.includes('subprogramme')) {
         this.router.navigate(['programme', 'subprogramme', data[0].id]);
       }
-      this.loadingCommunication.changeLoaderTo(false);
-    });
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
   ionViewWillLeave() {
