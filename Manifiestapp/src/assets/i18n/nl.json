@@ -40,5 +40,8 @@
     "Login": "Connectie to Beeple",
     "Password": "Password",
     "Email": "Email"
+  },
+  "Error": {
+    "Generic": "Een fout opgetreden"
   }
 }

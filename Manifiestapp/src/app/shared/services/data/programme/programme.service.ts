@@ -142,7 +142,7 @@ export class ProgrammeService implements IProgrammeService {
             header: 'You have conflict some of your shifts',
             message,
             icon: 'alert-circle-outline',
-            color: 'danger',
+            color: 'warning',
             duration: 5000
           });
           toast.present();
