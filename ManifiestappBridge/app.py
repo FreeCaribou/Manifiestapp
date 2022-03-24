@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, request
+from tkinter import N
+from flask import Flask, Response, jsonify, redirect, request, abort, redirect, url_for
 import requests as http_request
 import json
 import utils.get_excel_volunteer as get_excel_volunteer
@@ -10,7 +11,6 @@ app.config.from_pyfile('settings.py')
 
 @app.route('/testcors')
 def testcors():
-    # return jsonify(json.loads(http_request.get('https://mf.sakado.be/?rest_route=/wp/v2/evenement').text))
     return jsonify(json.loads(http_request.get(request.headers.get('url')).text))
 
 
@@ -44,17 +44,24 @@ def collaborator_enrolments(id):
     return jsonify(jsonArray)
 
 
-# TODO verify good body to send
-# TODO check error
-# TODO check presence in beeple
-# TODO check presence in our data excel
+# TODO check error - make better table of code error
 @app.route('/auth', methods=['POST'])
 def authentification():
-    body = json.loads(request.data)
+    try:
+        body = json.loads(request.data)
+    except:
+        return redirect(url_for('error', code='auth-bad-body'))
     url = '{}authenticate'.format(app.config.get('BEEPLE_URL'))
     response = http_request.post(url, json=body)
 
-    jResponse = json.loads(response.text)
+    try:
+        jResponse = json.loads(response.text)
+    except:
+        return redirect(url_for('error', code='auth-bad-authentification'))
+
+    if 'errors' in jResponse:
+        return redirect(url_for('error', code='auth-bad-combination'))
+
     volunteers_data = get_excel_volunteer.get()
     volunteer = None
 
@@ -69,5 +76,11 @@ def authentification():
             'email': volunteer['email'],
             'token': jResponse['token']
         }
+    else:
+        return redirect(url_for('error', code='auth-bad-not-in-file'))
 
-    return jResponse
+
+@app.route('/error/<code>')
+def error(code):
+    return {'error': {'code': code}}, 400
+
