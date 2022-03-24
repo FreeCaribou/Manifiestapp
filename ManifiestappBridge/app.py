@@ -1,4 +1,3 @@
-from tkinter import N
 from flask import Flask, jsonify, redirect, request, redirect, url_for
 import requests as http_request
 import json
