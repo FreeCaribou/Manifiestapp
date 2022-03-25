@@ -16,22 +16,25 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     return next.handle(req).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('error with some backend request', error, req, next);
-        return from(this.handleError(req, next));
+        console.error('error with some backend request', error, req);
+        return from(this.handleError(req, next, error));
       })
     )
   }
 
-  async handleError(req: HttpRequest<any>, next: HttpHandler) {
-    const message = await this.translate.get('Error.Generic').toPromise();
-    // TODO check the type of error to know what to return
+  async handleError(req: HttpRequest<any>, next: HttpHandler, error: HttpErrorResponse) {
+    let message = await this.translate.get('Error.Generic').toPromise();
+
+    if (error.error?.error?.code) {
+      message = await this.translate.get(`Error.${error.error.error.code}`).toPromise();
+    }
 
     const toast = await this.toastController.create({
       header: 'Internet Error',
       message,
       icon: 'bug-outline',
       color: 'danger',
-      duration: 10000,
+      duration: 5000,
     });
     toast.present();
 

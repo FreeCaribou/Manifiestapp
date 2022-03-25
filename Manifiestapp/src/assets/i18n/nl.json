@@ -42,6 +42,11 @@
     "Email": "Email"
   },
   "Error": {
-    "Generic": "Een fout opgetreden"
+    "Generic": "Een fout opgetreden",
+    "auth-bad-combination": "Je hebt niet het juiste e-mailadres of wachtwoord ingevoerd, of je hebt je nog niet geregistreerd",
+    "auth-bad-authentification": "Heb je je nog niet aangemeld voor vrijwilligerswerk bij Manifiesta ?",
+    "auth-bad-body": "Het formulier is verkeerd verzonden",
+    "enrolments-get-fail": "Er is een fout opgetreden bij het openen van uw diensten",
+    "cors-bridge-fail": "Er is een fout opgetreden bij het openen van de gevraagde informatie"
   }
 }

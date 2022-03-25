@@ -42,6 +42,11 @@
     "Email": "Email"
   },
   "Error": {
-    "Generic": "Une erreur s'est produite"
+    "Generic": "Une erreur s'est produite",
+    "auth-bad-combination": "Vous n'avez pas rentré le bon email ou mot de passe, ou vous n'êtes pas encore inscrit",
+    "auth-bad-authentification": "Vous n'êtes pas encore inscrit au bénévolat Manifiesta ?",
+    "auth-bad-body": "La formulaire est mal envoyé",
+    "enrolments-get-fail": "Il y a une erreur pour accéder à vos shifts",
+    "cors-bridge-fail": "Il y a une erreur pour accéder aux informations demandées"
   }
 }

@@ -10,7 +10,11 @@ app.config.from_pyfile('settings.py')
 
 @app.route('/testcors')
 def testcors():
-    return jsonify(json.loads(http_request.get(request.headers.get('url')).text))
+    try:
+        response = jsonify(json.loads(http_request.get(request.headers.get('url')).text))
+    except:
+        return redirect(url_for('error', code='cors-bridge-fail'))
+    return response
 
 
 @app.route('/')
@@ -22,23 +26,26 @@ def home():
 # TODO check error
 @app.route('/collaborators/<int:id>/enrolments')
 def collaborator_enrolments(id):
-    url = '{}admin/collaborators/{}/enrolments'.format(
-        app.config.get('BEEPLE_URL'), id)
-    headers = {'Token': app.config.get('BEEPLE_TOKEN')}
-    response = http_request.get(url, headers=headers)
+    try:
+        url = '{}admin/collaborators/{}/enrolments'.format(
+            app.config.get('BEEPLE_URL'), id)
+        headers = {'Token': app.config.get('BEEPLE_TOKEN')}
+        response = http_request.get(url, headers=headers)
 
-    jResponseEnrolments = json.loads(response.text)['enrolments']
-    jsonArray = []
+        jResponseEnrolments = json.loads(response.text)['enrolments']
+        jsonArray = []
 
-    for e in jResponseEnrolments:
-        detailUrl = '{}admin/collaborators/enrolments/{}'.format(
-            app.config.get('BEEPLE_URL'), e['id'])
-        detailResponse = http_request.get(detailUrl, headers=headers)
-        jResponseDetail = json.loads(detailResponse.text)
-        jsonArray.append({
-            'id': e['id'],
-            'team': jResponseDetail['team'],
-        })
+        for e in jResponseEnrolments:
+            detailUrl = '{}admin/collaborators/enrolments/{}'.format(
+                app.config.get('BEEPLE_URL'), e['id'])
+            detailResponse = http_request.get(detailUrl, headers=headers)
+            jResponseDetail = json.loads(detailResponse.text)
+            jsonArray.append({
+                'id': e['id'],
+                'team': jResponseDetail['team'],
+            })
+    except:
+        return redirect(url_for('error', code='enrolments-get-fail'))
 
     return jsonify(jsonArray)
 
