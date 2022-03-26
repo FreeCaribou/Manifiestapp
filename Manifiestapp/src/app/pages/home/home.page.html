@@ -15,6 +15,16 @@
     <h2 class="secondary-color disabled-margin home-main-text">{{'Info.HomeSubtitle' | translate }}</h2>
     <h1 class="primary-color disabled-margin home-main-text">MANIFIESTA</h1>
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
+
+    <ion-grid class="primary-color main-text">
+      <ion-row>
+        <ion-col>Days {{diffDays}}</ion-col>
+        <ion-col>Hours {{diffHours}}</ion-col>
+        <ion-col>Minutes {{diffMinutes}}</ion-col>
+        <ion-col>Seconds {{diffSeconds}}</ion-col>
+      </ion-row>
+    </ion-grid>
+
     <h6 class="disabled-margin home-description-text">{{'Info.HomePresentation' | translate }}</h6>
   </div>
   <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
