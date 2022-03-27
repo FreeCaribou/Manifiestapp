@@ -242,7 +242,7 @@ export class ProgrammeService implements IProgrammeService {
     event.startDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['start-hour']?.raw);
     event.endDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['end-hour']?.raw);
     event.headline = event.title?.rendered;
-    event.mainPictureUrl = event._embedded?.['wp:featuredmedia'] ? event._embedded?.['wp:featuredmedia'][0]?.source_url : '';
+    event.mainPictureUrl = event._embedded?.['wp:featuredmedia'] ? event._embedded?.['wp:featuredmedia'][0]?.source_url : 'assets/pictures/manifiesta-title-logo.jpg';
     event.localisation = event._embedded?.['wp:term'] ? event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'locatie'))?.[0] : null;
     event.category = event._embedded?.['wp:term'] ? event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'programmacategorie'))?.[0] : null;
     event.day = event._embedded?.['wp:term'] ? event._embedded?.['wp:term'].find(x => x?.find(y => y?.taxonomy === 'dag'))?.[0] : null;
