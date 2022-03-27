@@ -12,6 +12,8 @@ import { wpDateToRealDate } from 'src/app/shared/utils/wp-date-to-real-date';
 import * as moment from 'moment';
 import { ToastController } from '@ionic/angular';
 import { VolunteerShiftService } from '../volunteer-shift/volunteer-shift.service';
+import { TranslateService } from '@ngx-translate/core';
+import { formatDate } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +27,7 @@ export class ProgrammeService implements IProgrammeService {
     private service: ProgrammeDataService,
     private volunteerShiftService: VolunteerShiftService,
     private toastController: ToastController,
+    private translate: TranslateService
   ) { }
 
   getAllProgramme(): Observable<EventInterface[]> {
@@ -153,17 +156,27 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   // TODO better notification message and see for the date
-  async addOneEventNotif(event: EventInterface) {
+  async addOneEventNotif(event: EventInterface, ) {
+    const startDateFormated = formatDate(event.startDate, 'HH:mm', 'en', '+00');
+    const body = await this.translate.get(
+      'Programme.NotificationBody',
+      { event: event?.title?.rendered, startDate: startDateFormated })
+      .toPromise();
     await LocalNotifications.schedule({
       notifications: [
         {
-          title: 'Event is coming',
+          title: `${event?.title?.rendered} - ${startDateFormated}` || 'Check it',
           id: parseInt(event.id) || 1,
-          body: event?.title?.rendered || 'Check it',
-          schedule: { at: new Date(Date.now() + 1000 * 300), allowWhileIdle: true },
+          body: body,
+          largeBody: body,
+          // For test, show notification 5 seconds after the click on fav
+          schedule: { at: new Date(Date.now() + 1000 * 5), allowWhileIdle: true },
+          // For production, an half hour before the event
+          // schedule: { at: new Date(new Date(event.startDate).getTime() - 1000 * 60 * 30), allowWhileIdle: true },
           autoCancel: true,
-          summaryText: 'One of your favorite event is coming to start',
-          actionTypeId: NotificationEventEnum.EventFav
+          summaryText: await this.translate.get('Programme.NotificationSummary').toPromise(),
+          actionTypeId: NotificationEventEnum.EventFav,
+          largeIcon: 'large_icon',
         }
       ]
     });
@@ -242,10 +255,14 @@ export class ProgrammeService implements IProgrammeService {
     event.startDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['start-hour']?.raw);
     event.endDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['end-hour']?.raw);
     event.headline = event.title?.rendered;
-    event.mainPictureUrl = event._embedded?.['wp:featuredmedia'] ? event._embedded?.['wp:featuredmedia'][0]?.source_url : 'assets/pictures/manifiesta-title-logo.jpg';
-    event.localisation = event._embedded?.['wp:term'] ? event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'locatie'))?.[0] : null;
-    event.category = event._embedded?.['wp:term'] ? event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'programmacategorie'))?.[0] : null;
-    event.day = event._embedded?.['wp:term'] ? event._embedded?.['wp:term'].find(x => x?.find(y => y?.taxonomy === 'dag'))?.[0] : null;
+    event.mainPictureUrl = event._embedded?.['wp:featuredmedia'] ?
+      event._embedded?.['wp:featuredmedia'][0]?.source_url : 'assets/pictures/manifiesta-title-logo.jpg';
+    event.localisation = event._embedded?.['wp:term'] ?
+      event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'locatie'))?.[0] : null;
+    event.category = event._embedded?.['wp:term'] ?
+      event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'programmacategorie'))?.[0] : null;
+    event.day = event._embedded?.['wp:term'] ?
+      event._embedded?.['wp:term'].find(x => x?.find(y => y?.taxonomy === 'dag'))?.[0] : null;
     return event;
   }
 

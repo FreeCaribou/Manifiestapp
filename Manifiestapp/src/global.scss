@@ -29,8 +29,12 @@
   --ion-font-family: "Proxima Nova";
 }
 
-h1, h2, h3, h4, h5, h6, .main-text {
+h1, h2, h3, h4, h5, h6, .counter {
   font-family: "Proxima Nova Bold";
+}
+
+.counter {
+  font-weight: bold;
 }
 
 .main-map {

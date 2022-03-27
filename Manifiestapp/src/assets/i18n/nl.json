@@ -25,7 +25,10 @@
     "Locations": "Locaties",
     "Categories": "Categories",
     "HaveConflict": "Er zijn conflicten in uw favorieten",
-    "YourFavoris": "Uw favorieten"
+    "YourFavoris": "Uw favorieten",
+    "NotificationTitle": "",
+    "NotificationSummary": "Een van je favoriete evenementen gaat beginnen !",
+    "NotificationBody": "Het evenement {{event}} gaat beginnen om {{startDate}}"
   },
   "Info": {
     "GeneralInfo": "Algemene informatie",

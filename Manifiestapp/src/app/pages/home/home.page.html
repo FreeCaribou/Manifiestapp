@@ -16,16 +16,29 @@
     <h1 class="primary-color disabled-margin home-main-text">MANIFIESTA</h1>
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
 
-    <ion-grid class="primary-color main-text">
+    <ion-grid class="primary-color counter">
       <ion-row>
-        <ion-col>Days {{diffDays}}</ion-col>
-        <ion-col>Hours {{diffHours}}</ion-col>
-        <ion-col>Minutes {{diffMinutes}}</ion-col>
-        <ion-col>Seconds {{diffSeconds}}</ion-col>
+        <ion-col>Days <p>{{diffDays}}</p>
+        </ion-col>
+        <ion-col>Hours <p>{{diffHours}}</p>
+        </ion-col>
+        <ion-col>Minutes <p>{{diffMinutes}}</p>
+        </ion-col>
+        <ion-col>Seconds <p>{{diffSeconds}}</p>
+        </ion-col>
       </ion-row>
     </ion-grid>
 
-    <h6 class="disabled-margin home-description-text">{{'Info.HomePresentation' | translate }}</h6>
+    <!-- <div class="facebook-container">
+      <div class="fb-page" data-href="https://www.facebook.com/manifiesta.be" data-tabs="timeline" data-width=""
+        data-height="275px" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
+        data-show-facepile="false">
+        <blockquote cite="https://www.facebook.com/manifiesta.be" class="fb-xfbml-parse-ignore"><a
+            href="https://www.facebook.com/manifiesta.be">ManiFiesta</a></blockquote>
+      </div>
+    </div> -->
+
+    <h6 class="home-description-text">{{'Info.HomePresentation' | translate }}</h6>
   </div>
   <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

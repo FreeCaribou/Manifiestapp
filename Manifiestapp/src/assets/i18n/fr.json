@@ -25,7 +25,10 @@
     "Locations": "Lieux",
     "Categories": "Catégories",
     "HaveConflict": "Il y a des conflits dans vos favoris",
-    "YourFavoris": "Vos favoris"
+    "YourFavoris": "Vos favoris",
+    "NotificationTitle": "",
+    "NotificationSummary": "Un de vos favoris va commencer !",
+    "NotificationBody": "l'évènement {{event}} va commencer à {{startDate}}"
   },
   "Info": {
     "GeneralInfo": "Information générale",

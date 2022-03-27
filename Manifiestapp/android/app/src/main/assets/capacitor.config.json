@@ -5,8 +5,8 @@
 	"bundledWebRuntime": false,
 	"plugins": {
 		"LocalNotifications": {
-			"smallIcon": "icon",
-			"iconColor": "#01b2b8"
+			"smallIcon": "small_icon",
+			"iconColor": "#f18904"
 		}
 	}
 }
