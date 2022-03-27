@@ -109,7 +109,6 @@ export class ProgrammeService implements IProgrammeService {
     this.favoriteChangeEmit.emit(event);
   }
 
-  // TODO the translate
   // TODO divide the code please ...
   async verifyEventHourConflictForNewFav(event: EventInterface) {
     this.verificationFavoriteLoadEmit.emit(true);
@@ -124,7 +123,7 @@ export class ProgrammeService implements IProgrammeService {
           message += `"${x.headline}"${k + 1 === conflicts.length ? '' : ' and '}`;
         });
         const toast = await this.toastController.create({
-          header: 'You have conflict with other event in your favoris',
+          header: await this.translate.get('Programme.HaveConflict').toPromise(),
           message,
           icon: 'alert-circle-outline',
           color: 'warning',
@@ -142,7 +141,7 @@ export class ProgrammeService implements IProgrammeService {
             message += `"${x.team?.full_name}"${k + 1 === shiftConflict.length ? '' : ' and '}`;
           });
           const toast = await this.toastController.create({
-            header: 'You have conflict some of your shifts',
+            header: await this.translate.get('Programme.ConflictShifts').toPromise(),
             message,
             icon: 'alert-circle-outline',
             color: 'warning',
