@@ -6,6 +6,7 @@ import { MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
+import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
@@ -25,6 +26,7 @@ export class MyManifiestaPage implements OnDestroy {
   shifts = [];
   loginForm: FormGroup;
   isConnected = false;
+  acceptNotification = false;
 
   constructor(
     private programmeService: ProgrammeService,
@@ -35,15 +37,42 @@ export class MyManifiestaPage implements OnDestroy {
     public modalController: ModalController,
     private volunteerShiftService: VolunteerShiftService,
     private formBuilder: FormBuilder
-  ) { }
-
+  ) {
+    this.checkAvoidNotification();
+  }
+  
   // TODO improve the fetch, avoid some double fetching
-  ionViewWillEnter() {
+  ionViewDidEnter() {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.loginForm = this.buildLoginForm();
     this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
     this.fetchFavoriteProgramme();
     this.fetchShifts();
+  }
+
+  checkAvoidNotification() {
+    // For the storage we do the opposite of the view
+    // In this way I dont have to manage a default value at the launch of the app
+    if (localStorage.getItem(LocalStorageEnum.AvoidNotification)) {
+      this.acceptNotification = false;
+    } else {
+      this.acceptNotification = true;
+    }
+  }
+
+  async onChangeAcceptNotification(event) {
+    this.loadingCommunication.changeLoaderTo(true);
+    this.acceptNotification = !this.acceptNotification;
+
+    if (this.acceptNotification) {
+      localStorage.removeItem(LocalStorageEnum.AvoidNotification);
+      await this.programmeService.addAllNotification();
+    } else {
+      localStorage.setItem(LocalStorageEnum.AvoidNotification, 'true');
+      await this.programmeService.cancelAllEventNotif();
+    }
+
+    this.loadingCommunication.changeLoaderTo(false);
   }
 
   fetchShifts(reloadFav = false) {

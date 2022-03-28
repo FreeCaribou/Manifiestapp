@@ -2,16 +2,6 @@
 
 <ion-content>
 
-  <!-- Must have own ion-segment because we can't stop propagation of click event -->
-  <ion-list class="btn-lang-box">
-    <button [disabled]="languageCommunication.selectedLanguage === 'fr'" (click)="presentModalSelectLang('fr')">
-      FR
-    </button>
-    <button [disabled]="languageCommunication.selectedLanguage === 'nl'" (click)="presentModalSelectLang('nl')">
-      NL
-    </button>
-  </ion-list>
-
   <ion-toolbar *ngIf="haveConflict" color="warning">
     <ion-title>
       <ion-icon name="alert-circle-outline"></ion-icon> {{ 'Programme.HaveConflict' | translate }}
@@ -27,6 +17,22 @@
       <div slot="content">
         <div class="m-right-16 m-left-16">
           TODO - Select lang - Notif autorisation
+
+          <!-- Must have own ion-segment because we can't stop propagation of click event -->
+          <ion-list class="btn-lang-box">
+            <button [disabled]="languageCommunication.selectedLanguage === 'fr'" (click)="presentModalSelectLang('fr')">
+              FR
+            </button>
+            <button [disabled]="languageCommunication.selectedLanguage === 'nl'" (click)="presentModalSelectLang('nl')">
+              NL
+            </button>
+          </ion-list>
+
+          <ion-item>
+            <ion-label>{{'User.AcceptNotification' | translate}}</ion-label>
+            <ion-checkbox  name="accept-notification" [value]="acceptNotification" [checked]="acceptNotification"
+              color="secondary" (ionChange)="onChangeAcceptNotification($event)"></ion-checkbox >
+          </ion-item>
         </div>
       </div>
     </ion-accordion>
@@ -69,14 +75,16 @@
               <ion-label color="primary" position="stacked">
                 {{"User.Email" | translate}}
               </ion-label>
-              <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be"></ion-input>
+              <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be">
+              </ion-input>
             </ion-item>
 
             <ion-item>
               <ion-label color="primary" position="stacked">
                 {{"User.Password" | translate}}
               </ion-label>
-              <ion-input clearInput type="password" formControlName="password" required placeholder="azerty1234"></ion-input>
+              <ion-input clearInput type="password" formControlName="password" required placeholder="azerty1234">
+              </ion-input>
             </ion-item>
 
             <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="secondary" expand="block"
@@ -89,20 +97,21 @@
         </form>
 
         <div *ngIf="isConnected">
-          <ion-list >
+          <ion-list>
             <ion-item *ngFor="let s of shifts">
               <ion-label>
                 <h2>{{s.team.happening}}</h2>
                 <p>
                   {{s.team.function?.name}}:
-                  {{s.team.shifts[0]?.start_datetime | date:'dd/MM HH:mm' }} - {{s.team.shifts[0]?.end_datetime | date:'dd/MM HH:mm' }}
+                  {{s.team.shifts[0]?.start_datetime | date:'dd/MM HH:mm' }} - {{s.team.shifts[0]?.end_datetime |
+                  date:'dd/MM HH:mm' }}
                 </p>
               </ion-label>
             </ion-item>
           </ion-list>
           <ion-button color="danger" (click)="clickOnLogout()">Logout</ion-button>
         </div>
- 
+
       </div>
     </ion-accordion>
   </ion-accordion-group>

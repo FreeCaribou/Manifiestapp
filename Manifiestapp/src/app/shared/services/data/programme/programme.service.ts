@@ -155,30 +155,49 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   // TODO better notification message and see for the date
-  async addOneEventNotif(event: EventInterface, ) {
-    const startDateFormated = formatDate(event.startDate, 'HH:mm', 'en', '+00');
-    const body = await this.translate.get(
-      'Programme.NotificationBody',
-      { event: event?.title?.rendered, startDate: startDateFormated })
-      .toPromise();
-    await LocalNotifications.schedule({
-      notifications: [
-        {
-          title: `${event?.title?.rendered} - ${startDateFormated}` || 'Check it',
-          id: parseInt(event.id) || 1,
-          body: body,
-          largeBody: body,
-          // For test, show notification 5 seconds after the click on fav
-          schedule: { at: new Date(Date.now() + 1000 * 5), allowWhileIdle: true },
-          // For production, an half hour before the event
-          // schedule: { at: new Date(new Date(event.startDate).getTime() - 1000 * 60 * 30), allowWhileIdle: true },
-          autoCancel: true,
-          summaryText: await this.translate.get('Programme.NotificationSummary').toPromise(),
-          actionTypeId: NotificationEventEnum.EventFav,
-          largeIcon: 'large_icon',
-        }
-      ]
+  async addOneEventNotif(event: EventInterface) {
+    if (!localStorage.getItem(LocalStorageEnum.AvoidNotification)) {
+      const startDateFormated = formatDate(event.startDate, 'HH:mm', 'en', '+00');
+      const body = await this.translate.get(
+        'Programme.NotificationBody',
+        { event: event?.title?.rendered, startDate: startDateFormated })
+        .toPromise();
+      await LocalNotifications.schedule({
+        notifications: [
+          {
+            title: `${event?.title?.rendered} - ${startDateFormated}` || 'Check it',
+            id: parseInt(event.id) || 1,
+            body: body,
+            largeBody: body,
+            // For test, show notification 5 seconds after the click on fav
+            schedule: { at: new Date(Date.now() + 1000 * 15), allowWhileIdle: true },
+            // For production, an half hour before the event
+            // schedule: { at: new Date(new Date(event.startDate).getTime() - 1000 * 60 * 30), allowWhileIdle: true },
+            autoCancel: true,
+            summaryText: await this.translate.get('Programme.NotificationSummary').toPromise(),
+            actionTypeId: NotificationEventEnum.EventFav,
+            largeIcon: 'large_icon',
+          }
+        ]
+      });
+    }
+  }
+
+  async cancelAllEventNotif() {
+    const allNotif = await (await LocalNotifications.getPending()).notifications;
+    await allNotif.forEach(async n => {
+      await LocalNotifications.cancel({ notifications: [n] });
     });
+  }
+
+  async addAllNotification() {
+    // to be sur to avoid doublon
+    await this.cancelAllEventNotif();
+
+    const favorites = await this.getFavoriteProgramme().toPromise();
+    await favorites.forEach(async e => {
+      await this.addOneEventNotif(e);
+    })
   }
 
   async cancelOneEventNotif(event: EventInterface, notifs: PendingLocalNotificationSchema[]) {

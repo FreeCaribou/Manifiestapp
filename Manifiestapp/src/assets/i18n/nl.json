@@ -43,7 +43,8 @@
   "User": {
     "Login": "Connectie to Beeple",
     "Password": "Password",
-    "Email": "Email"
+    "Email": "Email",
+    "AcceptNotification": "Aankondigingen accepteren"
   },
   "Error": {
     "Generic": "Een fout opgetreden",

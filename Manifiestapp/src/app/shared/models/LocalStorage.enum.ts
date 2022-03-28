@@ -3,4 +3,5 @@ export enum LocalStorageEnum {
   Language = 'language',
   BeepleId = 'beepleId',
   BeepleToken = 'beepleToken',
+  AvoidNotification = 'avoidNotification'
 }
