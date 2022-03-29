@@ -16,22 +16,27 @@
       </ion-item>
       <div slot="content">
         <div class="m-right-16 m-left-16">
-          TODO - Select lang - Notif autorisation
-
-          <!-- Must have own ion-segment because we can't stop propagation of click event -->
           <ion-list class="btn-lang-box">
-            <button [disabled]="languageCommunication.selectedLanguage === 'fr'" (click)="presentModalSelectLang('fr')">
+            <ion-button [disabled]="languageCommunication.selectedLanguage === 'fr'" size="small"
+              (click)="presentModalSelectLang('fr')" 
+              [color]="languageCommunication.selectedLanguage === 'fr' ? 'warning' : 'secondary'" 
+              [fill]="languageCommunication.selectedLanguage === 'fr' ? 'outline' : 'solid'"
+              >
               FR
-            </button>
-            <button [disabled]="languageCommunication.selectedLanguage === 'nl'" (click)="presentModalSelectLang('nl')">
+            </ion-button>
+            <ion-button [disabled]="languageCommunication.selectedLanguage === 'nl'" size="small"
+              (click)="presentModalSelectLang('nl')" 
+              [color]="languageCommunication.selectedLanguage === 'nl' ? 'warning' : 'secondary'" 
+              [fill]="languageCommunication.selectedLanguage === 'nl' ? 'outline' : 'solid'"
+              >
               NL
-            </button>
+            </ion-button>
           </ion-list>
 
           <ion-item>
             <ion-label>{{'User.AcceptNotification' | translate}}</ion-label>
-            <ion-checkbox  name="accept-notification" [value]="acceptNotification" [checked]="acceptNotification"
-              color="secondary" (ionChange)="onChangeAcceptNotification($event)"></ion-checkbox >
+            <ion-checkbox name="accept-notification" [value]="acceptNotification" [checked]="acceptNotification"
+              color="secondary" (ionChange)="onChangeAcceptNotification($event)"></ion-checkbox>
           </ion-item>
         </div>
       </div>

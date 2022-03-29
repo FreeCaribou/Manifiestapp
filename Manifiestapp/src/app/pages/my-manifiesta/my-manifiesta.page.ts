@@ -42,7 +42,7 @@ export class MyManifiestaPage implements OnDestroy {
   }
   
   // TODO improve the fetch, avoid some double fetching
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.loginForm = this.buildLoginForm();
     this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
