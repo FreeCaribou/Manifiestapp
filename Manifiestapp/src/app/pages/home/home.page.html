@@ -1,35 +1,33 @@
 <app-header [title]="'Home'"></app-header>
 
 <ion-content>
-  <!-- <div class="banner-container">
-    <img alt="manifiesta-front-page-2022" width="100%" src="assets/pictures/front-page.jpg"><img>
-    <div class="banner-container-text">
-      <h2 class="secondary-color disabled-margin">{{'Info.HomeSubtitle' | translate }}</h2>
-      <h1 class="primary-color disabled-margin">MANIFIESTA</h1>
-      <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
-    </div>
+
+  <!-- TODO see with the size of the screen
+  The picture is good on phone screen but on tablette, pc or landscape, it will be to much -->
+  <img alt="manifiesta-front-page-2022" width="100%" src="assets/pictures/front-page.jpg"><img>
+  <!-- <div class="banner-picture-container">
   </div> -->
-  <div class="banner-picture-container">
-  </div>
+
   <div class="m-right-16 m-left-16">
     <h2 class="secondary-color disabled-margin home-main-text">{{'Info.HomeSubtitle' | translate }}</h2>
     <h1 class="primary-color disabled-margin home-main-text">MANIFIESTA</h1>
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
+  </div>
 
-    <ion-grid class="primary-color counter">
-      <ion-row>
-        <ion-col>Days <p>{{diffDays}}</p>
-        </ion-col>
-        <ion-col>Hours <p>{{diffHours}}</p>
-        </ion-col>
-        <ion-col>Minutes <p>{{diffMinutes}}</p>
-        </ion-col>
-        <ion-col>Seconds <p>{{diffSeconds}}</p>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-grid class="primary-color counter m-top-16 m-bt-16">
+    <ion-row>
+      <ion-col>Days <h1>{{diffDays}}</h1>
+      </ion-col>
+      <ion-col>Hours <h1>{{diffHours}}</h1>
+      </ion-col>
+      <ion-col>Min. <h1>{{diffMinutes}}</h1>
+      </ion-col>
+      <ion-col>S. <h1>{{diffSeconds}}</h1>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <!-- <div class="facebook-container">
+  <!-- <div class="facebook-container">
       <div class="fb-page" data-href="https://www.facebook.com/manifiesta.be" data-tabs="timeline" data-width=""
         data-height="275px" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
         data-show-facepile="false">
@@ -37,8 +35,30 @@
             href="https://www.facebook.com/manifiesta.be">ManiFiesta</a></blockquote>
       </div>
     </div> -->
+  <div class="m-right-16 m-left-16">
+    <div *ngIf="loadNews">
+      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    </div>
+    <div *ngIf="!loadNews">
+      <ion-card *ngFor="let new of news" class="programme-card-body m-bt-16">
+        <div [routerLink]="['/new-detail', new.id]" class="fake-mouse-select">
+          <ion-thumbnail>
+            <ion-img [src]="new.mainPictureUrl"></ion-img>
+          </ion-thumbnail>
 
-    <h6 class="home-description-text">{{'Info.HomePresentation' | translate }}</h6>
+          <ion-card-header>
+            <ion-card-subtitle>
+            </ion-card-subtitle>
+            <ion-card-title [innerHtml]="new.headline" color="secondary"></ion-card-title>
+          </ion-card-header>
+        </div>
+
+        <ion-card-content [innerHtml]="new.shortText">
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <h6 class="home-description-text m-top-16">{{'Info.HomePresentation' | translate }}</h6>
   </div>
   <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

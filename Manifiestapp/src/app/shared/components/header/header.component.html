@@ -6,6 +6,6 @@
     </ion-buttons>
     <ion-title *ngIf="title && !withoutI18n">{{ 'Menu.' + title | translate }}</ion-title>
     <ion-title *ngIf="!title">Manifiesta</ion-title>
-    <ion-title *ngIf="title && withoutI18n" [title]="title">{{title}}</ion-title>
+    <ion-title *ngIf="title && withoutI18n" [innerHtml]="title" [title]="title">{{title}}</ion-title>
   </ion-toolbar>
 </ion-header>

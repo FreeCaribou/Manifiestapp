@@ -18,6 +18,7 @@ import { InfoListDataService } from './services/data/info-list/info-list.data.se
 import { InfoListMockService } from './services/data/info-list/info-list.mock.service';
 import { ProgrammeDataService } from './services/data/programme/programme.data.service';
 import { ProgrammeMockService } from './services/data/programme/programme.mock.service';
+import { NewsListService } from './services/data/news-list/news-list.service';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ProgrammeMockService } from './services/data/programme/programme.mock.s
   providers: [
     MapCommunicationService,
     VolunteerShiftService,
+    NewsListService,
     environment.dataMock ? { provide: ProgrammeDataService, useClass: ProgrammeMockService } : ProgrammeDataService,
     environment.dataMock ? { provide: InfoListDataService, useClass: InfoListMockService } : InfoListDataService,
   ]

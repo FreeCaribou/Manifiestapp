@@ -1,0 +1,11 @@
+<app-header [title]="newInfo?.headline" [withoutI18n]="true" [defaultHref]="defaultHref"></app-header>
+
+<ion-content>
+  <div *ngIf="newInfo">
+    <img [src]="newInfo.mainPictureUrl" width="100%" />
+    <div class="m-right-16 m-left-16">
+      <h3 class="secondary-color disabled-margin" [innerHtml]="newInfo.headline"></h3>
+      <p [innerHtml]="newInfo.allText"></p>
+    </div>
+  </div>
+</ion-content>

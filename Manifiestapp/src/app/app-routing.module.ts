@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'manifiesta-playlist',
     loadChildren: () => import('./pages/playlist/playlist.module').then(m => m.PlaylistPageModule)
   },
+  {
+    path: 'new-detail/:id',
+    loadChildren: () => import('./pages/new-detail/new-detail.module').then( m => m.NewDetailPageModule)
+  },
 
   // failback routes
   {

@@ -170,7 +170,7 @@ ion-menu {
   }
 
   // TODO Must decide if we let long text or cut (cut for the moment)
-  ion-card-title {
+  ion-card-title.event-title {
     // max-height: 48px;
     white-space: nowrap;
     overflow: hidden;
@@ -260,8 +260,8 @@ ion-tab-button {
 
 .banner-picture-container {
   background-image: url('./assets/pictures/front-page.jpg');
-  background-position: bottom right;
-  height: 125px;
+  background-position: bottom;
+  height: 175px;
   background-repeat: no-repeat;
   background-size: 100%;
 }

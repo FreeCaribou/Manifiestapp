@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NewInfoInterface } from 'src/app/shared/models/NewInfo.interface';
+import { NewsListService } from 'src/app/shared/services/data/news-list/news-list.service';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +8,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
+
+  news: NewInfoInterface[] = [];
+  loadNews = false;
+
+  constructor(
+    private newsListService: NewsListService,
+  ) {}
 
   manifiestaDate = new Date('2022-09-17T09:00:00').getTime();
   diffDays: number;
@@ -18,6 +27,11 @@ export class HomePage {
     setInterval(() => {
       this.count();
     }, 1000);
+
+    this.loadNews = true;
+    this.newsListService.getInfos(true).subscribe(n => {
+      this.news = n;
+    }).add(() => { this.loadNews = false; });
   }
 
   count() {
