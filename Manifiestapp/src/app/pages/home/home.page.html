@@ -44,8 +44,7 @@
       <ion-progress-bar type="indeterminate"></ion-progress-bar>
     </div>
     <div *ngIf="!loadNews">
-      <ion-card *ngFor="let new of news" class="programme-card-body m-bt-16">
-        <div [routerLink]="['/new-detail', new.id]" class="fake-mouse-select">
+      <ion-card *ngFor="let new of news" class="programme-card-body m-bt-16 fake-mouse-select" [routerLink]="['/new-detail', new.id]">
           <ion-thumbnail>
             <ion-img [src]="new.mainPictureUrl"></ion-img>
           </ion-thumbnail>
@@ -55,17 +54,22 @@
             </ion-card-subtitle>
             <ion-card-title [innerHtml]="new.headline" color="secondary"></ion-card-title>
           </ion-card-header>
-        </div>
 
         <ion-card-content [innerHtml]="new.shortText">
         </ion-card-content>
       </ion-card>
     </div>
 
-    <h6 class="home-description-text m-top-16">{{'Info.HomePresentation' | translate }}</h6>
+    <h6 *ngIf="news?.length === 0" class="home-description-text m-top-16">{{'Info.HomePresentation' | translate }}</h6>
   </div>
   <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
   allowfullscreen></iframe> -->
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="secondary">
+      <ion-icon name="newspaper"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>

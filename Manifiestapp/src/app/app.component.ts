@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
     // { title: 'Map', url: 'map', icon: 'map' },
     { title: 'About', url: 'about', icon: 'information-circle' },
-    { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
+    // { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
   ];
 
   subBackButton: Subscription;
