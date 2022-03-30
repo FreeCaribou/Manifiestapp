@@ -60,7 +60,7 @@
       </ion-card>
     </div>
 
-    <h6 *ngIf="news?.length === 0" class="home-description-text m-top-16">{{'Info.HomePresentation' | translate }}</h6>
+    <h6 *ngIf="news?.length === 0 && !loadNews" class="home-description-text m-top-16">{{'Info.HomePresentation' | translate }}</h6>
   </div>
   <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
