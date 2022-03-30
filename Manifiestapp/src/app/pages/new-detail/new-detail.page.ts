@@ -26,7 +26,6 @@ export class NewDetailPage {
     this.loadingCommunication.changeLoaderTo(true);
     this.id = this.activatedRoute.snapshot.params.id;
     this.newsListService.getInfo(this.id).subscribe(d => {
-      console.log('lol', d)
       this.newInfo = d;
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
