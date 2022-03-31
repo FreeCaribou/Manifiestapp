@@ -6,6 +6,28 @@ Actually we use Beeple to manage that, Beeple have an API, but with some problem
 
 
 
+## ENV
+
+### FLASK_ENV
+
+
+### BEEPLE_URL
+
+The url of the company beeple instance
+
+https://<url>/api/v1/
+
+
+### BEEPLE_TOKEN
+
+A admin token, because the current user token dont work
+
+
+### EXCEL_URL
+
+The internet path to the excel file to match the connected user to the right id
+
+
 
 ## Bridge API Error key-message
 
