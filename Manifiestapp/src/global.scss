@@ -29,7 +29,13 @@
   --ion-font-family: "Proxima Nova";
 }
 
-h1, h2, h3, h4, h5, h6, .counter {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.counter {
   font-family: "Proxima Nova Bold";
 }
 
@@ -235,6 +241,10 @@ ion-menu {
   left: 50%;
 }
 
+.loading-news {
+  text-align: center;
+}
+
 // the tab selected button color
 ion-tab-button {
   --color-selected: var(--ion-color-secondary);
@@ -259,7 +269,7 @@ ion-tab-button {
 }
 
 .banner-picture-container {
-  background-image: url('./assets/pictures/front-page.jpg');
+  background-image: url("./assets/pictures/front-page.jpg");
   background-position: bottom;
   height: 175px;
   background-repeat: no-repeat;

@@ -40,8 +40,8 @@
 
   <!-- TODO all click to detail ? -->
   <div class="m-right-16 m-left-16">
-    <div *ngIf="loadNews">
-      <ion-progress-bar type="indeterminate"></ion-progress-bar>
+    <div *ngIf="loadNews" class="m-top-16 loading-news">
+      <ion-spinner name="lines" color="primary"></ion-spinner>
     </div>
     <div *ngIf="!loadNews">
       <ion-card *ngFor="let new of news" class="programme-card-body m-bt-16 fake-mouse-select" [routerLink]="['/new-detail', new.id]">
