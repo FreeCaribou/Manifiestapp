@@ -1,7 +1,7 @@
 import { EventInterface } from "src/app/shared/models/Event.interface";
 import { EventDayEnum } from "src/app/shared/models/EventDay.enum";
 
-// TODO have mock the day we know how real data will be
+// TODO-refactor have mock the day we know how real data will be
 export const MOCK_GET_ALL_PROGRAMME: EventInterface[] = [
   // {
   //   title: 'Main stage',

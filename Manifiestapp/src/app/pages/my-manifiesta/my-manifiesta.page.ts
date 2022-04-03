@@ -40,7 +40,7 @@ export class MyManifiestaPage implements OnDestroy {
   ) {
     this.checkAvoidNotification();
   }
-  
+
   // TODO improve the fetch, avoid some double fetching
   ionViewWillEnter() {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
@@ -79,14 +79,9 @@ export class MyManifiestaPage implements OnDestroy {
     if (this.volunteerShiftService.isConnectedToBeeple()) {
       this.loadingCommunication.changeLoaderTo(true);
       this.volunteerShiftService.getShifts().subscribe(d => {
-        // TODO manage error, also with backend
-        if (d['error']) {
-
-        } else {
-          this.shifts = d;
-          if (reloadFav) {
-            this.fetchFavoriteProgramme();
-          }
+        this.shifts = d;
+        if (reloadFav) {
+          this.fetchFavoriteProgramme();
         }
       }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
     }

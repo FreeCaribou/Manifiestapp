@@ -5,7 +5,7 @@ import { map, tap } from "rxjs/operators";
 import { LocalStorageEnum } from "src/app/shared/models/LocalStorage.enum";
 import { environment } from "src/environments/environment";
 
-// TODO typing
+// TODO-refactor typing
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +15,7 @@ export class VolunteerShiftService {
     private httpClient: HttpClient,
   ) { }
 
-  // TODO maybe also a mapping of data here ?
+  // TODO-refactor maybe also a mapping of data here ?
   getShifts(): Observable<any[]> {
     if (this.isConnectedToBeeple()) {
       return this.httpClient.get<any[]>(

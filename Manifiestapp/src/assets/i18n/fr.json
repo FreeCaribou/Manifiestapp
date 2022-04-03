@@ -44,7 +44,9 @@
     "Login": "Connection à Beeple",
     "Password": "Mot de passe",
     "Email": "Email",
-    "AcceptNotification": "Accepter les notifications"
+    "AcceptNotification": "Accepter les notifications",
+    "ConnectionProblem": "Si c'est votre première inscription, il se peut que la synchronisation n'est pas encore faite, veuillez attendre 2 - 3 jours, nous nous excusons du soucis.",
+    "ConnectionBeeple": "Connectez vous avec vos identifiants de bénévoles Manifiesta pour voir ici vos horaires. <a href='https://volunteers.manifiesta.be/'>Si vous voulez vous inscrire ou changer votre mot de passe, c'est ici !</a>"
   },
   "Error": {
     "Generic": "Une erreur s'est produite",

@@ -44,7 +44,9 @@
     "Login": "Connectie to Beeple",
     "Password": "Password",
     "Email": "Email",
-    "AcceptNotification": "Aankondigingen accepteren"
+    "AcceptNotification": "Aankondigingen accepteren",
+    "ConnectionProblem": "Als dit uw eerste registratie is, kan het zijn dat de synchronisatie nog niet is voltooid, wacht 2-3 dagen, onze excuses voor de zorgen.",
+    "ConnectionBeeple": "Log in met uw Manifiesta vrijwilligers inloggegevens om uw shifts hier te bekijke. <a href='https://volunteers.manifiesta.be/'>Als u zich wilt registreren of uw wachtwoord wilt wijzigen, is het hier!<a>"
   },
   "Error": {
     "Generic": "Een fout opgetreden",

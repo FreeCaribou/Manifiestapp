@@ -29,6 +29,10 @@
   --ion-font-family: "Proxima Nova";
 }
 
+ion-content {
+  --padding-bottom: 35px;
+}
+
 h1,
 h2,
 h3,
@@ -175,13 +179,13 @@ ion-menu {
     padding: 5px;
   }
 
-  // TODO Must decide if we let long text or cut (cut for the moment)
+  // The title text is cut
   ion-card-title.event-title {
     // max-height: 48px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
@@ -294,4 +298,20 @@ ion-tab-button {
 
 .home-description-text {
   color: var(--ion-color-medium);
+}
+
+.favorites-conflict-warning-bar {
+  background-color: var(--ion-color-warning) !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
+.favorites-conflict-warning-text {
+  display: flex;
+
+  ion-icon {
+    align-self: center;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
 }

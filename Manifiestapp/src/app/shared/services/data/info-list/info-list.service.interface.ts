@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-// TODO type
+// TODO-refactor type
 export interface IInfoListService {
   getVenues(): Observable<any[]>;
   getOrganizers(): Observable<any[]>;

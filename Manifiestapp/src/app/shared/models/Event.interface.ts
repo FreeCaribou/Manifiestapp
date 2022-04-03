@@ -40,7 +40,7 @@ export interface EventInterface {
   _embedded?: { "wp:term": any[], "wp:featuredmedia": any[] };
   // wp:term transform to more beautifull variable prop
 
-  // TODO ask for english name
+  // TODO-refactor ask for english name
   "toolset-meta"?: {
     "info-evenement": {
       afbeelding: {

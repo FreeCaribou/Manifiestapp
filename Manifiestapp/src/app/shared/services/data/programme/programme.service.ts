@@ -109,7 +109,7 @@ export class ProgrammeService implements IProgrammeService {
     this.favoriteChangeEmit.emit(event);
   }
 
-  // TODO divide the code please ...
+  // TODO-refactor divide the code please ...
   async verifyEventHourConflictForNewFav(event: EventInterface) {
     this.verificationFavoriteLoadEmit.emit(true);
     const favs = await this.getFavoriteProgramme().toPromise();
@@ -154,7 +154,7 @@ export class ProgrammeService implements IProgrammeService {
     this.verificationFavoriteLoadEmit.emit(false);
   }
 
-  // TODO better notification message and see for the date
+  // TODO better notification message and see for the localisation
   async addOneEventNotif(event: EventInterface) {
     if (!localStorage.getItem(LocalStorageEnum.AvoidNotification)) {
       const startDateFormated = formatDate(event.startDate, 'HH:mm', 'en', '+00');
@@ -224,7 +224,7 @@ export class ProgrammeService implements IProgrammeService {
     return events.filter(x => this.isFavorite(x.id));
   }
 
-  // TODO seriously, better code is needed here ...
+  // TODO-refactor seriously, better code is needed here ...
   mapVerifyFavoriteConflict(events: EventInterface[], shifts = []): EventInterface[] {
     return events.map(e => {
       e.inFavoriteConflict =
@@ -239,7 +239,7 @@ export class ProgrammeService implements IProgrammeService {
     })
   }
 
-  // TODO type that
+  // TODO-refactor type that
   convertShiftTime(shift): any {
     let shiftDate = shift.team?.shifts[0];
     shiftDate.startDate = shiftDate.start_datetime;

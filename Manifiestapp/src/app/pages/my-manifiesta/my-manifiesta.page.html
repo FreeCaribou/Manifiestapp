@@ -2,11 +2,12 @@
 
 <ion-content>
 
-  <ion-toolbar *ngIf="haveConflict" color="warning">
-    <ion-title>
-      <ion-icon name="alert-circle-outline"></ion-icon> {{ 'Programme.HaveConflict' | translate }}
-    </ion-title>
-  </ion-toolbar>
+  <div *ngIf="haveConflict" class="favorites-conflict-warning-bar" color="warning">
+    <h5 class="favorites-conflict-warning-text">
+      <ion-icon name="alert-circle-outline"></ion-icon>
+      {{ 'Programme.HaveConflict' | translate }}
+    </h5>
+  </div>
 
   <!-- Options -->
   <ion-accordion-group value="opties">
@@ -18,17 +19,15 @@
         <div class="m-right-16 m-left-16">
           <ion-list class="btn-lang-box">
             <ion-button [disabled]="languageCommunication.selectedLanguage === 'fr'" size="small"
-              (click)="presentModalSelectLang('fr')" 
-              [color]="languageCommunication.selectedLanguage === 'fr' ? 'warning' : 'secondary'" 
-              [fill]="languageCommunication.selectedLanguage === 'fr' ? 'outline' : 'solid'"
-              >
+              (click)="presentModalSelectLang('fr')"
+              [color]="languageCommunication.selectedLanguage === 'fr' ? 'warning' : 'secondary'"
+              [fill]="languageCommunication.selectedLanguage === 'fr' ? 'outline' : 'solid'">
               FR
             </ion-button>
             <ion-button [disabled]="languageCommunication.selectedLanguage === 'nl'" size="small"
-              (click)="presentModalSelectLang('nl')" 
-              [color]="languageCommunication.selectedLanguage === 'nl' ? 'warning' : 'secondary'" 
-              [fill]="languageCommunication.selectedLanguage === 'nl' ? 'outline' : 'solid'"
-              >
+              (click)="presentModalSelectLang('nl')"
+              [color]="languageCommunication.selectedLanguage === 'nl' ? 'warning' : 'secondary'"
+              [fill]="languageCommunication.selectedLanguage === 'nl' ? 'outline' : 'solid'">
               NL
             </ion-button>
           </ion-list>
@@ -55,7 +54,6 @@
             <p *ngIf="list?.length === 0" class="m-right-16 m-left-16">{{ 'Programme.NoFavorites' | translate }}</p>
           </a>
           <div *ngIf="list?.length > 0">
-            <!-- TODO have button to switch list to card -->
             <!-- <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card> -->
             <!-- Try with a list view what it's look like -->
             <app-event-list [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list>
@@ -75,7 +73,7 @@
 
         <form *ngIf="!isConnected && loginForm" [formGroup]="loginForm">
           <ion-grid>
-            TODO link to the Manifiesta Volunteer site + Explanation of what this is here
+            <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-16 m-left-16"></p>
             <ion-item>
               <ion-label color="primary" position="stacked">
                 {{"User.Email" | translate}}
@@ -97,6 +95,8 @@
               {{'User.Login' | translate}}
               <ion-icon slot="end" icon="person"></ion-icon>
             </ion-button>
+
+            <p class="m-right-16 m-left-16">{{'User.ConnectionProblem' | translate}}</p>
 
           </ion-grid>
         </form>

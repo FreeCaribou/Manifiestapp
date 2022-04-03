@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { wpDateToRealDate } from '../utils/wp-date-to-real-date';
 
-// TODO params to have yes or no the dd/MM also
 @Pipe({
   name: 'simpleDatePipe'
 })

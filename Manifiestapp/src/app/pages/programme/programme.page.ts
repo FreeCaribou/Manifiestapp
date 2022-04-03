@@ -23,7 +23,6 @@ export class ProgrammePage {
       // The data from WP don't come always in right order for the days
       // We look for the slug, kind of WP id
       // Slug will be day-<number of the day event>-lang(nl||fr)
-      // TODO ask back wp to keep this way of slug naming
       this.days = data.sort((a, b) => {
         return a.slug < b.slug ? -1 : 1;
       });
