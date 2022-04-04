@@ -11,16 +11,17 @@ export class HomePage {
 
   news: NewInfoInterface[] = [];
   loadNews = false;
-
-  constructor(
-    private newsListService: NewsListService,
-  ) {}
+  isNow = false;
 
   manifiestaDate = new Date('2022-09-17T09:00:00').getTime();
   diffDays: number;
   diffHours: number;
   diffMinutes: number;
   diffSeconds: number;
+
+  constructor(
+    private newsListService: NewsListService,
+  ) {}
 
   ionViewDidEnter() {
     this.count();
@@ -36,6 +37,9 @@ export class HomePage {
 
   count() {
     const now = new Date().getTime();
+    if (now > this.manifiestaDate) {
+      this.isNow = true;
+    }
     const distance = this.manifiestaDate - now;
     this.diffDays = Math.floor(distance / (1000 * 60 * 60 * 24));
     this.diffHours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

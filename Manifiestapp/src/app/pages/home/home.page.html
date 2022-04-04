@@ -14,7 +14,7 @@
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
   </div>
 
-  <ion-grid class="primary-color counter m-top-16 m-bt-16">
+  <ion-grid *ngIf="!isNow" class="primary-color counter m-top-16 m-bt-16">
     <ion-row>
       <ion-col>Days <h1>{{diffDays}}</h1>
       </ion-col>
@@ -26,6 +26,11 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
+  <!-- TODO find something to show here when the festival is now -->
+  <div *ngIf="isNow" class="m-right-16 m-left-16">
+    
+  </div>
 
   <!-- <div class="facebook-container">
       <div class="fb-page" data-href="https://www.facebook.com/manifiesta.be" data-tabs="timeline" data-width=""
