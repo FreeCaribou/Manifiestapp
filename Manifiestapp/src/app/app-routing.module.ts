@@ -32,6 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/playlist/playlist.module').then(m => m.PlaylistPageModule)
   },
   {
+    path: 'news-info',
+    loadChildren: () => import('./pages/news-info/news-info.module').then( m => m.NewsInfoPageModule)
+  },
+  {
     path: 'new-detail/:id',
     loadChildren: () => import('./pages/new-detail/new-detail.module').then( m => m.NewDetailPageModule)
   },
