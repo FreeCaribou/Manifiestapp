@@ -12,6 +12,7 @@
     "build-for-app-ios": "ionic build --prod && ionic cap copy && ionic cap sync && ionic capacitor build --prod ios",
     "open-android": "ionic cap open android",
     "start-live-android": "ionic cap run android -l --external --prod",
+    "serve-lab": "ionic serve --lab --prod",
     "start": "node server.js",
     "build": "ng build --prod",
     "test": "ng test",

@@ -83,7 +83,7 @@ export class MyManifiestaPage implements OnDestroy {
         if (reloadFav) {
           this.fetchFavoriteProgramme();
         }
-      }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
+      }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
     }
   }
 
@@ -134,11 +134,11 @@ export class MyManifiestaPage implements OnDestroy {
   }
 
   clickOnLogin() {
-    this.loadingCommunication.changeLoaderTo(true)
+    this.loadingCommunication.changeLoaderTo(true);
     this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       this.fetchShifts(true);
-    }).add(() => { this.loadingCommunication.changeLoaderTo(false) })
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
   clickOnLogout() {
