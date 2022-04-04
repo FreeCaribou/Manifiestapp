@@ -27,6 +27,7 @@ export class MyManifiestaPage implements OnDestroy {
   loginForm: FormGroup;
   isConnected = false;
   acceptNotification = false;
+  hadLoginError = false;
 
   constructor(
     private programmeService: ProgrammeService,
@@ -138,6 +139,9 @@ export class MyManifiestaPage implements OnDestroy {
     this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       this.fetchShifts(true);
+    }, error => {
+      // TODO show the message in case of the right error (error no user in excel)
+      console.error(error); this.hadLoginError = true;
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 

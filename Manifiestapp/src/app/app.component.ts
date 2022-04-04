@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
     LocalNotifications.addListener('localNotificationActionPerformed', (n) => {
       if (n.actionId === 'tap') {
         if (n.notification.actionTypeId === NotificationEventEnum.EventFav) {
-          this.router.navigate(['/programme', 'event-detail', n.notification.id])
+          this.router.navigate(['/programme', 'event-detail', n.notification.id]);
         }
       }
     });
@@ -60,7 +60,9 @@ export class AppComponent implements OnInit {
 
   async init() {
     this.languageCommunication.init();
-    console.log('You use the platform: ', this.platform.platforms(), this.languageCommunication.translate.currentLang, environment.production);
+    console.log('You use the platform: ',
+    this.platform.platforms(),
+    this.languageCommunication.translate.currentLang, environment.production);
     // when the user tap on the physical back button of the device, we want to close the app
     // but not for all page !
     const pageWithoutBackButton = [
@@ -84,7 +86,7 @@ export class AppComponent implements OnInit {
         }
 
       }
-    })
+    });
   }
 
   ionViewWillLeave() {

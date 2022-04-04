@@ -9,39 +9,6 @@
     </h5>
   </div>
 
-  <!-- Options -->
-  <ion-accordion-group value="opties">
-    <ion-accordion value="opties">
-      <ion-item slot="header">
-        <ion-label>{{'General.Options' | translate }}</ion-label>
-      </ion-item>
-      <div slot="content">
-        <div class="m-right-16 m-left-16">
-          <ion-list class="btn-lang-box">
-            <ion-button [disabled]="languageCommunication.selectedLanguage === 'fr'" size="small"
-              (click)="presentModalSelectLang('fr')"
-              [color]="languageCommunication.selectedLanguage === 'fr' ? 'warning' : 'secondary'"
-              [fill]="languageCommunication.selectedLanguage === 'fr' ? 'outline' : 'solid'">
-              FR
-            </ion-button>
-            <ion-button [disabled]="languageCommunication.selectedLanguage === 'nl'" size="small"
-              (click)="presentModalSelectLang('nl')"
-              [color]="languageCommunication.selectedLanguage === 'nl' ? 'warning' : 'secondary'"
-              [fill]="languageCommunication.selectedLanguage === 'nl' ? 'outline' : 'solid'">
-              NL
-            </ion-button>
-          </ion-list>
-
-          <ion-item>
-            <ion-label>{{'User.AcceptNotification' | translate}}</ion-label>
-            <ion-checkbox name="accept-notification" [value]="acceptNotification" [checked]="acceptNotification"
-              color="secondary" (ionChange)="onChangeAcceptNotification($event)"></ion-checkbox>
-          </ion-item>
-        </div>
-      </div>
-    </ion-accordion>
-  </ion-accordion-group>
-
   <!-- Favorite Programme -->
   <ion-accordion-group value="favoriteProgramme">
     <ion-accordion value="favoriteProgramme">
@@ -62,6 +29,7 @@
       </div>
     </ion-accordion>
   </ion-accordion-group>
+
 
   <!-- Shifts Volunteers -->
   <ion-accordion-group value="shiftsVolunteers">
@@ -96,7 +64,7 @@
               <ion-icon slot="end" icon="person"></ion-icon>
             </ion-button>
 
-            <p class="m-right-16 m-left-16">{{'User.ConnectionProblem' | translate}}</p>
+            <p *ngIf="hadLoginError" class="m-right-16 m-left-16">{{'User.ConnectionProblem' | translate}}</p>
 
           </ion-grid>
         </form>
@@ -105,18 +73,52 @@
           <ion-list>
             <ion-item *ngFor="let s of shifts">
               <ion-label>
-                <h2>{{s.team.happening}}</h2>
+                <h2> {{s.team.shifts[0]?.start_datetime | date:'dd/MM HH:mm' }} - {{s.team.shifts[0]?.end_datetime |
+                  date:'HH:mm' }}</h2>
                 <p>
-                  {{s.team.function?.name}}:
-                  {{s.team.shifts[0]?.start_datetime | date:'dd/MM HH:mm' }} - {{s.team.shifts[0]?.end_datetime |
-                  date:'dd/MM HH:mm' }}
+                  <span class="secondary-color">{{s.team.happening}}</span> -
+                  <span class="primary-color">{{s.team.function?.name}}</span>
                 </p>
               </ion-label>
             </ion-item>
           </ion-list>
-          <ion-button color="danger" (click)="clickOnLogout()">Logout</ion-button>
+          <ion-button color="danger" class="m-right-16 m-left-16" (click)="clickOnLogout()">Logout</ion-button>
         </div>
 
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+
+  <!-- Options -->
+  <ion-accordion-group value="opties">
+    <ion-accordion value="opties">
+      <ion-item slot="header">
+        <ion-label>{{'General.Options' | translate }}</ion-label>
+      </ion-item>
+      <div slot="content">
+        <div class="m-right-16 m-left-16">
+          <ion-list class="btn-lang-box">
+            <ion-button [disabled]="languageCommunication.selectedLanguage === 'fr'" size="small"
+              (click)="presentModalSelectLang('fr')"
+              [color]="languageCommunication.selectedLanguage === 'fr' ? 'warning' : 'secondary'"
+              [fill]="languageCommunication.selectedLanguage === 'fr' ? 'outline' : 'solid'">
+              FR
+            </ion-button>
+            <ion-button [disabled]="languageCommunication.selectedLanguage === 'nl'" size="small"
+              (click)="presentModalSelectLang('nl')"
+              [color]="languageCommunication.selectedLanguage === 'nl' ? 'warning' : 'secondary'"
+              [fill]="languageCommunication.selectedLanguage === 'nl' ? 'outline' : 'solid'">
+              NL
+            </ion-button>
+          </ion-list>
+
+          <ion-item>
+            <ion-label>{{'User.AcceptNotification' | translate}}</ion-label>
+            <ion-checkbox name="accept-notification" [value]="acceptNotification" [checked]="acceptNotification"
+              color="secondary" (ionChange)="onChangeAcceptNotification($event)"></ion-checkbox>
+          </ion-item>
+        </div>
       </div>
     </ion-accordion>
   </ion-accordion-group>

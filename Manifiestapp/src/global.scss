@@ -95,6 +95,9 @@ ion-menu {
       ion-icon {
         color: var(--ion-color-dark-tint) !important;
       }
+      ion-label {
+        font-weight: bolder !important;
+      }
     }
 
     ion-item.selected {
@@ -128,29 +131,10 @@ ion-menu {
 
 .btn-lang-box {
   display: flex;
-  // padding-top: 0;
 
   ion-button {
     flex: 1;
   }
-
-  // button {
-  //   flex: 1;
-  //   background-color: var(--ion-color-primary);
-  //   padding: 12px 0;
-  //   font-size: 14px;
-  // }
-
-  // // bug with mobile, an weird css focus appear
-  // :focus {
-  //   outline: none;
-  //   box-shadow: none;
-  // }
-
-  // :disabled {
-  //   color: var(--ion-color-secondary);
-  //   border-bottom: solid var(--ion-color-secondary) 2px;
-  // }
 }
 
 .separator-line {
@@ -223,6 +207,10 @@ ion-menu {
 
 .tertiary-color {
   color: var(--ion-color-tertiary);
+}
+
+.font-italic {
+  font-size: italic;
 }
 
 .loading-block {
@@ -314,4 +302,8 @@ ion-tab-button {
     margin-left: 12px;
     margin-right: 12px;
   }
+}
+
+ion-accordion::part(header) {
+  font-style: italic;
 }
