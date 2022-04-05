@@ -16,7 +16,6 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-my-manifiesta',
   templateUrl: './my-manifiesta.page.html',
-  styleUrls: ['./my-manifiesta.page.scss'],
 })
 export class MyManifiestaPage implements OnDestroy {
   list: EventInterface[];

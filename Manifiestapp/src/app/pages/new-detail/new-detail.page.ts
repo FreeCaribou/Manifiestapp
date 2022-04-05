@@ -7,7 +7,6 @@ import { NewsListService } from 'src/app/shared/services/data/news-list/news-lis
 @Component({
   selector: 'app-new-detail',
   templateUrl: './new-detail.page.html',
-  styleUrls: ['./new-detail.page.scss'],
 })
 export class NewDetailPage {
   id: string;

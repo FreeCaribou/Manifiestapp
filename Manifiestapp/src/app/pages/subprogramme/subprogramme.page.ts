@@ -10,7 +10,6 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
 @Component({
   selector: 'app-subprogramme',
   templateUrl: './subprogramme.page.html',
-  styleUrls: ['./subprogramme.page.scss'],
 })
 export class SubprogrammePage {
   dayId: string;

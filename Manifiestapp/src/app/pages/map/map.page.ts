@@ -5,7 +5,6 @@ import { Layer, MapOptions } from 'leaflet';
 @Component({
   selector: 'app-map',
   templateUrl: './map.page.html',
-  styleUrls: ['./map.page.scss'],
 })
 export class MapPage {
 

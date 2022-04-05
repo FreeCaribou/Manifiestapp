@@ -5,7 +5,6 @@ import { NewsListService } from 'src/app/shared/services/data/news-list/news-lis
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
 })
 export class HomePage {
 

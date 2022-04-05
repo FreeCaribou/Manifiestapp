@@ -6,7 +6,6 @@ import { InfoListService } from 'src/app/shared/services/data/info-list/info-lis
 @Component({
   selector: 'app-programme',
   templateUrl: './programme.page.html',
-  styleUrls: ['./programme.page.scss'],
 })
 export class ProgrammePage {
   days: any[];
