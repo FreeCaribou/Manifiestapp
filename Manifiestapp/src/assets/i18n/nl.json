@@ -30,7 +30,8 @@
     "NotificationTitle": "",
     "NotificationSummary": "Een van je favoriete evenementen gaat beginnen !",
     "NotificationBody": "Het evenement {{event}} gaat beginnen om {{startDate}}",
-    "ConflictShifts": "Je hebt een conflict met sommige van je shift"
+    "ConflictShifts": "Je hebt een conflict met sommige van je shift",
+    "FavAdded": "Favoriet goed toegevoegd"
   },
   "Info": {
     "GeneralInfo": "Algemene informatie",

@@ -99,14 +99,28 @@ export class ProgrammeService implements IProgrammeService {
     const allNotif = await (await LocalNotifications.getPending()).notifications;
     if (event.favorite) {
       await this.verifyEventHourConflictForNewFav(event);
-      if (!allNotif.find(x => x.id == parseInt(event.id))) {
+      if (!allNotif.find(x => x.id === parseInt(event.id))) {
         await this.addOneEventNotif(event);
       }
+      // TODO see if we show an "is ok" toast
+      // Can be annoying for nothing
+      // await this.showOkNewFavoriteToast();
     } else {
       await this.cancelOneEventNotif(event, allNotif);
     }
 
     this.favoriteChangeEmit.emit(event);
+  }
+
+  async showOkNewFavoriteToast() {
+    const toast = await this.toastController.create({
+      message: await this.translate.get('Programme.FavAdded').toPromise(),
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+      duration: 1500,
+      position: 'top',
+    });
+    toast.present();
   }
 
   // TODO-refactor divide the code please ...
