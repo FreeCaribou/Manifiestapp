@@ -42,12 +42,12 @@
               "./node_modules/leaflet/dist/leaflet.css"
             ],
             "scripts": [],
-            "aot": false,
+            "aot": true,
             "vendorChunk": true,
             "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
+            "buildOptimizer": true,
+            "sourceMap": false,
+            "optimization": true,
             "namedChunks": true
           },
           "configurations": {
