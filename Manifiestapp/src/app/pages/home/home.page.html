@@ -8,13 +8,13 @@
   <!-- <div class="banner-picture-container">
   </div> -->
 
-  <div class="m-right-16 m-left-16">
+  <div class="m-right-medium m-left-medium">
     <h2 class="secondary-color disabled-margin home-main-text">{{'Info.HomeSubtitle' | translate }}</h2>
     <h1 class="primary-color disabled-margin home-main-text">MANIFIESTA</h1>
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
   </div>
 
-  <ion-grid *ngIf="!isNow" class="primary-color counter m-top-16 m-bt-16">
+  <ion-grid *ngIf="!isNow" class="primary-color counter m-top-medium m-bt-medium">
     <ion-row>
       <ion-col>Days <h1>{{diffDays}}</h1>
       </ion-col>
@@ -28,7 +28,7 @@
   </ion-grid>
 
   <!-- TODO find something to show here when the festival is now -->
-  <div *ngIf="isNow" class="m-right-16 m-left-16">
+  <div *ngIf="isNow" class="m-right-medium m-left-medium">
     
   </div>
 
@@ -41,12 +41,12 @@
       </div>
     </div> -->
 
-  <div class="m-right-16 m-left-16">
-    <div *ngIf="loadNews" class="m-top-16 loading-news">
+  <div class="m-right-medium m-left-medium">
+    <div *ngIf="loadNews" class="m-top-medium loading-news">
       <ion-spinner name="lines" color="primary"></ion-spinner>
     </div>
     <div *ngIf="!loadNews">
-      <ion-card *ngFor="let new of news" class="programme-card-body m-bt-16 fake-mouse-select" [routerLink]="['/new-detail', new.id]">
+      <ion-card *ngFor="let new of news" class="programme-card-body m-bt-medium fake-mouse-select" [routerLink]="['/new-detail', new.id]">
           <ion-thumbnail>
             <ion-img [src]="new.mainPictureUrl"></ion-img>
           </ion-thumbnail>
@@ -62,7 +62,7 @@
       </ion-card>
     </div>
 
-    <h6 *ngIf="news?.length === 0 && !loadNews" class="home-description-text m-top-16">{{'Info.HomePresentation' | translate }}</h6>
+    <h6 *ngIf="news?.length === 0 && !loadNews" class="home-description-text m-top-medium">{{'Info.HomePresentation' | translate }}</h6>
   </div>
   <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

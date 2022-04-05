@@ -18,7 +18,7 @@
       <div slot="content">
         <div *ngIf="list">
           <a [routerLink]="['/programme']">
-            <p *ngIf="list?.length === 0" class="m-right-16 m-left-16">{{ 'Programme.NoFavorites' | translate }}</p>
+            <p *ngIf="list?.length === 0" class="m-right-medium m-left-medium">{{ 'Programme.NoFavorites' | translate }}</p>
           </a>
           <div *ngIf="list?.length > 0">
             <!-- <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card> -->
@@ -41,7 +41,7 @@
 
         <form *ngIf="!isConnected && loginForm" [formGroup]="loginForm">
           <ion-grid>
-            <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-16 m-left-16"></p>
+            <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-medium m-left-medium"></p>
             <ion-item>
               <ion-label color="primary" position="stacked">
                 {{"User.Email" | translate}}
@@ -64,7 +64,7 @@
               <ion-icon slot="end" icon="person"></ion-icon>
             </ion-button>
 
-            <p *ngIf="hadLoginError" class="m-right-16 m-left-16">{{'User.ConnectionProblem' | translate}}</p>
+            <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
 
           </ion-grid>
         </form>
@@ -82,7 +82,7 @@
               </ion-label>
             </ion-item>
           </ion-list>
-          <ion-button color="danger" class="m-right-16 m-left-16" (click)="clickOnLogout()">Logout</ion-button>
+          <ion-button color="danger" class="m-right-medium m-left-medium" (click)="clickOnLogout()">Logout</ion-button>
         </div>
 
       </div>
@@ -97,7 +97,7 @@
         <ion-label>{{'General.Options' | translate }}</ion-label>
       </ion-item>
       <div slot="content">
-        <div class="m-right-16 m-left-16">
+        <div class="m-right-medium m-left-medium">
           <ion-list class="btn-lang-box">
             <ion-button [disabled]="languageCommunication.selectedLanguage === 'fr'" size="small"
               (click)="presentModalSelectLang('fr')"

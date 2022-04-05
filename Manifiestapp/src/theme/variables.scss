@@ -8,18 +8,20 @@
 
 @font-face {
   font-family: "Proxima Nova Bold";
-    src: url("../assets/font/proxima_ssv/MainProximaNovaBold.otf");
+  src: url("../assets/font/proxima_ssv/MainProximaNovaBold.otf");
 }
+
+$medium-size: 16px;
 
 /** Ionic CSS Variables **/
 :root {
   // Manifiesta primary 2022
   --ion-color-primary: #f18904;
-	--ion-color-primary-rgb: 241,137,4;
-	--ion-color-primary-contrast: #000000;
-	--ion-color-primary-contrast-rgb: 0,0,0;
-	--ion-color-primary-shade: #d47904;
-	--ion-color-primary-tint: #f2951d;
+  --ion-color-primary-rgb: 241, 137, 4;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #d47904;
+  --ion-color-primary-tint: #f2951d;
 
   // 2021
   // --ion-color-primary: #01b2b8;
@@ -30,20 +32,20 @@
   // --ion-color-primary-tint: #1ababf;
 
   // Secondary 2022
-	--ion-color-secondary: #00a9ac;
-	--ion-color-secondary-rgb: 0,169,172;
-	--ion-color-secondary-contrast: #ffffff;
-	--ion-color-secondary-contrast-rgb: 255,255,255;
-	--ion-color-secondary-shade: #009597;
-	--ion-color-secondary-tint: #1ab2b4;
+  --ion-color-secondary: #00a9ac;
+  --ion-color-secondary-rgb: 0, 169, 172;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #009597;
+  --ion-color-secondary-tint: #1ab2b4;
 
   // Tertiary 2022
-	--ion-color-tertiary: #e53329;
-	--ion-color-tertiary-rgb: 229,51,41;
-	--ion-color-tertiary-contrast: #ffffff;
-	--ion-color-tertiary-contrast-rgb: 255,255,255;
-	--ion-color-tertiary-shade: #ca2d24;
-	--ion-color-tertiary-tint: #e8473e;
+  --ion-color-tertiary: #e53329;
+  --ion-color-tertiary-rgb: 229, 51, 41;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #ca2d24;
+  --ion-color-tertiary-tint: #e8473e;
 
   // Tertiary/can be secondary 2021
   // --ion-color-tertiary: #7e2855;
@@ -53,26 +55,26 @@
   // --ion-color-tertiary-shade: #6f234b;
   // --ion-color-tertiary-tint: #8b3e66;
 
-	--ion-color-success: #28ba62;
-	--ion-color-success-rgb: 40,186,98;
-	--ion-color-success-contrast: #000000;
-	--ion-color-success-contrast-rgb: 0,0,0;
-	--ion-color-success-shade: #23a456;
-	--ion-color-success-tint: #3ec172;
+  --ion-color-success: #28ba62;
+  --ion-color-success-rgb: 40, 186, 98;
+  --ion-color-success-contrast: #000000;
+  --ion-color-success-contrast-rgb: 0, 0, 0;
+  --ion-color-success-shade: #23a456;
+  --ion-color-success-tint: #3ec172;
 
-	--ion-color-warning: #e0ac08;
-	--ion-color-warning-rgb: 224,172,8;
-	--ion-color-warning-contrast: #000000;
-	--ion-color-warning-contrast-rgb: 0,0,0;
-	--ion-color-warning-shade: #c59707;
-	--ion-color-warning-tint: #e3b421;
+  --ion-color-warning: #e0ac08;
+  --ion-color-warning-rgb: 224, 172, 8;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #c59707;
+  --ion-color-warning-tint: #e3b421;
 
-	--ion-color-danger: #cf3c4f;
-	--ion-color-danger-rgb: 207,60,79;
-	--ion-color-danger-contrast: #ffffff;
-	--ion-color-danger-contrast-rgb: 255,255,255;
-	--ion-color-danger-shade: #b63546;
-	--ion-color-danger-tint: #d45061;
+  --ion-color-danger: #cf3c4f;
+  --ion-color-danger-rgb: 207, 60, 79;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #b63546;
+  --ion-color-danger-tint: #d45061;
 
   --ion-color-dark: #222428;
   --ion-color-dark-rgb: 34, 36, 40;
@@ -121,6 +123,7 @@
 // disabled for the moment dark mode because
 // bug in Android phone
 // not yet idea to good dark mode
+
 
 // @media (prefers-color-scheme: dark) {
 //   /*
@@ -279,5 +282,3 @@
 //     --ion-card-background: #1e1e1e;
 //   }
 // }
-
-

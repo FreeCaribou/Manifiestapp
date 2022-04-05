@@ -25,6 +25,8 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import "./theme/variables.scss";
+
 * {
   --ion-font-family: "Proxima Nova";
 }
@@ -92,9 +94,11 @@ ion-menu {
   ion-menu-toggle {
     ion-item {
       color: var(--ion-color-dark-tint);
+
       ion-icon {
         color: var(--ion-color-dark-tint) !important;
       }
+
       ion-label {
         font-weight: bolder !important;
       }
@@ -114,6 +118,7 @@ ion-menu {
       ion-label {
         color: var(--ion-color-secondary) !important;
       }
+
       ion-icon {
         color: var(--ion-color-secondary) !important;
       }
@@ -142,18 +147,17 @@ ion-menu {
   border-bottom: solid var(--ion-color-primary) 1px;
 }
 
+
 .programme-card-body {
   margin: 0;
   height: 100%;
 
+  // WARNING
+  // the height value of this must be the value of the top of the .ion-fab-event-card-fav + 50
   ion-thumbnail {
     height: 150px;
     width: 100%;
   }
-
-  // ::part(image) {
-  //   height: 150px;
-  // }
 
   ion-card-header {
     padding: 0 5px;
@@ -173,24 +177,30 @@ ion-menu {
   }
 }
 
-.m-16 {
-  margin: 16px;
+// WARNING
+// the top value of this must be the value of the height of the ion-thumbnail of the event card - 50
+.ion-fab-event-card-fav {
+  top: 100px;
 }
 
-.m-bt-16 {
-  margin-bottom: 16px;
+.m-medium {
+  margin: $medium-size;
 }
 
-.m-top-16 {
-  margin-top: 16px;
+.m-bt-medium {
+  margin-bottom: $medium-size;
 }
 
-.m-left-16 {
-  margin-left: 16px;
+.m-top-medium {
+  margin-top: $medium-size;
 }
 
-.m-right-16 {
-  margin-right: 16px;
+.m-left-medium {
+  margin-left: $medium-size;
+}
+
+.m-right-medium {
+  margin-right: $medium-size;
 }
 
 .disabled-margin {
@@ -242,6 +252,7 @@ ion-tab-button {
   --color-selected: var(--ion-color-secondary);
   --color-focused: var(--ion-color-secondary);
 }
+
 .custom-tab-selected {
   color: var(--ion-color-secondary) !important;
 }

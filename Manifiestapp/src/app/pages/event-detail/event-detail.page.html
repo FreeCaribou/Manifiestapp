@@ -4,7 +4,7 @@
   <div *ngIf="event">
     <img [src]="event.mainPictureUrl" width="100%" />
 
-    <div class="m-right-16 m-left-16">
+    <div class="m-right-medium m-left-medium">
       <h3 class="secondary-color disabled-margin" [innerHtml]="event.headline"></h3>
 
       <div class="event-detail-maininfo">
@@ -16,8 +16,8 @@
             {{event.startDate | simpleDatePipe:true}} - {{event.endDate | simpleDatePipe:true}}
           </h5>
         </div>
-        <ion-icon (click)="onCardHeartClick(event)" color="tertiary" [name]="event.favorite ? 'heart' : 'heart-outline'">
-        </ion-icon>
+        <!-- <ion-icon (click)="onCardHeartClick(event)" color="tertiary" [name]="event.favorite ? 'heart' : 'heart-outline'">
+        </ion-icon> -->
       </div>
 
       <p [innerHtml]="event.content.rendered"></p>
@@ -31,8 +31,16 @@
 
       <hr>
     </div>
+
   </div>
 
   <div *ngIf="options" class="event-detail-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
   </div>
+
+  
+  <ion-fab *ngIf="event" vertical="bottom" horizontal="end" slot="fixed" (click)="onCardHeartClick(event)">
+    <ion-fab-button color="tertiary">
+      <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

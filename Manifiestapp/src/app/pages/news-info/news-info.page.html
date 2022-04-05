@@ -1,8 +1,8 @@
 <app-header [title]="'News'"></app-header>
 
 <ion-content>
-  <div class="m-right-16 m-left-16 m-top-16">
-    <ion-card *ngFor="let new of list" class="programme-card-body m-bt-16 fake-mouse-select"
+  <div class="m-right-medium m-left-medium m-top-medium">
+    <ion-card *ngFor="let new of list" class="programme-card-body m-bt-medium fake-mouse-select"
       [routerLink]="['/new-detail', new.id]">
       <ion-thumbnail>
         <ion-img [src]="new.mainPictureUrl"></ion-img>

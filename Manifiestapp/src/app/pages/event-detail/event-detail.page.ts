@@ -43,7 +43,7 @@ export class EventDetailPage {
             this.event.position.lng,
             `${this.event.title} - ${this.event.description}`,
             this.event.id)
-        ]
+        ];
       }
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
 
