@@ -1,8 +1,6 @@
-<ion-list *ngFor="let events of list">
+<ion-list *ngFor="let events of list" lines="none">
 
-  <ion-list-header>
-    <ion-label>{{ events.day | date:'EEEE dd LLLL' }}</ion-label>
-  </ion-list-header>
+  <ion-label class="m-left-medium">{{ events.day | date:'EEEE dd LLLL':'':translate.currentLang }}</ion-label>
 
   <ion-item *ngFor="let event of events.events">
     <ion-avatar [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
@@ -17,7 +15,7 @@
           {{event.startDate | simpleDatePipe:true}} - {{event.endDate |
           simpleDatePipe:true}} <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning">
           </ion-icon>
-        </span> - <span class="primary-color">{{event.localisation?.name}}</span>
+        </span> - <span class="medium-color">{{event.localisation?.name}}</span>
       </h3>
     </ion-label>
     <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="tertiary"

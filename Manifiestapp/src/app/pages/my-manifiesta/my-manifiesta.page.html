@@ -40,6 +40,9 @@
       <div slot="content">
 
         <form *ngIf="!isConnected && loginForm" [formGroup]="loginForm">
+
+          <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-medium m-left-medium"></p>
+
           <ion-grid>
             <ion-item>
               <ion-label color="primary" position="stacked">
@@ -65,7 +68,7 @@
 
             <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
 
-            <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-medium m-left-medium"></p>
+            <p [innerHtml]="'User.SignupBeeple' | translate" class="m-right-medium m-left-medium"></p>
 
           </ion-grid>
         </form>

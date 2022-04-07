@@ -1,3 +1,4 @@
+import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
@@ -7,6 +8,8 @@ import { environment } from 'src/environments/environment';
 import { NotificationEventEnum } from './shared/models/NotificationEvent.enum';
 import { LanguageCommunicationService } from './shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from './shared/services/communication/loading.communication.service';
+import localeFr from '@angular/common/locales/fr';
+import localeNl from '@angular/common/locales/nl';
 
 @Component({
   selector: 'app-root',
@@ -60,6 +63,8 @@ export class AppComponent implements OnInit {
   }
 
   async init() {
+    registerLocaleData(localeFr);
+    registerLocaleData(localeNl);
     this.languageCommunication.init();
     console.log('You use the platform: ',
     this.platform.platforms(),

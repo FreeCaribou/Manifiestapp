@@ -265,10 +265,10 @@ export class ProgrammeService implements IProgrammeService {
 
   verifyConflictBetweenToRangeOfDate(a, b): boolean {
     return (
-      moment(a.startDate).isBetween(b.startDate, b.endDate, 'minutes', '[]')
-      || moment(a.endDate).isBetween(b.startDate, b.endDate, 'minutes', '[]')
-      || (moment(a.startDate).isSameOrAfter(b.startDate) && moment(a.endDate).isSameOrBefore(b.endDate))
-      || (moment(a.startDate).isSameOrBefore(b.startDate) && moment(a.endDate).isSameOrAfter(b.endDate))
+      moment(a.startDate).isBetween(b.startDate, b.endDate, 'minutes', '()')
+      || moment(a.endDate).isBetween(b.startDate, b.endDate, 'minutes', '()')
+      || (moment(a.startDate).isAfter(b.startDate) && moment(a.endDate).isBefore(b.endDate))
+      || (moment(a.startDate).isBefore(b.startDate) && moment(a.endDate).isAfter(b.endDate))
     );
   }
 
@@ -281,7 +281,6 @@ export class ProgrammeService implements IProgrammeService {
   mapListEventToDayListEvent(events: EventInterface[]): DayListEventInterface[] {
     const dayListEvent = [];
     events.forEach(e => {
-      console.log('hhhh', e.startDate.toISOString().slice(0, 10))
       const index = dayListEvent.findIndex(x => e.startDate.toISOString().slice(0, 10) === x?.day?.toISOString().slice(0, 10));
       if (index > -1) {
         dayListEvent[index].events.push(e);
@@ -294,11 +293,6 @@ export class ProgrammeService implements IProgrammeService {
     });
 
     return dayListEvent;
-
-    return [{
-      day: new Date(),
-      events
-    }];
   }
 
 

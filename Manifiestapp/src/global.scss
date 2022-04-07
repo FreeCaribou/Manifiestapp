@@ -326,3 +326,7 @@ ion-tab-button {
 ion-accordion::part(header) {
   font-style: italic;
 }
+
+ion-tab-bar {
+  padding-top: unset !important;
+}

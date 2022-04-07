@@ -1,6 +1,6 @@
 # MANIFIESTAPP
 
-Manifiesta is a festival that takes place every year in September in Belgium, the festival of solidarity, with concerts, debates or artistic activities.
+ManiFiesta is a festival that takes place every year in September in Belgium, the festival of solidarity, with concerts, debates or artistic activities.
 
 Here is the official mobile app allowing first of all to see the programme more easily and to put your favourites there.
 

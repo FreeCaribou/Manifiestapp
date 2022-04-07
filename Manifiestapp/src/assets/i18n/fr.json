@@ -18,7 +18,7 @@
     "Sunday": "Dimanche",
     "BuyTicket": "Acheter le ticket",
     "Playlist": "Playlist",
-    "MyManifiesta": "Mon Manifiesta",
+    "MyManifiesta": "Mon ManiFiesta",
     "News": "Dernières nouvelles"
   },
   "Programme": {
@@ -38,7 +38,7 @@
     "HowToCome": "Comment venir ?",
     "Rules": "Règlement",
     "Contact": "Contact",
-    "HomeSubtitle": "Fête de la solidarité",
+    "HomeSubtitle": "Fête de la Solidarité",
     "HomePresentation": "Pendant deux jours, refaisons le monde tel qu'il devrait être. Un monde dans lequel nous nous engageons ensemble pour imaginer les alternatives du futur. Nous y parlons la langue de la solidarité et de la diversité ! La langue des 99%, pas la langue de l'argent.",
     "Date": "17-18 septembre 2022 Hippordrome Ostende"
   },
@@ -48,12 +48,13 @@
     "Email": "Email",
     "AcceptNotification": "Accepter les notifications",
     "ConnectionProblem": "Si c'est votre première inscription, il se peut que la synchronisation n'est pas encore faite, veuillez attendre 2 - 3 jours, nous nous excusons du soucis.",
-    "ConnectionBeeple": "Connectez vous avec vos identifiants de bénévoles Manifiesta pour voir ici vos horaires. <a href='https://volunteers.manifiesta.be/'>Si vous voulez vous inscrire ou changer votre mot de passe, c'est ici !</a>"
+    "ConnectionBeeple": "Connectez vous avec vos identifiants de bénévole ManiFiesta pour voir ici vos tâches.",
+    "SignupBeeple": "<a href='https://volunteers.manifiesta.be/'>Si vous voulez vous inscrire, c'est ici !</a>"
   },
   "Error": {
     "Generic": "Une erreur s'est produite",
     "auth-bad-combination": "Vous n'avez pas rentré le bon email ou mot de passe, ou vous n'êtes pas encore inscrit",
-    "auth-bad-authentification": "Vous n'êtes pas encore inscrit au bénévolat Manifiesta ?",
+    "auth-bad-authentification": "Vous n'êtes pas encore inscrit au bénévolat ManiFiesta ?",
     "auth-bad-body": "La formulaire est mal envoyé",
     "enrolments-get-fail": "Il y a une erreur pour accéder à vos shifts",
     "cors-bridge-fail": "Il y a une erreur pour accéder aux informations demandées"

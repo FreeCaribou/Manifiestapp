@@ -5,7 +5,7 @@
     "All": "Alle",
     "Filters": "Filters",
     "Options": "Opties",
-    "ShiftsVolunteers": "Vrijwilligersuren"
+    "ShiftsVolunteers": "Jouw vrijwilligerstaken"
   },
   "Menu": {
     "Home": "Home",
@@ -18,7 +18,7 @@
     "Sunday": "Zondag",
     "BuyTicket": "Koop het ticket",
     "Playlist": "Playlist",
-    "MyManifiesta": "Mijn Manifiesta",
+    "MyManifiesta": "Mijn ManiFiesta",
     "News": "Nieuws"
   },
   "Programme": {
@@ -38,7 +38,7 @@
     "HowToCome": "Hoe te komen ?",
     "Rules": "Regels",
     "Contact": "Contact",
-    "HomeSubtitle": "Feest van de solidariteit",
+    "HomeSubtitle": "Feest van de Solidariteit",
     "HomePresentation": "Laten we twee dagen lang opnieuw bouwen aan een wereld zoals hij zou moeten zijn. Een wereld waarin we ons samen inzetten om de alternatieven van de toekomst te bedenken. Wij spreken de taal van solidariteit en diversiteit! De taal van de 99%, niet de taal van het geld.",
     "Date": "17-18 september 2022 Hippodroom Oostende"
   },
@@ -48,12 +48,13 @@
     "Email": "Email",
     "AcceptNotification": "Aankondigingen accepteren",
     "ConnectionProblem": "Als dit uw eerste registratie is, kan het zijn dat de synchronisatie nog niet is voltooid, wacht 2-3 dagen, onze excuses voor de zorgen.",
-    "ConnectionBeeple": "Log in met uw Manifiesta vrijwilligers inloggegevens om uw shifts hier te bekijke. <a href='https://volunteers.manifiesta.be/'>Als u zich wilt registreren of uw wachtwoord wilt wijzigen, is het hier!<a>"
+    "ConnectionBeeple": "Log je hier in met je vrijwilligersgegens als je wil dat je vrijwilligerstaken hier verschijnen.",
+    "SignupBeeple": "<a href='https://volunteers.manifiesta.be/'>Cliquez ici si vous souhaitez vous inscrire comme bénévole à ManiFiesta.<a>"
   },
   "Error": {
     "Generic": "Een fout opgetreden",
     "auth-bad-combination": "Je hebt niet het juiste e-mailadres of wachtwoord ingevoerd, of je hebt je nog niet geregistreerd",
-    "auth-bad-authentification": "Heb je je nog niet aangemeld voor vrijwilligerswerk bij Manifiesta ?",
+    "auth-bad-authentification": "Heb je je nog niet aangemeld voor vrijwilligerswerk bij ManiFiesta ?",
     "auth-bad-body": "Het formulier is verkeerd verzonden",
     "enrolments-get-fail": "Er is een fout opgetreden bij het openen van uw diensten",
     "cors-bridge-fail": "Er is een fout opgetreden bij het openen van de gevraagde informatie"
