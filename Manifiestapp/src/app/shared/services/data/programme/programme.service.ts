@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators'
-import { EventInterface } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
 import { IProgrammeService } from './programme.service.interface';
@@ -48,9 +48,6 @@ export class ProgrammeService implements IProgrammeService {
     );
   }
 
-  // TODO Important make a subdivision by day here !
-  // So we will have a list of a list, one list by day
-  // The purpose is to not reshow at each item the date day but only the date hour
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
     let shiftsList = [];
     return this.getFavoriteId().length > 0 ?
@@ -279,6 +276,29 @@ export class ProgrammeService implements IProgrammeService {
     return events.sort((a, b) => {
       return a.startDate?.getTime() - b.startDate?.getTime();
     });
+  }
+
+  mapListEventToDayListEvent(events: EventInterface[]): DayListEventInterface[] {
+    const dayListEvent = [];
+    events.forEach(e => {
+      console.log('hhhh', e.startDate.toISOString().slice(0, 10))
+      const index = dayListEvent.findIndex(x => e.startDate.toISOString().slice(0, 10) === x?.day?.toISOString().slice(0, 10));
+      if (index > -1) {
+        dayListEvent[index].events.push(e);
+      } else {
+        dayListEvent.push({
+          day: new Date(e.startDate.toISOString().slice(0, 10)),
+          events: [e]
+        });
+      }
+    });
+
+    return dayListEvent;
+
+    return [{
+      day: new Date(),
+      events
+    }];
   }
 
 

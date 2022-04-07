@@ -1,7 +1,10 @@
-import { EventDayEnum } from "./EventDay.enum";
-
 export interface RenderedInterface {
   rendered: string;
+}
+
+export interface DayListEventInterface {
+  day: Date;
+  events: EventInterface[];
 }
 
 export interface EventInterface {

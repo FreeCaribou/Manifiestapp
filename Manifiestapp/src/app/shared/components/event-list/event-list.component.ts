@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EventInterface } from '../../models/Event.interface';
+import { DayListEventInterface, EventInterface } from '../../models/Event.interface';
 import { ProgrammeService } from '../../services/data/programme/programme.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ProgrammeService } from '../../services/data/programme/programme.servic
 })
 export class EventListComponent {
   @Input()
-  list: EventInterface[];
+  list: DayListEventInterface[];
   @Input()
   dateJustWithHour = true;
 

@@ -5,7 +5,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
-import { EventInterface } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './my-manifiesta.page.html',
 })
 export class MyManifiestaPage implements OnDestroy {
-  list: EventInterface[];
+  list: DayListEventInterface[];
   favorieChangeEmit: Subscription;
   dateJustWithHour = false;
   haveConflict = false;
@@ -90,8 +90,8 @@ export class MyManifiestaPage implements OnDestroy {
   fetchFavoriteProgramme() {
     this.loadingCommunication.changeLoaderTo(true);
     this.programmeService.getFavoriteProgramme().subscribe(data => {
-      this.list = data;
-      this.haveConflict = this.list.findIndex(e => e.inFavoriteConflict) > -1;
+      this.list = this.programmeService.mapListEventToDayListEvent(data);
+      this.haveConflict = data.findIndex(e => e.inFavoriteConflict) > -1;
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
