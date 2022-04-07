@@ -38,6 +38,8 @@ export class ProgrammeService implements IProgrammeService {
     );
   }
 
+  // TODO find a way to cache that, see info-list for example
+  // But the filter must not be cache
   getAllProgrammeFilter(day: string[], venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]> {
     return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId).pipe(
       map(e => this.mapArrayRawWpDataToClearData(e)),
@@ -46,6 +48,9 @@ export class ProgrammeService implements IProgrammeService {
     );
   }
 
+  // TODO Important make a subdivision by day here !
+  // So we will have a list of a list, one list by day
+  // The purpose is to not reshow at each item the date day but only the date hour
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
     let shiftsList = [];
     return this.getFavoriteId().length > 0 ?

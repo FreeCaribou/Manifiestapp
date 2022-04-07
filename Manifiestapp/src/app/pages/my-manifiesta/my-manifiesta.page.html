@@ -41,7 +41,6 @@
 
         <form *ngIf="!isConnected && loginForm" [formGroup]="loginForm">
           <ion-grid>
-            <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-medium m-left-medium"></p>
             <ion-item>
               <ion-label color="primary" position="stacked">
                 {{"User.Email" | translate}}
@@ -54,7 +53,7 @@
               <ion-label color="primary" position="stacked">
                 {{"User.Password" | translate}}
               </ion-label>
-              <ion-input clearInput type="password" formControlName="password" required placeholder="azerty1234">
+              <ion-input clearInput type="password" formControlName="password" required placeholder="azerty1234" clearOnEdit="false">
               </ion-input>
             </ion-item>
 
@@ -65,6 +64,8 @@
             </ion-button>
 
             <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
+
+            <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-medium m-left-medium"></p>
 
           </ion-grid>
         </form>

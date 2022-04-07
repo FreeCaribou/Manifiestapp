@@ -183,6 +183,10 @@ ion-menu {
   top: 100px;
 }
 
+.m-left-small {
+  margin-left: $small-size;
+}
+
 .m-medium {
   margin: $medium-size;
 }
@@ -217,6 +221,10 @@ ion-menu {
 
 .tertiary-color {
   color: var(--ion-color-tertiary);
+}
+
+.medium-color {
+  color: var(--ion-color-medium);
 }
 
 .font-italic {
