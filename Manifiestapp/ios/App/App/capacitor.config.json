@@ -1,0 +1,12 @@
+{
+	"appId": "be.manifiesta.app",
+	"appName": "ManiFiestapp",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"LocalNotifications": {
+			"smallIcon": "small_icon",
+			"iconColor": "#f18904"
+		}
+	}
+}
