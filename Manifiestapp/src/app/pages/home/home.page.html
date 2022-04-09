@@ -4,7 +4,7 @@
 
   <!-- TODO see with the size of the screen
   The picture is good on phone screen but on tablette, pc or landscape, it will be to much -->
-  <img alt="manifiesta-front-page-2022" width="100%" src="assets/pictures/front-page.jpg" class="not-present-small"/>
+  <img alt="manifiesta-front-page-2022" width="100%" src="assets/pictures/front-page.jpg" class="not-present-small" />
   <div class="banner-picture-container not-present-big">
   </div>
 
@@ -14,7 +14,7 @@
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
   </div>
 
-  <ion-grid *ngIf="!isNow" class="primary-color counter m-top-medium m-bt-medium">
+  <!-- <ion-grid *ngIf="!isNow" class="primary-color counter m-top-medium m-bt-medium">
     <ion-row>
       <ion-col>Days <h1>{{diffDays}}</h1>
       </ion-col>
@@ -25,11 +25,11 @@
       <ion-col>S. <h1>{{diffSeconds}}</h1>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid> -->
 
   <!-- TODO find something to show here when the festival is now -->
-  <div *ngIf="isNow" class="m-right-medium m-left-medium">
-    
+  <div *ngIf="!isNow" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
+    <h1>{{'General.Welcome' | translate}}</h1>
   </div>
 
   <!-- <div class="facebook-container">
@@ -42,27 +42,29 @@
     </div> -->
 
   <div class="m-right-medium m-left-medium">
-    <div *ngIf="loadNews" class="m-top-medium loading-news">
+    <div *ngIf="loadNews" class="m-top-medium text-align">
       <ion-spinner name="lines" color="primary"></ion-spinner>
     </div>
     <div *ngIf="!loadNews">
-      <ion-card *ngFor="let new of news" class="programme-card-body m-bt-medium fake-mouse-select" [routerLink]="['/new-detail', new.id]">
-          <ion-thumbnail>
-            <ion-img [src]="new.mainPictureUrl"></ion-img>
-          </ion-thumbnail>
+      <ion-card *ngFor="let new of news" class="programme-card-body m-bt-medium fake-mouse-select"
+        [routerLink]="['/new-detail', new.id]">
+        <ion-thumbnail>
+          <ion-img [src]="new.mainPictureUrl"></ion-img>
+        </ion-thumbnail>
 
-          <ion-card-header>
-            <ion-card-subtitle>
-            </ion-card-subtitle>
-            <ion-card-title [innerHtml]="new.headline" color="secondary"></ion-card-title>
-          </ion-card-header>
+        <ion-card-header>
+          <ion-card-subtitle>
+          </ion-card-subtitle>
+          <ion-card-title [innerHtml]="new.headline" color="secondary"></ion-card-title>
+        </ion-card-header>
 
         <ion-card-content [innerHtml]="new.shortText">
         </ion-card-content>
       </ion-card>
     </div>
 
-    <h6 *ngIf="news?.length === 0 && !loadNews" class="home-description-text m-top-medium">{{'Info.HomePresentation' | translate }}</h6>
+    <h6 *ngIf="news?.length === 0 && !loadNews" class="home-description-text m-top-medium">{{'Info.HomePresentation' |
+      translate }}</h6>
   </div>
   <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
   frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

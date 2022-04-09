@@ -1,7 +1,8 @@
 {
   "General": {
     "HelloWorld": "Hallo Wereld",
-    "Welcome": "Welkom op het feest van de solidariteit",
+    "WelcomeSolidarity": "Welkom op het feest van de solidariteit",
+    "Welcome": "Welkom !",
     "All": "Alle",
     "Filters": "Filters",
     "Options": "Opties",
