@@ -14,7 +14,7 @@
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
   </div>
 
-  <!-- <ion-grid *ngIf="!isNow" class="primary-color counter m-top-medium m-bt-medium">
+  <ion-grid *ngIf="!isNow" class="primary-color counter m-top-medium m-bt-medium">
     <ion-row>
       <ion-col>Days <h1>{{diffDays}}</h1>
       </ion-col>
@@ -25,10 +25,10 @@
       <ion-col>S. <h1>{{diffSeconds}}</h1>
       </ion-col>
     </ion-row>
-  </ion-grid> -->
+  </ion-grid>
 
   <!-- TODO find something to show here when the festival is now -->
-  <div *ngIf="!isNow" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
+  <div *ngIf="isNow" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
     <h1>{{'General.Welcome' | translate}}</h1>
   </div>
 
