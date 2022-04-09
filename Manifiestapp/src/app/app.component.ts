@@ -29,7 +29,9 @@ export class AppComponent implements OnInit {
 
   subBackButton: Subscription;
   subRouter: Subscription;
-  showPlaylistButton = true;
+
+  showNewsletterButton = true;
+  pagesToShowNewsletterButton = ['/home', '/news-info', '/new-detail']
 
   openLangModal = false;
 
@@ -60,6 +62,7 @@ export class AppComponent implements OnInit {
     this.languageCommunication.langHasChangeEvent.subscribe(l => {
       this.menu.close();
     });
+
   }
 
   async init() {
@@ -76,7 +79,7 @@ export class AppComponent implements OnInit {
     ];
     this.subRouter = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        this.showPlaylistButton = !event.urlAfterRedirects.includes('/manifiesta-playlist');
+        this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => event.urlAfterRedirects.includes(x)) > -1;
 
         this.subBackButton?.unsubscribe();
         if (!pageWithoutBackButton.find(x => event.urlAfterRedirects.includes(x))) {
