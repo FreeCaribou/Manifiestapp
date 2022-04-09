@@ -1,6 +1,6 @@
 {
-  "appId": "be.manifiesta.app",
-  "appName": "ManiFiestapp",
+  "appId": "be.mymanifiesta.app",
+  "appName": "My ManiFiesta",
   "webDir": "www",
   "bundledWebRuntime": false,
 

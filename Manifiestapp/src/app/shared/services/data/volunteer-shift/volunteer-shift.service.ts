@@ -31,7 +31,7 @@ export class VolunteerShiftService {
   }
 
   login(session): Observable<any> {
-    session.display = 'ManifiestApp'
+    session.display = 'MyManifiesta'
     return this.httpClient.post(`${environment.beepleBridgeUrl}auth`, { session }).pipe(
       tap(data => {
         localStorage.setItem(LocalStorageEnum.BeepleId, data.id);

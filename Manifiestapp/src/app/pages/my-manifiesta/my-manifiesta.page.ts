@@ -128,7 +128,7 @@ export class MyManifiestaPage implements OnDestroy {
 
   buildLoginForm() {
     return this.formBuilder.group({
-      email: [environment.dataMock ? 'samy.gnu@manifiestapp.be' : '', [Validators.required]],
+      email: [environment.dataMock ? 'samy.gnu@mymanifiesta.be' : '', [Validators.required]],
       password: [environment.dataMock ? 'babyDontHurtMeNoMore' : '', Validators.required],
     });
   }
