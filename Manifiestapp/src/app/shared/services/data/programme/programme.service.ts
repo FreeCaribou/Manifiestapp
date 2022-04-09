@@ -14,6 +14,7 @@ import { ToastController } from '@ionic/angular';
 import { VolunteerShiftService } from '../volunteer-shift/volunteer-shift.service';
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
+import { LanguageCommunicationService } from '../../communication/language.communication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,13 @@ export class ProgrammeService implements IProgrammeService {
     private service: ProgrammeDataService,
     private volunteerShiftService: VolunteerShiftService,
     private toastController: ToastController,
-    private translate: TranslateService
-  ) { }
+    private translate: TranslateService,
+    private languageService: LanguageCommunicationService,
+  ) {
+    this.languageService.langHasChangeEvent.subscribe(e => {
+      this.resetListCache();
+    })
+  }
 
   getAllProgramme(): Observable<EventInterface[]> {
     return this.service.getAllProgramme().pipe(
@@ -38,14 +44,30 @@ export class ProgrammeService implements IProgrammeService {
     );
   }
 
-  // TODO find a way to cache that, see info-list for example
-  // But the filter must not be cache
-  getAllProgrammeFilter(day: string[], venuesId?: string[], organizersId?: string[], eventCategoriesId?: string[]): Observable<EventInterface[]> {
-    return this.service.getAllProgrammeFilter(day, venuesId, organizersId, eventCategoriesId).pipe(
-      map(e => this.mapArrayRawWpDataToClearData(e)),
-      map(e => this.mapToFavorite(e)),
-      map(e => this.mapOrderByStartDate(e)),
-    );
+  programmes: { days: string, list: EventInterface[] }[] = [];
+  getAllProgrammeFilter(day: string[], locatiesId?: string[], categoriesId?: string[], organizersId?: string[]): Observable<EventInterface[]> {
+    const programmesCacheIndex = this.programmes.findIndex(x => x.days === day.toString() && x.list);
+    if (programmesCacheIndex === -1) {
+      return this.service.getAllProgrammeFilter(day, locatiesId, categoriesId, organizersId).pipe(
+        map(e => this.mapArrayRawWpDataToClearData(e)),
+        map(e => this.mapToFavorite(e)),
+        map(e => this.mapOrderByStartDate(e)),
+        tap(e => {
+          if (!locatiesId && !organizersId && !categoriesId) {
+            this.programmes.push({ days: day.toString(), list: e })
+          }
+        }),
+      );
+    } else {
+      let tmpProgrammes = this.programmes[programmesCacheIndex].list;
+      if (locatiesId) {
+        tmpProgrammes = tmpProgrammes.filter(x => locatiesId.find(y => y.toString() === x.localisation.id.toString()));
+      }
+      if (categoriesId) {
+        tmpProgrammes = tmpProgrammes.filter(x => categoriesId.find(y => y.toString() === x.category.id.toString()));
+      }
+      return of(tmpProgrammes);
+    }
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
@@ -76,6 +98,10 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   // no data call method
+
+  resetListCache() {
+    this.programmes = [];
+  }
 
   getFavoriteId(): string[] {
     return localStorage.getItem(LocalStorageEnum.FavoriteId)?.split(',') || [];

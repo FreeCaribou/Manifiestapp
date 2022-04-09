@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { environment } from 'src/environments/environment';
@@ -44,18 +45,43 @@ export class ProgrammeDataService implements IProgrammeService {
       params = params.append('programmacategorie', categoriesId.toString());
     }
 
-    return this.baseService.get(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`);
-    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`);
+    return this.fetchWordPressListPage(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`, 1, []);
+    return this.baseService.get(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}&per_page=2`);
+    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}&per_page=100`);
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
-    return this.baseService.get(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
-    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
+    return this.fetchWordPressListPage(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`, 1, []);
+    return this.baseService.get(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}&per_page=100`);
+    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}&per_page=100`);
   }
 
   getEvent(id: string): Observable<EventInterface> {
     return this.baseService.get(`${this.baseUrl}/${id}?_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
     return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}?_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
+  }
+
+  // WordPress can return max 100 items per call
+  // More and we have a fail result
+  // But we have the attributes page to parcours the page
+  // Here we parcours in a recursive method the page
+  // If the result is not an array, is that we are at the end and we return the lastArray
+  // If the length of the result is lesser than the maxPerPage, is that we are also at the end so we return a merge of the lastArray and the respons
+  fetchWordPressListPage(url, count = 1, lastArray: EventInterface[] = [], maxPerPage = 2): Observable<EventInterface[]> {
+    let arrayToReturn: EventInterface[] = lastArray;
+    return this.baseService.get(`${url}&page=${count}`).pipe(
+      switchMap(e => {
+        if (!Array.isArray(e)) {
+          return of(lastArray);
+        }
+        arrayToReturn = arrayToReturn.concat(e);
+        if (e.length === maxPerPage) {
+          return this.fetchWordPressListPage(url, count + 1, arrayToReturn);
+        } else {
+          return of(arrayToReturn);
+        }
+      })
+    );
   }
 
 }

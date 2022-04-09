@@ -25,10 +25,12 @@ export class NewsListService {
 
   news: NewInfoInterface[];
   // sticky = important in the wordpress language
+  // TODO find a way to cache that
+  // But beware of the sticky or not
   getInfos(onlySticky = false): Observable<NewInfoInterface[]> {
     if (!this.news || this.news.length === 0) {
       return this.baseService.get(
-        `${this.baseUrl}?_embed=wp:featuredmedia&lang=${this.languageService.selectedLanguage}${onlySticky ? '&sticky=true' : ''}`
+        `${this.baseUrl}?_embed=wp:featuredmedia&lang=${this.languageService.selectedLanguage}${onlySticky ? '&sticky=true' : ''}&per_page=100`
       ).pipe(
         map(data => { return data.map(e => { return this.mapRawWpDataToClearData(e) }); }),
         tap(n => { this.news = n })
@@ -40,7 +42,7 @@ export class NewsListService {
 
   getInfo(id: string): Observable<NewInfoInterface> {
     return this.baseService.get(
-      `${this.baseUrl}/${id}?_embed=wp:featuredmedia&lang=${this.languageService.selectedLanguage}`
+      `${this.baseUrl}/${id}?_embed=wp:featuredmedia&lang=${this.languageService.selectedLanguage}&per_page=100`
     ).pipe(
       map(n => this.mapRawWpDataToClearData(n))
     );

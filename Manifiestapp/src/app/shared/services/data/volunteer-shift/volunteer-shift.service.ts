@@ -16,15 +16,22 @@ export class VolunteerShiftService {
   ) { }
 
   // TODO-refactor maybe also a mapping of data here ?
+  shifts: any[];
   getShifts(): Observable<any[]> {
     if (this.isConnectedToBeeple()) {
-      return this.httpClient.get<any[]>(
-        `${environment.beepleBridgeUrl}collaborators/${this.getBeepleVolunteerId()}/enrolments`,
-        { headers: { Token: this.getBeepleVolunteerToken() } }
-      ).pipe(
-        map(e => { return this.mapShiftsRemoveOldFromPreviousYear(e); }),
-        map(e => { return this.mapSortShiftsByStartDatetime(e); })
-      )
+      if (!this.shifts || this.shifts.length === 0) {
+        return this.httpClient.get<any[]>(
+          `${environment.beepleBridgeUrl}collaborators/${this.getBeepleVolunteerId()}/enrolments`,
+          { headers: { Token: this.getBeepleVolunteerToken() } }
+        ).pipe(
+          map(e => { return this.mapShiftsRemoveOldFromPreviousYear(e); }),
+          map(e => { return this.mapSortShiftsByStartDatetime(e); }),
+          tap(s => this.shifts = s),
+        )
+      } else {
+        return of(this.shifts);
+      }
+
     } else {
       return of([])
     }
@@ -43,6 +50,7 @@ export class VolunteerShiftService {
   // no data call method
 
   logout() {
+    this.shifts = [];
     localStorage.removeItem(LocalStorageEnum.BeepleId);
     localStorage.removeItem(LocalStorageEnum.BeepleToken);
   }
