@@ -13,7 +13,7 @@ export class BaseService {
   }
 
   get(path: string): Observable<any> {
-    return this.httpClient.get('https://manifiestback.herokuapp.com/testcors', {headers: {url: path}});
+    return this.httpClient.get('https://manifiestback.herokuapp.com/bypasscors', {headers: {url: path}});
   }
 
 }
