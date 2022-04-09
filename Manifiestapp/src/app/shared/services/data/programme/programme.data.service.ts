@@ -67,7 +67,7 @@ export class ProgrammeDataService implements IProgrammeService {
   // Here we parcours in a recursive method the page
   // If the result is not an array, is that we are at the end and we return the lastArray
   // If the length of the result is lesser than the maxPerPage, is that we are also at the end so we return a merge of the lastArray and the respons
-  fetchWordPressListPage(url, count = 1, lastArray: EventInterface[] = [], maxPerPage = 50): Observable<EventInterface[]> {
+  fetchWordPressListPage(url, count = 1, lastArray: EventInterface[] = [], maxPerPage = 100): Observable<EventInterface[]> {
     let arrayToReturn: EventInterface[] = lastArray;
     return this.baseService.get(`${url}&per_page=${maxPerPage}&page=${count}`).pipe(
       switchMap(e => {
