@@ -8,7 +8,9 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config.from_pyfile('settings.py')
 
-@app.route('/testcors')
+
+# Have problem with some api with the CORS, here is the solution
+@app.route('/bypasscors')
 def testcors():
     try:
         response = jsonify(json.loads(http_request.get(request.headers.get('url')).text))
@@ -22,8 +24,6 @@ def home():
     return {'hello': 'world'}
 
 
-# TODO get detail
-# TODO check error
 @app.route('/collaborators/<int:id>/enrolments')
 def collaborator_enrolments(id):
     try:
@@ -50,7 +50,6 @@ def collaborator_enrolments(id):
     return jsonify(jsonArray)
 
 
-# TODO check error - make better table of code error
 @app.route('/auth', methods=['POST'])
 def authentification():
     try:
