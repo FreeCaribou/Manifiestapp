@@ -22,7 +22,6 @@
 
       <p [innerHtml]="event.content.rendered"></p>
 
-      <!-- TODO see for the social media -->
       <a *ngIf="event['toolset-meta']?.['info-evenement']?.['facebookopagina']?.raw"
         [href]="event['toolset-meta']?.['info-evenement']?.['facebookopagina']?.raw" target="_blank">
         <ion-icon name="logo-facebook" color="facebook" class="medium-icon">

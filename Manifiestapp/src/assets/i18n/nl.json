@@ -30,7 +30,7 @@
     "YourFavoris": "Uw favorieten",
     "NotificationTitle": "",
     "NotificationSummary": "Een van je favoriete evenementen gaat beginnen !",
-    "NotificationBody": "Het evenement {{event}} gaat beginnen om {{startDate}}",
+    "NotificationBody": "Het evenement {{event}} gaat beginnen om {{startDate}} naar {{location}}",
     "ConflictShifts": "Je hebt een conflict met sommige van je shift",
     "FavAdded": "Favoriet goed toegevoegd"
   },

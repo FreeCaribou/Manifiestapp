@@ -1,4 +1,4 @@
 // TODO-refactor Unit Test
-export function wpDateToRealDate(rawValue: string): Date {
-  return parseFloat(rawValue) ? new Date(parseFloat(rawValue) * 1000) : null;
+export function wpDateToRealDate(rawValue: string, unixtime = true): Date {
+  return unixtime ? new Date(parseFloat(rawValue) * 1000) : new Date(rawValue) || null;
 }

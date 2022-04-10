@@ -23,26 +23,35 @@ export class NewsListService {
     })
   }
 
-  news: NewInfoInterface[];
+  allNews: NewInfoInterface[] = [];
+  stickyNews: NewInfoInterface[] = [];
   // sticky = important in the wordpress language
-  // TODO find a way to cache that
-  // But beware of the sticky or not
   getInfos(onlySticky = false): Observable<NewInfoInterface[]> {
-    if (!this.news || this.news.length === 0) {
+    if ((this.allNews?.length === 0 && !onlySticky) || (this.stickyNews?.length === 0 && onlySticky)) {
       return this.baseService.get(
         `${this.baseUrl}?_embed=wp:featuredmedia&lang=${this.languageService.selectedLanguage}${onlySticky ? '&sticky=true' : ''}&per_page=100`
       ).pipe(
         map(data => { return data.map(e => { return this.mapRawWpDataToClearData(e) }); }),
-        tap(n => { this.news = n })
+        tap(n => {
+          if (onlySticky) {
+            this.stickyNews = n;
+          } else {
+            this.allNews = n;
+          }
+        })
       );
     } else {
-      return of(this.news);
+      if (onlySticky) {
+        return of(this.stickyNews);
+      } else {
+        return of(this.allNews);
+      }
     }
   }
 
   getInfo(id: string): Observable<NewInfoInterface> {
     return this.baseService.get(
-      `${this.baseUrl}/${id}?_embed=wp:featuredmedia&lang=${this.languageService.selectedLanguage}&per_page=100`
+      `${this.baseUrl}/${id}?_embed=wp:featuredmedia&lang=${this.languageService.selectedLanguage}`
     ).pipe(
       map(n => this.mapRawWpDataToClearData(n))
     );
@@ -58,7 +67,8 @@ export class NewsListService {
   }
 
   resetInfoListCache() {
-    this.news = [];
+    this.allNews = [];
+    this.stickyNews = [];
   }
 
 }

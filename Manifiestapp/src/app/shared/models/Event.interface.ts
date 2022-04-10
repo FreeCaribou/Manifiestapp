@@ -42,8 +42,6 @@ export interface EventInterface {
   _links?: { "wp:attachement": { href: string }[] };
   _embedded?: { "wp:term": any[], "wp:featuredmedia": any[] };
   // wp:term transform to more beautifull variable prop
-
-  // TODO-refactor ask for english name
   "toolset-meta"?: {
     "info-evenement": {
       afbeelding: {
@@ -54,9 +52,11 @@ export interface EventInterface {
       },
       "start-hour": {
         raw: string;
+        formatted: string;
       },
       "end-hour": {
         raw: string;
+        formatted: string;
       }
     }
   };

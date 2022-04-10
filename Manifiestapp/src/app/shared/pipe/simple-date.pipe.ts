@@ -9,11 +9,10 @@ export class SimpleDatePipe implements PipeTransform {
   transform(value: Date | string, withoutDay: any): any {
     const stringFormat = withoutDay ? 'HH:mm' : 'dd/MM HH:mm';
     if (value && value instanceof Date) {
-      return formatDate(value, stringFormat, 'en', '+00');
+      return formatDate(value, stringFormat, 'fr');
     } else if (value && typeof value === 'string' && parseFloat(value)) {
-      // GMT +00 because the back wp do not look like to manage this kind of thing
       const correctDate = wpDateToRealDate(value);
-      return correctDate ? formatDate(correctDate, stringFormat, 'en', '+00') : 'No hour';
+      return correctDate ? formatDate(correctDate, stringFormat, 'fr') : 'No hour';
     } else {
       return 'No hour'
     }

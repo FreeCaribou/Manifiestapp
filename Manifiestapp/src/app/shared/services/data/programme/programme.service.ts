@@ -130,9 +130,6 @@ export class ProgrammeService implements IProgrammeService {
       if (!allNotif.find(x => x.id === parseInt(event.id))) {
         await this.addOneEventNotif(event);
       }
-      // TODO see if we show an "is ok" toast
-      // Can be annoying for nothing
-      // await this.showOkNewFavoriteToast();
     } else {
       await this.cancelOneEventNotif(event, allNotif);
     }
@@ -196,13 +193,14 @@ export class ProgrammeService implements IProgrammeService {
     this.verificationFavoriteLoadEmit.emit(false);
   }
 
-  // TODO better notification message and see for the localisation
+  // TODO beware in production with the date from wp ...
+  // TODO for the schedule, made an if prod / not prod, see the comment
   async addOneEventNotif(event: EventInterface) {
     if (!localStorage.getItem(LocalStorageEnum.AvoidNotification)) {
-      const startDateFormated = formatDate(event.startDate, 'HH:mm', 'en', '+00');
+      const startDateFormated = formatDate(event.startDate, 'HH:mm', 'fr');
       const body = await this.translate.get(
         'Programme.NotificationBody',
-        { event: event?.title?.rendered, startDate: startDateFormated })
+        { event: event?.title?.rendered, startDate: startDateFormated, location: event?.localisation.name })
         .toPromise();
       await LocalNotifications.schedule({
         notifications: [
@@ -329,8 +327,8 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   mapRawWpDataToClearData(event: EventInterface): EventInterface {
-    event.startDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['start-hour']?.raw);
-    event.endDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['end-hour']?.raw);
+    event.startDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['start-hour']?.formatted, false);
+    event.endDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['end-hour']?.formatted, false);
     event.headline = event.title?.rendered;
     event.mainPictureUrl = event._embedded?.['wp:featuredmedia'] ?
       event._embedded?.['wp:featuredmedia'][0]?.source_url : 'assets/pictures/manifiesta-title-logo.jpg';

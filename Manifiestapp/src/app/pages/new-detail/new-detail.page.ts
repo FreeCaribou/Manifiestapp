@@ -12,7 +12,6 @@ export class NewDetailPage {
   id: string;
   newInfo: NewInfoInterface;
 
-  // TODO have other defaultHref when we come from the news list and not the home
   defaultHref = '/home';
 
   constructor(

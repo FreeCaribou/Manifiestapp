@@ -41,7 +41,6 @@ export class MyManifiestaPage implements OnDestroy {
     this.checkAvoidNotification();
   }
 
-  // TODO improve the fetch, avoid some double fetching
   ionViewWillEnter() {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.loginForm = this.buildLoginForm();
@@ -139,7 +138,6 @@ export class MyManifiestaPage implements OnDestroy {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       this.fetchShifts(true);
     }, error => {
-      // TODO show the message in case of the right error (error no user in excel)
       console.error(error); this.hadLoginError = true;
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
