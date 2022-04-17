@@ -2,29 +2,136 @@
 
 <ion-content>
 
-  <ion-list>
-    <ion-list-header>
-      {{ 'Info.GeneralInfo' | translate }}
-    </ion-list-header>
-    <ion-item>
-      <ion-label>{{ 'Info.HowToCome' | translate }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{ 'Info.Rules' | translate }}</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>Sponsor here later</ion-label>
-    </ion-item>
+  <h2 class="m-right-medium m-left-medium">
+    <a href="https://manifiesta.eventsquare.co">{{ 'About.BuyTicket' | translate }}</a>
+  </h2>
 
-    <ion-list-header>
-      {{ 'Info.Contact' | translate }}
-    </ion-list-header>
-    <ion-item>
-      <ion-label>info@manifiesta.be</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-label>+32 one random number</ion-label>
-    </ion-item>
-  </ion-list>
+  <ion-accordion-group>
+    <ion-accordion value="rules">
+      <ion-item slot="header">
+        <ion-label>{{ 'Info.Rules' | translate }}</ion-label>
+      </ion-item>
+      <ion-list slot="content">
+        <ion-item>
+          <ion-label>
+            <h2 class="secondary-color">{{ 'About.Article' | translate:{num:'1'} }}</h2>
+            <p>{{ 'About.ArticleOne' | translate }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2 class="secondary-color">{{ 'About.Article' | translate:{num:'2'} }}</h2>
+            <ul>
+              <li>{{ 'About.ArticleTwoOne' | translate }}</li>
+              <li>{{ 'About.ArticleTwoTwo' | translate }}</li>
+              <li>{{ 'About.ArticleTwoThree' | translate }}</li>
+              <li>{{ 'About.ArticleTwoFour' | translate }}</li>
+              <li>{{ 'About.ArticleTwoFive' | translate }}</li>
+              <li>{{ 'About.ArticleTwoSix' | translate }}</li>
+            </ul>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2 class="secondary-color">{{ 'About.Article' | translate:{num:'3'} }}</h2>
+            <p>{{ 'About.ArticleThreeBegin' | translate }}</p>
+            <ul>
+              <li>{{ 'About.ArticleThreeOne' | translate }}</li>
+              <li>{{ 'About.ArticleThreeTwo' | translate }}</li>
+              <li>{{ 'About.ArticleThreeThree' | translate }}</li>
+              <li>{{ 'About.ArticleThreeFour' | translate }}</li>
+              <li>{{ 'About.ArticleThreeFive' | translate }}</li>
+              <li>{{ 'About.ArticleThreeSix' | translate }}</li>
+              <li>{{ 'About.ArticleThreeSeven' | translate }}</li>
+              <li>{{ 'About.ArticleThreeEight' | translate }}</li>
+              <li>{{ 'About.ArticleThreeNine' | translate }}</li>
+            </ul>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2 class="secondary-color">{{ 'About.Article' | translate:{num:'4'} }}</h2>
+            <p>{{ 'About.ArticleFourBeginOne' | translate }}</p>
+            <p>{{ 'About.ArticleFourBeginTwo' | translate }}</p>
+            <ul>
+              <li>{{ 'About.ArticleFourOne' | translate }}</li>
+              <li>{{ 'About.ArticleFourTwo' | translate }}</li>
+              <li>{{ 'About.ArticleFourThree' | translate }}</li>
+              <li>{{ 'About.ArticleFourFour' | translate }}</li>
+              <li>{{ 'About.ArticleFourFive' | translate }}</li>
+              <li>{{ 'About.ArticleFourSix' | translate }}</li>
+              <li>{{ 'About.ArticleFourSeven' | translate }}</li>
+              <li>{{ 'About.ArticleFourEight' | translate }}</li>
+            </ul>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2 class="secondary-color">{{ 'About.Article' | translate:{num:'5'} }}</h2>
+            <p>{{ 'About.ArticleFiveBegin' | translate }}</p>
+            <ul>
+              <li>{{ 'About.ArticleFiveOne' | translate }}</li>
+              <li>{{ 'About.ArticleFiveTwo' | translate }}</li>
+              <li>{{ 'About.ArticleFiveThree' | translate }}</li>
+              <li>{{ 'About.ArticleFiveFour' | translate }}</li>
+            </ul>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2 class="secondary-color">{{ 'About.Article' | translate:{num:'6'} }}</h2>
+            <p>{{ 'About.ArticleSixBegin' | translate }}</p>
+            <ul>
+              <li>{{ 'About.ArticleSixOne' | translate }}</li>
+              <li>{{ 'About.ArticleSixTwo' | translate }}</li>
+              <li>{{ 'About.ArticleSixThree' | translate }}</li>
+              <li>{{ 'About.ArticleSixFour' | translate }}</li>
+            </ul>
+            <p>{{ 'About.ArticleSixEnd' | translate }}</p>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            <h2 class="secondary-color">{{ 'About.Article' | translate:{num:'7'} }}</h2>
+            <ul>
+              <li>{{ 'About.ArticleSevenOne' | translate }}</li>
+              <li>{{ 'About.ArticleSevenTwo' | translate }}</li>
+            </ul>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <ion-accordion-group>
+    <ion-accordion value="team">
+      <ion-item slot="header">
+        <ion-label>{{ 'About.Contact' | translate }}</ion-label>
+      </ion-item>
+      <ion-list slot="content">
+        <ion-item>
+          <ion-label><a href="mailto:info@manifiesta.be">info@manifiesta.be</a></ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Mario : {{ 'About.TeamDirector' | translate }} </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Caroline : {{ 'About.TeamVolunteer' | translate }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Jan : {{ 'About.TeamReception' | translate }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Juliette : {{ 'About.TeamCommunication' | translate }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Simon : {{ 'About.TeamMobility' | translate }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Matteo : {{ 'About.TeamInfra' | translate }}</ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+  </ion-accordion-group>
 
 </ion-content>

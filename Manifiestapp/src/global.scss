@@ -342,3 +342,12 @@ ion-tab-bar {
     display: none;
   }
 }
+
+ion-label {
+  white-space: unset !important;
+
+  li {
+    color: var(--ion-color-step-600, #666666);
+    font-size: 14px;
+  }
+}
