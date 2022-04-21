@@ -6,7 +6,8 @@
     "All": "Tout",
     "Filters": "Filtres",
     "Options": "Options",
-    "ShiftsVolunteers": "Shifts bénévole"
+    "ShiftsVolunteers": "Shifts bénévole",
+    "NoConnection": "Vous ne semblez pas être connecté à Internet"
   },
   "Menu": {
     "Home": "Home",

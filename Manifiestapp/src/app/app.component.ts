@@ -2,7 +2,7 @@ import { registerLocaleData } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { MenuController, ModalController, Platform } from '@ionic/angular';
+import { MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { NotificationEventEnum } from './shared/models/NotificationEvent.enum';
@@ -10,6 +10,8 @@ import { LanguageCommunicationService } from './shared/services/communication/la
 import { LoadingCommunicationService } from './shared/services/communication/loading.communication.service';
 import localeFr from '@angular/common/locales/fr';
 import localeNl from '@angular/common/locales/nl';
+import { Network } from '@capacitor/network';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -45,10 +47,28 @@ export class AppComponent implements OnInit {
     public router: Router,
     public menu: MenuController,
     public modalController: ModalController,
+    public translate: TranslateService,
+    public toastController: ToastController,
   ) {
   }
 
   async ngOnInit() {
+    Network.getStatus().then(n => {
+      if (!n.connected) {
+        this.translate.get('General.NoConnection').subscribe(t => {
+          this.toastController.create({
+            message: t,
+            icon: 'alert-circle-outline',
+            color: 'danger',
+            position: 'top',
+            duration: 5000
+          }).then(toast => {
+            toast.present();
+          });
+        });
+      }
+    });
+
     this.init();
     await LocalNotifications.requestPermissions();
     LocalNotifications.addListener('localNotificationActionPerformed', (n) => {
