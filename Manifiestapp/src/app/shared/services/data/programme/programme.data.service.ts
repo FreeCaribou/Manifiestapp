@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { EventInterface } from 'src/app/shared/models/Event.interface';
-import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { environment } from 'src/environments/environment';
 import { LanguageCommunicationService } from '../../communication/language.communication.service';
 import { BaseService } from '../base.service';
@@ -46,19 +45,14 @@ export class ProgrammeDataService implements IProgrammeService {
     }
 
     return this.fetchWordPressListPage(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}`, 1, []);
-    return this.baseService.get(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}&per_page=2`);
-    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?${params.toString()}&lang=${this.languageService.selectedLanguage}&per_page=100`);
   }
 
   getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
     return this.fetchWordPressListPage(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`, 1, []);
-    return this.baseService.get(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}&per_page=100`);
-    return this.httpClient.get<EventInterface[]>(`${this.baseUrl}?include=${ids?.toString()}&_embed=${this.embed}&lang=${this.languageService.selectedLanguage}&per_page=100`);
   }
 
   getEvent(id: string): Observable<EventInterface> {
     return this.baseService.get(`${this.baseUrl}/${id}?_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
-    return this.httpClient.get<EventInterface>(`${this.baseUrl}/${id}?_embed=${this.embed}&lang=${this.languageService.selectedLanguage}`);
   }
 
   // WordPress can return max 100 items per call

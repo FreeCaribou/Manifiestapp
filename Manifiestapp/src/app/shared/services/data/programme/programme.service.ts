@@ -15,6 +15,8 @@ import { VolunteerShiftService } from '../volunteer-shift/volunteer-shift.servic
 import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 import { LanguageCommunicationService } from '../../communication/language.communication.service';
+import { environment } from '../../../../../environments/environment';
+
 
 @Injectable({
   providedIn: 'root'
@@ -194,14 +196,23 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   // TODO beware in production with the date from wp ...
-  // TODO for the schedule, made an if prod / not prod, see the comment
   async addOneEventNotif(event: EventInterface) {
     if (!localStorage.getItem(LocalStorageEnum.AvoidNotification)) {
       const startDateFormated = formatDate(event.startDate, 'HH:mm', 'fr');
       const body = await this.translate.get(
         'Programme.NotificationBody',
-        { event: event?.title?.rendered, startDate: startDateFormated, location: event?.localisation.name })
-        .toPromise();
+        { event: event?.title?.rendered, startDate: startDateFormated, location: event?.localisation.name }
+      ).toPromise();
+
+      let scheduleDate: Date;
+      if (environment.production) {
+        // For production, an half hour before the event
+        scheduleDate = new Date(new Date(event.startDate).getTime() - 1000 * 60 * 30);
+      } else {
+        // For test, show notification 5 seconds after the click on fav
+        scheduleDate = new Date(Date.now() + 1000 * 15);
+      }
+
       await LocalNotifications.schedule({
         notifications: [
           {
@@ -209,10 +220,7 @@ export class ProgrammeService implements IProgrammeService {
             id: parseInt(event.id) || 1,
             body: body,
             largeBody: body,
-            // For test, show notification 5 seconds after the click on fav
-            schedule: { at: new Date(Date.now() + 1000 * 15), allowWhileIdle: true },
-            // For production, an half hour before the event
-            // schedule: { at: new Date(new Date(event.startDate).getTime() - 1000 * 60 * 30), allowWhileIdle: true },
+            schedule: { at: scheduleDate, allowWhileIdle: true },
             autoCancel: true,
             summaryText: await this.translate.get('Programme.NotificationSummary').toPromise(),
             actionTypeId: NotificationEventEnum.EventFav,
