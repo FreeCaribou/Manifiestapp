@@ -63,10 +63,10 @@ export class ProgrammeService implements IProgrammeService {
     } else {
       let tmpProgrammes = this.programmes[programmesCacheIndex].list;
       if (locatiesId) {
-        tmpProgrammes = tmpProgrammes.filter(x => locatiesId.find(y => y.toString() === x.localisation.id.toString()));
+        tmpProgrammes = tmpProgrammes.filter(x => locatiesId.find(y => y.toString() === x.localisation?.id.toString()));
       }
       if (categoriesId) {
-        tmpProgrammes = tmpProgrammes.filter(x => categoriesId.find(y => y.toString() === x.category.id.toString()));
+        tmpProgrammes = tmpProgrammes.filter(x => categoriesId.find(y => y.toString() === x.category?.id.toString()));
       }
       return of(tmpProgrammes);
     }
@@ -197,7 +197,7 @@ export class ProgrammeService implements IProgrammeService {
 
   // TODO beware in production with the date from wp ...
   async addOneEventNotif(event: EventInterface) {
-    if (!localStorage.getItem(LocalStorageEnum.AvoidNotification)) {
+    if (!localStorage.getItem(LocalStorageEnum.AvoidNotification) && event.startDate) {
       const startDateFormated = formatDate(event.startDate, 'HH:mm', 'fr');
       const body = await this.translate.get(
         'Programme.NotificationBody',
@@ -313,12 +313,12 @@ export class ProgrammeService implements IProgrammeService {
   mapListEventToDayListEvent(events: EventInterface[]): DayListEventInterface[] {
     const dayListEvent = [];
     events.forEach(e => {
-      const index = dayListEvent.findIndex(x => e.startDate.toISOString().slice(0, 10) === x?.day?.toISOString().slice(0, 10));
+      const index = dayListEvent.findIndex(x => e.startDate?.toISOString().slice(0, 10) === x?.day?.toISOString().slice(0, 10));
       if (index > -1) {
         dayListEvent[index].events.push(e);
       } else {
         dayListEvent.push({
-          day: new Date(e.startDate.toISOString().slice(0, 10)),
+          day: e.startDate ? new Date(e.startDate?.toISOString().slice(0, 10)) : null,
           events: [e]
         });
       }

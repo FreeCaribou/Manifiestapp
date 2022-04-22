@@ -33,7 +33,8 @@
     "NotificationSummary": "Un de vos favoris va commencer !",
     "NotificationBody": "l'évènement {{event}} va commencer à {{startDate}} à l'endroit {{location}}",
     "ConflictShifts": "Vous avez des conflits avec certains de vos shifts",
-    "FavAdded": "Favori bien ajouté"
+    "FavAdded": "Favori bien ajouté",
+    "ScheduleNotYetDefined": "Horaire pas encore défini"
   },
   "Info": {
     "GeneralInfo": "Information générale",

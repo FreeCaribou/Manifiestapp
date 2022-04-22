@@ -6,7 +6,7 @@
 
     <ion-card-header>
       <ion-card-subtitle>
-        <span>{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate |
+        <span *ngIf="event.startDate">{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate |
           simpleDatePipe:dateJustWithHour}}</span>
         <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>

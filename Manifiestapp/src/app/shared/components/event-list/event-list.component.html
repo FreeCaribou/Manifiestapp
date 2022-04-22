@@ -1,6 +1,7 @@
 <ion-list *ngFor="let events of list" lines="none">
 
-  <ion-label class="m-left-medium">{{ events.day | date:'EEEE dd LLLL':'':translate.currentLang }}</ion-label>
+  <ion-label *ngIf="events.day" class="m-left-medium">{{ events.day | date:'EEEE dd LLLL':'':translate.currentLang }}</ion-label>
+  <ion-label *ngIf="!events.day" class="m-left-medium">{{ 'Programme.ScheduleNotYetDefined' | translate }}</ion-label>
 
   <ion-item *ngFor="let event of events.events">
     <ion-avatar [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
@@ -11,7 +12,7 @@
         <span [innerHtml]="event.headline" class="secondary-color"></span>
       </h2>
       <h3>
-        <span class="medium-color">
+        <span *ngIf="event.startDate" class="medium-color">
           {{event.startDate | simpleDatePipe:true}} - {{event.endDate |
           simpleDatePipe:true}} <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning">
           </ion-icon>
