@@ -60,6 +60,10 @@ There is a problem to fetch your shifts
 
 There is a problem with the bridge to get the route
 
+### schedule-update-fail
+
+There is a problem to see if there is any update of the event schedule
+
 
 
 

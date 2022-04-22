@@ -2,6 +2,7 @@ from flask import Flask, jsonify, redirect, request, redirect, url_for
 import requests as http_request
 import json
 import utils.get_excel_volunteer as get_excel_volunteer
+import utils.get_schedule_update as get_schedule_update
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -22,6 +23,15 @@ def testcors():
 @app.route('/')
 def home():
     return {'hello': 'world'}
+
+
+@app.route('/scheduleupdate')
+def schedule_update():
+    try:
+        schedule = jsonify(get_schedule_update.get())
+    except:
+        return redirect(url_for('error', code='schedule-update-fail'))
+    return schedule
 
 
 @app.route('/collaborators/<int:id>/enrolments')
