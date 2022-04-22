@@ -62,14 +62,7 @@
     "cors-bridge-fail": "Er is een fout opgetreden bij het openen van de gevraagde informatie"
   },
   "About": {
-    "Contact": "Het team !",
-    "TeamDirector": "Directeur, verantwoordelijk voor programmering, standen en financiën",
-    "TeamVolunteer": "Vrijwilligers manager",
-    "TeamReception": "Receptie en accommodatiemanager",
-    "TeamCommunication": "Communicatie en decoratie verantwoordelijke",
-    "TeamMobility": "Mobiliteit, catering en eco manager",
-    "TeamInfra": "Manager infrastructuur, logistiek en sport",
-    "BuyTicket": "Heb je je festivalticket nog niet?",
+    "BuyTicket": "Koop hier je ticket",
     "Article": "Artikel {{num}}",
     "ArticleOne": "Op ManiFiesta zetten we samen onze schouders onder de alternatieven van de toekomst. Wij spreken de taal van de solidariteit en de diversiteit, de taal van de 99%, niet die van het grote geld. Op het feest van de solidariteit is dan ook geen plaats voor racisme, seksisme, homofobie of andere vormen van haatzaaierij.",
     "ArticleTwoOne": "Toegang tot ManiFiesta is gratis voor kinderen onder de 12",

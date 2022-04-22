@@ -2,9 +2,9 @@
 
 <ion-content>
 
-  <h2 class="m-right-medium m-left-medium">
-    <a href="https://manifiesta.eventsquare.co">{{ 'About.BuyTicket' | translate }}</a>
-  </h2>
+  <ion-item>
+    <ion-label><a href="mailto:info@manifiesta.be">info@manifiesta.be</a></ion-label>
+  </ion-item>
 
   <ion-accordion-group>
     <ion-accordion value="rules">
@@ -186,37 +186,6 @@
             <h2 class="secondary-color">{{ 'About.OtherLodging' | translate }}</h2>
             <p [innerHTML]="'About.OtherLodgingText' | translate"></p>
           </ion-label>
-        </ion-item>
-      </ion-list>
-    </ion-accordion>
-  </ion-accordion-group>
-
-  <ion-accordion-group>
-    <ion-accordion value="team">
-      <ion-item slot="header">
-        <ion-label>{{ 'About.Contact' | translate }}</ion-label>
-      </ion-item>
-      <ion-list slot="content">
-        <ion-item>
-          <ion-label><a href="mailto:info@manifiesta.be">info@manifiesta.be</a></ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Mario : {{ 'About.TeamDirector' | translate }} </ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Caroline : {{ 'About.TeamVolunteer' | translate }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Jan : {{ 'About.TeamReception' | translate }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Juliette : {{ 'About.TeamCommunication' | translate }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Simon : {{ 'About.TeamMobility' | translate }}</ion-label>
-        </ion-item>
-        <ion-item>
-          <ion-label>Matteo : {{ 'About.TeamInfra' | translate }}</ion-label>
         </ion-item>
       </ion-list>
     </ion-accordion>
