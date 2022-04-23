@@ -21,4 +21,8 @@ export class InfoListMockService implements IInfoListService {
     return of([]);
   }
 
+  getScheduleUpdate(): Observable<any[]> {
+    return of([]);
+  }
+
 }

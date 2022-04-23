@@ -6,4 +6,6 @@ export interface IInfoListService {
   getOrganizers(): Observable<any[]>;
   getEventCategories(): Observable<any[]>;
   getDays(): Observable<any[]>;
+
+  getScheduleUpdate(): Observable<any[]>;
 }

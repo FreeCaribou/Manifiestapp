@@ -13,7 +13,7 @@ def get():
         # Dont ask me why please, Beeple is Beeple...
         jsonArray.append({
             'code': r['code'],
-            'date': r['date'],
-            'comment': r['comment'],
+            'date': str(r['date']),
+            'comment': str(r['comment']),
         })
     return jsonArray

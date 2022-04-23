@@ -63,6 +63,10 @@ export class InfoListService implements IInfoListService {
     }
   }
 
+  getScheduleUpdate(): Observable<any[]> {
+    return this.service.getScheduleUpdate();
+  }
+
   resetInfoListCache() {
     this.venues = [];
     this.organizers = [];
