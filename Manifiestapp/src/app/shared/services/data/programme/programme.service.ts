@@ -213,21 +213,25 @@ export class ProgrammeService implements IProgrammeService {
         scheduleDate = new Date(Date.now() + 1000 * 15);
       }
 
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            title: `${event?.title?.rendered} - ${startDateFormated}` || 'Check it',
-            id: parseInt(event.id) || 1,
-            body: body,
-            largeBody: body,
-            schedule: { at: scheduleDate, allowWhileIdle: true },
-            autoCancel: true,
-            summaryText: await this.translate.get('Programme.NotificationSummary').toPromise(),
-            actionTypeId: NotificationEventEnum.EventFav,
-            largeIcon: 'large_icon',
-          }
-        ]
-      });
+      // We don't need to prepar a notification if the date is in the past !
+      if (scheduleDate > new Date()) {
+        await LocalNotifications.schedule({
+          notifications: [
+            {
+              title: `${event?.title?.rendered} - ${startDateFormated}` || 'Check it',
+              id: parseInt(event.id) || 1,
+              body: body,
+              largeBody: body,
+              schedule: { at: scheduleDate, allowWhileIdle: true },
+              autoCancel: true,
+              summaryText: await this.translate.get('Programme.NotificationSummary').toPromise(),
+              actionTypeId: NotificationEventEnum.EventFav,
+              largeIcon: 'large_icon',
+            }
+          ]
+        });
+      }
+
     }
   }
 
