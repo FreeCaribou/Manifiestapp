@@ -18,7 +18,8 @@
       <div slot="content">
         <div *ngIf="list">
           <a [routerLink]="['/programme']">
-            <p *ngIf="list?.length === 0" class="m-right-medium m-left-medium">{{ 'Programme.NoFavorites' | translate }}</p>
+            <p *ngIf="list?.length === 0" class="m-right-medium m-left-medium">{{ 'Programme.NoFavorites' | translate }}
+            </p>
           </a>
           <div *ngIf="list?.length > 0">
             <!-- <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card> -->
@@ -37,7 +38,10 @@
       <ion-item slot="header">
         <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
       </ion-item>
-      <div slot="content">
+      <div slot="content" *ngIf="isIos">
+        <p [innerHtml]="'User.WebsiteBeeple' | translate" class="m-right-medium m-left-medium"></p>
+      </div>
+      <div slot="content" *ngIf="!isIos">
 
         <form *ngIf="!isConnected && loginForm" [formGroup]="loginForm">
 
@@ -56,7 +60,8 @@
               <ion-label color="primary" position="stacked">
                 {{"User.Password" | translate}}
               </ion-label>
-              <ion-input clearInput type="password" formControlName="password" required placeholder="azerty1234" clearOnEdit="false">
+              <ion-input clearInput type="password" formControlName="password" required placeholder="azerty1234"
+                clearOnEdit="false">
               </ion-input>
             </ion-item>
 
