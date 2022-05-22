@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { MenuController, ModalController } from '@ionic/angular';
+import { isPlatform, MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
 import { DayListEventInterface, EventInterface } from 'src/app/shared/models/Event.interface';
@@ -27,6 +27,7 @@ export class MyManifiestaPage implements OnDestroy {
   isConnected = false;
   acceptNotification = false;
   hadLoginError = false;
+  isIos = true;
 
   constructor(
     private programmeService: ProgrammeService,
@@ -42,6 +43,8 @@ export class MyManifiestaPage implements OnDestroy {
   }
 
   ionViewWillEnter() {
+    this.isIos = isPlatform('ios');
+    console.log('is ios?', this.isIos)
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.loginForm = this.buildLoginForm();
     this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
