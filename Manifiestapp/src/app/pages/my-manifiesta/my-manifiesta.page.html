@@ -39,7 +39,11 @@
         <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
       </ion-item>
       <div slot="content" *ngIf="isIos">
-        <p [innerHtml]="'User.WebsiteBeeple' | translate" class="m-right-medium m-left-medium"></p>
+        <!-- <p [innerHtml]="'User.WebsiteBeeple' | translate" class="m-right-medium m-left-medium"></p> -->
+        <ion-button (click)="seeBeeple()" class="padding-not-stick-edges m-right-medium m-left-medium" color="primary"
+          expand="block">
+          {{'User.WebsiteBeepleText' | translate}}
+        </ion-button>
       </div>
       <div slot="content" *ngIf="!isIos">
 
@@ -73,7 +77,11 @@
 
             <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
 
-            <p [innerHtml]="'User.SignupBeeple' | translate" class="m-right-medium m-left-medium"></p>
+            <!-- <p [innerHtml]="'User.SignupBeeple' | translate" class="m-right-medium m-left-medium"></p> -->
+            <ion-button (click)="seeBeeple()" class="padding-not-stick-edges"
+              color="primary" expand="block">
+              {{'User.SignupBeepleText' | translate}}
+            </ion-button>
 
           </ion-grid>
         </form>

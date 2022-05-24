@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Browser } from '@capacitor/browser';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { isPlatform, MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -150,6 +151,14 @@ export class MyManifiestaPage implements OnDestroy {
     this.shifts = [];
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.fetchFavoriteProgramme();
+  }
+
+  async seeBeeple() {
+    await Browser.open({
+      url: 'https://volunteers.manifiesta.be/' + this.languageCommunication.selectedLanguage,
+      presentationStyle: 'popover',
+      toolbarColor: '#f18904'
+    });
   }
 
   ngOnDestroy() {
