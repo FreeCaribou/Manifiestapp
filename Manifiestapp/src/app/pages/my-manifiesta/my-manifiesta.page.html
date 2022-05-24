@@ -78,9 +78,10 @@
             <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
 
             <!-- <p [innerHtml]="'User.SignupBeeple' | translate" class="m-right-medium m-left-medium"></p> -->
-            <ion-button (click)="seeBeeple()" class="padding-not-stick-edges"
+            <ion-button (click)="seeBeeple()" class="padding-not-stick-edges m-top-medium"
               color="primary" expand="block">
               {{'User.SignupBeepleText' | translate}}
+              <ion-icon slot="end" icon="person-add"></ion-icon>
             </ion-button>
 
           </ion-grid>

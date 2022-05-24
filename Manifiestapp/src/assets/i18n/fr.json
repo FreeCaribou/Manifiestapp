@@ -53,7 +53,7 @@
     "ConnectionProblem": "Si c'est votre première inscription, il se peut que la synchronisation n'est pas encore faite, veuillez attendre 2 - 3 jours, nous nous excusons du soucis.",
     "ConnectionBeeple": "Connectez vous avec vos identifiants de bénévole ManiFiesta pour voir ici vos tâches.",
     "SignupBeeple": "<a href='https://volunteers.manifiesta.be/'>Si vous voulez vous inscrire, c'est ici !</a>",
-    "SignupBeepleText": "Si vous voulez vous inscrire, c'est ici !",
+    "SignupBeepleText": "Inscription",
     "WebsiteBeeple": "<a href='https://volunteers.manifiesta.be/'>Aller vers le site pour les bénévoles</a>",
     "WebsiteBeepleText": "Aller vers le site pour les bénévoles"
   },
