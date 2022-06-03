@@ -59,7 +59,7 @@ export class NewsListService {
 
   mapRawWpDataToClearData(newInfo: NewInfoInterface): NewInfoInterface {
     newInfo.headline = newInfo.title?.rendered;
-    newInfo.mainPictureUrl = newInfo._embedded?.['wp:featuredmedia'] ?
+    newInfo.mainPictureUrl = newInfo._embedded?.['wp:featuredmedia'] && newInfo._embedded?.['wp:featuredmedia'][0]?.source_url ?
       newInfo._embedded?.['wp:featuredmedia'][0]?.source_url : 'assets/pictures/manifiesta-title-logo.jpg';
     newInfo.allText = newInfo.content?.rendered;
     newInfo.shortText = newInfo.excerpt?.rendered;
