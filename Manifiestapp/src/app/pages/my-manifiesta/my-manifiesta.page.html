@@ -100,7 +100,14 @@
               </ion-label>
             </ion-item>
           </ion-list>
-          <ion-button color="danger" class="m-right-medium m-left-medium" (click)="clickOnLogout()">Logout</ion-button>
+          <div class="m-right-medium m-left-medium flex-space-between">
+            <ion-button color="danger" (click)="clickOnLogout()">
+              Logout
+            </ion-button>
+            <ion-button color="danger" (click)="clickOnDeleteAccount()" size="small">
+              {{'User.DeleteAccount' | translate }}
+            </ion-button>
+          </div>
         </div>
 
       </div>

@@ -1,4 +1,7 @@
 # 1.0.2
+## Feature
+* Link to delete volunteer account (mandatory by Apple)
+
 ## Patch
 * Prevent no image from WordPress with default image
 

@@ -156,7 +156,13 @@ export class MyManifiestaPage implements OnDestroy {
   async seeBeeple() {
     await Browser.open({
       url: 'https://volunteers.manifiesta.be/' + this.languageCommunication.selectedLanguage,
-      presentationStyle: 'popover',
+      toolbarColor: '#f18904'
+    });
+  }
+
+  async clickOnDeleteAccount() {
+    await Browser.open({
+      url: `https://volunteers.manifiesta.be/${this.languageCommunication.selectedLanguage}/settings`,
       toolbarColor: '#f18904'
     });
   }

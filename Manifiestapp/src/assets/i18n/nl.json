@@ -55,7 +55,8 @@
     "SignupBeeple": "<a href='https://volunteers.manifiesta.be/'>Klik hier als je je wil inschrijven als vrijwilliger bij ManiFiesta.<a>",
     "SignupBeepleText": "Registratie",
     "WebsiteBeeple": "<a href='https://volunteers.manifiesta.be/'>Ga naar de site voor vrijwilligers</a>",
-    "WebsiteBeepleText": "Ga naar de site voor vrijwilligers"
+    "WebsiteBeepleText": "Ga naar de site voor vrijwilligers",
+    "DeleteAccount": "Mijn vrijwilligersaccount verwijderen"
   },
   "Error": {
     "Generic": "Een fout opgetreden",

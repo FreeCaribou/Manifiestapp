@@ -55,7 +55,8 @@
     "SignupBeeple": "<a href='https://volunteers.manifiesta.be/'>Si vous voulez vous inscrire, c'est ici !</a>",
     "SignupBeepleText": "Inscription",
     "WebsiteBeeple": "<a href='https://volunteers.manifiesta.be/'>Aller vers le site pour les bénévoles</a>",
-    "WebsiteBeepleText": "Aller vers le site pour les bénévoles"
+    "WebsiteBeepleText": "Aller vers le site pour les bénévoles",
+    "DeleteAccount": "Supprimer mon compte bénévole"
   },
   "Error": {
     "Generic": "Une erreur s'est produite",
