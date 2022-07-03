@@ -353,4 +353,24 @@ export class ProgrammeService implements IProgrammeService {
     return event;
   }
 
+
+  // offline
+
+  setOfflineFavoritesList(events: DayListEventInterface[]) {
+    localStorage.setItem(LocalStorageEnum.OfflineFavorites, JSON.stringify(events));
+  }
+
+  getOfflineFavoritesList(): DayListEventInterface[] {
+    const tmp = localStorage.getItem(LocalStorageEnum.OfflineFavorites);
+    if (tmp) {
+      try {
+        return JSON.parse(localStorage.getItem(LocalStorageEnum.OfflineFavorites));
+      } catch (e) {
+        return [];
+      }
+    } else {
+      return [];
+    }
+  }
+
 }

@@ -9,6 +9,6 @@
     <ion-title *ngIf="!title">Manifiesta</ion-title>
     <ion-title *ngIf="title && withoutI18n" [innerHtml]="title" [title]="title">{{title}}</ion-title>
 
-    <ion-title *ngIf="!connected" color="danger">{{'General.NoConnection' | translate}}</ion-title>
+    <ion-title *ngIf="!connected" color="danger">{{'General.NoInternet' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>

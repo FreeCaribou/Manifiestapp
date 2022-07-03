@@ -4,5 +4,6 @@ export enum LocalStorageEnum {
   BeepleId = 'beepleId',
   BeepleToken = 'beepleToken',
   AvoidNotification = 'avoidNotification',
-  OfflineShifts = 'offlineShifts'
+  OfflineShifts = 'offlineShifts',
+  OfflineFavorites= 'offlineFavorites',
 }

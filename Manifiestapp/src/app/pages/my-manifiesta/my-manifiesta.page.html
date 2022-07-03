@@ -38,16 +38,9 @@
       <ion-item slot="header">
         <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
       </ion-item>
-      <div slot="content" *ngIf="isIos">
-        <!-- <p [innerHtml]="'User.WebsiteBeeple' | translate" class="m-right-medium m-left-medium"></p> -->
-        <ion-button (click)="seeBeeple()" class="padding-not-stick-edges m-right-medium m-left-medium" color="primary"
-          expand="block">
-          {{'User.WebsiteBeepleText' | translate}}
-        </ion-button>
-      </div>
-      <div slot="content" *ngIf="!isIos">
-
-        <form *ngIf="!isConnected && loginForm" [formGroup]="loginForm">
+      <div slot="content">
+        <h2 *ngIf="!connected" class="m-right-medium m-left-medium">{{'User.NotConnectedForShifts' | translate }}</h2>
+        <form *ngIf="!isConnected && loginForm && connected" [formGroup]="loginForm">
 
           <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-medium m-left-medium"></p>
 

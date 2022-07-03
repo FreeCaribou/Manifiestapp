@@ -26,10 +26,12 @@ export class MyManifiestaPage implements OnDestroy {
   haveConflict = false;
   shifts = [];
   loginForm: FormGroup;
+  // for the beeple connection
   isConnected = false;
   acceptNotification = false;
   hadLoginError = false;
-  isIos = true;
+  // for the internet connection
+  connected = true;
 
   constructor(
     private programmeService: ProgrammeService,
@@ -45,13 +47,14 @@ export class MyManifiestaPage implements OnDestroy {
   }
 
   ionViewWillEnter() {
-    this.isIos = isPlatform('ios');
-    console.log('is ios?', this.isIos)
-    this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
-    this.loginForm = this.buildLoginForm();
-    this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
-    this.fetchFavoriteProgramme();
-    this.fetchShifts();
+    Network.getStatus().then(n => {
+      this.connected = n.connected;
+      this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
+      this.loginForm = this.buildLoginForm();
+      this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
+      this.fetchFavoriteProgramme();
+      this.fetchShifts();
+    });
   }
 
   checkAvoidNotification() {
@@ -81,28 +84,31 @@ export class MyManifiestaPage implements OnDestroy {
 
   fetchShifts(reloadFav = false) {
     if (this.volunteerShiftService.isConnectedToBeeple()) {
-      Network.getStatus().then(n => {
-        if (n.connected) {
-          this.loadingCommunication.changeLoaderTo(true);
-          this.volunteerShiftService.getShifts().subscribe(d => {
-            this.shifts = d;
-            if (reloadFav) {
-              this.fetchFavoriteProgramme();
-            }
-          }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
-        } else {
-          this.shifts = this.volunteerShiftService.getOfflineList();
-        }
-      });
+      if (this.connected) {
+        this.loadingCommunication.changeLoaderTo(true);
+        this.volunteerShiftService.getShifts().subscribe(d => {
+          this.shifts = d;
+          if (reloadFav) {
+            this.fetchFavoriteProgramme();
+          }
+        }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+      } else {
+        this.shifts = this.volunteerShiftService.getOfflineList();
+      }
     }
   }
 
   fetchFavoriteProgramme() {
-    this.loadingCommunication.changeLoaderTo(true);
-    this.programmeService.getFavoriteProgramme().subscribe(data => {
-      this.list = this.programmeService.mapListEventToDayListEvent(data);
-      this.haveConflict = data.findIndex(e => e.inFavoriteConflict) > -1;
-    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+    if (this.connected) {
+      this.loadingCommunication.changeLoaderTo(true);
+      this.programmeService.getFavoriteProgramme().subscribe(data => {
+        this.list = this.programmeService.mapListEventToDayListEvent(data);
+        this.programmeService.setOfflineFavoritesList(this.list);
+        this.haveConflict = data.findIndex(e => e.inFavoriteConflict) > -1;
+      }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+    } else {
+      this.list = this.programmeService.getOfflineFavoritesList();
+    }
   }
 
   ionViewWillLeave() {
@@ -156,6 +162,7 @@ export class MyManifiestaPage implements OnDestroy {
   clickOnLogout() {
     this.volunteerShiftService.logout();
     this.shifts = [];
+    this.volunteerShiftService.setOfflineList([]);
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.fetchFavoriteProgramme();
   }
