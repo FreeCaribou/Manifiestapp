@@ -7,7 +7,7 @@
     "Filters": "Filtres",
     "Options": "Options",
     "ShiftsVolunteers": "Shifts bénévole",
-    "NoConnection": "Vous ne semblez pas être connecté à Internet"
+    "NoConnection": "Vous n'êtes pas connecté à Internet"
   },
   "Menu": {
     "Home": "Home",
@@ -56,7 +56,7 @@
     "SignupBeepleText": "Inscription",
     "WebsiteBeeple": "<a href='https://volunteers.manifiesta.be/'>Aller vers le site pour les bénévoles</a>",
     "WebsiteBeepleText": "Aller vers le site pour les bénévoles",
-    "DeleteAccount": "Supprimer mon compte bénévole"
+    "DeleteAccount": "Supprimer mon comptes"
   },
   "Error": {
     "Generic": "Une erreur s'est produite",

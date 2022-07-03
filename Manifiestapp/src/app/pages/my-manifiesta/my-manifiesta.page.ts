@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { LocalNotifications } from '@capacitor/local-notifications';
+import { Network } from '@capacitor/network';
 import { isPlatform, MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
@@ -80,13 +81,19 @@ export class MyManifiestaPage implements OnDestroy {
 
   fetchShifts(reloadFav = false) {
     if (this.volunteerShiftService.isConnectedToBeeple()) {
-      this.loadingCommunication.changeLoaderTo(true);
-      this.volunteerShiftService.getShifts().subscribe(d => {
-        this.shifts = d;
-        if (reloadFav) {
-          this.fetchFavoriteProgramme();
+      Network.getStatus().then(n => {
+        if (n.connected) {
+          this.loadingCommunication.changeLoaderTo(true);
+          this.volunteerShiftService.getShifts().subscribe(d => {
+            this.shifts = d;
+            if (reloadFav) {
+              this.fetchFavoriteProgramme();
+            }
+          }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+        } else {
+          this.shifts = this.volunteerShiftService.getOfflineList();
         }
-      }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+      });
     }
   }
 

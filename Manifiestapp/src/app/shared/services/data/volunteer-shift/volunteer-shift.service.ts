@@ -27,6 +27,7 @@ export class VolunteerShiftService {
           map(e => { return this.mapShiftsRemoveOldFromPreviousYear(e); }),
           map(e => { return this.mapSortShiftsByStartDatetime(e); }),
           tap(s => this.shifts = s),
+          tap(s => this.setOfflineList(s)),
         )
       } else {
         return of(this.shifts);
@@ -81,6 +82,25 @@ export class VolunteerShiftService {
       const bDate = new Date(b.team.shifts[0]?.start_datetime).getTime();
       return aDate - bDate;
     });
+  }
+
+  // offline
+
+  setOfflineList(shifts: any[]) {
+    localStorage.setItem(LocalStorageEnum.OfflineShifts, JSON.stringify(shifts));
+  }
+
+  getOfflineList(): any[] {
+    const tmp = localStorage.getItem(LocalStorageEnum.OfflineShifts);
+    if (tmp) {
+      try {
+        return JSON.parse(localStorage.getItem(LocalStorageEnum.OfflineShifts));
+      } catch (e) {
+        return [];
+      }
+    } else {
+      return [];
+    }
   }
 
 }

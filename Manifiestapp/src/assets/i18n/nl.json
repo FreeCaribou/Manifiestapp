@@ -7,7 +7,7 @@
     "Filters": "Filters",
     "Options": "Opties",
     "ShiftsVolunteers": "Jouw vrijwilligerstaken",
-    "NoConnection": "Je lijkt niet verbonden te zijn met internet"
+    "NoConnection": "Je bent niet verbonden met internet"
   },
   "Menu": {
     "Home": "Home",
@@ -56,7 +56,7 @@
     "SignupBeepleText": "Registratie",
     "WebsiteBeeple": "<a href='https://volunteers.manifiesta.be/'>Ga naar de site voor vrijwilligers</a>",
     "WebsiteBeepleText": "Ga naar de site voor vrijwilligers",
-    "DeleteAccount": "Mijn vrijwilligersaccount verwijderen"
+    "DeleteAccount": "Mijn account verwijderen"
   },
   "Error": {
     "Generic": "Een fout opgetreden",

@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
         } else {
           await loading?.dismiss();
         }
-      });
+      }).add(async () => { await loading?.dismiss(); });
     }
 
   }

@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-header',
@@ -13,6 +14,12 @@ export class HeaderComponent {
   @Input()
   withoutI18n = false;
 
-  constructor() { }
+  connected = true;
+
+  constructor() {
+    Network.getStatus().then(n => {
+      this.connected = n.connected;
+    });
+   }
 
 }
