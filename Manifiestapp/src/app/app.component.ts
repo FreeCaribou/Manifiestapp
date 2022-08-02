@@ -133,7 +133,8 @@ export class AppComponent implements OnInit {
     // when the user tap on the physical back button of the device, we want to close the app
     // but not for all page !
     const pageWithoutBackButton = [
-      '/programme/event-detail'
+      '/programme/event-detail',
+      '/programme/new-detail'
     ];
     this.subRouter = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
