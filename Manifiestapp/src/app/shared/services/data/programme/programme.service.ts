@@ -114,9 +114,9 @@ export class ProgrammeService implements IProgrammeService {
     const favoriteId: string[] = this.getFavoriteId();
 
     if (isChangedToFavorite && !favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId, [event.id.toString()].toString())
+      localStorage.setItem(LocalStorageEnum.FavoriteId, [event.id.toString()].toString());
     } else if (isChangedToFavorite && favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId, [...favoriteId, event.id.toString()].toString())
+      localStorage.setItem(LocalStorageEnum.FavoriteId, [...favoriteId, event.id.toString()].toString());
     } else if (!isChangedToFavorite && favoriteId) {
       const favoriteIdFiltered = favoriteId.filter(x => x !== event.id.toString());
       if (favoriteIdFiltered.length > 0) {
@@ -125,6 +125,14 @@ export class ProgrammeService implements IProgrammeService {
         localStorage.removeItem(LocalStorageEnum.FavoriteId);
       }
     }
+
+    this.programmes.forEach(p => {
+      p.list.forEach(l => {
+        if (l.id.toString() === event.id.toString()) {
+          l.favorite = isChangedToFavorite;
+        }
+      });
+    })
 
     const allNotif = await (await LocalNotifications.getPending()).notifications;
     if (event.favorite) {
