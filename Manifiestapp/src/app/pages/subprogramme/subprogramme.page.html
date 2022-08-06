@@ -3,10 +3,20 @@
   <ion-accordion-group>
     <ion-accordion value="filter">
       <ion-item slot="header">
-        <ion-label>Filter</ion-label>
+        <ion-label>{{"Programme.Filter" | translate}}</ion-label>
       </ion-item>
 
       <ion-list slot="content">
+
+        <ion-item>
+          <ion-label color="primary" position="stacked">
+            {{"Programme.Search" | translate}}
+          </ion-label>
+          <ion-input clearInput type="text" [placeholder]="'Programme.Search' | translate" [(ngModel)]="search"
+            (ngModelChange)="onSearchChange()">
+          </ion-input>
+        </ion-item>
+
         <ion-item *ngIf="locaties && connected">
           <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
           <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
@@ -35,6 +45,6 @@
     </ion-accordion>
   </ion-accordion-group>
 
-  <app-event-list-card [list]="list"></app-event-list-card>
+  <app-event-list-card [list]="listToShow"></app-event-list-card>
 
 </ion-content>

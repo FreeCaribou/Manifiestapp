@@ -36,7 +36,9 @@
     "ConflictShifts": "Je hebt een conflict met sommige van je shift",
     "FavAdded": "Favoriet goed toegevoegd",
     "ScheduleNotYetDefined": "Uur nog niet gedefinieerd",
-    "NoConnectionNodetail": "Komen terug naar deze pagina met een internetverbinding voor details."
+    "NoConnectionNodetail": "Komen terug naar deze pagina met een internetverbinding voor details.",
+    "Search": "Zoeken",
+    "Filter": "Filter"
   },
   "Info": {
     "GeneralInfo": "Algemene informatie",

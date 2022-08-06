@@ -15,6 +15,7 @@ import { Network } from '@capacitor/network';
 export class SubprogrammePage {
   dayId: string;
   list: EventInterface[];
+  listToShow: EventInterface[];
   day: EventDayEnum;
   locaties: any[];
   locatieSelected: any;
@@ -27,6 +28,8 @@ export class SubprogrammePage {
 
   // for the internet connection
   connected = true;
+
+  search: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -49,14 +52,16 @@ export class SubprogrammePage {
           // this.infoListService.getOrganizers(),
         ]).subscribe(datas => {
           this.list = datas[0];
+          this.listToShow = this.list;
           this.locaties = datas[1];
           this.categories = datas[2];
           // this.organizers = datas[3];
         }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
-    
+
         this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.loadingCommunication.changeLoaderTo(load));
       } else {
         this.list = this.programmeService.getOfflineProgrammesList([this.dayId]);
+        this.listToShow = this.list;
       }
     });
   }
@@ -70,11 +75,25 @@ export class SubprogrammePage {
       // this.organizerSelected ? [this.organizerSelected] : null,
     ).subscribe(data => {
       this.list = data;
+      this.listToShow = this.list;
+      this.onSearchChange();
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
   ionViewWillLeave() {
     this.list = [];
+  }
+
+  onSearchChange() {
+    console.log('hello', this.search)
+    if (this.search && this.search?.trim() !== '') {
+      console.log('we change', this.search, this.list)
+      this.listToShow = this.list.filter(
+        x => x.title.rendered.toLowerCase().includes(this.search.toLowerCase())
+      );
+    } else {
+      this.listToShow = this.list;
+    }
   }
 
 }

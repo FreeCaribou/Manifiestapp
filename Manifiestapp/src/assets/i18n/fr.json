@@ -36,7 +36,9 @@
     "ConflictShifts": "Vous avez des conflits avec certains de vos shifts",
     "FavAdded": "Favori bien ajouté",
     "ScheduleNotYetDefined": "Horaire pas encore défini",
-    "NoConnectionNodetail": "Revenez sur cette page avec une connection internet pour avoir les détails."
+    "NoConnectionNodetail": "Revenez sur cette page avec une connection internet pour avoir les détails.",
+    "Search": "Recherche",
+    "Filter": "Filtrer"
   },
   "Info": {
     "GeneralInfo": "Information générale",
