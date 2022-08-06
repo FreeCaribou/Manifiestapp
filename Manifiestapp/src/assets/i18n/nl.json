@@ -72,6 +72,8 @@
     "cors-bridge-fail": "Er is een fout opgetreden bij het openen van de gevraagde informatie"
   },
   "About": {
+    "App": "Over de app",
+    "Dev": "Applicatie ontwikkeld onder de GPL-3 licentie ",
     "BuyTicket": "Koop hier je ticket",
     "Article": "Artikel {{num}}",
     "ArticleOne": "Op ManiFiesta zetten we samen onze schouders onder de alternatieven van de toekomst. Wij spreken de taal van de solidariteit en de diversiteit, de taal van de 99%, niet die van het grote geld. Op het feest van de solidariteit is dan ook geen plaats voor racisme, seksisme, homofobie of andere vormen van haatzaaierij.",
