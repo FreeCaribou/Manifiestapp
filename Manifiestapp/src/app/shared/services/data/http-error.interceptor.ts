@@ -34,7 +34,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
       message,
       icon: 'bug-outline',
       color: 'danger',
-      duration: 5000,
+      duration: 4000,
     });
     toast.present();
 

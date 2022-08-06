@@ -117,8 +117,8 @@ export class AppComponent implements OnInit {
             message: t,
             icon: 'alert-circle-outline',
             color: 'danger',
-            position: 'top',
-            duration: 5000
+            position: 'bottom',
+            duration: 7000
           }).then(toast => {
             toast.present();
           });

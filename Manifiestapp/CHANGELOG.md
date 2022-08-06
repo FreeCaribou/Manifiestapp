@@ -1,4 +1,4 @@
-# 1.1.0
+# 1.2
 ## Feature
 * Link to delete volunteer account (mandatory by Apple)
 * Offline mode for shifts
@@ -6,12 +6,13 @@
 * Events card with title bigger
 * Offline mode for programmes
 * Search in the programme with a text
+* Dont try to get news when offline mode
 ## Patch
 * Prevent no image from WordPress with default image
 * Fav click on detail event
 * For iOS, delete Beeple account
 
-# 1.0.1
+# 1.1
 ## Patch
 * For iOS, connect to Manifiesta Beeple by in app Browser
 

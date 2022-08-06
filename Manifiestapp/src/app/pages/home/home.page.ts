@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NewInfoInterface } from 'src/app/shared/models/NewInfo.interface';
 import { NewsListService } from 'src/app/shared/services/data/news-list/news-list.service';
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomePage {
 
   constructor(
     private newsListService: NewsListService,
-  ) {}
+  ) { }
 
   ionViewDidEnter() {
     this.count();
@@ -28,10 +29,14 @@ export class HomePage {
       this.count();
     }, 1000);
 
-    this.loadNews = true;
-    this.newsListService.getInfos(true).subscribe(n => {
-      this.news = n;
-    }).add(() => { this.loadNews = false; });
+    Network.getStatus().then(n => {
+      if (n.connected) {
+        this.loadNews = true;
+        this.newsListService.getInfos(true).subscribe(n => {
+          this.news = n;
+        }).add(() => { this.loadNews = false; });
+      }
+    });
   }
 
   count() {
