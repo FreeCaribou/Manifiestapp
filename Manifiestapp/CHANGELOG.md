@@ -5,6 +5,7 @@
 * Offline mode for favorites
 * Events card with title bigger
 * Offline mode for programmes
+* Search in the programme with a text
 ## Patch
 * Prevent no image from WordPress with default image
 * Fav click on detail event
