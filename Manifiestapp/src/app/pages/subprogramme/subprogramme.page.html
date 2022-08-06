@@ -7,7 +7,7 @@
       </ion-item>
 
       <ion-list slot="content">
-        <ion-item *ngIf="locaties">
+        <ion-item *ngIf="locaties && connected">
           <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
           <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
@@ -15,7 +15,7 @@
           </ion-select>
         </ion-item>
 
-        <!-- <ion-item *ngIf="organizers">
+        <!-- <ion-item *ngIf="organizers && connected">
           <ion-label position="floating">Organizers</ion-label>
           <ion-select [(ngModel)]="organizerSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
@@ -23,7 +23,7 @@
           </ion-select>
         </ion-item> -->
 
-        <ion-item *ngIf="categories">
+        <ion-item *ngIf="categories && connected">
           <ion-label position="floating">{{'Programme.Categories' | translate}}</ion-label>
           <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
@@ -34,7 +34,6 @@
 
     </ion-accordion>
   </ion-accordion-group>
-
 
   <app-event-list-card [list]="list"></app-event-list-card>
 

@@ -1,11 +1,14 @@
-# 1.0.2
+# 1.1.0
 ## Feature
 * Link to delete volunteer account (mandatory by Apple)
 * Offline mode for shifts
 * Offline mode for favorites
-
+* Events card with title bigger
+* Offline mode for programmes
 ## Patch
 * Prevent no image from WordPress with default image
+* Fav click on detail event
+* For iOS, delete Beeple account
 
 # 1.0.1
 ## Patch

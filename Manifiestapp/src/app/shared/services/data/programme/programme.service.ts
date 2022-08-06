@@ -47,7 +47,9 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   programmes: { days: string, list: EventInterface[] }[] = [];
-  getAllProgrammeFilter(day: string[], locatiesId?: string[], categoriesId?: string[], organizersId?: string[]): Observable<EventInterface[]> {
+  getAllProgrammeFilter(
+    day: string[], locatiesId?: string[], categoriesId?: string[], organizersId?: string[]
+  ): Observable<EventInterface[]> {
     const programmesCacheIndex = this.programmes.findIndex(x => x.days === day.toString() && x.list);
     if (programmesCacheIndex === -1) {
       return this.service.getAllProgrammeFilter(day, locatiesId, categoriesId, organizersId).pipe(
@@ -57,6 +59,7 @@ export class ProgrammeService implements IProgrammeService {
         tap(e => {
           if (!locatiesId && !organizersId && !categoriesId) {
             this.programmes.push({ days: day.toString(), list: e })
+            localStorage.setItem(LocalStorageEnum.OfflineProgrammes, JSON.stringify(this.programmes));
           }
         }),
       );
@@ -373,6 +376,21 @@ export class ProgrammeService implements IProgrammeService {
     if (tmp) {
       try {
         return JSON.parse(localStorage.getItem(LocalStorageEnum.OfflineFavorites));
+      } catch (e) {
+        return [];
+      }
+    } else {
+      return [];
+    }
+  }
+
+  getOfflineProgrammesList(day: string[]): EventInterface[] {
+    const tmp = localStorage.getItem(LocalStorageEnum.OfflineProgrammes);
+    if (tmp) {
+      try {
+        const programmesOffline = JSON.parse(localStorage.getItem(LocalStorageEnum.OfflineProgrammes));
+        const programmesCache = programmesOffline.find(x => x.days === day.toString());
+        return programmesCache?.list || [];
       } catch (e) {
         return [];
       }

@@ -139,7 +139,6 @@ export class AppComponent implements OnInit {
     this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => this.router.url.includes(x)) > -1;
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log('huzezejiez', event)
         this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => event.urlAfterRedirects.includes(x)) > -1;
 
         this.subBackButton?.unsubscribe();

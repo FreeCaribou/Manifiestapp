@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from '../../communication/language.communication.service';
 import { InfoListDataService } from './info-list.data.service';
 import { IInfoListService } from './info-list.service.interface';
@@ -57,6 +58,7 @@ export class InfoListService implements IInfoListService {
     if (!this.days || this.days.length === 0) {
       return this.service.getDays().pipe(
         tap(d => this.days = d),
+        tap(d => localStorage.setItem(LocalStorageEnum.OfflineDays, JSON.stringify(d))),
       );
     } else {
       return of(this.days)
@@ -72,6 +74,22 @@ export class InfoListService implements IInfoListService {
     this.organizers = [];
     this.eventCategories = [];
     this.days = [];
+  }
+
+
+  // offline
+
+  getOfflineDaysList(): any[] {
+    const tmp = localStorage.getItem(LocalStorageEnum.OfflineDays);
+    if (tmp) {
+      try {
+        return JSON.parse(localStorage.getItem(LocalStorageEnum.OfflineDays));
+      } catch (e) {
+        return [];
+      }
+    } else {
+      return [];
+    }
   }
 
 }

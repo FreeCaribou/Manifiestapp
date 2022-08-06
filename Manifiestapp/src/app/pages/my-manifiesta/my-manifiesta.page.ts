@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Network } from '@capacitor/network';
-import { isPlatform, MenuController, ModalController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
 import { DayListEventInterface, EventInterface } from 'src/app/shared/models/Event.interface';
@@ -132,6 +132,9 @@ export class MyManifiestaPage implements OnDestroy {
       LocalNotifications.getPending().then(n => {
         LocalNotifications.cancel({ notifications: n.notifications }).finally(() => {
           localStorage.removeItem('favoriteId');
+          localStorage.removeItem(LocalStorageEnum.OfflineFavorites);
+          localStorage.removeItem(LocalStorageEnum.OfflineProgrammes);
+          localStorage.removeItem(LocalStorageEnum.OfflineDays);
 
           // Problem with id data from wp backend
           // The id is not same for the same event depending of the lang
@@ -165,6 +168,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.volunteerShiftService.setOfflineList([]);
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.fetchFavoriteProgramme();
+    localStorage.removeItem(LocalStorageEnum.OfflineShifts);
   }
 
   async seeBeeple() {

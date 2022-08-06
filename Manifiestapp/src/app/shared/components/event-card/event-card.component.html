@@ -6,8 +6,8 @@
 
     <ion-card-header>
       <ion-card-subtitle>
-        <span *ngIf="event.startDate">{{event.startDate | simpleDatePipe:dateJustWithHour}} - {{event.endDate |
-          simpleDatePipe:dateJustWithHour}}</span>
+        <span *ngIf="event.startDate">{{event.startDate | simpleDatePipe:dateJustWithHour:!connected}} - {{event.endDate |
+          simpleDatePipe:dateJustWithHour:!connected}}</span>
         <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>
       <ion-card-title [innerHtml]="event.headline" color="secondary" class="event-title"></ion-card-title>
@@ -16,14 +16,11 @@
   </div>
 
   <ion-card-content>
-    <!-- <ion-icon class="fake-mouse-select" (click)="onCardHeartClick(event)" color="tertiary"
-      [name]="event.favorite ? 'heart' : 'heart-outline'">
-    </ion-icon> -->
   </ion-card-content>
 
 </ion-card>
 
-<ion-fab vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav" (click)="onCardHeartClick(event)">
+<ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav" (click)="onCardHeartClick(event)">
   <ion-fab-button color="tertiary" size="small">
     <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-fab-button>

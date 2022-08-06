@@ -1,45 +1,51 @@
 <app-header [title]="event?.headline" [withoutI18n]="true" [defaultHref]="defaultHref"></app-header>
 
 <ion-content>
-  <div *ngIf="event">
-    <img [src]="event.mainPictureUrl" width="100%" />
+  <div *ngIf="connected">
+    <div *ngIf="event">
+      <img [src]="event.mainPictureUrl" width="100%" />
 
-    <div class="m-right-medium m-left-medium">
-      <h3 class="secondary-color disabled-margin" [innerHtml]="event.headline"></h3>
+      <div class="m-right-medium m-left-medium">
+        <h3 class="secondary-color disabled-margin" [innerHtml]="event.headline"></h3>
 
-      <div class="event-detail-maininfo">
-        <div class="event-detail-maininfo-detail">
-          <h5 class="primary-color disabled-margin">
-            {{event.day?.name}} | {{event.localisation?.name}} | {{event.category?.name}}
-          </h5>
-          <h5 class="secondary-color disabled-margin">
-            {{event.startDate | simpleDatePipe:true}} - {{event.endDate | simpleDatePipe:true}}
-          </h5>
+        <div class="event-detail-maininfo">
+          <div class="event-detail-maininfo-detail">
+            <h5 class="primary-color disabled-margin">
+              {{event.day?.name}} | {{event.localisation?.name}} | {{event.category?.name}}
+            </h5>
+            <h5 class="secondary-color disabled-margin">
+              {{event.startDate | simpleDatePipe:true}} - {{event.endDate | simpleDatePipe:true}}
+            </h5>
+          </div>
+          <!-- <ion-icon (click)="onCardHeartClick(event)" color="tertiary" [name]="event.favorite ? 'heart' : 'heart-outline'">
+          </ion-icon> -->
         </div>
-        <!-- <ion-icon (click)="onCardHeartClick(event)" color="tertiary" [name]="event.favorite ? 'heart' : 'heart-outline'">
-        </ion-icon> -->
+
+        <p [innerHtml]="event.content.rendered"></p>
+
+        <a *ngIf="event['toolset-meta']?.['info-evenement']?.['facebookopagina']?.raw"
+          [href]="event['toolset-meta']?.['info-evenement']?.['facebookopagina']?.raw" target="_blank">
+          <ion-icon name="logo-facebook" color="facebook" class="medium-icon">
+          </ion-icon>
+        </a>
+
+        <hr>
       </div>
 
-      <p [innerHtml]="event.content.rendered"></p>
-
-      <a *ngIf="event['toolset-meta']?.['info-evenement']?.['facebookopagina']?.raw"
-        [href]="event['toolset-meta']?.['info-evenement']?.['facebookopagina']?.raw" target="_blank">
-        <ion-icon name="logo-facebook" color="facebook" class="medium-icon">
-        </ion-icon>
-      </a>
-
-      <hr>
     </div>
 
+    <div *ngIf="options" class="event-detail-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
+    </div>
+
+
+    <ion-fab *ngIf="event" vertical="bottom" horizontal="end" slot="fixed" (click)="onCardHeartClick(event)">
+      <ion-fab-button color="tertiary">
+        <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </div>
 
-  <div *ngIf="options" class="event-detail-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
+  <div *ngIf="!connected">
+    <h1 class="text-align">{{ 'Programme.NoConnectionNodetail' | translate }}</h1>
   </div>
-
-  
-  <ion-fab *ngIf="event" vertical="bottom" horizontal="end" slot="fixed" (click)="onCardHeartClick(event)">
-    <ion-fab-button color="tertiary">
-      <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 </ion-content>

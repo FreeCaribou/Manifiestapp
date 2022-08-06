@@ -6,6 +6,7 @@ import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-subprogramme',
@@ -24,6 +25,9 @@ export class SubprogrammePage {
 
   showFilters = false;
 
+  // for the internet connection
+  connected = true;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
@@ -32,22 +36,29 @@ export class SubprogrammePage {
   ) { }
 
   ionViewWillEnter() {
-    this.loadingCommunication.changeLoaderTo(true);
     this.dayId = this.activatedRoute.snapshot.params.dayId;
 
-    forkJoin([
-      this.programmeService.getAllProgrammeFilter([this.dayId]),
-      this.infoListService.getVenues(),
-      this.infoListService.getEventCategories(),
-      // this.infoListService.getOrganizers(),
-    ]).subscribe(datas => {
-      this.list = datas[0];
-      this.locaties = datas[1];
-      this.categories = datas[2];
-      // this.organizers = datas[3];
-    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
-
-    this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.loadingCommunication.changeLoaderTo(load));
+    Network.getStatus().then(n => {
+      this.connected = n.connected;
+      if (this.connected) {
+        this.loadingCommunication.changeLoaderTo(true);
+        forkJoin([
+          this.programmeService.getAllProgrammeFilter([this.dayId]),
+          this.infoListService.getVenues(),
+          this.infoListService.getEventCategories(),
+          // this.infoListService.getOrganizers(),
+        ]).subscribe(datas => {
+          this.list = datas[0];
+          this.locaties = datas[1];
+          this.categories = datas[2];
+          // this.organizers = datas[3];
+        }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+    
+        this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.loadingCommunication.changeLoaderTo(load));
+      } else {
+        this.list = this.programmeService.getOfflineProgrammesList([this.dayId]);
+      }
+    });
   }
 
   onSelectChange() {
@@ -56,7 +67,7 @@ export class SubprogrammePage {
       [this.dayId],
       this.locatieSelected ? [this.locatieSelected] : null,
       this.categorieSelected ? [this.categorieSelected] : null,
-      this.organizerSelected ? [this.organizerSelected] : null,
+      // this.organizerSelected ? [this.organizerSelected] : null,
     ).subscribe(data => {
       this.list = data;
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });

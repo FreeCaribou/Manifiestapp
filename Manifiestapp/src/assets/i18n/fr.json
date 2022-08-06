@@ -35,7 +35,8 @@
     "NotificationBody": "l'évènement {{event}} va commencer à {{startDate}} à l'endroit {{location}}",
     "ConflictShifts": "Vous avez des conflits avec certains de vos shifts",
     "FavAdded": "Favori bien ajouté",
-    "ScheduleNotYetDefined": "Horaire pas encore défini"
+    "ScheduleNotYetDefined": "Horaire pas encore défini",
+    "NoConnectionNodetail": "Revenez sur cette page avec une connection internet pour avoir les détails."
   },
   "Info": {
     "GeneralInfo": "Information générale",

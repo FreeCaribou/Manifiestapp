@@ -35,7 +35,8 @@
     "NotificationBody": "Het evenement {{event}} gaat beginnen om {{startDate}} naar {{location}}",
     "ConflictShifts": "Je hebt een conflict met sommige van je shift",
     "FavAdded": "Favoriet goed toegevoegd",
-    "ScheduleNotYetDefined": "Uur nog niet gedefinieerd"
+    "ScheduleNotYetDefined": "Uur nog niet gedefinieerd",
+    "NoConnectionNodetail": "Komen terug naar deze pagina met een internetverbinding voor details."
   },
   "Info": {
     "GeneralInfo": "Algemene informatie",

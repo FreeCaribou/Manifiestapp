@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EventInterface } from '../../models/Event.interface';
 import { ProgrammeService } from '../../services/data/programme/programme.service';
+import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-event-card',
@@ -12,7 +13,13 @@ export class EventCardComponent implements OnInit {
   @Input()
   dateJustWithHour = true;
 
-  constructor(private programmeService: ProgrammeService) { }
+  connected = false;
+
+  constructor(private programmeService: ProgrammeService) {
+    Network.getStatus().then(n => {
+      this.connected = n.connected;
+    });
+   }
 
   ngOnInit() { }
 
