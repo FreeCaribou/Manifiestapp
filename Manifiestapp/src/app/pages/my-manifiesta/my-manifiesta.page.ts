@@ -1,10 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { Network } from '@capacitor/network';
-import { MenuController, ModalController } from '@ionic/angular';
+import { IonModal, MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
 import { DayListEventInterface, EventInterface } from 'src/app/shared/models/Event.interface';
@@ -32,6 +32,9 @@ export class MyManifiestaPage implements OnDestroy {
   hadLoginError = false;
   // for the internet connection
   connected = true;
+
+  @ViewChild('advantageModal') advantageModal: IonModal;
+  @ViewChild('insuranceModal') insuranceModal: IonModal;
 
   constructor(
     private programmeService: ProgrammeService,
@@ -183,6 +186,22 @@ export class MyManifiestaPage implements OnDestroy {
       url: `https://volunteers.manifiesta.be/${this.languageCommunication.selectedLanguage}/settings`,
       toolbarColor: '#f18904'
     });
+  }
+
+  openAdvantageModal() {
+    this.advantageModal.present();
+  }
+
+  closeAdvantageModal() {
+    this.advantageModal.dismiss();
+  }
+
+  openInsuranceModal() {
+    this.insuranceModal.present();
+  }
+
+  closeInsuranceModal() {
+    this.insuranceModal.dismiss();
   }
 
   ngOnDestroy() {

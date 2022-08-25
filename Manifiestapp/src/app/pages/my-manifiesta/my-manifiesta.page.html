@@ -71,8 +71,8 @@
             <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
 
             <!-- <p [innerHtml]="'User.SignupBeeple' | translate" class="m-right-medium m-left-medium"></p> -->
-            <ion-button (click)="seeBeeple()" class="padding-not-stick-edges m-top-medium"
-              color="primary" expand="block">
+            <ion-button (click)="seeBeeple()" class="padding-not-stick-edges m-top-medium" color="primary"
+              expand="block">
               {{'User.SignupBeepleText' | translate}}
               <ion-icon slot="end" icon="person-add"></ion-icon>
             </ion-button>
@@ -93,6 +93,10 @@
               </ion-label>
             </ion-item>
           </ion-list>
+          <div class="m-right-medium m-left-medium m-bt-medium m-top-medium flex-space-between">
+            <a class="fake-mouse-select" (click)="openAdvantageModal()">{{'Volunteer.AdvantageTitle' | translate}}</a>
+            <a class="fake-mouse-select" (click)="openInsuranceModal()">{{'Volunteer.InsuranceTitle' | translate}}</a>
+          </div>
           <div class="m-right-medium m-left-medium flex-space-between">
             <ion-button color="danger" (click)="clickOnLogout()">
               Logout
@@ -140,5 +144,49 @@
       </div>
     </ion-accordion>
   </ion-accordion-group>
+
+
+  <!-- Modal for volunteer -->
+  <ion-modal #advantageModal>
+    <ng-template>
+      <ion-header translucent>
+        <ion-toolbar color="secondary">
+          <ion-title>{{'Volunteer.AdvantageTitle' | translate}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeAdvantageModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <p>{{'Volunteer.AdvantagePartOne' | translate}}</p>
+        <p>{{'Volunteer.AdvantagePartTwo' | translate}}</p>
+        <p>{{'Volunteer.AdvantagePartThree' | translate}}</p>
+        <p>{{'Volunteer.AdvantagePartFour' | translate}}</p>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal #insuranceModal>
+    <ng-template>
+      <ion-header translucent>
+        <ion-toolbar color="secondary">
+          <ion-title>{{'Volunteer.InsuranceTitle' | translate}}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeInsuranceModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <p>{{'Volunteer.InsurancePartOne' | translate}}</p>
+        <p [innerHtml]="'Volunteer.InsurancePartList' | translate"></p>
+        <p>{{'Volunteer.InsurancePartPolice' | translate}}</p>
+        <p [innerHtml]="'Volunteer.InsuranceEnd' | translate"></p>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
 </ion-content>
