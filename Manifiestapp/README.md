@@ -11,3 +11,11 @@ See the package json file to see automatic script to run, test and build. Inform
 ## License
 
 [GPL-3](https://choosealicense.com/licenses/gpl-3.0/)
+
+### TODO
+
+Lot of refactor
+
+Unit Testing
+
+Any idea of new functionality ?
