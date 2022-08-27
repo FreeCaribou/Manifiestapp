@@ -1,3 +1,7 @@
+# 1.3
+## Patch
+* Adapt logo
+
 # 1.2
 ## Feature
 * Link to delete volunteer account (mandatory by Apple)
