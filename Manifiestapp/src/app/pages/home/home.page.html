@@ -9,6 +9,9 @@
   <div class="m-right-medium m-left-medium">
     <h2 class="secondary-color disabled-margin home-main-text">{{'Info.HomeSubtitle' | translate }}</h2>
     <h1 class="primary-color disabled-margin home-main-text">MANIFIESTA</h1>
+    <h6 class="home-description-text m-top-medium">
+      {{'General.Finish' | translate}}
+    </h6>
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p>
   </div>
 
@@ -25,25 +28,17 @@
     </ion-row>
   </ion-grid>
   
-  <h2 class="m-right-medium m-left-medium text-align">
+  <!-- Ticket in pause -->
+  <!-- <h2 class="m-right-medium m-left-medium text-align">
     <a href="https://manifiesta.eventsquare.co">{{ 'About.BuyTicket' | translate }}</a>
-  </h2>
+  </h2> -->
 
   <div *ngIf="isNow" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
     <h1>{{'General.Welcome' | translate}}</h1>
   </div>
 
-  <!-- <div class="facebook-container">
-      <div class="fb-page" data-href="https://www.facebook.com/manifiesta.be" data-tabs="timeline" data-width=""
-        data-height="275px" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true"
-        data-show-facepile="false">
-        <blockquote cite="https://www.facebook.com/manifiesta.be" class="fb-xfbml-parse-ignore"><a
-            href="https://www.facebook.com/manifiesta.be">ManiFiesta</a></blockquote>
-      </div>
-    </div> -->
-
   <div class="m-right-medium m-left-medium">
-    <div *ngIf="loadNews" class="m-top-medium text-align">
+    <!-- <div *ngIf="loadNews" class="m-top-medium text-align">
       <ion-spinner name="lines" color="primary"></ion-spinner>
     </div>
     <div *ngIf="!loadNews">
@@ -65,10 +60,7 @@
     </div>
 
     <h6 *ngIf="news?.length === 0 && !loadNews" class="home-description-text m-top-medium">{{'Info.HomePresentation' |
-      translate }}</h6>
+      translate }}</h6> -->
   </div>
-  <!-- <iframe width="100%" src="https://www.youtube.com/embed/Q9MFrRDh3lo" title="Aftermovie 2021"
-  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  allowfullscreen></iframe> -->
 
 </ion-content>

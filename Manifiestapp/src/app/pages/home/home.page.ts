@@ -13,7 +13,7 @@ export class HomePage {
   loadNews = false;
   isNow = false;
 
-  manifiestaDate = new Date('2022-09-17T09:00:00').getTime();
+  manifiestaDate = new Date('2023-09-09T09:00:00').getTime();
   diffDays: number;
   diffHours: number;
   diffMinutes: number;
@@ -29,14 +29,14 @@ export class HomePage {
       this.count();
     }, 1000);
 
-    Network.getStatus().then(n => {
-      if (n.connected) {
-        this.loadNews = true;
-        this.newsListService.getInfos(true).subscribe(n => {
-          this.news = n;
-        }).add(() => { this.loadNews = false; });
-      }
-    });
+    // Network.getStatus().then(n => {
+    //   if (n.connected) {
+    //     this.loadNews = true;
+    //     this.newsListService.getInfos(true).subscribe(n => {
+    //       this.news = n;
+    //     }).add(() => { this.loadNews = false; });
+    //   }
+    // });
   }
 
   count() {

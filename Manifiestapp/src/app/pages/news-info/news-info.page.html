@@ -2,7 +2,8 @@
 
 <ion-content>
   <div class="m-right-medium m-left-medium m-top-medium">
-    <ion-card *ngFor="let new of list" class="programme-card-body m-bt-medium fake-mouse-select"
+    <h5 class="text-align">{{'General.SeeYouLater' | translate}}</h5>
+    <!-- <ion-card *ngFor="let new of list" class="programme-card-body m-bt-medium fake-mouse-select"
       [routerLink]="['/new-detail', new.id]">
       <ion-thumbnail>
         <ion-img [src]="new.mainPictureUrl"></ion-img>
@@ -16,6 +17,6 @@
 
       <ion-card-content [innerHtml]="new.shortText">
       </ion-card-content>
-    </ion-card>
+    </ion-card> -->
   </div>
 </ion-content>

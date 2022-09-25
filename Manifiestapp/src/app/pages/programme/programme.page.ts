@@ -21,17 +21,17 @@ export class ProgrammePage {
   ) { }
 
   ionViewWillEnter() {
-    Network.getStatus().then(n => {
-      this.connected = n.connected;
-      if (this.connected) {
-        this.loadingCommunication.changeLoaderTo(true);
-        this.infoListService.getDays().subscribe(data => {
-          this.setDays(data);
-        }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
-      } else {
-        this.setDays(this.infoListService.getOfflineDaysList())
-      }
-    });
+    // Network.getStatus().then(n => {
+    //   this.connected = n.connected;
+    //   if (this.connected) {
+    //     this.loadingCommunication.changeLoaderTo(true);
+    //     this.infoListService.getDays().subscribe(data => {
+    //       this.setDays(data);
+    //     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+    //   } else {
+    //     this.setDays(this.infoListService.getOfflineDaysList())
+    //   }
+    // });
   }
 
   // The data from WP don't come always in right order for the days

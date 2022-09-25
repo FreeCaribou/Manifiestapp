@@ -16,14 +16,14 @@ export class NewsInfoPage {
   ) { }
 
   ionViewDidEnter() {
-    Network.getStatus().then(n => {
-      if (n.connected) {
-        this.loadingCommunication.changeLoaderTo(true);
-        this.newsListService.getInfos().subscribe(d => {
-          this.list = d;
-        }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
-      }
-    })
+    // Network.getStatus().then(n => {
+    //   if (n.connected) {
+    //     this.loadingCommunication.changeLoaderTo(true);
+    //     this.newsListService.getInfos().subscribe(d => {
+    //       this.list = d;
+    //     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+    //   }
+    // })
   }
 
 }

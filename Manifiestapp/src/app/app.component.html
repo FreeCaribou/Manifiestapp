@@ -24,7 +24,9 @@
             <ion-icon name="logo-instagram" color="instagram" class="big-icon">
             </ion-icon>
           </a>
-          <a href="https://www.facebook.com/manifiesta.be" alt="facebook" target="_blank">
+          <a [href]="languageCommunication.translate.currentLang === 'nl' ? 
+          'https://www.facebook.com/manifiesta.nl' : 'https://www.facebook.com/profile.php?id=100085999362192'"
+            alt="facebook" target="_blank">
             <ion-icon name="logo-facebook" color="facebook" class="big-icon">
             </ion-icon>
           </a>

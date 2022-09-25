@@ -50,14 +50,14 @@ export class MyManifiestaPage implements OnDestroy {
   }
 
   ionViewWillEnter() {
-    Network.getStatus().then(n => {
-      this.connected = n.connected;
-      this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
-      this.loginForm = this.buildLoginForm();
-      this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
-      this.fetchFavoriteProgramme();
-      this.fetchShifts();
-    });
+    // Network.getStatus().then(n => {
+    //   this.connected = n.connected;
+    //   this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
+    //   this.loginForm = this.buildLoginForm();
+    //   this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
+    //   this.fetchFavoriteProgramme();
+    //   this.fetchShifts();
+    // });
   }
 
   checkAvoidNotification() {

@@ -1,12 +1,13 @@
 <app-header [title]="'Programme'"></app-header>
 
 <ion-content>
-  <ion-tabs>
+  <h5 class="text-align">{{'General.SeeYouLater' | translate}}</h5>
+  <!-- <ion-tabs>
     <ion-tab-bar slot="top">
       <ion-tab-button *ngFor="let d of days" [tab]="'subprogramme/'+d.id"
         [class.custom-tab-selected]="isTabSelected(d)">
         <ion-label>{{ d.name }}</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
-  </ion-tabs>
+  </ion-tabs> -->
 </ion-content>

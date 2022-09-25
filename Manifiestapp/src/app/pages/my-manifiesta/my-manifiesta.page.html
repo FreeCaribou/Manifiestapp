@@ -9,8 +9,10 @@
     </h5>
   </div>
 
+  <h5 class="text-align">{{'General.SeeYouLater' | translate}}</h5>
+
   <!-- Favorite Programme -->
-  <ion-accordion-group value="favoriteProgramme">
+  <!-- <ion-accordion-group value="favoriteProgramme">
     <ion-accordion value="favoriteProgramme">
       <ion-item slot="header">
         <ion-label>{{'Programme.YourFavoris' | translate }}</ion-label>
@@ -22,18 +24,16 @@
             </p>
           </a>
           <div *ngIf="list?.length > 0">
-            <!-- <app-event-list-card [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list-card> -->
-            <!-- Try with a list view what it's look like -->
             <app-event-list [list]="list" [dateJustWithHour]="dateJustWithHour"></app-event-list>
           </div>
         </div>
       </div>
     </ion-accordion>
-  </ion-accordion-group>
+  </ion-accordion-group> -->
 
 
   <!-- Shifts Volunteers -->
-  <ion-accordion-group value="shiftsVolunteers">
+  <!-- <ion-accordion-group value="shiftsVolunteers">
     <ion-accordion value="shiftsVolunteers">
       <ion-item slot="header">
         <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
@@ -70,7 +70,6 @@
 
             <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
 
-            <!-- <p [innerHtml]="'User.SignupBeeple' | translate" class="m-right-medium m-left-medium"></p> -->
             <ion-button (click)="seeBeeple()" class="padding-not-stick-edges m-top-medium" color="primary"
               expand="block">
               {{'User.SignupBeepleText' | translate}}
@@ -109,7 +108,7 @@
 
       </div>
     </ion-accordion>
-  </ion-accordion-group>
+  </ion-accordion-group> -->
 
 
   <!-- Options -->

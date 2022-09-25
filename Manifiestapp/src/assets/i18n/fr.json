@@ -8,7 +8,9 @@
     "Options": "Options",
     "ShiftsVolunteers": "Shifts bénévole",
     "NoConnection": "Vous n'êtes pas connecté à Internet",
-    "NoInternet": "Pas d'Internet"
+    "NoInternet": "Pas d'Internet",
+    "SeeYouLater": "Revenez nous voir en 2023 !",
+    "Finish": "Voilà Manifiesta 2022 qui est fini, merci à tous nos bénévoles et surtout, rendez vous l'an prochain !"
   },
   "Menu": {
     "Home": "Home",
@@ -47,7 +49,7 @@
     "Contact": "Contact",
     "HomeSubtitle": "Fête de la Solidarité",
     "HomePresentation": "Pendant deux jours, refaisons le monde tel qu'il devrait être. Un monde dans lequel nous nous engageons ensemble pour imaginer les alternatives du futur. Nous y parlons la langue de la solidarité et de la diversité ! La langue des 99%, pas la langue de l'argent.",
-    "Date": "17-18 septembre 2022 Hippordrome Ostende"
+    "Date": "Prochaines dates à retenir, 09-10 septembre 2023 !"
   },
   "User": {
     "Login": "Connexion",
