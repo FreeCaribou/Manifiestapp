@@ -12,8 +12,21 @@ export class BaseService {
   constructor(private httpClient: HttpClient) {
   }
 
+  /**
+   * deprecated
+   * @param path
+   * @returns 
+   */
   get(path: string): Observable<any> {
     return this.httpClient.get('https://manifiestback.herokuapp.com/bypasscors', {headers: {url: path}});
+  }
+
+  getCall(url: string): Observable<any> {
+    return this.httpClient.get(url);
+  }
+
+  postCall(url: string, body): Observable<any> {
+    return this.httpClient.post(url, body)
   }
 
 }

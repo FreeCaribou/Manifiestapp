@@ -12,6 +12,7 @@ import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
+import { SellingService } from 'src/app/shared/services/data/selling/selling.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 import { environment } from 'src/environments/environment';
 
@@ -30,6 +31,12 @@ export class MyManifiestaPage implements OnDestroy {
   isConnected = false;
   acceptNotification = false;
   hadLoginError = false;
+  // for the seller connection
+  iWantSell: boolean;
+  sellerDepartement: string;
+  sellerPostalCode: string;
+  sellerSellingGoal: number;
+  departements = [];
   // for the internet connection
   connected = true;
 
@@ -44,20 +51,88 @@ export class MyManifiestaPage implements OnDestroy {
     public menu: MenuController,
     public modalController: ModalController,
     private volunteerShiftService: VolunteerShiftService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private sellingService: SellingService,
   ) {
     this.checkAvoidNotification();
   }
 
   ionViewWillEnter() {
-    // Network.getStatus().then(n => {
-    //   this.connected = n.connected;
-    //   this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
-    //   this.loginForm = this.buildLoginForm();
-    //   this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
-    //   this.fetchFavoriteProgramme();
-    //   this.fetchShifts();
-    // });
+    Network.getStatus().then(n => {
+      this.connected = n.connected;
+      this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
+      this.loginForm = this.buildLoginForm();
+      // this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
+      // this.fetchFavoriteProgramme();
+      // this.fetchShifts();
+      if (this.isConnected) {
+        this.verifySellerData();
+      }
+    });
+  }
+
+  verifySellerData() {
+    if (this.departements.length === 0) {
+      this.loadAllDepartement();
+    }
+    this.iWantSell = localStorage.getItem(LocalStorageEnum.VolunteerWantSell) as unknown as boolean;
+    this.sellerDepartement = localStorage.getItem(LocalStorageEnum.SellerDepartment);
+    this.sellerPostalCode = localStorage.getItem(LocalStorageEnum.SellerPostalCode);
+    this.sellerSellingGoal = parseInt(localStorage.getItem(LocalStorageEnum.SellerSellingGoal));
+    this.volunteerShiftService.sendSellerVerificationEmit();
+  }
+
+  onIWantSellChange(event) {
+    if (event.detail?.checked) {
+      localStorage.setItem(LocalStorageEnum.VolunteerWantSell, 'true');
+    } else {
+      localStorage.removeItem(LocalStorageEnum.VolunteerWantSell);
+    }
+    this.verifySellerData();
+  }
+
+  // TODO verification real post code
+  onSellerDepartementChange(event) {
+    if (event.detail?.value) {
+      localStorage.setItem(LocalStorageEnum.SellerDepartment, event.detail?.value);
+    } else {
+      localStorage.removeItem(LocalStorageEnum.SellerDepartment);
+    }
+    this.verifySellerData();
+  }
+
+  onSellerPostalCodeChange(event) {
+    console.log('post change', event)
+    const postalCode = event.detail?.value;
+    if (!!postalCode) {
+      localStorage.setItem(LocalStorageEnum.SellerPostalCode, postalCode);
+    } else {
+      localStorage.removeItem(LocalStorageEnum.SellerPostalCode);
+    }
+    this.verifySellerData();
+  }
+
+  onSellerSellingGoal(event) {
+    console.log('selling goal change', event, isNaN(event.detail?.value))
+    const sellingGoal = event.detail?.value;
+    if (isNaN(sellingGoal)) {
+      localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
+    } else {
+      if (!!sellingGoal) {
+        localStorage.setItem(LocalStorageEnum.SellerSellingGoal, sellingGoal);
+      } else {
+        localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
+      }
+    }
+    this.verifySellerData();
+  }
+
+  loadAllDepartement() {
+    this.loadingCommunication.changeLoaderTo(true);
+    this.sellingService.getAllDepartments().subscribe(data => {
+      this.departements = data;
+      this.verifySellerData();
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
   }
 
   checkAvoidNotification() {
@@ -159,7 +234,8 @@ export class MyManifiestaPage implements OnDestroy {
     this.loadingCommunication.changeLoaderTo(true);
     this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
-      this.fetchShifts(true);
+      // this.fetchShifts(true);
+      this.verifySellerData();
     }, error => {
       console.error(error); this.hadLoginError = true;
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
@@ -172,6 +248,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.fetchFavoriteProgramme();
     localStorage.removeItem(LocalStorageEnum.OfflineShifts);
+    this.verifySellerData();
   }
 
   async seeBeeple() {

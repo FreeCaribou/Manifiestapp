@@ -1,5 +1,5 @@
 import { registerLocaleData } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { LoadingController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
@@ -15,6 +15,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { InfoListService } from './shared/services/data/info-list/info-list.service';
 import { LocalStorageEnum } from './shared/models/LocalStorage.enum';
 import { ProgrammeService } from './shared/services/data/programme/programme.service';
+import { App, URLOpenListenerEvent } from '@capacitor/app';
+import { VolunteerShiftService } from './shared/services/data/volunteer-shift/volunteer-shift.service';
 
 @Component({
   selector: 'app-root',
@@ -22,18 +24,11 @@ import { ProgrammeService } from './shared/services/data/programme/programme.ser
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public appPages = [
-    { title: 'Home', url: 'home', icon: 'home' },
-    { title: 'Programme', url: 'programme', icon: 'calendar' },
-    { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
-    { title: 'News', url: 'news-info', icon: 'newspaper' },
-    // { title: 'Map', url: 'map', icon: 'map' },
-    { title: 'About', url: 'about', icon: 'information-circle' },
-    // { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
-  ];
+  public appPages = [];
 
   subBackButton: Subscription;
   subRouter: Subscription;
+  sellerAccessDataChangeEmit: Subscription;
 
   showNewsletterButton = true;
   pagesToShowNewsletterButton = ['/home', '/news-info', '/new-detail']
@@ -45,6 +40,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public platform: Platform,
+    public volunteerShiftService: VolunteerShiftService,
     public languageCommunication: LanguageCommunicationService,
     public loadingCommunication: LoadingCommunicationService,
     public router: Router,
@@ -55,8 +51,8 @@ export class AppComponent implements OnInit {
     public infoListService: InfoListService,
     public programmeService: ProgrammeService,
     public loadingController: LoadingController,
-  ) {
-  }
+    private zone: NgZone,
+  ) { }
 
   async ngOnInit() {
     await LocalNotifications.requestPermissions();
@@ -74,6 +70,26 @@ export class AppComponent implements OnInit {
     this.languageCommunication.langHasChangeEvent.subscribe(l => {
       this.menu.close();
     });
+  }
+
+  private buildMenu() {
+    console.log('build the menu')
+    this.appPages = [
+      { title: 'Home', url: 'home', icon: 'home' },
+      { title: 'Programme', url: 'programme', icon: 'calendar' },
+      { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
+      { title: 'News', url: 'news-info', icon: 'newspaper' },
+      // { title: 'Map', url: 'map', icon: 'map' },
+      // { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
+    ];
+
+    // if (this.volunteerShiftService.isReadyToSellWithData()) {
+    //   this.appPages.push({ title: 'Selling', url: 'selling', icon: 'ticket' });
+    // } 
+
+    // See if we want a different selling menu item in case of
+    this.appPages.push({ title: 'Selling', url: 'selling', icon: 'ticket' });
+    this.appPages.push({ title: 'About', url: 'about', icon: 'information-circle' });
   }
 
   // We need at the launch of the app to verify if there is update of the schedule of event
@@ -103,6 +119,25 @@ export class AppComponent implements OnInit {
   }
 
   async init() {
+    this.buildMenu();
+    this.volunteerShiftService.sellerAccessDataChangeEmit.subscribe(d => {
+      this.buildMenu();
+    });
+    // more routing init
+    App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
+      this.zone.run(() => {
+        console.log('return of url', event.url)
+        const slug = event.url.includes('mycallbackscheme://selling');
+        // Expected url call back
+        // mycallbackscheme://seller?action=sale&amount=101&clientTransactionId=&message=(-4) USER_CANCEL&status=fail&tid=16220044
+        if (slug || event.url === 'selling') {
+          this.router.navigateByUrl(`${event.url.replace('mycallbackscheme://', '/')}&timestamp=${new Date().getTime()}`);
+        }
+        // If no match, do nothing - let regular routing
+        // logic take over
+      });
+    });
+
     registerLocaleData(localeFr);
     registerLocaleData(localeNl);
     this.languageCommunication.init();

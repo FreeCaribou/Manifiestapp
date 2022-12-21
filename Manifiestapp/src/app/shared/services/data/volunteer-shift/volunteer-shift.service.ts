@@ -1,9 +1,10 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { LocalStorageEnum } from "src/app/shared/models/LocalStorage.enum";
 import { environment } from "src/environments/environment";
+import { BaseService } from "../base.service";
 
 // TODO-refactor typing
 @Injectable({
@@ -11,8 +12,13 @@ import { environment } from "src/environments/environment";
 })
 export class VolunteerShiftService {
 
+  baseUrl = `${environment.apiUrl}`;
+
+  sellerAccessDataChangeEmit = new EventEmitter<string>();
+
   constructor(
     private httpClient: HttpClient,
+    private baseService: BaseService,
   ) { }
 
   // TODO-refactor maybe also a mapping of data here ?
@@ -40,10 +46,12 @@ export class VolunteerShiftService {
 
   login(session): Observable<any> {
     session.display = 'MyManifiesta'
-    return this.httpClient.post(`${environment.beepleBridgeUrl}auth`, { session }).pipe(
+    return this.baseService.postCall(`${this.baseUrl}sellers/connect`, session).pipe(
       tap(data => {
+        console.log('data', data)
         localStorage.setItem(LocalStorageEnum.BeepleId, data.id);
-        localStorage.setItem(LocalStorageEnum.BeepleToken, data.token);
+        localStorage.setItem(LocalStorageEnum.BeepleEmail, data.mail);
+        // localStorage.setItem(LocalStorageEnum.BeepleToken, data.token);
       })
     );
   }
@@ -64,8 +72,43 @@ export class VolunteerShiftService {
     return localStorage.getItem(LocalStorageEnum.BeepleToken);
   }
 
+  getBeepleVolunteerEmail(): string {
+    return localStorage.getItem(LocalStorageEnum.BeepleEmail);
+  }
+
+  getVolunteerWantSell(): string {
+    return localStorage.getItem(LocalStorageEnum.VolunteerWantSell);
+  }
+
+  getSellerDepartment(): string {
+    return localStorage.getItem(LocalStorageEnum.SellerDepartment);
+  }
+
+  getSellerPostalCode(): string {
+    return localStorage.getItem(LocalStorageEnum.SellerPostalCode);
+  }
+
+  getSellerSellingGoal(): number {
+    return parseInt(localStorage.getItem(LocalStorageEnum.SellerSellingGoal));
+  }
+
+  sendSellerVerificationEmit() {
+    this.sellerAccessDataChangeEmit.emit('verify');
+  }
+
   isConnectedToBeeple(): boolean {
-    return (this.getBeepleVolunteerId() && this.getBeepleVolunteerToken()) as unknown as boolean;
+    return (this.getBeepleVolunteerId() && this.getBeepleVolunteerEmail()) as unknown as boolean;
+  }
+
+  // Need to be connected and want to sell and have a departement selected
+  isReadyToSellWithData(): boolean {
+    return (
+      this.isConnectedToBeeple()
+      && this.getVolunteerWantSell()
+      && this.getSellerDepartment()
+      && this.getSellerPostalCode()
+      && this.getSellerSellingGoal()
+    ) as unknown as boolean
   }
 
   mapShiftsRemoveOldFromPreviousYear(shifts: any[]): any[] {

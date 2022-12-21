@@ -3,4 +3,8 @@ export const environment = {
   dataMock: false,
   baseUrl: 'https://www.manifiesta.be/wp-json/wp/v2/',
   beepleBridgeUrl: 'https://manifiestback.herokuapp.com/',
+  apiUrl: 'https://api-manifiesta-tickets.whoissamy.be/api/',
+  vwAccessSite: '',
+  vwAccessCode: '',
+  vwPinCode: '',
 };

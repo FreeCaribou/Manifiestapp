@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "be.manifiesta.app",
+      "sha256_cert_fingerprints": [
+        "FD:6D:89:7E:6F:80:99:05:0B:EE:F5:F8:0F:A2:6F:AC:B4:A5:0F:AF:C6:1A:20:25:C8:85:BE:B2:33:5F:9E:23"
+      ]
+    }
+  }
+]

@@ -33,7 +33,7 @@
 
 
   <!-- Shifts Volunteers -->
-  <!-- <ion-accordion-group value="shiftsVolunteers">
+  <ion-accordion-group value="shiftsVolunteers">
     <ion-accordion value="shiftsVolunteers">
       <ion-item slot="header">
         <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
@@ -68,7 +68,9 @@
               <ion-icon slot="end" icon="person"></ion-icon>
             </ion-button>
 
-            <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
+            <ion-chip *ngIf="hadLoginError" color="warning" class="m-right-medium m-left-medium">
+              {{'User.ConnectionProblem' | translate}}
+            </ion-chip>
 
             <ion-button (click)="seeBeeple()" class="padding-not-stick-edges m-top-medium" color="primary"
               expand="block">
@@ -92,12 +94,44 @@
               </ion-label>
             </ion-item>
           </ion-list>
+          <div class="m-right-medium m-left-medium m-bt-medium m-top-medium">
+            <ion-item>
+              <ion-label>{{'Volunteer.WantSell' | translate}}</ion-label>
+              <ion-toggle slot="end" [checked]="iWantSell" (ionChange)="onIWantSellChange($event)"></ion-toggle>
+            </ion-item>
+            <ng-container *ngIf="iWantSell">
+              <h6> {{"Ticket.EnterSomeDataToBeAbleToSell" | translate}}</h6>
+              <ion-item *ngIf="departements.length > 0">
+                <ion-label color="primary" position="floating">
+                  {{"Ticket.Department" | translate}}
+                </ion-label>
+                <ion-select [placeholder]="'Ticket.DepartmentChoice' | translate" [value]="sellerDepartement"
+                  interface="popover" (ionChange)="onSellerDepartementChange($event)">
+                  <ion-select-option *ngFor="let d of departements" [value]="d.code">{{d.label}}</ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">
+                  {{'Volunteer.PostalCode' | translate}}
+                </ion-label>
+                <ion-input [placeholder]="'Volunteer.PostalCode' | translate" [value]="sellerPostalCode"
+                  (ionChange)="onSellerPostalCodeChange($event)"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label color="primary" position="stacked">
+                  {{'Volunteer.SellingGoal' | translate}}
+                </ion-label>
+                <ion-input [placeholder]="'Volunteer.SellingGoal' | translate" type="number" min="0"
+                  [value]="sellerSellingGoal" (ionChange)="onSellerSellingGoal($event)"></ion-input>
+              </ion-item>
+            </ng-container>
+          </div>
           <div class="m-right-medium m-left-medium m-bt-medium m-top-medium flex-space-between">
             <a class="fake-mouse-select" (click)="openAdvantageModal()">{{'Volunteer.AdvantageTitle' | translate}}</a>
             <a class="fake-mouse-select" (click)="openInsuranceModal()">{{'Volunteer.InsuranceTitle' | translate}}</a>
           </div>
           <div class="m-right-medium m-left-medium flex-space-between">
-            <ion-button color="danger" (click)="clickOnLogout()">
+            <ion-button color="danger" (click)="clickOnLogout()" size="small">
               Logout
             </ion-button>
             <ion-button color="danger" (click)="clickOnDeleteAccount()" size="small">
@@ -108,7 +142,7 @@
 
       </div>
     </ion-accordion>
-  </ion-accordion-group> -->
+  </ion-accordion-group>
 
 
   <!-- Options -->

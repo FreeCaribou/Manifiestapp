@@ -6,7 +6,7 @@
     "All": "Tout",
     "Filters": "Filtres",
     "Options": "Options",
-    "ShiftsVolunteers": "Shifts bénévole",
+    "ShiftsVolunteers": "Bénévole",
     "NoConnection": "Vous n'êtes pas connecté à Internet",
     "NoInternet": "Pas d'Internet",
     "SeeYouLater": "Revenez nous voir en 2023 !",
@@ -24,7 +24,8 @@
     "BuyTicket": "Acheter le ticket",
     "Playlist": "Playlist",
     "MyManifiesta": "Mon ManiFiesta",
-    "News": "Dernières nouvelles"
+    "News": "Dernières nouvelles",
+    "Selling": "Vendeur"
   },
   "Programme": {
     "NoFavorites": "Vous n'avez pas de favoris pour le moment",
@@ -56,13 +57,13 @@
     "Password": "Mot de passe",
     "Email": "Email",
     "AcceptNotification": "Accepter les notifications",
-    "ConnectionProblem": "Si c'est votre première inscription, il se peut que la synchronisation n'est pas encore faite, veuillez attendre 2 - 3 jours, nous nous excusons du soucis.",
+    "ConnectionProblem": "Soucis dans la connection",
     "ConnectionBeeple": "Connectez vous avec vos identifiants de bénévole ManiFiesta pour voir ici vos tâches.",
     "SignupBeeple": "<a href='https://volunteers.manifiesta.be/'>Si vous voulez vous inscrire, c'est ici !</a>",
     "SignupBeepleText": "Inscription",
     "WebsiteBeeple": "<a href='https://volunteers.manifiesta.be/'>Aller vers le site pour les bénévoles</a>",
     "WebsiteBeepleText": "Aller vers le site pour les bénévoles",
-    "DeleteAccount": "Supprimer mon comptes",
+    "DeleteAccount": "Supprimer compte",
     "NotConnectedForShifts": "Internet requis pour se connecter à vos shifts"
   },
   "Error": {
@@ -70,6 +71,7 @@
     "auth-bad-combination": "Vous n'avez pas rentré le bon email ou mot de passe, ou vous n'êtes pas encore inscrit",
     "auth-bad-authentification": "Vous n'êtes pas encore inscrit au bénévolat ManiFiesta ?",
     "auth-bad-body": "La formulaire est mal envoyé",
+    "auth-bad-not-in-file": "Si c'est votre première inscription, il se peut que la synchronisation n'est pas encore faite, veuillez attendre 2 - 3 jours, nous nous excusons du soucis.",
     "enrolments-get-fail": "Il y a une erreur pour accéder à vos shifts",
     "cors-bridge-fail": "Il y a une erreur pour accéder aux informations demandées"
   },
@@ -160,6 +162,36 @@
     "InsurancePartOne": "En tant que bénévole à Manifiesta, vous êtes couvert par notre assurance pour tout dommage corporels en cas d'accident et pour votre responsabilité civile pour les dommages causés à des tiers. Cela signifie:",
     "InsurancePartList": "<ul><li>Par dommage corporel, on entend des dommages portant atteinte à votre intégrité physique, mentale ou économique.</li><li>Des accidents peuvent se produire pendant le bénévolat au festival, ainsi que sur votre trajet aller et retour.</li><li>Les dommages matériels en cas d'accident ne sont pas couverts, sauf si tu as besoin d'un certain matériel pour des raisons médicales. Cela signifie par exemple que les vêtements endommagés ne sont pas couverts par l'assurance, mais que les lunettes cassées le sont.</li><li>Au niveau de la responsabilité civile. Cette assurance couvre les dommages que vous pourriez causer au public ou à d'autres tiers. C'est-à-dire les dommages matériels et corporels que vous pourriez causer dans le cadre de votre bénévolat, que vous soyez directement à l’origine du dommage ou que celui-ci résulte d’un défaut de surveillance. Par exemple, vous blessez quelqu'un en portant une table.</li></ul>",
     "InsurancePartPolice": "Nous sommes assurés par CIRCLES GROUP S.A. (numéro de police : CE76709)",
-    "InsuranceEnd": "En cas de problème ou pour toute question pendant le festival, vous pouvez vous rendre au secrétariat bénévoles (dans le village bénévoles). Vous pouvez contacter <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a> si vous souhaitez avoir plus de détails sur l'assurance."
+    "InsuranceEnd": "En cas de problème ou pour toute question pendant le festival, vous pouvez vous rendre au secrétariat bénévoles (dans le village bénévoles). Vous pouvez contacter <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a> si vous souhaitez avoir plus de détails sur l'assurance.",
+    "PostalCode": "Code postale",
+    "WantSell": "Je veux vendre des tickets",
+    "SellingGoal": "Objectif de vente"
+  },
+  "Ticket": {
+    "ConnectionSelling": "Connexion pour nos vendeur",
+    "SellerEmail": "Email du vendeur",
+    "Department": "Département",
+    "DepartmentChoice": "Choix du département",
+    "TicketsGoal": "Objectif",
+    "ClientInformation": "Information du client :",
+    "ClientEmail": "Email du client",
+    "VerificationClientEmail": "Vérification email du client",
+    "ClientFirstname": "Prénom du client",
+    "ClientLastname": "Nom du client",
+    "Buy": "Vendre",
+    "Cancel": "Annuler",
+    "Details": "Détails",
+    "ValidateBuy": "Valider le paiement",
+    "Pay": "Payer",
+    "EnterSomeDataToBeAbleToSell": "Veuillez rentrer votre 'département', code postal pour lequel vous allez vendre ainsi que votre objectif",
+    "HardwareNOK": "Tout ne semble pas prêt sur votre gsm pour vendre",
+    "VivaWalletNotInstall": "Viva Wallet POS non installé",
+    "InstallVivaWallet": "Installer Viva Wallet POS",
+    "GpsNotActivated": "Localisation / GPS non activé",
+    "ActivateGps": "Activer Localisation / GPS",
+    "NfcNotActivated": "NFC non activé",
+    "ActivateNfc": "Activer NFC",
+    "GoMyManifiestaForConnect": "Pour accèder à la vente de ticket vous devez vous connecter sur My Manifiesta et y remplir des informations",
+    "TicketBuyRecap": "Récapitulatif des tickets"
   }
 }

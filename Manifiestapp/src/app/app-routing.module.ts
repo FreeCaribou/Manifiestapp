@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'new-detail/:id',
     loadChildren: () => import('./pages/new-detail/new-detail.module').then( m => m.NewDetailPageModule)
   },
+  {
+    path: 'selling',
+    loadChildren: () => import('./pages/selling/selling.module').then( m => m.SellingPageModule)
+  },
 
   // failback routes
   {

@@ -25,8 +25,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
   async handleError(req: HttpRequest<any>, next: HttpHandler, error: HttpErrorResponse) {
     let message = await this.translate.get('Error.Generic').toPromise();
 
-    if (error.error?.error?.code) {
-      message = await this.translate.get(`Error.${error.error.error.code}`).toPromise();
+    if (error.error?.code) {
+      message = await this.translate.get(`Error.${error.error.code}`).toPromise();
     }
 
     const toast = await this.toastController.create({

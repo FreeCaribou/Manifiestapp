@@ -6,7 +6,7 @@
     "All": "Alle",
     "Filters": "Filters",
     "Options": "Opties",
-    "ShiftsVolunteers": "Jouw vrijwilligerstaken",
+    "ShiftsVolunteers": "Vrijwilliger",
     "NoConnection": "Je bent niet verbonden met internet",
     "NoInternet": "Geen Internet",
     "SeeYouLater": "Kom terug en zie ons in 2023!",
@@ -24,7 +24,8 @@
     "BuyTicket": "Koop het ticket",
     "Playlist": "Playlist",
     "MyManifiesta": "Mijn ManiFiesta",
-    "News": "Nieuws"
+    "News": "Nieuws",
+    "Selling": "Verkoper"
   },
   "Programme": {
     "NoFavorites": "U heeft geen favoriet voor dit moment",
@@ -56,13 +57,13 @@
     "Password": "Password",
     "Email": "Email",
     "AcceptNotification": "Aankondigingen accepteren",
-    "ConnectionProblem": "Als dit uw eerste registratie is, kan het zijn dat de synchronisatie nog niet is voltooid, wacht 2-3 dagen, onze excuses voor de zorgen.",
+    "ConnectionProblem": "Problemen in de verbinding",
     "ConnectionBeeple": "Log je hier in met je vrijwilligersgegens als je wil dat je vrijwilligerstaken hier verschijnen.",
     "SignupBeeple": "<a href='https://volunteers.manifiesta.be/'>Klik hier als je je wil inschrijven als vrijwilliger bij ManiFiesta.<a>",
     "SignupBeepleText": "Registratie",
     "WebsiteBeeple": "<a href='https://volunteers.manifiesta.be/'>Ga naar de site voor vrijwilligers</a>",
     "WebsiteBeepleText": "Ga naar de site voor vrijwilligers",
-    "DeleteAccount": "Mijn account verwijderen",
+    "DeleteAccount": "Account verwijderen",
     "NotConnectedForShifts": "Internet vereist om verbinding te maken met jouw vrijwilligerstaken"
   },
   "Error": {
@@ -70,6 +71,7 @@
     "auth-bad-combination": "Je hebt niet het juiste e-mailadres of wachtwoord ingevoerd, of je hebt je nog niet geregistreerd",
     "auth-bad-authentification": "Heb je je nog niet aangemeld voor vrijwilligerswerk bij ManiFiesta ?",
     "auth-bad-body": "Het formulier is verkeerd verzonden",
+    "auth-bad-not-in-file": "Als dit uw eerste registratie is, kan het zijn dat de synchronisatie nog niet is voltooid, wacht 2-3 dagen, onze excuses voor de zorgen.",
     "enrolments-get-fail": "Er is een fout opgetreden bij het openen van uw diensten",
     "cors-bridge-fail": "Er is een fout opgetreden bij het openen van de gevraagde informatie"
   },
@@ -160,6 +162,36 @@
     "InsurancePartOne": "Als vrijwilliger op Manifiesta ben je verzekerd door onze verzekering voor lichamelijke letsels ten gevolge van ongevallen en voor burgerlijke aansprakelijkheid bij schade aan derden. Dit betekent o.a het volgende:",
     "InsurancePartList": "<ul><li>Lichamelijke letsels betekent schade aan uw fysieke, psychische of economische integriteit..</li><li>Ongevallen kunnen gebeuren zowel tijdens het vrijwilligerswerk op het festival als op de heen- en terugweg.</li><li>Je materiële schade bij ongevallen is niet gedekt, tenzij het gaat om een materieel voorwerp voor medische redenen. Dit betekent bijvoorbeeld dat beschadigde kledij niet door de verzekering gedekt wordt, maar een gebroken bril wel.</li><li>Wat de burgerlijke aansprakelijkheid betreft. Deze verzekering dekt de schade die jij aan het publiek of andere derden zou kunnen toebrengen. Dat wil zeggen : materiële schade en lichamelijke letsels die je in het kader van je vrijwilligerswerk zou kunnen veroorzaken, ongeacht of je de schade rechtstreeks veroorzaakt of dat deze het gevolg is van een gebrek aan toezicht. Bijvoorbeeld, je verwondt iemand terwijl je een tafel draagt.</li></ul>",
     "InsurancePartPolice": "Wij zijn verzekerd bij CIRCLES GROUP S.A. (polisnummer: CE76709)",
-    "InsuranceEnd": "Als je tijdens het festival problemen of vragen hebt, kun je terecht bij het vrijwilligerssecretariaat (in de vrijwilligerdorp). Indien je meer details wenst over de verzekering, kan je contact opnemen met <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a>"
+    "InsuranceEnd": "Als je tijdens het festival problemen of vragen hebt, kun je terecht bij het vrijwilligerssecretariaat (in de vrijwilligerdorp). Indien je meer details wenst over de verzekering, kan je contact opnemen met <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a>",
+    "PostalCode": "Postcode",
+    "WantSell": "Ik wil tickets verkopen",
+    "SellingGoal": "Verkoopdoel"
+  },
+  "Ticket": {
+    "ConnectionSelling": "Inloggen voor onze verkopers",
+    "SellerEmail": "Verkoper e-mail",
+    "Department": "Afdeling",
+    "DepartmentChoice": "Keuze van de afdeling",
+    "TicketsGoal": "Doelstelling",
+    "ClientInformation": "Klant informatie:",
+    "ClientEmail": "Klanten email",
+    "VerificationClientEmail": "Verificatie klanten email",
+    "ClientFirstname": "Klant voornaam",
+    "ClientLastname": "Klant naam",
+    "Buy": "Verkopen",
+    "Cancel": "Annuleren",
+    "Details": "Details",
+    "ValidateBuy": "Valideer de betaling",
+    "Pay": "Betalen",
+    "EnterSomeDataToBeAbleToSell": "Vul hier uw 'afdeling', postcode in waarvoor u gaat verkopen en ook je verkoopdoel",
+    "HardwareNOK": "Niet alles lijkt klaar op je mobiel om te verkopen",
+    "VivaWalletNotInstall": "Viva Wallet POS niet geïnstalleerd",
+    "InstallVivaWallet": "Viva Wallet POS installeren",
+    "GpsNotActivated": "Locatie / GPS niet geactiveerd",
+    "ActivateGps": "Locatie/GPS inschakelen",
+    "NfcNotActivated": "NFC niet geactiveerd",
+    "ActivateNfc": "NFC inschakelen",
+    "GoMyManifiestaForConnect": "Om toegang te krijgen tot de kaartverkoop moet u verbinding maken met My Manifiesta en meer informatie invullen",
+    "TicketBuyRecap": "Overzicht van kaartjes"
   }
 }

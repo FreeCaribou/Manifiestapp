@@ -15,7 +15,18 @@
             android:name="be.manifiesta.app.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:exported="true"
             android:launchMode="singleTask">
+
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="be.manifiesta.app.MainActivity"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                android:scheme="mycallbackscheme"
+                android:host="selling"/>
+            </intent-filter>
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,4 +49,8 @@
     <!-- Permissions -->
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <queries>
+        <package android:name="com.vivawallet.spoc.payapp" />
+    </queries>
 </manifest>
