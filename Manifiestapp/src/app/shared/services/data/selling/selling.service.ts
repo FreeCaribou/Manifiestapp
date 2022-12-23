@@ -71,7 +71,15 @@ export class SellingService {
     }
   }
 
-  ticketsSale(tickets: any[], email: string, firstname: string, lastname: string, transactionId: string): Observable<any> {
+  ticketsSale(
+    tickets: any[],
+    email: string,
+    firstname: string,
+    lastname: string,
+    transactionId: string,
+    askSendTicket: boolean,
+    address?: any
+  ): Observable<any> {
     return this.baseService.postCall(
       `${this.baseUrl}tickets/confirm`,
       {
@@ -80,13 +88,23 @@ export class SellingService {
         email,
         "language": this.languageService.selectedLanguage,
         "ip": "127.0.0.1",
-        "agent": "seller-1",
+        "agent": "ManifiestApp",
         "invoice": 0,
         "testmode": 0,
-        "sellerId": "1",
+        "sellerId": localStorage.getItem(LocalStorageEnum.BeepleId),
         tickets,
         vwTransactionId: transactionId,
+        "sellerDepartmentId": localStorage.getItem(LocalStorageEnum.SellerDepartment),
+        "sellerPostalCode": localStorage.getItem(LocalStorageEnum.SellerPostalCode),
+        askSendTicket,
+        address
       }
+    );
+  }
+
+  getMySellingInformation(): Observable<any> {
+    return this.baseService.getCall(
+      `${this.baseUrl}tickets/sellingInformation/seller/${localStorage.getItem(LocalStorageEnum.BeepleId)}`
     );
   }
 

@@ -10,7 +10,8 @@
     "NoConnection": "Je bent niet verbonden met internet",
     "NoInternet": "Geen Internet",
     "SeeYouLater": "Kom terug en zie ons in 2023!",
-    "Finish": "Manifiesta is gesloten voor 2022, bedankt aan al onze vrijwilligers en vooral, tot volgend jaar!"
+    "Finish": "Manifiesta is gesloten voor 2022, bedankt aan al onze vrijwilligers en vooral, tot volgend jaar!",
+    "Hello": "Hallo"
   },
   "Menu": {
     "Home": "Home",
@@ -192,6 +193,11 @@
     "NfcNotActivated": "NFC niet geactiveerd",
     "ActivateNfc": "NFC inschakelen",
     "GoMyManifiestaForConnect": "Om toegang te krijgen tot de kaartverkoop moet u verbinding maken met My Manifiesta en meer informatie invullen",
-    "TicketBuyRecap": "Overzicht van kaartjes"
+    "TicketBuyRecap": "Overzicht van kaartjes",
+    "ClientWantPhysicTicket": "Stuur het kaartje per post",
+    "ClientStreet": "Klant straat",
+    "ClientNumber": "Klant huisnummer",
+    "ClientPostCode": "Klant postcode",
+    "ClientCity": "Klant stad"
   }
 }

@@ -10,7 +10,8 @@
     "NoConnection": "Vous n'êtes pas connecté à Internet",
     "NoInternet": "Pas d'Internet",
     "SeeYouLater": "Revenez nous voir en 2023 !",
-    "Finish": "Voilà Manifiesta 2022 qui est fini, merci à tous nos bénévoles et surtout, rendez vous l'an prochain !"
+    "Finish": "Voilà Manifiesta 2022 qui est fini, merci à tous nos bénévoles et surtout, rendez vous l'an prochain !",
+    "Hello": "Bonjour"
   },
   "Menu": {
     "Home": "Home",
@@ -192,6 +193,11 @@
     "NfcNotActivated": "NFC non activé",
     "ActivateNfc": "Activer NFC",
     "GoMyManifiestaForConnect": "Pour accèder à la vente de ticket vous devez vous connecter sur My Manifiesta et y remplir des informations",
-    "TicketBuyRecap": "Récapitulatif des tickets"
+    "TicketBuyRecap": "Récapitulatif des tickets",
+    "ClientWantPhysicTicket": "Envoyer le ticket par la poste",
+    "ClientStreet": "Rue du client",
+    "ClientNumber": "Numéro de rue du client",
+    "ClientPostCode": "Code postal du client",
+    "ClientCity": "Ville du client"
   }
 }

@@ -15,7 +15,8 @@
 
     <ng-container *ngIf="!seller || !volunteerShiftService.isReadyToSellWithData()">
       <a [routerLink]="['/my-manifiesta']">
-        <h6 class="m-right-medium m-left-medium m-bt-medium m-top-medium">{{'Ticket.GoMyManifiestaForConnect' | translate}}</h6>
+        <h6 class="m-right-medium m-left-medium m-bt-medium m-top-medium">{{'Ticket.GoMyManifiestaForConnect' |
+          translate}}</h6>
       </a>
       <!-- <form *ngIf="loginForm" [formGroup]="loginForm">
 
@@ -68,12 +69,14 @@
     <!-- If connected -->
     <div *ngIf="seller && volunteerShiftService.isReadyToSellWithData()" class="m-right-medium m-left-medium">
 
-      <ng-container *ngIf="allHardwareOk">
+      <ng-container *ngIf="mySellingInfo">
         <h2>
-          {{'Ticket.TicketsGoal' | translate}} {{seller.sellTickets}} / {{sellerSellingGoal}}
+          {{'Ticket.TicketsGoal' | translate}} {{mySellingInfo?.totalAmountTicket}} / {{sellerSellingGoal}}
         </h2>
         <ion-progress-bar [value]="progress" color="danger"></ion-progress-bar>
-  
+      </ng-container>
+
+      <ng-container *ngIf="allHardwareOk">
         <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary">
           <ion-card-header>
             <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
@@ -95,12 +98,12 @@
             </ion-button>
           </ion-item>
         </ion-card>
-  
-        <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary" expand="block"
-          (click)="setOpenModal(true)">
+
+        <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
+          expand="block" (click)="setOpenModal(true)">
           <ion-icon name="cart"></ion-icon>
           {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
-        </ion-button>  
+        </ion-button>
       </ng-container>
 
       <!-- <br>
@@ -158,7 +161,8 @@
     </div> -->
   </ng-container>
 
-  <ng-container *ngIf="showClientDetailForm">
+  <!-- *ngIf="showClientDetailForm" -->
+  <ng-container *ngIf="showClientDetailForm && buyForm && addressForm">
     <ion-content class="ion-padding">
       <ng-container>
         <h4>
@@ -205,7 +209,7 @@
                 <ion-label color="primary" position="stacked">
                   {{"Ticket.ClientFirstname" | translate}}
                 </ion-label>
-                <ion-input clearInput type="firstname" formControlName="firstname" required placeholder="Rosa">
+                <ion-input clearInput type="text" formControlName="firstname" required placeholder="Rosa">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -216,13 +220,72 @@
                 <ion-label color="primary" position="stacked">
                   {{"Ticket.ClientLastname" | translate}}
                 </ion-label>
-                <ion-input clearInput type="lastname" formControlName="lastname" required placeholder="Luxemburg">
+                <ion-input clearInput type="text" formControlName="lastname" required placeholder="Luxemburg">
                 </ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label>
+                  {{"Ticket.ClientWantPhysicTicket" | translate}}
+                </ion-label>
+                <ion-toggle slot="end" formControlName="askSendTicket"></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
         </ion-grid>
       </form>
+      <ng-container *ngIf="buyForm.value.askSendTicket">
+        <form *ngIf="addressForm" [formGroup]="addressForm">
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label color="primary" position="stacked">
+                  {{"Ticket.ClientStreet" | translate}}
+                </ion-label>
+                <ion-input clearInput type="text" formControlName="street" required placeholder="Caserne street">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label color="primary" position="stacked">
+                  {{"Ticket.ClientNumber" | translate}}
+                </ion-label>
+                <ion-input clearInput type="text" formControlName="number" required placeholder="86">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label color="primary" position="stacked">
+                  {{"Ticket.ClientPostCode" | translate}}
+                </ion-label>
+                <ion-input clearInput type="text" formControlName="postCode" required placeholder="1000">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-item>
+                <ion-label color="primary" position="stacked">
+                  {{"Ticket.ClientCity" | translate}}
+                </ion-label>
+                <ion-input clearInput type="text" formControlName="city" required placeholder="Brussels">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ng-container>
       <ion-button (click)="buy()" [disabled]="disabledBuyButton" color="secondary" expand="block">
         <ion-icon name="cart"></ion-icon>
         {{"Ticket.Pay" | translate}} {{totalAmount | currency:'EUR'}}

@@ -20,13 +20,14 @@ import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-sh
 export class SellingPage {
 
   departments = [];
-  loginForm: FormGroup;
   buyForm: FormGroup;
+  addressForm: FormGroup;
   hadLoginError: false;
   seller;
   sellerSellingGoal: number;
   ticketTypes = [];
   ticketNumberOfSell: { ticketId: string, ticketAmount: number, ticketPrice: number }[] = [];
+  mySellingInfo;
 
   status: string;
   action: string;
@@ -66,8 +67,12 @@ export class SellingPage {
     return totalAmount;
   }
 
+  get formValid(): boolean {
+    return this.buyForm?.value?.askSendTicket ? this.buyForm.valid && this.addressForm.valid : this.buyForm.valid;
+  }
+
   get disabledBuyButton(): boolean {
-    return this.totalAmount <= 0 || !this.buyForm.valid || !this.allHardwareOk;
+    return this.totalAmount <= 0 || !this.formValid || !this.allHardwareOk;
   }
 
   get allHardwareOk(): boolean {
@@ -165,9 +170,8 @@ export class SellingPage {
   ionViewWillEnter() {
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
     this.verifyHardwareForVivaWallet();
-
-    this.loginForm = this.buildLoginForm();
     this.buyForm = this.buildBuyForm();
+    this.addressForm = this.builAddressForm();
 
     this.activatedRoute.queryParams.subscribe((queryParams) => {
       console.log('query param ?', queryParams, this.activatedRoute.snapshot.queryParamMap)
@@ -204,7 +208,13 @@ export class SellingPage {
 
           this.loadingCommunication.changeLoaderTo(true);
           this.sellingService.ticketsSale(
-            ticketsForCall, this.buyForm.value.email, this.buyForm.value.firstname, this.buyForm.value.lastname, this.transactionId
+            ticketsForCall,
+            this.buyForm.value.email,
+            this.buyForm.value.firstname,
+            this.buyForm.value.lastname,
+            this.transactionId,
+            this.buyForm.value.askSendTicket,
+            this.addressForm.value,
           ).subscribe(data => {
             console.log('tickets sale order', data)
             this.loadThermometer();
@@ -264,22 +274,25 @@ export class SellingPage {
     toast.present();
   }
 
-  buildLoginForm() {
-    return this.formBuilder.group({
-      email: [environment.dataMock ? 'samy.gnu@mymanifiesta.be' : '', [Validators.required]],
-      department: [environment.dataMock ? 1 : null, Validators.required],
-    });
-  }
-
   buildBuyForm() {
     return this.formBuilder.group({
       email: [environment.dataMock ? 'samy.gnu@mymanifiesta.be' : '', [Validators.required, Validators.email]],
       verificationEmail: [environment.dataMock ? 'samy.gnu@mymanifiesta.be' : '', [Validators.required, Validators.email]],
       firstname: [environment.dataMock ? 'Karl' : '', Validators.required],
       lastname: [environment.dataMock ? 'Marx' : '', Validators.required],
+      askSendTicket: [false],
     }, { validators: this.verificationEmail() });
   }
 
+  builAddressForm() {
+    return this.formBuilder.group({
+      street: ['', Validators.required],
+      number: ['', Validators.required],
+      city: ['', Validators.required],
+      postCode: ['', Validators.required],
+    });
+  }
+  
   verificationEmail(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return control?.value?.email !== control.value.verificationEmail ? { emailNotEqual: { value: control.value } } : null;
@@ -287,11 +300,16 @@ export class SellingPage {
   }
 
   loadThermometer() {
-    setInterval(() => {
-      if (this.progress < (this.seller?.sellTickets / this.sellerSellingGoal)) {
-        this.progress += 0.025;
-      }
-    }, 50);
+    this.loadingCommunication.changeLoaderTo(true);
+    this.sellingService.getMySellingInformation().subscribe(info => {
+      console.log('hello my selling info', info)
+      this.mySellingInfo = info;
+      setInterval(() => {
+        if (this.progress < (this.mySellingInfo?.totalAmountTicket / this.sellerSellingGoal)) {
+          this.progress += 0.025;
+        }
+      }, 50);
+    }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
   }
 
   loadTicketType() {
@@ -356,6 +374,7 @@ export class SellingPage {
   setOpenModal(isOpen: boolean) {
     // To be sur to renew the form
     this.buyForm = this.buildBuyForm();
+    this.addressForm = this.builAddressForm();
     this.autoVivaWalletAuth();
   }
 

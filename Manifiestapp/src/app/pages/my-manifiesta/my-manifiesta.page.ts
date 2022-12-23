@@ -39,6 +39,7 @@ export class MyManifiestaPage implements OnDestroy {
   departements = [];
   // for the internet connection
   connected = true;
+  volunteerName: string;
 
   @ViewChild('advantageModal') advantageModal: IonModal;
   @ViewChild('insuranceModal') insuranceModal: IonModal;
@@ -67,6 +68,7 @@ export class MyManifiestaPage implements OnDestroy {
       // this.fetchShifts();
       if (this.isConnected) {
         this.verifySellerData();
+        this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
       }
     });
   }
@@ -236,6 +238,8 @@ export class MyManifiestaPage implements OnDestroy {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       // this.fetchShifts(true);
       this.verifySellerData();
+      localStorage.setItem(LocalStorageEnum.VolunteerName, user.name);
+      this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
     }, error => {
       console.error(error); this.hadLoginError = true;
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
@@ -249,6 +253,8 @@ export class MyManifiestaPage implements OnDestroy {
     this.fetchFavoriteProgramme();
     localStorage.removeItem(LocalStorageEnum.OfflineShifts);
     this.verifySellerData();
+    this.volunteerName = undefined;
+    localStorage.removeItem(LocalStorageEnum.VolunteerName);
   }
 
   async seeBeeple() {
