@@ -1,0 +1,72 @@
+<app-header title="MySellingDetails" [defaultHref]="defaultHref"></app-header>
+
+<ion-content>
+  <div *ngIf="mySellingInfo">
+    <div class="m-right-medium m-left-medium">
+      <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal">
+      </app-my-selling-little-recap>
+    </div>
+
+    <ion-accordion-group>
+      <ion-accordion value="mySelings">
+        <ion-item slot="header">
+          <ion-label>{{'Ticket.MySelling' | translate}}</ion-label>
+        </ion-item>
+        <div slot="content">
+          <ion-card *ngFor="let sell of mySellingInfo.data">
+            <ion-card-header>
+              <ion-card-title>{{sell.quantity}} {{"Ticket.Ticket(s)At" | translate}} {{sell.clientName}}
+              </ion-card-title>
+              <ion-card-subtitle>{{sell.date | date:'dd/MM/YY HH:mm'}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <p *ngIf="sell.ticketInfoPrice">{{"Ticket.Price" | translate}} {{sell.ticketInfoPrice}}</p>
+              <p>{{"Ticket.TicketReference" | translate}} {{sell.eventsquareReference}}</p>
+              <p>{{"Ticket.Department" | translate}} {{sell.sellerDepartment}}</p>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+
+  <div *ngIf="bestSellingPostalCode">
+    <ion-accordion-group>
+      <ion-accordion value="bestSellingPostalCode">
+        <ion-item slot="header">
+          <ion-label>{{'Ticket.BestSellerMyPostalCode' | translate}}</ion-label>
+        </ion-item>
+        <div slot="content">
+          <app-top-seller-list [list]="bestSellingPostalCode" [total]="sellingPostalCodeAccount"></app-top-seller-list>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+
+  <div *ngIf="bestSellingDepartment">
+    <ion-accordion-group value="myDepartmentBestSelings">
+      <ion-accordion value="myDepartmentBestSelings">
+        <ion-item slot="header">
+          <ion-label>{{'Ticket.BestSellerOurDepartment' | translate}}</ion-label>
+        </ion-item>
+        <div slot="content">
+          <app-top-seller-list [list]="bestSellingDepartment" [total]="sellingDepartmentAccount"></app-top-seller-list>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+
+  <div *ngIf="bestSellingNational">
+    <ion-accordion-group value="bestSellingNational">
+      <ion-accordion value="bestSellingNational">
+        <ion-item slot="header">
+          <ion-label>{{'Ticket.BestSellerNational' | translate}}</ion-label>
+        </ion-item>
+        <div slot="content">
+          <app-top-seller-list [list]="bestSellingNational" [total]="sellingNationalAccount"></app-top-seller-list>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+
+</ion-content>

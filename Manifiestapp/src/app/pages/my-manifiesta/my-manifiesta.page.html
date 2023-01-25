@@ -100,7 +100,12 @@
           </ion-list>
           <div class="m-right-medium m-left-medium m-bt-medium m-top-medium">
             <ion-item>
-              <ion-label>{{'Volunteer.WantSell' | translate}}</ion-label>
+              <ion-label>
+                {{'Volunteer.WantSell' | translate}}
+                <p style="font-size: 10px; line-height: normal;">
+                  {{'Ticket.DataPrivacy' | translate}}
+                </p>
+              </ion-label>
               <ion-toggle slot="end" [checked]="iWantSell" (ionChange)="onIWantSellChange($event)"></ion-toggle>
             </ion-item>
             <ng-container *ngIf="iWantSell">

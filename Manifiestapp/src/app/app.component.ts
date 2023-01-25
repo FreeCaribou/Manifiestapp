@@ -1,6 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import { Component, NgZone, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { LoadingController, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
@@ -17,6 +17,7 @@ import { LocalStorageEnum } from './shared/models/LocalStorage.enum';
 import { ProgrammeService } from './shared/services/data/programme/programme.service';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { VolunteerShiftService } from './shared/services/data/volunteer-shift/volunteer-shift.service';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -24,7 +25,16 @@ import { VolunteerShiftService } from './shared/services/data/volunteer-shift/vo
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  public appPages = [];
+  public appPages = [
+    { title: 'Home', url: 'home', icon: 'home' },
+    { title: 'Programme', url: 'programme', icon: 'calendar' },
+    { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
+    { title: 'News', url: 'news-info', icon: 'newspaper' },
+    { title: 'Selling', url: 'selling', icon: 'ticket' },
+    { title: 'About', url: 'about', icon: 'information-circle' },
+    // { title: 'Map', url: 'map', icon: 'map' },
+    // { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
+  ];
 
   subBackButton: Subscription;
   subRouter: Subscription;
@@ -44,6 +54,7 @@ export class AppComponent implements OnInit {
     public languageCommunication: LanguageCommunicationService,
     public loadingCommunication: LoadingCommunicationService,
     public router: Router,
+    public activatedRoute: ActivatedRoute,
     public menu: MenuController,
     public modalController: ModalController,
     public translate: TranslateService,
@@ -70,26 +81,6 @@ export class AppComponent implements OnInit {
     this.languageCommunication.langHasChangeEvent.subscribe(l => {
       this.menu.close();
     });
-  }
-
-  private buildMenu() {
-    console.log('build the menu')
-    this.appPages = [
-      { title: 'Home', url: 'home', icon: 'home' },
-      { title: 'Programme', url: 'programme', icon: 'calendar' },
-      { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
-      { title: 'News', url: 'news-info', icon: 'newspaper' },
-      // { title: 'Map', url: 'map', icon: 'map' },
-      // { title: 'BuyTicket', url: 'buy-ticket', icon: 'ticket' },
-    ];
-
-    // if (this.volunteerShiftService.isReadyToSellWithData()) {
-    //   this.appPages.push({ title: 'Selling', url: 'selling', icon: 'ticket' });
-    // } 
-
-    // See if we want a different selling menu item in case of
-    this.appPages.push({ title: 'Selling', url: 'selling', icon: 'ticket' });
-    this.appPages.push({ title: 'About', url: 'about', icon: 'information-circle' });
   }
 
   // We need at the launch of the app to verify if there is update of the schedule of event
@@ -119,10 +110,6 @@ export class AppComponent implements OnInit {
   }
 
   async init() {
-    this.buildMenu();
-    this.volunteerShiftService.sellerAccessDataChangeEmit.subscribe(d => {
-      this.buildMenu();
-    });
     // more routing init
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
@@ -172,25 +159,59 @@ export class AppComponent implements OnInit {
       '/programme/new-detail'
     ];
     this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => this.router.url.includes(x)) > -1;
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => event.urlAfterRedirects.includes(x)) > -1;
 
-        this.subBackButton?.unsubscribe();
-        if (!pageWithoutBackButton.find(x => event.urlAfterRedirects.includes(x))) {
-          this.subBackButton = this.platform.backButton.subscribe(() => {
-            const app = 'app';
-            this.menu.isOpen().then(data => {
-              if (!data) {
-                navigator[app].exitApp();
-              }
-            });
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd),
+      tap(event => {
+        this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => event['urlAfterRedirects'].includes(x)) > -1;
+      }),
+      map(() => this.activatedRoute),
+      map(route => {
+        while (route.firstChild) route = route.firstChild
+        return route
+      }),
+      filter(route => route.outlet === 'primary'),
+      mergeMap(route => route.data)
+    ).subscribe(snapshotData => {
+      console.log('data route snapshot', snapshotData, snapshotData.noBackExit)
+      this.subBackButton?.unsubscribe();
 
-          });
-        }
-
-      }
+      this.subBackButton = this.platform.backButton.subscribe(() => {
+        const app = 'app';
+        this.menu.isOpen().then(data => {
+          // We need to verify that we are not on the menu
+          if (!data && !snapshotData.noBackExit) {
+            console.log('we exit')
+            navigator[app].exitApp();
+          }
+        });
+      });
     });
+
+    // this.router.events.subscribe(event => {
+    //   console.log('this router', this.activatedRoute.snapshot)
+
+    //   this.activatedRoute.data.subscribe(l => {console.log('llllllllll', l)})
+
+    //   if (event instanceof NavigationEnd) {
+    //     console.log('i sub to exit', event, pageWithoutBackButton)
+    //     this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => event.urlAfterRedirects.includes(x)) > -1;
+
+    //     this.subBackButton?.unsubscribe();
+    //     if (!pageWithoutBackButton.find(x => event.urlAfterRedirects.includes(x))) {
+    //       this.subBackButton = this.platform.backButton.subscribe(() => {
+    //         console.log('i sub to exit')
+    //         const app = 'app';
+    //         this.menu.isOpen().then(data => {
+    //           if (!data) {
+    //             navigator[app].exitApp();
+    //           }
+    //         });
+    //       });
+    //     }
+
+    //   }
+    // });
   }
 
   ionViewWillLeave() {

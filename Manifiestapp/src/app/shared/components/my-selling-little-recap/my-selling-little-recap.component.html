@@ -1,0 +1,11 @@
+<h5>{{"Ticket.NumberSellingAndTicket" | translate:sellerSendingDataI18NParam}}</h5>
+<h6>
+  <ng-container *ngIf="mySellingInfo?.totalAmountTicket < sellerSellingGoal">
+    {{"Ticket.TargetNotYet" | translate:restingTicketI18NParam}}
+  </ng-container>
+  <ng-container *ngIf="mySellingInfo?.totalAmountTicket >= sellerSellingGoal">
+    {{"Ticket.TargetYet" | translate}}
+  </ng-container>
+</h6>
+<app-thermometer [totalAmountTicket]="mySellingInfo?.totalAmountTicket" [sellerSellingGoal]="sellerSellingGoal">
+</app-thermometer>

@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons style="display: flex; justify-content: center;">
+      <ion-button (click)="closeShowAfterSellingModal()">{{"Ticket.SellingSuccess" | translate}}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal">
+  </app-my-selling-little-recap>
+  <br>
+  <ion-button expand="block" color="success" class="m-top-medium" (click)="closeShowAfterSellingModal()">{{"Ticket.ContinueSelling" | translate}}</ion-button>
+  <br>
+  <a [routerLink]="['/selling/my-details']">
+    {{"Ticket.CuriousOfOther" | translate}}
+  </a>
+</ion-content>

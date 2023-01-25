@@ -8,6 +8,7 @@ import { SellingPageRoutingModule } from './selling-routing.module';
 
 import { SellingPage } from './selling.page';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { SellingMyDetailsPage } from './my-details/selling-my-details.page';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
     FormsModule, ReactiveFormsModule,
   ],
-  declarations: [SellingPage]
+  declarations: [SellingPage, SellingMyDetailsPage]
 })
 export class SellingPageModule {}

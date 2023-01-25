@@ -26,7 +26,8 @@
     "Playlist": "Playlist",
     "MyManifiesta": "Mon ManiFiesta",
     "News": "Dernières nouvelles",
-    "Selling": "Vendeur"
+    "Selling": "Vendeur",
+    "MySellingDetails": "Mes détails de vente"
   },
   "Programme": {
     "NoFavorites": "Vous n'avez pas de favoris pour le moment",
@@ -185,7 +186,7 @@
     "ValidateBuy": "Valider le paiement",
     "Pay": "Payer",
     "EnterSomeDataToBeAbleToSell": "Veuillez rentrer votre 'département', code postal pour lequel vous allez vendre ainsi que votre objectif",
-    "HardwareNOK": "Tout ne semble pas prêt sur votre gsm pour vendre",
+    "HardwareNOK": "Tout ne semble pas prêt sur ton gsm pour vendre",
     "VivaWalletNotInstall": "Viva Wallet POS non installé",
     "InstallVivaWallet": "Installer Viva Wallet POS",
     "GpsNotActivated": "Localisation / GPS non activé",
@@ -198,6 +199,26 @@
     "ClientStreet": "Rue du client",
     "ClientNumber": "Numéro de rue du client",
     "ClientPostCode": "Code postal du client",
-    "ClientCity": "Ville du client"
+    "ClientCity": "Ville du client",
+    "ContinueSelling": "Continuer à vendre",
+    "GoodSellingCamrad": "Félicitation pour ta vente camarade {{sellerName}} !",
+    "NumberSellingAndTicket": "{{totalTickets}} tickets vendu sur {{totalSelling}} ventes",
+    "TargetNotYet": "Encore {{restingTicket}} ticket(s) à vendre pour ton objectif de {{goal}}",
+    "TargetYet": "Voila ton objectif atteint !",
+    "HelloSeller": "Bonjour camarade {{sellerName}}",
+    "BestSellerOurDepartment": "Meilleurs vendeurs de mon département",
+    "MySelling": "Mes ventes",
+    "Tickets": "Tickets",
+    "BestSellerMyPostalCode": "Meilleurs vendeurs de ma commune",
+    "BestSellerNational": "Meilleurs vendeurs du pays",
+    "Ticket(s)At": "ticket(s) à",
+    "Price": "Prix",
+    "TicketReference": "Référence du ticket",
+    "CuriousOfOther": "Curieux de voir combien les autres camarades ont vendu ? Viens voir ici !",
+    "HistoricOfSelling": "Historique des ventes",
+    "SellingSuccess": "Vente réussie !",
+    "DataPrivacy": "J'accepte que ManiFiesta enregistre et traite mes données mentionnées sur cette page ainsi que les données de mes ventes et les partage avec d'autres utilisateurs de cette application. www.manifiesta.be/privacy",
+    "ClientAcceptKeepData": "Le client accepte que ses données soient stockées",
+    "ClientWantNewsletter": "Le client veut s'inscrire à la newsletter"
   }
 }

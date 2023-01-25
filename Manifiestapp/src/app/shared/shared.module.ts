@@ -20,6 +20,10 @@ import { ProgrammeDataService } from './services/data/programme/programme.data.s
 import { ProgrammeMockService } from './services/data/programme/programme.mock.service';
 import { NewsListService } from './services/data/news-list/news-list.service';
 import { SellingService } from './services/data/selling/selling.service';
+import { ThermometerComponent } from './components/thermometer/thermometer.component';
+import { SellingPostInfoModalComponent } from './components/selling-post-info-modal/selling-post-info-modal.component';
+import { TopSellerListComponent } from './components/top-seller-list/top-seller-list.component';
+import { MySellingLittleRecapComponent } from './components/my-selling-little-recap/my-selling-little-recap.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +33,10 @@ import { SellingService } from './services/data/selling/selling.service';
     EventListComponent,
     SimpleDatePipe,
     SelectLangComponent,
+    ThermometerComponent,
+    SellingPostInfoModalComponent,
+    TopSellerListComponent,
+    MySellingLittleRecapComponent,
   ],
   imports: [
     CommonModule,
@@ -43,6 +51,7 @@ import { SellingService } from './services/data/selling/selling.service';
     IonicModule,
     CommonModule,
     HeaderComponent,
+    ThermometerComponent,
     EventCardComponent,
     EventListCardComponent,
     TranslateModule,
@@ -51,6 +60,9 @@ import { SellingService } from './services/data/selling/selling.service';
     EventListComponent,
     FormsModule,
     ReactiveFormsModule,
+    SellingPostInfoModalComponent,
+    TopSellerListComponent,
+    MySellingLittleRecapComponent,
   ],
   providers: [
     MapCommunicationService,

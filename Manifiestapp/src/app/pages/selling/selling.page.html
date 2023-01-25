@@ -69,30 +69,32 @@
     <!-- If connected -->
     <div *ngIf="seller && volunteerShiftService.isReadyToSellWithData()" class="m-right-medium m-left-medium">
 
-      <ng-container *ngIf="mySellingInfo">
-        <h2>
-          {{'Ticket.TicketsGoal' | translate}} {{mySellingInfo?.totalAmountTicket}} / {{sellerSellingGoal}}
-        </h2>
-        <ion-progress-bar [value]="progress" color="danger"></ion-progress-bar>
-      </ng-container>
+      <a *ngIf="mySellingInfo" [routerLink]="['/selling/my-details']" class="fake-mouse-select">
+        <h4>{{'Ticket.HelloSeller' | translate:sellerNameI18NParam}}</h4>
+      </a>
 
       <ng-container *ngIf="allHardwareOk">
-        <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary">
-          <ion-card-header>
+
+        <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
+          [class.transparent-background]="ticketType.branding?.image">
+          <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
+          <ion-card-header *ngIf="!ticketType.branding?.image">
             <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
-            <ion-card-subtitle>{{ticketType.price + ticketType.fee | currency:'EUR'}}</ion-card-subtitle>
           </ion-card-header>
           <ion-item>
-            <ion-button slot="start" [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
+            <ion-label >
+              {{ticketType.price + ticketType.fee | currency:'EUR'}}
+             
+                | {{ticketNumberOfSell[index].ticketPrice *
+                ticketNumberOfSell[index].ticketAmount |
+                currency:'EUR'}}
+              </ion-label>
+
+            <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
               (click)="changeAmountTicket(index, 'remove')">
               <ion-icon name="remove"></ion-icon>
             </ion-button>
             <ion-input [(ngModel)]="ticketNumberOfSell[index].ticketAmount" type="number" min="0"></ion-input>
-            <ion-label>
-              | {{ticketNumberOfSell[index].ticketPrice *
-              ticketNumberOfSell[index].ticketAmount |
-              currency:'EUR'}}
-            </ion-label>
             <ion-button slot="end" (click)="changeAmountTicket(index, 'add')">
               <ion-icon name="add"></ion-icon>
             </ion-button>
@@ -104,6 +106,13 @@
           <ion-icon name="cart"></ion-icon>
           {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
         </ion-button>
+
+        <ion-button class="m-top-medium" expand="block" (click)="goMyDetails()">
+          <ion-icon name="ticket-outline"></ion-icon>
+          {{"Ticket.HistoricOfSelling" | translate}}
+        </ion-button>
+
+
       </ng-container>
 
       <!-- <br>
@@ -112,37 +121,37 @@
       </ion-button> -->
 
       <ng-container *ngIf="!allHardwareOk">
-        <h2>
+        <h5>
           {{"Ticket.HardwareNOK" | translate}}
-        </h2>
-        <h3 *ngIf="!vivaWalletInstall">
+        </h5>
+        <h6 *ngIf="!vivaWalletInstall">
           {{"Ticket.VivaWalletNotInstall" | translate}}
           <ion-button expand="block" (click)="goInstallVivaWallet()">
             <ion-icon name="cloud-download-outline"></ion-icon>
             {{"Ticket.InstallVivaWallet" | translate}}
           </ion-button>
-        </h3>
-        <!-- <h3 *ngIf="!bluetoothActivated">
+        </h6>
+        <!-- <h6 *ngIf="!bluetoothActivated">
           {{"Ticket.BluetoothNotActivated" | translate}}
           <ion-button expand="block" (click)="goActiveBluetooth()">
             <ion-icon name="bluetooth"></ion-icon>
             {{"Ticket.ActivateBluetooth" | translate}}
           </ion-button>
-        </h3> -->
-        <h3 *ngIf="!gpsActivated">
+        </h6> -->
+        <h6 *ngIf="!gpsActivated">
           {{"Ticket.GpsNotActivated" | translate}}
           <ion-button expand="block" (click)="goActiveGps()">
             <ion-icon name="location"></ion-icon>
             {{"Ticket.ActivateGps" | translate}}
           </ion-button>
-        </h3>
-        <h3 *ngIf="!nfcActivated">
+        </h6>
+        <h6 *ngIf="!nfcActivated">
           {{"Ticket.NfcNotActivated" | translate}}
           <ion-button expand="block" (click)="goActiveNfc()">
             <ion-icon name="card"></ion-icon>
             {{"Ticket.ActivateNfc" | translate}}
           </ion-button>
-        </h3>
+        </h6>
       </ng-container>
     </div>
 
@@ -209,7 +218,8 @@
                 <ion-label color="primary" position="stacked">
                   {{"Ticket.ClientFirstname" | translate}}
                 </ion-label>
-                <ion-input clearInput type="text" formControlName="firstname" required placeholder="Rosa">
+                <ion-input clearInput type="text" formControlName="firstname" required placeholder="Rosa"
+                  autocapitalize="words">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -220,7 +230,8 @@
                 <ion-label color="primary" position="stacked">
                   {{"Ticket.ClientLastname" | translate}}
                 </ion-label>
-                <ion-input clearInput type="text" formControlName="lastname" required placeholder="Luxemburg">
+                <ion-input clearInput type="text" formControlName="lastname" required placeholder="Luxemburg"
+                  autocapitalize="words">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -246,7 +257,8 @@
                 <ion-label color="primary" position="stacked">
                   {{"Ticket.ClientStreet" | translate}}
                 </ion-label>
-                <ion-input clearInput type="text" formControlName="street" required placeholder="Caserne street">
+                <ion-input clearInput type="text" formControlName="street" required placeholder="Caserne Street"
+                  autocapitalize="words">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -279,13 +291,32 @@
                 <ion-label color="primary" position="stacked">
                   {{"Ticket.ClientCity" | translate}}
                 </ion-label>
-                <ion-input clearInput type="text" formControlName="city" required placeholder="Brussels">
+                <ion-input clearInput type="text" formControlName="city" required placeholder="Brussels"
+                  autocapitalize="words">
                 </ion-input>
               </ion-item>
             </ion-col>
           </ion-row>
         </form>
       </ng-container>
+
+      <ion-item class="m-top-medium">
+        <ion-label>
+          {{'Ticket.ClientWantNewsletter' | translate}}
+        </ion-label>
+        <ion-toggle slot="end" [checked]="clientWantNewsletter" (ionChange)="onClientWantNewsletter($event)"></ion-toggle>
+      </ion-item>
+
+      <ion-item lass="m-top-medium">
+        <ion-label>
+          {{'Ticket.ClientAcceptKeepData' | translate}}
+          <p style="font-size: 10px; line-height: normal;">
+            {{'Ticket.DataPrivacy' | translate}}
+          </p>
+        </ion-label>
+        <ion-toggle slot="end" [checked]="clientAcceptData" (ionChange)="onClientAcceptData($event)"></ion-toggle>
+      </ion-item>
+
       <ion-button (click)="buy()" [disabled]="disabledBuyButton" color="secondary" expand="block">
         <ion-icon name="cart"></ion-icon>
         {{"Ticket.Pay" | translate}} {{totalAmount | currency:'EUR'}}

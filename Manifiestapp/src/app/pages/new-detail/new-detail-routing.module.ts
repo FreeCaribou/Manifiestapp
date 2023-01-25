@@ -6,7 +6,8 @@ import { NewDetailPage } from './new-detail.page';
 const routes: Routes = [
   {
     path: '',
-    component: NewDetailPage
+    component: NewDetailPage,
+    data: {noBackExit: true}
   }
 ];
 

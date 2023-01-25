@@ -361,3 +361,19 @@ ion-label {
   display: flex;
   justify-content: space-between;
 }
+
+ion-modal {
+  --height: 50%;
+  --width: 90%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+  background: rgb(209, 213, 219);
+  opacity: 1;
+}
+
+.transparent-background {
+  background: transparent;
+}

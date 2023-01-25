@@ -26,7 +26,8 @@
     "Playlist": "Playlist",
     "MyManifiesta": "Mijn ManiFiesta",
     "News": "Nieuws",
-    "Selling": "Verkoper"
+    "Selling": "Verkoper",
+    "MySellingDetails": "Mijn verkoopgegevens"
   },
   "Programme": {
     "NoFavorites": "U heeft geen favoriet voor dit moment",
@@ -198,6 +199,26 @@
     "ClientStreet": "Klant straat",
     "ClientNumber": "Klant huisnummer",
     "ClientPostCode": "Klant postcode",
-    "ClientCity": "Klant stad"
+    "ClientCity": "Klant stad",
+    "ContinueSelling": "Blijven verkopen",
+    "GoodSellingCamrad": "Gefliciteerd met je verkoop kameraad {{sellerName}}!",
+    "NumberSellingAndTicket": "{{totalTickets}} kaartjes verkocht voor {{totalSelling}} verkopen",
+    "TargetNotYet": "Nog {{restingTicket}} kaartje(s) to koop voor uw doel van {{goal}}",
+    "TargetYet": "Hier is je doel bereikt!",
+    "HelloSeller": "Hallo kameraad {{sellerName}}",
+    "BestSellerOurDepartment": "Top verkopers in mijn afdeling",
+    "MySelling": "Mijn verkopen",
+    "Tickets": "Kaartjes",
+    "BestSellerMyPostalCode": "Top verkopers in mijn gemeente",
+    "BestSellerNational": "Top verkopers van het land",
+    "Ticket(s)At": "kaartje(s) naar",
+    "Price": "Prijs",
+    "TicketReference": "Kaartje referentie",
+    "CuriousOfOther": "Nieuwsgierig hoeveel de andere kameraden hebben verkocht? Kom hier kijken!",
+    "HistoricOfSelling": "Verkoopgeschiedenis",
+    "SellingSuccess": "Succesvolle verkoop!",
+    "DataPrivacy": "Ik ga ermee akkoord dat ManiFiesta mijn gegevens vermeld op deze pagina en mijn verkoopgegevens opslaat en verwerkt en deelt met andere gebruikers van deze applicatie. www.manifiesta.be/privacy",
+    "ClientAcceptKeepData": "De klant aanvaardt dat zijn gegevens worden opgeslagen",
+    "ClientWantNewsletter": "De klant wil zich abonneren op de nieuwsbrief"
   }
 }

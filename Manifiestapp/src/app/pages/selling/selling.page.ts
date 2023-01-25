@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonModal, ModalController, Platform, ToastController } from '@ionic/angular';
@@ -11,13 +11,16 @@ import { environment } from 'src/environments/environment';
 import { AppAvailability } from '@awesome-cordova-plugins/app-availability/ngx';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
+import { SellingPostInfoModalComponent } from 'src/app/shared/components/selling-post-info-modal/selling-post-info-modal.component';
+import { takeUntil } from 'rxjs/operators'
+import { Observable, Subject, Subscription } from 'rxjs';
 
 // TODO Rework EVERYTHING
 @Component({
   selector: 'app-selling',
   templateUrl: './selling.page.html',
 })
-export class SellingPage {
+export class SellingPage implements AfterViewInit {
 
   departments = [];
   buyForm: FormGroup;
@@ -28,6 +31,7 @@ export class SellingPage {
   ticketTypes = [];
   ticketNumberOfSell: { ticketId: string, ticketAmount: number, ticketPrice: number }[] = [];
   mySellingInfo;
+  sellerName;
 
   status: string;
   action: string;
@@ -44,6 +48,18 @@ export class SellingPage {
   gpsActivated = false;
   nfcActivated = false;
 
+  showAfterSellingModal = false;
+  @ViewChild('afterSellingModal') afterSellingModal: IonModal;
+  @ViewChild('myInfoModal') myInfoModal: IonModal;
+
+  destroyer$ = new Subject();
+  routeSubscribe$: Subscription;
+
+  clientTransactionId: string;
+
+  clientAcceptData = false;
+  clientWantNewsletter = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private sellingService: SellingService,
@@ -59,6 +75,12 @@ export class SellingPage {
     public volunteerShiftService: VolunteerShiftService,
   ) { }
 
+  ngAfterViewInit(): void {
+    document.addEventListener('visibilitychange', () => {
+      this.verifyHardwareForVivaWallet();
+    });
+  }
+
   get totalAmount(): number {
     let totalAmount = 0;
     this.ticketNumberOfSell.forEach(t => {
@@ -72,7 +94,7 @@ export class SellingPage {
   }
 
   get disabledBuyButton(): boolean {
-    return this.totalAmount <= 0 || !this.formValid || !this.allHardwareOk;
+    return this.totalAmount <= 0 || !this.formValid || !this.allHardwareOk || !this.clientAcceptData;
   }
 
   get allHardwareOk(): boolean {
@@ -88,9 +110,25 @@ export class SellingPage {
           ticketId: t.ticketId,
           ticketAmount: t.ticketAmount,
           ticketTotalPrice: t.ticketPrice * t.ticketAmount,
+          ticketPrice: t.ticketPrice,
           ticketLabel: this.ticketTypes?.find(x => x.id === t.ticketId).name
         }
       });
+  }
+
+  get sellerSendingDataI18NParam() {
+    return {
+      totalSelling: this.mySellingInfo?.data?.length,
+      totalTickets: this.mySellingInfo?.totalAmountTicket
+    };
+  }
+
+  get sellerNameI18NParam() {
+    return {sellerName: this.sellerName}
+  }
+
+  get progressGetter() {
+    return this.progress;
   }
 
   verifyBluetooth() {
@@ -167,13 +205,25 @@ export class SellingPage {
     });
   }
 
+  ionViewDidLeave() {
+    console.log('leave')
+    this.destroyer$.next(true);
+    this.destroyer$.complete();
+
+    this.routeSubscribe$?.unsubscribe();
+  }
+
   ionViewWillEnter() {
+    console.log('enter')
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
-    this.verifyHardwareForVivaWallet();
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
+    this.sellerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
+    this.verifyHardwareForVivaWallet();
 
-    this.activatedRoute.queryParams.subscribe((queryParams) => {
+    // this.destroyer$?.unsubscribe();
+    // this.destroyer$?.complete();
+    this.routeSubscribe$ = this.activatedRoute.queryParams.pipe(takeUntil(this.destroyer$)).subscribe((queryParams) => {
       console.log('query param ?', queryParams, this.activatedRoute.snapshot.queryParamMap)
       this.status = queryParams['status'] || this.activatedRoute.snapshot.queryParamMap.get('status');
       this.message = queryParams['message'] || this.activatedRoute.snapshot.queryParamMap.get('message');
@@ -190,6 +240,8 @@ export class SellingPage {
           if (this.totalAmount > 0) {
             console.log('laucnh the client detail form')
             this.showClientDetailForm = true;
+            this.clientWantNewsletter = false;
+            this.clientAcceptData = false;
           }
           // this.vivaWalletConnectSuccess();
         } else {
@@ -202,26 +254,31 @@ export class SellingPage {
 
         if (this.status == 'success' && this.transactionId) {
           this.showClientDetailForm = false;
-          const ticketsForCall = this.ticketNumberOfSell
-            .filter(t => t.ticketAmount > 0)
-            .map(t => { return { ticketId: t.ticketId, ticketAmount: t.ticketAmount } });
+
+          if (this.clientWantNewsletter) {
+            this.addClientToNewsletter();
+          }
 
           this.loadingCommunication.changeLoaderTo(true);
           this.sellingService.ticketsSale(
-            ticketsForCall,
+            this.recapSelectedTicket,
             this.buyForm.value.email,
             this.buyForm.value.firstname,
             this.buyForm.value.lastname,
             this.transactionId,
             this.buyForm.value.askSendTicket,
+            this.clientTransactionId,
             this.addressForm.value,
-          ).subscribe(data => {
+          ).pipe(takeUntil(this.destroyer$)).subscribe(data => {
             console.log('tickets sale order', data)
-            this.loadThermometer();
+            this.loadThermometer(true);
             this.succeedPaiement();
             // Put at zero the tickets sell amount / number
             this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
             this.transactionId = undefined;
+            this.clientTransactionId = undefined;
+            this.clientWantNewsletter = false;
+            this.clientAcceptData = false;
           }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
         } else {
           this.vivaWalletError();
@@ -238,7 +295,15 @@ export class SellingPage {
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
+  
+  // also delete all the query param of the route
   async succeedPaiement() {
+    this.router.navigate(
+      [], 
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: {  },
+    });
     const message: string = i18nTerms.paiementOk[this.languageService.selectedLanguage];
     const toast = await this.toastController.create({
       header: 'Success',
@@ -299,17 +364,25 @@ export class SellingPage {
     };
   }
 
-  loadThermometer() {
+  loadThermometer(showPostSellingModal = false) {
     this.loadingCommunication.changeLoaderTo(true);
     this.sellingService.getMySellingInformation().subscribe(info => {
-      console.log('hello my selling info', info)
       this.mySellingInfo = info;
+      if (showPostSellingModal) {
+        this.openShowAfterSellingModal();
+      }
+    }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
+  }
+
+  loadThermometerView() {
+    if (this.mySellingInfo?.totalAmountTicket) {
+      this.progress = 0;
       setInterval(() => {
         if (this.progress < (this.mySellingInfo?.totalAmountTicket / this.sellerSellingGoal)) {
           this.progress += 0.025;
         }
       }, 50);
-    }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
+    }
   }
 
   loadTicketType() {
@@ -338,12 +411,13 @@ export class SellingPage {
 
   buy() {
     if (!this.disabledBuyButton) {
+      this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.BeepleId)}-${new Date().getTime()}`;
       window.open(
         'vivapayclient://pay/v1' +
         '?appId=be.manifiesta.app' +
         '&action=sale' +
         `&amount=${Math.floor(this.totalAmount * 100)}` +
-        `&clientTransactionId=${this.seller}-${new Date().getTime()}` +
+        `&clientTransactionId=${this.clientTransactionId}` +
         '&callback=mycallbackscheme://selling',
         '_system'
       );
@@ -380,6 +454,49 @@ export class SellingPage {
 
   cancelBuy() {
     this.showClientDetailForm = false;
+    this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
+  }
+
+  async openShowAfterSellingModal() {
+    console.log('allller', this.mySellingInfo)
+    const modal = await this.modalController.create({
+      component: SellingPostInfoModalComponent,
+      componentProps: {
+        totalAmountTicket: this.mySellingInfo?.totalAmountTicket,
+        sellerSellingGoal: this.sellerSellingGoal,
+        mySellingInfo: this.mySellingInfo,
+        sellerSendingDataI18NParam: this.sellerSendingDataI18NParam,
+        sellerNameI18NParam: this.sellerNameI18NParam,
+      }
+    })
+    modal.present();
+  }
+
+  goMyDetails() {
+    this.router.navigate(['/selling/my-details']);
+  }
+
+  onClientAcceptData(event) {
+    if (event.detail?.checked) {
+      this.clientAcceptData = true;
+    } else {
+      this.clientAcceptData = false;
+    }
+  }
+
+  onClientWantNewsletter(event) {
+    if (event.detail?.checked) {
+      this.clientWantNewsletter = true;
+    } else {
+      this.clientWantNewsletter = false;
+    }
+  }
+
+  addClientToNewsletter() {
+    this.loadingCommunication.changeLoaderTo(true)
+    this.sellingService.newsletterAdd(this.buyForm.value.email, this.buyForm.value.firstname, this.buyForm.value.lastname,)
+      .subscribe()
+      .add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
 }

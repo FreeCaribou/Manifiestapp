@@ -1,0 +1,18 @@
+<ion-list lines="inset">
+  <ion-list-header *ngIf="total">
+    <ion-label>Total {{total}} <ion-icon name="ticket-outline"></ion-icon></ion-label>
+  </ion-list-header>
+  <ion-item *ngFor="let seller of list; let index=index">
+    <ion-label>
+      <div class="flex-space-between">
+        <span>
+          <ion-icon *ngIf="index === 0" name="medal-outline" color="gold"></ion-icon> 
+          <ion-icon *ngIf="index === 1" name="medal-outline" color="silver"></ion-icon> 
+          <ion-icon *ngIf="index === 2" name="medal-outline" color="bronze"></ion-icon> 
+          {{seller.name}}
+        </span>
+        <span>{{seller.quantity}} {{'Ticket.Tickets' | translate}}</span>
+      </div>
+    </ion-label>
+  </ion-item>
+</ion-list>
