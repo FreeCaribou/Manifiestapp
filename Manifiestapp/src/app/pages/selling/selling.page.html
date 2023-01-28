@@ -62,7 +62,7 @@
         <h4>{{'Ticket.HelloSeller' | translate:sellerNameI18NParam}}</h4>
       </a>
 
-      <ng-container *ngIf="allHardwareOk">
+      <ng-container *ngIf="allHardwareOk && hasEveryInfoToSell">
 
         <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
           [class.transparent-background]="ticketType.branding?.image">
