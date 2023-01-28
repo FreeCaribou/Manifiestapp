@@ -31,12 +31,6 @@ export class MyManifiestaPage implements OnDestroy {
   isConnected = false;
   acceptNotification = false;
   hadLoginError = false;
-  // for the seller connection
-  iWantSell: boolean;
-  sellerDepartement: string;
-  sellerPostalCode: string;
-  sellerSellingGoal: number;
-  departements = [];
   // for the internet connection
   connected = true;
   volunteerName: string;
@@ -67,74 +61,9 @@ export class MyManifiestaPage implements OnDestroy {
       // this.fetchFavoriteProgramme();
       // this.fetchShifts();
       if (this.isConnected) {
-        this.verifySellerData();
         this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
       }
     });
-  }
-
-  verifySellerData() {
-    if (this.departements.length === 0) {
-      this.loadAllDepartement();
-    }
-    this.iWantSell = localStorage.getItem(LocalStorageEnum.VolunteerWantSell) as unknown as boolean;
-    this.sellerDepartement = localStorage.getItem(LocalStorageEnum.SellerDepartment);
-    this.sellerPostalCode = localStorage.getItem(LocalStorageEnum.SellerPostalCode);
-    this.sellerSellingGoal = parseInt(localStorage.getItem(LocalStorageEnum.SellerSellingGoal));
-    this.volunteerShiftService.sendSellerVerificationEmit();
-  }
-
-  onIWantSellChange(event) {
-    if (event.detail?.checked) {
-      localStorage.setItem(LocalStorageEnum.VolunteerWantSell, 'true');
-    } else {
-      localStorage.removeItem(LocalStorageEnum.VolunteerWantSell);
-    }
-    this.verifySellerData();
-  }
-
-  // TODO verification real post code
-  onSellerDepartementChange(event) {
-    if (event.detail?.value) {
-      localStorage.setItem(LocalStorageEnum.SellerDepartment, event.detail?.value);
-    } else {
-      localStorage.removeItem(LocalStorageEnum.SellerDepartment);
-    }
-    this.verifySellerData();
-  }
-
-  onSellerPostalCodeChange(event) {
-    console.log('post change', event)
-    const postalCode = event.detail?.value;
-    if (!!postalCode) {
-      localStorage.setItem(LocalStorageEnum.SellerPostalCode, postalCode);
-    } else {
-      localStorage.removeItem(LocalStorageEnum.SellerPostalCode);
-    }
-    this.verifySellerData();
-  }
-
-  onSellerSellingGoal(event) {
-    console.log('selling goal change', event, isNaN(event.detail?.value))
-    const sellingGoal = event.detail?.value;
-    if (isNaN(sellingGoal)) {
-      localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
-    } else {
-      if (!!sellingGoal) {
-        localStorage.setItem(LocalStorageEnum.SellerSellingGoal, sellingGoal);
-      } else {
-        localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
-      }
-    }
-    this.verifySellerData();
-  }
-
-  loadAllDepartement() {
-    this.loadingCommunication.changeLoaderTo(true);
-    this.sellingService.getAllDepartments().subscribe(data => {
-      this.departements = data;
-      this.verifySellerData();
-    }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
   }
 
   checkAvoidNotification() {
@@ -237,7 +166,6 @@ export class MyManifiestaPage implements OnDestroy {
     this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       // this.fetchShifts(true);
-      this.verifySellerData();
       localStorage.setItem(LocalStorageEnum.VolunteerName, user.name);
       this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
     }, error => {
@@ -252,7 +180,6 @@ export class MyManifiestaPage implements OnDestroy {
     this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
     this.fetchFavoriteProgramme();
     localStorage.removeItem(LocalStorageEnum.OfflineShifts);
-    this.verifySellerData();
     this.volunteerName = undefined;
     localStorage.removeItem(LocalStorageEnum.VolunteerName);
   }

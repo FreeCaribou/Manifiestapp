@@ -89,16 +89,17 @@ export class SellingService {
         firstname,
         lastname,
         email,
-        "language": this.languageService.selectedLanguage,
-        "ip": "127.0.0.1",
-        "agent": "ManifiestApp",
-        "invoice": 0,
-        "testmode": 0,
-        "sellerId": localStorage.getItem(LocalStorageEnum.BeepleId),
+        language: this.languageService.selectedLanguage,
+        ip: "127.0.0.1",
+        agent: "ManifiestApp",
+        invoice: 0,
+        testmode: 0,
+        sellerId: localStorage.getItem(LocalStorageEnum.SellerName),
+        sellerName: localStorage.getItem(LocalStorageEnum.SellerName),
         tickets,
         vwTransactionId: transactionId,
-        "sellerDepartmentId": localStorage.getItem(LocalStorageEnum.SellerDepartment),
-        "sellerPostalCode": localStorage.getItem(LocalStorageEnum.SellerPostalCode),
+        sellerDepartmentId: localStorage.getItem(LocalStorageEnum.SellerDepartment),
+        sellerPostalCode: localStorage.getItem(LocalStorageEnum.SellerPostalCode),
         askSendTicket,
         address,
         clientTransactionId,
@@ -120,7 +121,7 @@ export class SellingService {
 
   getMySellingInformation(): Observable<any> {
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/seller/${localStorage.getItem(LocalStorageEnum.BeepleId)}`
+      `${this.baseUrl}tickets/sellingInformation/seller/${localStorage.getItem(LocalStorageEnum.SellerEmail)}`
     );
   }
 

@@ -12,6 +12,7 @@ export enum LocalStorageEnum {
   SellerDepartment = 'sellerDepartment',
   SellerPostalCode = 'sellerPostalCode',
   SellerSellingGoal = 'sellerSellingGoal',
-  VolunteerWantSell = 'volunteerWantSell',
   VolunteerName = 'volunteerName',
+  SellerName = 'sellerName',
+  SellerEmail= 'sellerEmail',
 }

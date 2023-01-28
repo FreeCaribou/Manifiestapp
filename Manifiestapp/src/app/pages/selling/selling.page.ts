@@ -25,13 +25,12 @@ export class SellingPage implements AfterViewInit {
   departments = [];
   buyForm: FormGroup;
   addressForm: FormGroup;
+  sellerLoginForm: FormGroup;
   hadLoginError: false;
   seller;
-  sellerSellingGoal: number;
   ticketTypes = [];
   ticketNumberOfSell: { ticketId: string, ticketAmount: number, ticketPrice: number }[] = [];
   mySellingInfo;
-  sellerName;
 
   status: string;
   action: string;
@@ -59,6 +58,12 @@ export class SellingPage implements AfterViewInit {
 
   clientAcceptData = false;
   clientWantNewsletter = false;
+
+  // for the seller connection
+  sellerDepartement: string;
+  sellerPostalCode: string;
+  sellerSellingGoal: number;
+  departements = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -124,11 +129,25 @@ export class SellingPage implements AfterViewInit {
   }
 
   get sellerNameI18NParam() {
-    return {sellerName: this.sellerName}
+    return { sellerName: this.sellerName }
   }
 
   get progressGetter() {
     return this.progress;
+  }
+
+  get isLogin() {
+    return localStorage.getItem(LocalStorageEnum.SellerEmail) && localStorage.getItem(LocalStorageEnum.SellerName);
+  }
+
+  get hasEveryInfoToSell() {
+    return localStorage.getItem(LocalStorageEnum.SellerDepartment)
+      && localStorage.getItem(LocalStorageEnum.SellerPostalCode)
+      && localStorage.getItem(LocalStorageEnum.SellerSellingGoal)
+  }
+
+  get sellerName() {
+    return localStorage.getItem(LocalStorageEnum.SellerName);
   }
 
   verifyBluetooth() {
@@ -218,7 +237,7 @@ export class SellingPage implements AfterViewInit {
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
-    this.sellerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
+    this.sellerLoginForm = this.buildSellerLoginForm();
     this.verifyHardwareForVivaWallet();
 
     // this.destroyer$?.unsubscribe();
@@ -287,23 +306,26 @@ export class SellingPage implements AfterViewInit {
       }
     });
 
+
     this.loadingCommunication.changeLoaderTo(true);
-    this.sellingService.verifySellerConnection().subscribe(seller => {
-      this.seller = seller;
-      this.loadThermometer();
-      this.loadTicketType();
-    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+    this.sellingService.getAllDepartments().subscribe(data => {
+      this.departements = data;
+      if (localStorage.getItem(LocalStorageEnum.SellerDepartment)) {
+        this.loadTicketType();
+      }
+      this.verifySellerData();
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
   }
 
-  
+
   // also delete all the query param of the route
   async succeedPaiement() {
     this.router.navigate(
-      [], 
+      [],
       {
         relativeTo: this.activatedRoute,
-        queryParams: {  },
-    });
+        queryParams: {},
+      });
     const message: string = i18nTerms.paiementOk[this.languageService.selectedLanguage];
     const toast = await this.toastController.create({
       header: 'Success',
@@ -357,7 +379,30 @@ export class SellingPage implements AfterViewInit {
       postCode: ['', Validators.required],
     });
   }
-  
+
+  buildSellerLoginForm() {
+    return this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required],
+    });
+  }
+
+  clickOnLogin() {
+    localStorage.setItem(LocalStorageEnum.SellerEmail, this.sellerLoginForm.value.email);
+    localStorage.setItem(
+      LocalStorageEnum.SellerName,
+      `${this.sellerLoginForm.value.firstname.trim()} ${this.sellerLoginForm.value.lastname.trim()}`
+    );
+    this.verifySellerData();
+  }
+
+  clickOnLogout() {
+    localStorage.removeItem(LocalStorageEnum.SellerEmail);
+    localStorage.removeItem(LocalStorageEnum.SellerName);
+    this.verifySellerData();
+  }
+
   verificationEmail(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       return control?.value?.email !== control.value.verificationEmail ? { emailNotEqual: { value: control.value } } : null;
@@ -371,7 +416,7 @@ export class SellingPage implements AfterViewInit {
       if (showPostSellingModal) {
         this.openShowAfterSellingModal();
       }
-    }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
   loadThermometerView() {
@@ -497,6 +542,53 @@ export class SellingPage implements AfterViewInit {
     this.sellingService.newsletterAdd(this.buyForm.value.email, this.buyForm.value.firstname, this.buyForm.value.lastname,)
       .subscribe()
       .add(() => { this.loadingCommunication.changeLoaderTo(false); });
+  }
+
+  // Action about department / postcode
+
+  verifySellerData() {
+    this.sellerDepartement = localStorage.getItem(LocalStorageEnum.SellerDepartment);
+    this.sellerPostalCode = localStorage.getItem(LocalStorageEnum.SellerPostalCode);
+    this.sellerSellingGoal = parseInt(localStorage.getItem(LocalStorageEnum.SellerSellingGoal));
+    this.volunteerShiftService.sendSellerVerificationEmit();
+  }
+
+  // TODO verification real post code
+  onSellerDepartementChange(event) {
+    console.log('department change', event)
+    if (event.detail?.value) {
+      localStorage.setItem(LocalStorageEnum.SellerDepartment, event.detail?.value);
+    } else {
+      localStorage.removeItem(LocalStorageEnum.SellerDepartment);
+    }
+    this.loadTicketType();
+    this.verifySellerData();
+  }
+
+  onSellerPostalCodeChange(event) {
+    console.log('post change', event)
+    const postalCode = event.detail?.value;
+    if (!!postalCode) {
+      localStorage.setItem(LocalStorageEnum.SellerPostalCode, postalCode);
+    } else {
+      localStorage.removeItem(LocalStorageEnum.SellerPostalCode);
+    }
+    this.verifySellerData();
+  }
+
+  onSellerSellingGoal(event) {
+    console.log('selling goal change', event, isNaN(event.detail?.value))
+    const sellingGoal = event.detail?.value;
+    if (isNaN(sellingGoal)) {
+      localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
+    } else {
+      if (!!sellingGoal) {
+        localStorage.setItem(LocalStorageEnum.SellerSellingGoal, sellingGoal);
+      } else {
+        localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
+      }
+    }
+    this.verifySellerData();
   }
 
 }

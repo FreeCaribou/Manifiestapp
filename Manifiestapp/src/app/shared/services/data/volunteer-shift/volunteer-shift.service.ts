@@ -76,10 +76,6 @@ export class VolunteerShiftService {
     return localStorage.getItem(LocalStorageEnum.BeepleEmail);
   }
 
-  getVolunteerWantSell(): string {
-    return localStorage.getItem(LocalStorageEnum.VolunteerWantSell);
-  }
-
   getSellerDepartment(): string {
     return localStorage.getItem(LocalStorageEnum.SellerDepartment);
   }
@@ -103,9 +99,7 @@ export class VolunteerShiftService {
   // Need to be connected and want to sell and have a departement selected
   isReadyToSellWithData(): boolean {
     return (
-      this.isConnectedToBeeple()
-      && this.getVolunteerWantSell()
-      && this.getSellerDepartment()
+      this.getSellerDepartment()
       && this.getSellerPostalCode()
       && this.getSellerSellingGoal()
     ) as unknown as boolean

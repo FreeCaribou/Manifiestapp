@@ -11,65 +11,54 @@
 
 <ion-content>
 
+  <ng-container *ngIf="!isLogin && sellerLoginForm">
+    <form [formGroup]="sellerLoginForm">
+
+      <p [innerHtml]="'Ticket.ConnectionSeller' | translate" class="m-right-medium m-left-medium"></p>
+
+      <ion-grid>
+        <ion-item>
+          <ion-label color="primary" position="stacked">
+            {{"User.Email" | translate}}
+          </ion-label>
+          <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" position="stacked">
+            {{"Ticket.SellerFirstname" | translate}}
+          </ion-label>
+          <ion-input clearInput type="text" formControlName="firstname" required placeholder="Rosa"
+            autocapitalize="words">
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" position="stacked">
+            {{"Ticket.SellerLastname" | translate}}
+          </ion-label>
+          <ion-input clearInput type="text" formControlName="lastname" required placeholder="Luxemburg"
+            autocapitalize="words">
+          </ion-input>
+        </ion-item>
+
+        <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="secondary" expand="block"
+          [disabled]="!sellerLoginForm.valid">
+          {{'User.Login' | translate}}
+          <ion-icon slot="end" icon="person"></ion-icon>
+        </ion-button>
+
+      </ion-grid>
+    </form>
+  </ng-container>
+
   <ng-container *ngIf="!showClientDetailForm">
 
-    <ng-container *ngIf="!seller || !volunteerShiftService.isReadyToSellWithData()">
-      <a [routerLink]="['/my-manifiesta']">
-        <h6 class="m-right-medium m-left-medium m-bt-medium m-top-medium">{{'Ticket.GoMyManifiestaForConnect' |
-          translate}}</h6>
-      </a>
-      <!-- <form *ngIf="loginForm" [formGroup]="loginForm">
-
-        <h3 class="m-right-medium m-left-medium">
-          {{'Ticket.ConnectionSelling' | translate}}
-        </h3>
-
-        <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.SellerEmail" | translate}}
-                </ion-label>
-                <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="floating">
-                  {{"Ticket.Department" | translate}}
-                </ion-label>
-                <ion-select [placeholder]="'Ticket.DepartmentChoice' | translate" formControlName="department"
-                  interface="popover">
-                  <ion-select-option *ngFor="let d of departments" [value]="d.id">{{d.label}}</ion-select-option>
-                </ion-select>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="secondary" expand="block"
-                [disabled]="!loginForm.valid">
-                {{'User.Login' | translate}}
-                <ion-icon slot="end" icon="person"></ion-icon>
-                <ion-icon slot="end" icon="ticket"></ion-icon>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-
-          <p *ngIf="hadLoginError" class="m-right-medium m-left-medium">{{'User.ConnectionProblem' | translate}}</p>
-
-        </ion-grid>
-      </form> -->
-    </ng-container>
-
     <!-- If connected -->
-    <div *ngIf="seller && volunteerShiftService.isReadyToSellWithData()" class="m-right-medium m-left-medium">
+    <div *ngIf="isLogin" class="m-right-medium m-left-medium">
 
-      <a *ngIf="mySellingInfo" [routerLink]="['/selling/my-details']" class="fake-mouse-select">
+      <a [routerLink]="['/selling/my-details']" class="fake-mouse-select">
         <h4>{{'Ticket.HelloSeller' | translate:sellerNameI18NParam}}</h4>
       </a>
 
@@ -82,13 +71,13 @@
             <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
           </ion-card-header>
           <ion-item>
-            <ion-label >
+            <ion-label>
               {{ticketType.price + ticketType.fee | currency:'EUR'}}
-             
-                | {{ticketNumberOfSell[index].ticketPrice *
-                ticketNumberOfSell[index].ticketAmount |
-                currency:'EUR'}}
-              </ion-label>
+
+              | {{ticketNumberOfSell[index].ticketPrice *
+              ticketNumberOfSell[index].ticketAmount |
+              currency:'EUR'}}
+            </ion-label>
 
             <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
               (click)="changeAmountTicket(index, 'remove')">
@@ -106,12 +95,6 @@
           <ion-icon name="cart"></ion-icon>
           {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
         </ion-button>
-
-        <ion-button class="m-top-medium" expand="block" (click)="goMyDetails()">
-          <ion-icon name="ticket-outline"></ion-icon>
-          {{"Ticket.HistoricOfSelling" | translate}}
-        </ion-button>
-
 
       </ng-container>
 
@@ -153,24 +136,52 @@
           </ion-button>
         </h6>
       </ng-container>
+
+      <div class="separator-line m-top-medium"></div>
+
+      <!-- The information to know which kind of ticket show -->
+      <ng-container>
+        <h6> {{"Ticket.EnterSomeDataToBeAbleToSell" | translate}}</h6>
+        <ion-item *ngIf="departements.length > 0">
+          <ion-label color="primary" position="floating">
+            {{"Ticket.Department" | translate}}
+          </ion-label>
+          <ion-select [placeholder]="'Ticket.DepartmentChoice' | translate" [value]="sellerDepartement"
+            interface="popover" (ionChange)="onSellerDepartementChange($event)">
+            <ion-select-option *ngFor="let d of departements" [value]="d.code">{{d.label}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" position="stacked">
+            {{'Volunteer.PostalCode' | translate}}
+          </ion-label>
+          <ion-input [placeholder]="'Volunteer.PostalCode' | translate" [value]="sellerPostalCode"
+            (ionChange)="onSellerPostalCodeChange($event)"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" position="stacked">
+            {{'Volunteer.SellingGoal' | translate}}
+          </ion-label>
+          <ion-input [placeholder]="'Volunteer.SellingGoal' | translate" type="number" min="0"
+            [value]="sellerSellingGoal" (ionChange)="onSellerSellingGoal($event)"></ion-input>
+        </ion-item>
+      </ng-container>
+
+      <div class="separator-line m-top-medium"></div>
+
+      <ion-button class="m-top-medium" expand="block" (click)="goMyDetails()">
+        <ion-icon name="ticket-outline"></ion-icon>
+        {{"Ticket.HistoricOfSelling" | translate}}
+      </ion-button>
+
+      <ion-button class="m-top-medium" (click)="clickOnLogout()" color="danger" expand="block">
+        Logout
+        <ion-icon slot="end" icon="power"></ion-icon>
+      </ion-button>
     </div>
 
-    <!-- <ion-button color="danger" (click)="clickOnLogout()" expand="block">
-      Logout <ion-icon name="log-out-outline"></ion-icon>
-    </ion-button> -->
-
-
-    <!-- JUST FOR TEST COMMENT BEFORE RELEASE -->
-    <!-- <div>
-      {{routerUrl}}
-  
-      {{status}}
-  
-      {{message}}
-    </div> -->
   </ng-container>
 
-  <!-- *ngIf="showClientDetailForm" -->
   <ng-container *ngIf="showClientDetailForm && buyForm && addressForm">
     <ion-content class="ion-padding">
       <ng-container>
@@ -304,7 +315,8 @@
         <ion-label>
           {{'Ticket.ClientWantNewsletter' | translate}}
         </ion-label>
-        <ion-toggle slot="end" [checked]="clientWantNewsletter" (ionChange)="onClientWantNewsletter($event)"></ion-toggle>
+        <ion-toggle slot="end" [checked]="clientWantNewsletter"
+          (ionChange)="onClientWantNewsletter($event)"></ion-toggle>
       </ion-item>
 
       <ion-item lass="m-top-medium">
