@@ -24,35 +24,25 @@ export class SellingService {
   }
 
   getAllDepartments(): Observable<any[]> {
-    return this.baseService.getCall(`${this.baseUrl}departments`).pipe(tap(d => {this.departmentsCache = d}));
+    return this.baseService.getCall(`${this.baseUrl}departments/${this.languageService.selectedLanguage}`).pipe(tap(d => { this.departmentsCache = d }));
+  }
+
+  getAllProvinceInfo(): Observable<any[]> {
+    return this.baseService.getCall(`${this.baseUrl}departments/info/province`);
   }
 
   getAllTicketTypes(): Observable<any[]> {
     let shop = localStorage.getItem(LocalStorageEnum.SellerDepartment) || 'app';
-    const shopDivided = shop.split('_');
-    // We verify the type of the shop
-    if (shopDivided.length === 2) {
-      // If it is type Other, we need to check the precision of the type
-      if (shopDivided[0] === 'O') {
-        switch (shopDivided[1].toLowerCase()) {
-          case 'comac':
-            shop = 'comac';
-            break;
-          case 'intal':
-            shop = 'intal';
-            break;
-          default:
-            shop = 'app';
-            break;
-        }
-      } else if (shopDivided[0] === 'P') {
-        // If it is type Provencie, it's shop app
+    switch (shop.toLowerCase()) {
+      case 'comac':
+        shop = 'comac';
+        break;
+      case 'intal':
+        shop = 'intal';
+        break;
+      default:
         shop = 'app';
-      } else {
-        shop = 'app';
-      }
-    } else {
-      shop = 'app';
+        break;
     }
 
     return this.baseService.getCall(`${this.baseUrl}tickets/types/${shop}`);
@@ -67,10 +57,38 @@ export class SellingService {
     const sellerId = localStorage.getItem(LocalStorageEnum.BeepleId);
     if (sellerId && this.volunteerShiftService.isReadyToSellWithData()) {
       return of({ id: localStorage.getItem(LocalStorageEnum.BeepleId), sellTickets: 2, sellTicketsGoal: 10 });
-      return this.baseService.getCall(`${this.baseUrl}sellers/${sellerId}`);
     } else {
       return of(null);
     }
+  }
+
+  ticketsPrepar(
+    tickets: any[],
+    email: string,
+    firstname: string,
+    lastname: string,
+    clientTransactionId: string,
+  ): Observable<any> {
+    return this.baseService.postCall(
+      `${this.baseUrl}tickets/prepar`,
+      {
+        firstname,
+        lastname,
+        email,
+        language: this.languageService.selectedLanguage,
+        ip: "127.0.0.1",
+        agent: "ManifiestApp",
+        invoice: 0,
+        testmode: 0,
+        sellerId: localStorage.getItem(LocalStorageEnum.SellerEmail),
+        sellerName: localStorage.getItem(LocalStorageEnum.SellerName),
+        tickets,
+        sellerDepartmentId: localStorage.getItem(LocalStorageEnum.SellerDepartment),
+        sellerPostalCode: localStorage.getItem(LocalStorageEnum.SellerPostalCode),
+        clientTransactionId,
+        fromWorkGroup: localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup) ? true : false
+      }
+    )
   }
 
   ticketsSale(
@@ -94,7 +112,7 @@ export class SellingService {
         agent: "ManifiestApp",
         invoice: 0,
         testmode: 0,
-        sellerId: localStorage.getItem(LocalStorageEnum.SellerName),
+        sellerId: localStorage.getItem(LocalStorageEnum.SellerEmail),
         sellerName: localStorage.getItem(LocalStorageEnum.SellerName),
         tickets,
         vwTransactionId: transactionId,
@@ -103,6 +121,7 @@ export class SellingService {
         askSendTicket,
         address,
         clientTransactionId,
+        fromWorkGroup: localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup) ? true : false
       }
     )
   }
@@ -127,19 +146,22 @@ export class SellingService {
 
   getMyCurrentDepartmentSellingInformation(): Observable<any> {
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/department/${localStorage.getItem(LocalStorageEnum.SellerDepartment)}`
+      `${this.baseUrl}tickets/sellingInformation/department/top-ten/${localStorage.getItem(LocalStorageEnum.SellerDepartment)}/${localStorage.getItem(LocalStorageEnum.SellerPostalCode)}`
     );
   }
 
   getAllSellingInformation(): Observable<any> {
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/seller`
+      `${this.baseUrl}tickets/sellingInformation/seller/top-ten`
     );
   }
 
   getMyCurrentPostCodeSellingInformation(): Observable<any> {
+    const postCode = localStorage.getItem(LocalStorageEnum.SellerPostalCode);
+    const sellerDepartement = localStorage.getItem(LocalStorageEnum.SellerDepartment);
+    const fromWorkGroup = localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup);
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/postCode/${localStorage.getItem(LocalStorageEnum.SellerPostalCode)}`
+      `${this.baseUrl}tickets/sellingInformation/postCode/${postCode}/${sellerDepartement}/${fromWorkGroup}`
     );
   }
 

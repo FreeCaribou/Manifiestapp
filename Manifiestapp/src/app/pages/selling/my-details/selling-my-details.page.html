@@ -22,7 +22,8 @@
             <ion-card-content>
               <p *ngIf="sell.ticketInfoPrice">{{"Ticket.Price" | translate}} {{sell.ticketInfoPrice}}</p>
               <p>{{"Ticket.TicketReference" | translate}} {{sell.eventsquareReference}}</p>
-              <p>{{"Ticket.Department" | translate}} {{sell.sellerDepartment}}</p>
+              <p>{{"Ticket.Department" | translate}} {{sell.sellerDepartment}} 
+                <span *ngIf="sell.sellerDepartmentId === 'BASE'">{{sell.sellerPostalCode}} </span></p>
             </ion-card-content>
           </ion-card>
         </div>
@@ -34,7 +35,8 @@
     <ion-accordion-group>
       <ion-accordion value="bestSellingPostalCode">
         <ion-item slot="header">
-          <ion-label>{{'Ticket.BestSellerMyPostalCode' | translate}}</ion-label>
+          <ion-label *ngIf="!isFromWorkingGroup">{{'Ticket.BestSellerMyPostalCode' | translate}}</ion-label>
+          <ion-label *ngIf="isFromWorkingGroup">{{'Ticket.BestSellerMyDepartmentWorker' | translate}}</ion-label>
         </ion-item>
         <div slot="content">
           <app-top-seller-list [list]="bestSellingPostalCode" [total]="sellingPostalCodeAccount"></app-top-seller-list>
@@ -47,23 +49,24 @@
     <ion-accordion-group value="myDepartmentBestSelings">
       <ion-accordion value="myDepartmentBestSelings">
         <ion-item slot="header">
-          <ion-label>{{'Ticket.BestSellerOurDepartment' | translate}}</ion-label>
+          <ion-label *ngIf="myDepartment !== 'BASE' || isFromWorkingGroup">{{'Ticket.BestSellerOurDepartment' | translate}}</ion-label>
+          <ion-label *ngIf="myDepartment === 'BASE' && !isFromWorkingGroup">{{'Ticket.BestSellerOurProvince' | translate}}</ion-label>
         </ion-item>
         <div slot="content">
-          <app-top-seller-list [list]="bestSellingDepartment" [total]="sellingDepartmentAccount"></app-top-seller-list>
+          <app-top-seller-list [list]="bestSellingDepartment"></app-top-seller-list>
         </div>
       </ion-accordion>
     </ion-accordion-group>
   </div>
 
-  <div *ngIf="bestSellingNational">
-    <ion-accordion-group value="bestSellingNational">
-      <ion-accordion value="bestSellingNational">
+  <div *ngIf="bestSellingAll">
+    <ion-accordion-group value="bestSellingAll">
+      <ion-accordion value="bestSellingAll">
         <ion-item slot="header">
           <ion-label>{{'Ticket.BestSellerNational' | translate}}</ion-label>
         </ion-item>
         <div slot="content">
-          <app-top-seller-list [list]="bestSellingNational" [total]="sellingNationalAccount"></app-top-seller-list>
+          <app-top-seller-list [list]="bestSellingAll"></app-top-seller-list>
         </div>
       </ion-accordion>
     </ion-accordion-group>

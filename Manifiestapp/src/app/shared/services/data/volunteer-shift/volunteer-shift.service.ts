@@ -48,7 +48,6 @@ export class VolunteerShiftService {
     session.display = 'MyManifiesta'
     return this.baseService.postCall(`${this.baseUrl}sellers/connect`, session).pipe(
       tap(data => {
-        console.log('data', data)
         localStorage.setItem(LocalStorageEnum.BeepleId, data.id);
         localStorage.setItem(LocalStorageEnum.BeepleEmail, data.mail);
         // localStorage.setItem(LocalStorageEnum.BeepleToken, data.token);

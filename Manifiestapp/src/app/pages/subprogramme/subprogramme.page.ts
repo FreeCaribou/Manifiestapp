@@ -85,9 +85,7 @@ export class SubprogrammePage {
   }
 
   onSearchChange() {
-    console.log('hello', this.search)
     if (this.search && this.search?.trim() !== '') {
-      console.log('we change', this.search, this.list)
       this.listToShow = this.list.filter(
         x => x.title.rendered.toLowerCase().includes(this.search.toLowerCase())
       );

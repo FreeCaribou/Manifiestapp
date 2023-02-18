@@ -14,8 +14,6 @@
   <ng-container *ngIf="!isLogin && sellerLoginForm">
     <form [formGroup]="sellerLoginForm">
 
-      <p [innerHtml]="'Ticket.ConnectionSeller' | translate" class="m-right-medium m-left-medium"></p>
-
       <ion-grid>
         <ion-item>
           <ion-label color="primary" position="stacked">
@@ -43,9 +41,19 @@
           </ion-input>
         </ion-item>
 
+        <ion-item class="m-top-medium">
+          <ion-label>
+            {{'Ticket.IAcceptKeepData' | translate}}
+            <p style="font-size: 10px; line-height: normal;">
+              {{'Ticket.DataPrivacy' | translate}}
+            </p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="sellerAcceptData" (ionChange)="onSellerAcceptData($event)"></ion-toggle>
+        </ion-item>
+
         <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="secondary" expand="block"
-          [disabled]="!sellerLoginForm.valid">
-          {{'User.Login' | translate}}
+          [disabled]="!sellerLoginForm.valid || !sellerAcceptData">
+          {{'Ticket.BeginSell' | translate}}
           <ion-icon slot="end" icon="person"></ion-icon>
         </ion-button>
 
@@ -62,39 +70,44 @@
         <h4>{{'Ticket.HelloSeller' | translate:sellerNameI18NParam}}</h4>
       </a>
 
-      <ng-container *ngIf="allHardwareOk && hasEveryInfoToSell">
+      <ng-container *ngIf="allHardwareOk">
+        <h5 *ngIf="!hasEveryInfoToSell" class="fake-mouse-select" (click)="openSellerDepartmentInfo()">
+          {{'Ticket.CompleteSellerDepartmentInfoPlease' | translate}}
+        </h5>
 
-        <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
-          [class.transparent-background]="ticketType.branding?.image">
-          <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
-          <ion-card-header *ngIf="!ticketType.branding?.image">
-            <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
-          </ion-card-header>
-          <ion-item>
-            <ion-label>
-              {{ticketType.price + ticketType.fee | currency:'EUR'}}
+        <ng-container *ngIf="hasEveryInfoToSell && ticketTypes?.length > 0">
+          <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
+            [class.transparent-background]="ticketType.branding?.image">
+            <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
+            <ion-card-header *ngIf="!ticketType.branding?.image">
+              <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
+            </ion-card-header>
+            <ion-item>
+              <ion-label>
+                {{ticketType.price + ticketType.fee | currency:'EUR'}}
 
-              | {{ticketNumberOfSell[index].ticketPrice *
-              ticketNumberOfSell[index].ticketAmount |
-              currency:'EUR'}}
-            </ion-label>
+                | {{ticketNumberOfSell[index].ticketPrice *
+                ticketNumberOfSell[index].ticketAmount |
+                currency:'EUR'}}
+              </ion-label>
 
-            <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
-              (click)="changeAmountTicket(index, 'remove')">
-              <ion-icon name="remove"></ion-icon>
-            </ion-button>
-            <ion-input [(ngModel)]="ticketNumberOfSell[index].ticketAmount" type="number" min="0"></ion-input>
-            <ion-button slot="end" (click)="changeAmountTicket(index, 'add')">
-              <ion-icon name="add"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-card>
+              <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
+                (click)="changeAmountTicket(index, 'remove')">
+                <ion-icon name="remove"></ion-icon>
+              </ion-button>
+              <ion-input [(ngModel)]="ticketNumberOfSell[index].ticketAmount" type="number" min="0"></ion-input>
+              <ion-button slot="end" (click)="changeAmountTicket(index, 'add')">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-card>
 
-        <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
-          expand="block" (click)="setOpenModal(true)">
-          <ion-icon name="cart"></ion-icon>
-          {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
-        </ion-button>
+          <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
+            expand="block" (click)="setOpenModal(true)">
+            <ion-icon name="cart"></ion-icon>
+            {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
+          </ion-button>
+        </ng-container>
 
       </ng-container>
 
@@ -141,47 +154,26 @@
 
       <!-- The information to know which kind of ticket show -->
       <ng-container>
-        <h6> {{"Ticket.EnterSomeDataToBeAbleToSell" | translate}}</h6>
-        <ion-item *ngIf="departements.length > 0">
-          <ion-label color="primary" position="floating">
-            {{"Ticket.Department" | translate}}
-          </ion-label>
-          <ion-select [placeholder]="'Ticket.DepartmentChoice' | translate" [value]="sellerDepartement"
-            interface="popover" (ionChange)="onSellerDepartementChange($event)">
-            <ion-select-option *ngFor="let d of departements" [value]="d.code">{{d.label}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary" position="stacked">
-            {{'Volunteer.PostalCode' | translate}}
-          </ion-label>
-          <ion-input [placeholder]="'Volunteer.PostalCode' | translate" [value]="sellerPostalCode"
-            (ionChange)="onSellerPostalCodeChange($event)"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label color="primary" position="stacked">
-            {{'Volunteer.SellingGoal' | translate}}
-          </ion-label>
-          <ion-input [placeholder]="'Volunteer.SellingGoal' | translate" type="number" min="0"
-            [value]="sellerSellingGoal" (ionChange)="onSellerSellingGoal($event)"></ion-input>
-        </ion-item>
+        <ion-button class="m-top-medium" expand="block" (click)="goMyDetails()">
+          <ion-icon name="ticket-outline"></ion-icon>
+          {{"Ticket.HistoricOfSelling" | translate}}
+        </ion-button>
       </ng-container>
 
       <div class="separator-line m-top-medium"></div>
-
-      <ion-button class="m-top-medium" expand="block" (click)="goMyDetails()">
-        <ion-icon name="ticket-outline"></ion-icon>
-        {{"Ticket.HistoricOfSelling" | translate}}
+      
+      <ion-button expand="block" (click)="openSellerDepartmentInfo()">
+        {{"Ticket.MyDepartmentInfo" | translate}}
       </ion-button>
-
       <ion-button class="m-top-medium" (click)="clickOnLogout()" color="danger" expand="block">
-        Logout
+        {{"Volunteer.Logout" | translate}}
         <ion-icon slot="end" icon="power"></ion-icon>
       </ion-button>
     </div>
 
   </ng-container>
 
+  <!-- Client info -->
   <ng-container *ngIf="showClientDetailForm && buyForm && addressForm">
     <ion-content class="ion-padding">
       <ng-container>

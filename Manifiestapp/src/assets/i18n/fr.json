@@ -11,7 +11,8 @@
     "NoInternet": "Pas d'Internet",
     "SeeYouLater": "Revenez nous voir en 2023 !",
     "Finish": "Voilà Manifiesta 2022 qui est fini, merci à tous nos bénévoles et surtout, rendez vous l'an prochain !",
-    "Hello": "Bonjour"
+    "Hello": "Bonjour",
+    "Confirm": "Confirmer"
   },
   "Menu": {
     "Home": "Home",
@@ -167,7 +168,8 @@
     "InsuranceEnd": "En cas de problème ou pour toute question pendant le festival, vous pouvez vous rendre au secrétariat bénévoles (dans le village bénévoles). Vous pouvez contacter <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a> si vous souhaitez avoir plus de détails sur l'assurance.",
     "PostalCode": "Code postale",
     "WantSell": "Je veux vendre des tickets",
-    "SellingGoal": "Objectif de vente"
+    "SellingGoal": "Objectif de vente",
+    "Logout": "Déconnexion"
   },
   "Ticket": {
     "ConnectionSelling": "Connexion pour nos vendeur",
@@ -219,6 +221,15 @@
     "SellingSuccess": "Vente réussie !",
     "DataPrivacy": "J'accepte que ManiFiesta enregistre et traite mes données mentionnées sur cette page ainsi que les données de mes ventes et les partage avec d'autres utilisateurs de cette application. www.manifiesta.be/privacy",
     "ClientAcceptKeepData": "Le client accepte que ses données soient stockées",
-    "ClientWantNewsletter": "Le client veut s'inscrire à la newsletter"
+    "IAcceptKeepData": "J'accepte que ces données soient stockées",
+    "ClientWantNewsletter": "Le client veut s'inscrire à la newsletter",
+    "CompleteSellerDepartmentInfoPlease": "Veuillez compléter vos informations de sections svp",
+    "MyDepartmentInfo": "Mon profil",
+    "IAmFromWorkerGroup": "Groupe monde du travail",
+    "BestSellerMyDepartmentWorker": "Meilleurs vendeur des travailleurs de mon commune",
+    "BestSellerOurProvince": "Meilleurs vendeurs de ma province",
+    "BeginSell": "Commencer à vendre",
+    "SellerFirstname": "Prénom",
+    "SellerLastname": "Nom"
   }
 }

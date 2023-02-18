@@ -11,7 +11,8 @@
     "NoInternet": "Geen Internet",
     "SeeYouLater": "Kom terug en zie ons in 2023!",
     "Finish": "Manifiesta is gesloten voor 2022, bedankt aan al onze vrijwilligers en vooral, tot volgend jaar!",
-    "Hello": "Hallo"
+    "Hello": "Hallo",
+    "Confirm": "Bevestigen"
   },
   "Menu": {
     "Home": "Home",
@@ -167,7 +168,8 @@
     "InsuranceEnd": "Als je tijdens het festival problemen of vragen hebt, kun je terecht bij het vrijwilligerssecretariaat (in de vrijwilligerdorp). Indien je meer details wenst over de verzekering, kan je contact opnemen met <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a>",
     "PostalCode": "Postcode",
     "WantSell": "Ik wil tickets verkopen",
-    "SellingGoal": "Verkoopdoel"
+    "SellingGoal": "Verkoopdoel",
+    "Logout": "Uitloggen"
   },
   "Ticket": {
     "ConnectionSelling": "Inloggen voor onze verkopers",
@@ -219,6 +221,15 @@
     "SellingSuccess": "Succesvolle verkoop!",
     "DataPrivacy": "Ik ga ermee akkoord dat ManiFiesta mijn gegevens vermeld op deze pagina en mijn verkoopgegevens opslaat en verwerkt en deelt met andere gebruikers van deze applicatie. www.manifiesta.be/privacy",
     "ClientAcceptKeepData": "De klant aanvaardt dat zijn gegevens worden opgeslagen",
-    "ClientWantNewsletter": "De klant wil zich abonneren op de nieuwsbrief"
+    "IAcceptKeepData": "Ik aanvaardt dat deze gegevens worden opgeslagen",
+    "ClientWantNewsletter": "De klant wil zich abonneren op de nieuwsbrief",
+    "CompleteSellerDepartmentInfoPlease": "Vul uw sectie-informatie in a.u.b.",
+    "MyDepartmentInfo": "Mijn profiel",
+    "IAmFromWorkerGroup": "Wereld van de werkgroep",
+    "BestSellerMyDepartmentWorker": "Top verkopers van medewerkers in mijn gemeente",
+    "BestSellerOurProvince": "Top verkopers in mijn provincie",
+    "BeginSell": "Begin met verkopen",
+    "SellerFirstname": "Voornaam",
+    "SellerLastname": "Naam"
   }
 }

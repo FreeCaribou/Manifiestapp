@@ -24,6 +24,7 @@ import { ThermometerComponent } from './components/thermometer/thermometer.compo
 import { SellingPostInfoModalComponent } from './components/selling-post-info-modal/selling-post-info-modal.component';
 import { TopSellerListComponent } from './components/top-seller-list/top-seller-list.component';
 import { MySellingLittleRecapComponent } from './components/my-selling-little-recap/my-selling-little-recap.component';
+import { SellerDepartmentInfoModalComponent } from './components/seller-department-info-modal/seller-department-info-modal.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MySellingLittleRecapComponent } from './components/my-selling-little-re
     SelectLangComponent,
     ThermometerComponent,
     SellingPostInfoModalComponent,
+    SellerDepartmentInfoModalComponent,
     TopSellerListComponent,
     MySellingLittleRecapComponent,
   ],
@@ -61,6 +63,7 @@ import { MySellingLittleRecapComponent } from './components/my-selling-little-re
     FormsModule,
     ReactiveFormsModule,
     SellingPostInfoModalComponent,
+    SellerDepartmentInfoModalComponent,
     TopSellerListComponent,
     MySellingLittleRecapComponent,
   ],

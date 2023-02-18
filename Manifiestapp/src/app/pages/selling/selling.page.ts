@@ -14,6 +14,7 @@ import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-sh
 import { SellingPostInfoModalComponent } from 'src/app/shared/components/selling-post-info-modal/selling-post-info-modal.component';
 import { takeUntil } from 'rxjs/operators'
 import { Observable, Subject, Subscription } from 'rxjs';
+import { SellerDepartmentInfoModalComponent } from 'src/app/shared/components/seller-department-info-modal/seller-department-info-modal.component';
 
 // TODO Rework EVERYTHING
 @Component({
@@ -64,6 +65,8 @@ export class SellingPage implements AfterViewInit {
   sellerPostalCode: string;
   sellerSellingGoal: number;
   departements = [];
+
+  sellerAcceptData = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -140,10 +143,10 @@ export class SellingPage implements AfterViewInit {
     return localStorage.getItem(LocalStorageEnum.SellerEmail) && localStorage.getItem(LocalStorageEnum.SellerName);
   }
 
-  get hasEveryInfoToSell() {
-    return localStorage.getItem(LocalStorageEnum.SellerDepartment)
-      && localStorage.getItem(LocalStorageEnum.SellerPostalCode)
-      && localStorage.getItem(LocalStorageEnum.SellerSellingGoal)
+  get hasEveryInfoToSell(): boolean {
+    return Boolean(localStorage.getItem(LocalStorageEnum.SellerDepartment)
+      && (localStorage.getItem(LocalStorageEnum.SellerPostalCode))
+      && localStorage.getItem(LocalStorageEnum.SellerSellingGoal))
   }
 
   get sellerName() {
@@ -152,20 +155,20 @@ export class SellingPage implements AfterViewInit {
 
   verifyBluetooth() {
     this.diagnostic.isBluetoothEnabled()
-      .then(e => { console.log('bluetooth is ok', e); this.bluetoothActivated = e; })
-      .catch(e => { console.log('bluetooth is not ok'); this.bluetoothActivated = false; });
+      .then(e => { this.bluetoothActivated = e; })
+      .catch(e => { this.bluetoothActivated = false; });
   }
 
   verifyNfc() {
     this.diagnostic.isNFCEnabled()
-      .then(e => { console.log('nfc is ok', e); this.nfcActivated = e; })
-      .catch(e => { console.log('nfc is not ok'); this.nfcActivated = false; });
+      .then(e => { this.nfcActivated = e; })
+      .catch(e => { this.nfcActivated = false; });
   }
 
   verifyGps() {
     this.diagnostic.isGpsLocationEnabled()
-      .then(e => { console.log('gps is ok', e); this.gpsActivated = e; })
-      .catch(e => { console.log('gps is not ok'); this.gpsActivated = false; });
+      .then(e => { this.gpsActivated = e; })
+      .catch(e => { this.gpsActivated = false; });
   }
 
   verifyVivaWallet() {
@@ -173,8 +176,8 @@ export class SellingPage implements AfterViewInit {
       const app = 'com.vivawallet.spoc.payapp';
       this.appAvailability.check(app)
         .then(
-          (yes: boolean) => { console.log(app + ' is available'); this.vivaWalletInstall = true },
-          (no: boolean) => { console.log(app + ' is NOT available'); this.vivaWalletInstall = false }
+          (yes: boolean) => { this.vivaWalletInstall = true },
+          (no: boolean) => { this.vivaWalletInstall = false }
         );
     }
   }
@@ -225,7 +228,6 @@ export class SellingPage implements AfterViewInit {
   }
 
   ionViewDidLeave() {
-    console.log('leave')
     this.destroyer$.next(true);
     this.destroyer$.complete();
 
@@ -233,7 +235,6 @@ export class SellingPage implements AfterViewInit {
   }
 
   ionViewWillEnter() {
-    console.log('enter')
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
@@ -243,21 +244,16 @@ export class SellingPage implements AfterViewInit {
     // this.destroyer$?.unsubscribe();
     // this.destroyer$?.complete();
     this.routeSubscribe$ = this.activatedRoute.queryParams.pipe(takeUntil(this.destroyer$)).subscribe((queryParams) => {
-      console.log('query param ?', queryParams, this.activatedRoute.snapshot.queryParamMap)
       this.status = queryParams['status'] || this.activatedRoute.snapshot.queryParamMap.get('status');
       this.message = queryParams['message'] || this.activatedRoute.snapshot.queryParamMap.get('message');
       this.action = queryParams['action'] || this.activatedRoute.snapshot.queryParamMap.get('action');
       this.transactionId = queryParams['transactionId'] || this.activatedRoute.snapshot.queryParamMap.get('transactionId');
       this.routerUrl = this.router.url;
-      console.log('query param ? v2', this.status, this.message, this.action, this.transactionId, this.routerUrl)
 
-      if (this.status && this.seller && this.action == 'activatePos') {
-        console.log('try to activate viva wallet pos')
+      if (this.status && this.hasEveryInfoToSell && this.action == 'activatePos') {
         if (this.status == 'success' || this.message == 'POS_IS_ALREADY_ACTIVATED') {
-          console.log('try to activate viva wallet pos success or already activated', this.totalAmount, this.totalAmount > 0)
           // If we see ticket in the "basket", we show the client detail form
           if (this.totalAmount > 0) {
-            console.log('laucnh the client detail form')
             this.showClientDetailForm = true;
             this.clientWantNewsletter = false;
             this.clientAcceptData = false;
@@ -268,9 +264,7 @@ export class SellingPage implements AfterViewInit {
         }
       }
 
-      else if (this.status && this.seller && this.action == 'sale') {
-        console.log('try to activate viva wallet sale')
-
+      else if (this.status && this.hasEveryInfoToSell && this.action == 'sale') {
         if (this.status == 'success' && this.transactionId) {
           this.showClientDetailForm = false;
 
@@ -289,7 +283,6 @@ export class SellingPage implements AfterViewInit {
             this.clientTransactionId,
             this.addressForm.value,
           ).pipe(takeUntil(this.destroyer$)).subscribe(data => {
-            console.log('tickets sale order', data)
             this.loadThermometer(true);
             this.succeedPaiement();
             // Put at zero the tickets sell amount / number
@@ -306,15 +299,15 @@ export class SellingPage implements AfterViewInit {
       }
     });
 
+    if (this.hasEveryInfoToSell) {
+      this.loadTicketType();
+    }
 
-    this.loadingCommunication.changeLoaderTo(true);
-    this.sellingService.getAllDepartments().subscribe(data => {
-      this.departements = data;
-      if (localStorage.getItem(LocalStorageEnum.SellerDepartment)) {
-        this.loadTicketType();
-      }
-      this.verifySellerData();
-    }).add(() => { this.loadingCommunication.changeLoaderTo(false); })
+    if (this.isLogin && !this.hasEveryInfoToSell) {
+      this.openSellerDepartmentInfo();
+    }
+
+    this.verifySellerData();
   }
 
 
@@ -359,6 +352,13 @@ export class SellingPage implements AfterViewInit {
       duration: 4000,
     });
     toast.present();
+
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.activatedRoute,
+        queryParams: {},
+      });
   }
 
   buildBuyForm() {
@@ -395,11 +395,18 @@ export class SellingPage implements AfterViewInit {
       `${this.sellerLoginForm.value.firstname.trim()} ${this.sellerLoginForm.value.lastname.trim()}`
     );
     this.verifySellerData();
+
+    this.openSellerDepartmentInfo();
   }
 
   clickOnLogout() {
     localStorage.removeItem(LocalStorageEnum.SellerEmail);
     localStorage.removeItem(LocalStorageEnum.SellerName);
+
+    localStorage.removeItem(LocalStorageEnum.SellerDepartment);
+    localStorage.removeItem(LocalStorageEnum.SellerPostalCode);
+    localStorage.removeItem(LocalStorageEnum.SellerFromWorkGroup);
+    localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
     this.verifySellerData();
   }
 
@@ -431,14 +438,15 @@ export class SellingPage implements AfterViewInit {
   }
 
   loadTicketType() {
-    this.loadingCommunication.changeLoaderTo(true);
-    this.sellingService.getAllTicketTypes().subscribe(tt => {
-      this.ticketTypes = tt;
-      this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
-      console.log('the tickets type', this.ticketTypes, this.ticketNumberOfSell)
-    }).add(() => {
-      this.loadingCommunication.changeLoaderTo(false);
-    });
+    if (this.hasEveryInfoToSell) {
+      this.loadingCommunication.changeLoaderTo(true);
+      this.sellingService.getAllTicketTypes().subscribe(tt => {
+        this.ticketTypes = tt;
+        this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
+      }).add(() => {
+        this.loadingCommunication.changeLoaderTo(false);
+      });
+    }
   }
 
   /**
@@ -456,23 +464,31 @@ export class SellingPage implements AfterViewInit {
 
   buy() {
     if (!this.disabledBuyButton) {
-      this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.BeepleId)}-${new Date().getTime()}`;
-      window.open(
-        'vivapayclient://pay/v1' +
-        '?appId=be.manifiesta.app' +
-        '&action=sale' +
-        `&amount=${Math.floor(this.totalAmount * 100)}` +
-        `&clientTransactionId=${this.clientTransactionId}` +
-        '&callback=mycallbackscheme://selling',
-        '_system'
-      );
+      this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.SellerEmail)}-${new Date().getTime()}`;
+
+      this.sellingService.ticketsPrepar(
+        this.recapSelectedTicket,
+        this.buyForm.value.email,
+        this.buyForm.value.firstname,
+        this.buyForm.value.lastname,
+        this.clientTransactionId,
+      ).subscribe(() => {
+        window.open(
+          'vivapayclient://pay/v1' +
+          '?appId=be.manifiesta.app' +
+          '&action=sale' +
+          `&amount=${Math.floor(this.totalAmount * 100)}` +
+          `&clientTransactionId=${this.clientTransactionId}` +
+          '&callback=mycallbackscheme://selling',
+          '_system'
+        );
+      });
     } else {
       // TODO show message error
     }
   }
 
   autoVivaWalletAuth() {
-    console.log('come on auth auto please', this.totalAmount, this.totalAmount * 100, Math.floor(this.totalAmount * 100))
     window.open(
       'vivapayclient://pay/v1' +
       '?appId=be.manifiesta.app' +
@@ -503,7 +519,6 @@ export class SellingPage implements AfterViewInit {
   }
 
   async openShowAfterSellingModal() {
-    console.log('allller', this.mySellingInfo)
     const modal = await this.modalController.create({
       component: SellingPostInfoModalComponent,
       componentProps: {
@@ -517,6 +532,21 @@ export class SellingPage implements AfterViewInit {
     modal.present();
   }
 
+  async openSellerDepartmentInfo() {
+    const modal = await this.modalController.create({
+      component: SellerDepartmentInfoModalComponent,
+      componentProps: {
+      }
+    })
+    modal.present();
+    modal.onDidDismiss().then(() => {
+      this.loadTicketType();
+      if (!this.hasEveryInfoToSell) {
+        this.clickOnLogout();
+      }
+    });
+  }
+
   goMyDetails() {
     this.router.navigate(['/selling/my-details']);
   }
@@ -526,6 +556,14 @@ export class SellingPage implements AfterViewInit {
       this.clientAcceptData = true;
     } else {
       this.clientAcceptData = false;
+    }
+  }
+
+  onSellerAcceptData(event) {
+    if (event.detail?.checked) {
+      this.sellerAcceptData = true;
+    } else {
+      this.sellerAcceptData = false;
     }
   }
 
@@ -551,44 +589,6 @@ export class SellingPage implements AfterViewInit {
     this.sellerPostalCode = localStorage.getItem(LocalStorageEnum.SellerPostalCode);
     this.sellerSellingGoal = parseInt(localStorage.getItem(LocalStorageEnum.SellerSellingGoal));
     this.volunteerShiftService.sendSellerVerificationEmit();
-  }
-
-  // TODO verification real post code
-  onSellerDepartementChange(event) {
-    console.log('department change', event)
-    if (event.detail?.value) {
-      localStorage.setItem(LocalStorageEnum.SellerDepartment, event.detail?.value);
-    } else {
-      localStorage.removeItem(LocalStorageEnum.SellerDepartment);
-    }
-    this.loadTicketType();
-    this.verifySellerData();
-  }
-
-  onSellerPostalCodeChange(event) {
-    console.log('post change', event)
-    const postalCode = event.detail?.value;
-    if (!!postalCode) {
-      localStorage.setItem(LocalStorageEnum.SellerPostalCode, postalCode);
-    } else {
-      localStorage.removeItem(LocalStorageEnum.SellerPostalCode);
-    }
-    this.verifySellerData();
-  }
-
-  onSellerSellingGoal(event) {
-    console.log('selling goal change', event, isNaN(event.detail?.value))
-    const sellingGoal = event.detail?.value;
-    if (isNaN(sellingGoal)) {
-      localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
-    } else {
-      if (!!sellingGoal) {
-        localStorage.setItem(LocalStorageEnum.SellerSellingGoal, sellingGoal);
-      } else {
-        localStorage.removeItem(LocalStorageEnum.SellerSellingGoal);
-      }
-    }
-    this.verifySellerData();
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
+import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { SellingService } from 'src/app/shared/services/data/selling/selling.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
@@ -14,11 +15,12 @@ export class SellingMyDetailsPage {
   totalAmountTicket;
   sellerSellingGoal;
   bestSellingDepartment: any[];
-  sellingDepartmentAccount: number;
-  bestSellingNational: any[];
-  sellingNationalAccount: number;
   bestSellingPostalCode: any[];
+  bestSellingAll: any[];
   sellingPostalCodeAccount: number;
+
+  isFromWorkingGroup = localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup);
+  myDepartment: string = localStorage.getItem(LocalStorageEnum.SellerDepartment);
 
   defaultHref = '/selling';
 
@@ -41,13 +43,9 @@ export class SellingMyDetailsPage {
     forkJoin([
       this.sellingService.getMySellingInformation(),
       this.sellingService.getMyCurrentDepartmentSellingInformation(),
-      this.sellingService.getAllSellingInformation(),
       this.sellingService.getMyCurrentPostCodeSellingInformation(),
+      this.sellingService.getAllSellingInformation(),
     ]).subscribe(data => {
-      console.log('data', data[0], data[1], data[2], data[3])
-      // TODO
-      // 'Translate' the department id - label
-      // Show detail of ticket
       this.mySellingInfo = data[0];
       this.totalAmountTicket = this.mySellingInfo.totalAmountTicket;
       this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
@@ -63,12 +61,10 @@ export class SellingMyDetailsPage {
         return {...d, ticketInfoPrice};
       });
 
-      this.bestSellingDepartment = data[1].bestSelling;
-      this.sellingDepartmentAccount = data[1].totalAmountTicket;
-      this.bestSellingNational = data[2].data;
-      this.sellingNationalAccount = data[2].totalAmountTicket;
-      this.bestSellingPostalCode = data[3].bestSelling;
-      this.sellingPostalCodeAccount = data[3].totalAmountTicket;
+      this.bestSellingDepartment = data[1];
+      this.bestSellingPostalCode = data[2].bestSelling;
+      this.sellingPostalCodeAccount = data[2].totalAmountTicket;
+      this.bestSellingAll = data[3];
 
     }).add(() => {this.loadingCommunication.changeLoaderTo(false)});
   }

@@ -113,7 +113,6 @@ export class AppComponent implements OnInit {
     // more routing init
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
       this.zone.run(() => {
-        console.log('return of url', event.url)
         const slug = event.url.includes('mycallbackscheme://selling');
         // Expected url call back
         // mycallbackscheme://seller?action=sale&amount=101&clientTransactionId=&message=(-4) USER_CANCEL&status=fail&tid=16220044
@@ -173,7 +172,6 @@ export class AppComponent implements OnInit {
       filter(route => route.outlet === 'primary'),
       mergeMap(route => route.data)
     ).subscribe(snapshotData => {
-      console.log('data route snapshot', snapshotData, snapshotData.noBackExit)
       this.subBackButton?.unsubscribe();
 
       this.subBackButton = this.platform.backButton.subscribe(() => {
@@ -181,37 +179,11 @@ export class AppComponent implements OnInit {
         this.menu.isOpen().then(data => {
           // We need to verify that we are not on the menu
           if (!data && !snapshotData.noBackExit) {
-            console.log('we exit')
             navigator[app].exitApp();
           }
         });
       });
     });
-
-    // this.router.events.subscribe(event => {
-    //   console.log('this router', this.activatedRoute.snapshot)
-
-    //   this.activatedRoute.data.subscribe(l => {console.log('llllllllll', l)})
-
-    //   if (event instanceof NavigationEnd) {
-    //     console.log('i sub to exit', event, pageWithoutBackButton)
-    //     this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => event.urlAfterRedirects.includes(x)) > -1;
-
-    //     this.subBackButton?.unsubscribe();
-    //     if (!pageWithoutBackButton.find(x => event.urlAfterRedirects.includes(x))) {
-    //       this.subBackButton = this.platform.backButton.subscribe(() => {
-    //         console.log('i sub to exit')
-    //         const app = 'app';
-    //         this.menu.isOpen().then(data => {
-    //           if (!data) {
-    //             navigator[app].exitApp();
-    //           }
-    //         });
-    //       });
-    //     }
-
-    //   }
-    // });
   }
 
   ionViewWillLeave() {
