@@ -25,6 +25,7 @@ import { SellingPostInfoModalComponent } from './components/selling-post-info-mo
 import { TopSellerListComponent } from './components/top-seller-list/top-seller-list.component';
 import { MySellingLittleRecapComponent } from './components/my-selling-little-recap/my-selling-little-recap.component';
 import { SellerDepartmentInfoModalComponent } from './components/seller-department-info-modal/seller-department-info-modal.component';
+import { VivaWalletVerificationComponent } from './components/viva-wallet-verification/viva-wallet-verification.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SellerDepartmentInfoModalComponent } from './components/seller-departme
     SellerDepartmentInfoModalComponent,
     TopSellerListComponent,
     MySellingLittleRecapComponent,
+    VivaWalletVerificationComponent,
   ],
   imports: [
     CommonModule,
@@ -66,6 +68,7 @@ import { SellerDepartmentInfoModalComponent } from './components/seller-departme
     SellerDepartmentInfoModalComponent,
     TopSellerListComponent,
     MySellingLittleRecapComponent,
+    VivaWalletVerificationComponent,
   ],
   providers: [
     MapCommunicationService,

@@ -18,6 +18,8 @@ import { ProgrammeService } from './shared/services/data/programme/programme.ser
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { VolunteerShiftService } from './shared/services/data/volunteer-shift/volunteer-shift.service';
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { BackButtonCommunicationService } from './shared/services/communication/back-buttton.communication.service';
+import { SellingPage } from './pages/selling/selling.page';
 
 @Component({
   selector: 'app-root',
@@ -63,6 +65,7 @@ export class AppComponent implements OnInit {
     public programmeService: ProgrammeService,
     public loadingController: LoadingController,
     private zone: NgZone,
+    private backButtonBlock: BackButtonCommunicationService,
   ) { }
 
   async ngOnInit() {
@@ -178,8 +181,10 @@ export class AppComponent implements OnInit {
         const app = 'app';
         this.menu.isOpen().then(data => {
           // We need to verify that we are not on the menu
-          if (!data && !snapshotData.noBackExit) {
+          if (!data && !snapshotData.noBackExit && this.backButtonBlock.blockReference?.length === 0) {
             navigator[app].exitApp();
+          } else if (this.backButtonBlock.blockReference?.length > 0 && this.backButtonBlock.blockReference.includes(SellingPage.name)) {
+            this.backButtonBlock.sendGoBackToSellingPage();
           }
         });
       });

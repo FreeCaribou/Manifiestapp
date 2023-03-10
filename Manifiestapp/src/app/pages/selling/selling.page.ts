@@ -1,27 +1,28 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IonModal, ModalController, Platform, ToastController } from '@ionic/angular';
+import { IonModal, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { SellingService } from 'src/app/shared/services/data/selling/selling.service';
 import { i18nTerms } from 'src/app/shared/utils/i18n-terms';
 import { environment } from 'src/environments/environment';
-import { AppAvailability } from '@awesome-cordova-plugins/app-availability/ngx';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 import { SellingPostInfoModalComponent } from 'src/app/shared/components/selling-post-info-modal/selling-post-info-modal.component';
 import { takeUntil } from 'rxjs/operators'
 import { Observable, Subject, Subscription } from 'rxjs';
 import { SellerDepartmentInfoModalComponent } from 'src/app/shared/components/seller-department-info-modal/seller-department-info-modal.component';
+import { BackButtonCommunicationService } from 'src/app/shared/services/communication/back-buttton.communication.service';
+import { VivaWalletVerificationCommunicationService } from 'src/app/shared/services/communication/viva-wallet-verification.communication.service';
 
 // TODO Rework EVERYTHING
 @Component({
   selector: 'app-selling',
   templateUrl: './selling.page.html',
 })
-export class SellingPage implements AfterViewInit {
+export class SellingPage {
 
   departments = [];
   buyForm: FormGroup;
@@ -43,11 +44,6 @@ export class SellingPage implements AfterViewInit {
 
   showClientDetailForm = false;
 
-  vivaWalletInstall = false;
-  bluetoothActivated = false;
-  gpsActivated = false;
-  nfcActivated = false;
-
   showAfterSellingModal = false;
   @ViewChild('afterSellingModal') afterSellingModal: IonModal;
   @ViewChild('myInfoModal') myInfoModal: IonModal;
@@ -68,6 +64,8 @@ export class SellingPage implements AfterViewInit {
 
   sellerAcceptData = false;
 
+  finishSellingInfo;
+
   constructor(
     private formBuilder: FormBuilder,
     private sellingService: SellingService,
@@ -77,17 +75,13 @@ export class SellingPage implements AfterViewInit {
     private toastController: ToastController,
     private languageService: LanguageCommunicationService,
     public modalController: ModalController,
-    private appAvailability: AppAvailability,
     private platform: Platform,
     private diagnostic: Diagnostic,
     public volunteerShiftService: VolunteerShiftService,
+    private backButtonBlock: BackButtonCommunicationService,
+    public menu: MenuController,
+    private vivaWalletVerification: VivaWalletVerificationCommunicationService
   ) { }
-
-  ngAfterViewInit(): void {
-    document.addEventListener('visibilitychange', () => {
-      this.verifyHardwareForVivaWallet();
-    });
-  }
 
   get totalAmount(): number {
     let totalAmount = 0;
@@ -106,8 +100,9 @@ export class SellingPage implements AfterViewInit {
   }
 
   get allHardwareOk(): boolean {
-    return this.vivaWalletInstall && this.nfcActivated && this.gpsActivated;
-    // return this.vivaWalletInstall && this.bluetoothActivated && this.nfcActivated && this.gpsActivated;
+    return this.vivaWalletVerification.vivaWalletInstall
+      && this.vivaWalletVerification.nfcActivated
+      && this.vivaWalletVerification.gpsActivated;
   }
 
   get recapSelectedTicket(): any[] {
@@ -153,80 +148,6 @@ export class SellingPage implements AfterViewInit {
     return localStorage.getItem(LocalStorageEnum.SellerName);
   }
 
-  verifyBluetooth() {
-    this.diagnostic.isBluetoothEnabled()
-      .then(e => { this.bluetoothActivated = e; })
-      .catch(e => { this.bluetoothActivated = false; });
-  }
-
-  verifyNfc() {
-    this.diagnostic.isNFCEnabled()
-      .then(e => { this.nfcActivated = e; })
-      .catch(e => { this.nfcActivated = false; });
-  }
-
-  verifyGps() {
-    this.diagnostic.isGpsLocationEnabled()
-      .then(e => { this.gpsActivated = e; })
-      .catch(e => { this.gpsActivated = false; });
-  }
-
-  verifyVivaWallet() {
-    if (this.platform.is('android')) {
-      const app = 'com.vivawallet.spoc.payapp';
-      this.appAvailability.check(app)
-        .then(
-          (yes: boolean) => { this.vivaWalletInstall = true },
-          (no: boolean) => { this.vivaWalletInstall = false }
-        );
-    }
-  }
-
-  goInstallVivaWallet() {
-    if (this.platform.is('android')) {
-      window.open(
-        'market://details?id=com.vivawallet.spoc.payapp', '_system'
-      );
-    }
-  }
-
-  goActiveBluetooth() {
-    if (this.platform.is('android')) {
-      this.diagnostic.switchToBluetoothSettings();
-    }
-  }
-
-  goActiveGps() {
-    if (this.platform.is('android')) {
-      this.diagnostic.switchToLocationSettings();
-    }
-  }
-
-  goActiveNfc() {
-    if (this.platform.is('android')) {
-      this.diagnostic.switchToNFCSettings();
-    }
-  }
-
-  verifyHardwareForVivaWallet() {
-    this.verifyVivaWallet();
-    // this.verifyBluetooth();
-    this.verifyGps();
-    this.verifyNfc();
-
-    // this.diagnostic.registerBluetoothStateChangeHandler(() => {
-    //   this.verifyBluetooth();
-    // });
-
-    this.diagnostic.registerNFCStateChangeHandler(() => {
-      this.verifyNfc();
-    });
-
-    this.diagnostic.registerLocationStateChangeHandler(() => {
-      this.verifyGps();
-    });
-  }
-
   ionViewDidLeave() {
     this.destroyer$.next(true);
     this.destroyer$.complete();
@@ -239,7 +160,10 @@ export class SellingPage implements AfterViewInit {
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
     this.sellerLoginForm = this.buildSellerLoginForm();
-    this.verifyHardwareForVivaWallet();
+
+    this.backButtonBlock.goBackSellingPage.pipe(takeUntil(this.destroyer$)).subscribe(() => {
+      this.cancelBuy();
+    })
 
     // this.destroyer$?.unsubscribe();
     // this.destroyer$?.complete();
@@ -255,6 +179,7 @@ export class SellingPage implements AfterViewInit {
           // If we see ticket in the "basket", we show the client detail form
           if (this.totalAmount > 0) {
             this.showClientDetailForm = true;
+            this.backButtonBlock.addBlockRef(SellingPage.name);
             this.clientWantNewsletter = false;
             this.clientAcceptData = false;
           }
@@ -267,6 +192,7 @@ export class SellingPage implements AfterViewInit {
       else if (this.status && this.hasEveryInfoToSell && this.action == 'sale') {
         if (this.status == 'success' && this.transactionId) {
           this.showClientDetailForm = false;
+          this.backButtonBlock.removeBlockRef(SellingPage.name);
 
           if (this.clientWantNewsletter) {
             this.addClientToNewsletter();
@@ -283,6 +209,7 @@ export class SellingPage implements AfterViewInit {
             this.clientTransactionId,
             this.addressForm.value,
           ).pipe(takeUntil(this.destroyer$)).subscribe(data => {
+            this.finishSellingInfo = data;
             this.loadThermometer(true);
             this.succeedPaiement();
             // Put at zero the tickets sell amount / number
@@ -363,7 +290,7 @@ export class SellingPage implements AfterViewInit {
 
   buildBuyForm() {
     return this.formBuilder.group({
-      email: [environment.dataMock ? 'samy.gnu@mymanifiesta.be' : '', [Validators.required, Validators.email]],
+      email: [environment.dataMock ? 'samy.gnu@mymanifiesta.be' : '', [Validators.required, Validators.email, this.emailValidator()]],
       verificationEmail: [environment.dataMock ? 'samy.gnu@mymanifiesta.be' : '', [Validators.required, Validators.email]],
       firstname: [environment.dataMock ? 'Karl' : '', Validators.required],
       lastname: [environment.dataMock ? 'Marx' : '', Validators.required],
@@ -382,10 +309,18 @@ export class SellingPage implements AfterViewInit {
 
   buildSellerLoginForm() {
     return this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, this.emailValidator()]],
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
     });
+  }
+
+  emailValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const regex =
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return !regex.test(control.value.trim().toLowerCase()) ? { wrongEmailPath: { value: control.value } } : null;
+    };
   }
 
   clickOnLogin() {
@@ -462,6 +397,7 @@ export class SellingPage implements AfterViewInit {
     }
   }
 
+  // TODO for IOS
   buy() {
     if (!this.disabledBuyButton) {
       this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.SellerEmail)}-${new Date().getTime()}`;
@@ -488,6 +424,7 @@ export class SellingPage implements AfterViewInit {
     }
   }
 
+  // TODO for IOS
   autoVivaWalletAuth() {
     window.open(
       'vivapayclient://pay/v1' +
@@ -515,6 +452,7 @@ export class SellingPage implements AfterViewInit {
 
   cancelBuy() {
     this.showClientDetailForm = false;
+    this.backButtonBlock.removeBlockRef(SellingPage.name);
     this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
   }
 
@@ -527,6 +465,7 @@ export class SellingPage implements AfterViewInit {
         mySellingInfo: this.mySellingInfo,
         sellerSendingDataI18NParam: this.sellerSendingDataI18NParam,
         sellerNameI18NParam: this.sellerNameI18NParam,
+        finishSellingInfo: this.finishSellingInfo
       }
     })
     modal.present();

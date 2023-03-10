@@ -18,11 +18,29 @@ export class SellingPostInfoModalComponent implements OnInit {
   sellerSendingDataI18NParam;
   @Input()
   sellerNameI18NParam;
+  @Input()
+  finishSellingInfo;
 
   constructor(
     public modalController: ModalController,
     private router: Router
   ) {
+  }
+
+  get finishSellingInfoDataI18NParam() {
+    let ticketSells = 0;
+    try {
+      const carts = this.finishSellingInfo.order.cart.items.types;
+      carts.forEach(e => { ticketSells += e.quantity });
+    } catch (e) {
+      
+    }
+    return {
+      numberTicket: ticketSells,
+      fullName: `${this.finishSellingInfo?.order?.customer?.firstname} ${this.finishSellingInfo?.order?.customer?.lastname}`,
+      email: this.finishSellingInfo?.order?.customer?.email,
+      eventSquareRef: this.finishSellingInfo?.order?.reference,
+    };
   }
 
   ngOnInit(): void {

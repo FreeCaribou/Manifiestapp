@@ -27,7 +27,7 @@
       <ion-label color="primary" position="stacked">
         {{'Volunteer.PostalCode' | translate}}
       </ion-label>
-      <ion-input [placeholder]="'Volunteer.PostalCode' | translate" [value]="sellerPostalCode"
+      <ion-input [placeholder]="'Volunteer.PostalCode' | translate" type="number" [value]="sellerPostalCode"
         (ionChange)="onSellerPostalCodeChange($event)"></ion-input>
     </ion-item>
     <ion-item>

@@ -1,0 +1,31 @@
+<h5>
+  {{"Ticket.HardwareNOK" | translate}}
+</h5>
+<h6 *ngIf="!vivaWalletVerification.vivaWalletInstall">
+  {{"Ticket.VivaWalletNotInstall" | translate}}
+  <ion-button expand="block" (click)="goInstallVivaWallet()">
+    <ion-icon name="cloud-download-outline"></ion-icon>
+    {{"Ticket.InstallVivaWallet" | translate}}
+  </ion-button>
+</h6>
+<!-- <h6 *ngIf="!bluetoothActivated">
+  {{"Ticket.BluetoothNotActivated" | translate}}
+  <ion-button expand="block" (click)="goActiveBluetooth()">
+    <ion-icon name="bluetooth"></ion-icon>
+    {{"Ticket.ActivateBluetooth" | translate}}
+  </ion-button>
+</h6> -->
+<h6 *ngIf="!vivaWalletVerification.gpsActivated">
+  {{"Ticket.GpsNotActivated" | translate}}
+  <ion-button expand="block" (click)="goActiveGps()">
+    <ion-icon name="location"></ion-icon>
+    {{"Ticket.ActivateGps" | translate}}
+  </ion-button>
+</h6>
+<h6 *ngIf="!vivaWalletVerification.nfcActivated">
+  {{"Ticket.NfcNotActivated" | translate}}
+  <ion-button expand="block" (click)="goActiveNfc()">
+    <ion-icon name="card"></ion-icon>
+    {{"Ticket.ActivateNfc" | translate}}
+  </ion-button>
+</h6>
