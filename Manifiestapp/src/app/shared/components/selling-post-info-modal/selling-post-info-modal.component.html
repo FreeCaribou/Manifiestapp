@@ -9,7 +9,7 @@
   <p>
     {{"Ticket.PostSellingInfo" | translate:finishSellingInfoDataI18NParam}}
   </p>
-  <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal">
+  <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal" [postSelling]="true">
   </app-my-selling-little-recap>
   <br>
   <ion-button expand="block" color="success" class="m-top-medium" (click)="closeShowAfterSellingModal()">{{"Ticket.ContinueSelling" | translate}}</ion-button>

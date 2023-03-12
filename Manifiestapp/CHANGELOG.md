@@ -1,3 +1,11 @@
+# 2.1
+## Patch
+* Rewrite access to website information
+
+# 2.0
+## Feature
+* Possibility to sell ticket directly with the app (Android)
+
 # 1.3
 ## Patch
 * Adapt logo

@@ -206,13 +206,13 @@
     "GoodSellingCamrad": "Gefliciteerd met je verkoop kameraad {{sellerName}}!",
     "NumberSellingAndTicket": "{{totalTickets}} kaartjes verkocht voor {{totalSelling}} verkopen",
     "TargetNotYet": "Nog {{restingTicket}} kaartje(s) to koop voor uw doel van {{goal}}",
-    "TargetYet": "Hier is je doel bereikt!",
+    "TargetYet": "Geweldig, je hebt je doel van {{goal}} bereikt",
     "HelloSeller": "Hallo {{sellerName}} !",
-    "BestSellerOurDepartment": "Top verkopers in mijn organisatie",
+    "BestSellerOurDepartment": "Top 10 in mijn organisatie",
     "MySelling": "Mijn verkopen",
     "Tickets": "Kaartjes",
     "BestSellerMyPostalCode": "Verkoop in mijn gemeente",
-    "BestSellerNational": "Top verkopers van het land",
+    "BestSellerNational": "Top 10 van het land",
     "Ticket(s)At": "kaartje(s) naar",
     "Price": "Prijs",
     "TicketReference": "Kaartje referentie",
@@ -228,10 +228,12 @@
     "MyDepartmentInfo": "Mijn profiel",
     "IAmFromWorkerGroup": "Wereld van de werkgroep",
     "BestSellerMyDepartmentWorker": "Top verkopers van medewerkers in mijn gemeente",
-    "BestSellerOurProvince": "Top verkopers in mijn provincie",
+    "BestSellerOurProvince": "Top 10 in mijn provincie",
     "BeginSell": "Begin met verkopen",
     "SellerFirstname": "Voornaam",
     "SellerLastname": "Naam",
-    "PostSellingInfo": "Er zijn zojuist {{numberTicket}} kaarten naar {{fullName}} verzonden via e-mail {{email}} - Referentie {{eventSquareRef}}"
+    "PostSellingInfo": "Er zijn zojuist {{numberTicket}} kaarten naar {{fullName}} verzonden via e-mail {{email}} - Referentie {{eventSquareRef}}",
+    "YetXToSell": "Nog {{restingTicket}} meer te koop...",
+    "TimeIncreaseGoal": "Tijd om je doel te verhogen?"
   }
 }

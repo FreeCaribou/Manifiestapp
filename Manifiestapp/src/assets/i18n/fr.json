@@ -206,13 +206,13 @@
     "GoodSellingCamrad": "Félicitation pour ta vente camarade {{sellerName}} !",
     "NumberSellingAndTicket": "{{totalTickets}} tickets vendu sur {{totalSelling}} ventes",
     "TargetNotYet": "Encore {{restingTicket}} ticket(s) à vendre pour ton objectif de {{goal}}",
-    "TargetYet": "Voila ton objectif atteint !",
+    "TargetYet": "Super, tu as atteint ton objectif de {{goal}} !",
     "HelloSeller": "Bonjour {{sellerName}} !",
-    "BestSellerOurDepartment": "Meilleurs vendeurs de mon organisation",
+    "BestSellerOurDepartment": "Top 10 de mon organisation",
     "MySelling": "Mes ventes",
     "Tickets": "Tickets",
     "BestSellerMyPostalCode": "Ventes dans ma commune",
-    "BestSellerNational": "Meilleurs vendeurs du pays",
+    "BestSellerNational": "Top 10 du pays",
     "Ticket(s)At": "ticket(s) à",
     "Price": "Prix",
     "TicketReference": "Référence du ticket",
@@ -228,10 +228,12 @@
     "MyDepartmentInfo": "Mon profil",
     "IAmFromWorkerGroup": "Groupe monde du travail",
     "BestSellerMyDepartmentWorker": "Meilleurs vendeur des travailleurs de ma commune",
-    "BestSellerOurProvince": "Meilleurs vendeurs de ma province",
+    "BestSellerOurProvince": "Top 10 de ma province",
     "BeginSell": "Commencer à vendre",
     "SellerFirstname": "Prénom",
     "SellerLastname": "Nom",
-    "PostSellingInfo": "{{numberTicket}} cartes viennent d'être envoyées à {{fullName}} via l'email {{email}} - Référence {{eventSquareRef}}"
+    "PostSellingInfo": "{{numberTicket}} cartes viennent d'être envoyées à {{fullName}} via l'email {{email}} - Référence {{eventSquareRef}}",
+    "YetXToSell": "Encore {{restingTicket}} à vendre...",
+    "TimeIncreaseGoal": "Temps d'augmenter ton objectif ?"
   }
 }

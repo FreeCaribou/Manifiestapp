@@ -11,6 +11,9 @@ export class MySellingLittleRecapComponent {
   @Input()
   sellerSellingGoal;
 
+  @Input()
+  postSelling = false;
+
   constructor() {
   }
 
@@ -26,6 +29,10 @@ export class MySellingLittleRecapComponent {
       restingTicket: this.sellerSellingGoal - this.mySellingInfo?.totalAmountTicket,
       goal: this.sellerSellingGoal
     }
+  }
+
+  openMyInfo() {
+    
   }
 
 }

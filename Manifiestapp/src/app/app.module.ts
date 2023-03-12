@@ -14,6 +14,7 @@ import { SharedModule } from './shared/shared.module';
 import { SellingPageModule } from './pages/selling/selling.module';
 import { AppAvailability } from '@awesome-cordova-plugins/app-availability/ngx';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
+import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -41,6 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     AppAvailability,
+    OpenNativeSettings,
     Diagnostic,
   ],
   bootstrap: [AppComponent],

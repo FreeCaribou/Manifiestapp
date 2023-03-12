@@ -1,10 +1,18 @@
 <h5>{{"Ticket.NumberSellingAndTicket" | translate:sellerSendingDataI18NParam}}</h5>
 <h6>
   <ng-container *ngIf="mySellingInfo?.totalAmountTicket < sellerSellingGoal">
-    {{"Ticket.TargetNotYet" | translate:restingTicketI18NParam}}
+    <ng-container *ngIf="!postSelling">
+      {{"Ticket.TargetNotYet" | translate:restingTicketI18NParam}}
+    </ng-container>
+    <ng-container *ngIf="postSelling">
+      {{"Ticket.YetXToSell" | translate:restingTicketI18NParam}}
+    </ng-container>
   </ng-container>
   <ng-container *ngIf="mySellingInfo?.totalAmountTicket >= sellerSellingGoal">
-    {{"Ticket.TargetYet" | translate}}
+    {{"Ticket.TargetYet" | translate:restingTicketI18NParam}}
+    <p><small class="fake-mouse-select" (click)="openMyInfo">
+        {{"Ticket.TimeIncreaseGoal" | translate:restingTicketI18NParam}}
+      </small></p>
   </ng-container>
 </h6>
 <app-thermometer [totalAmountTicket]="mySellingInfo?.totalAmountTicket" [sellerSellingGoal]="sellerSellingGoal">

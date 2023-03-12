@@ -75,8 +75,6 @@ export class SellingPage {
     private toastController: ToastController,
     private languageService: LanguageCommunicationService,
     public modalController: ModalController,
-    private platform: Platform,
-    private diagnostic: Diagnostic,
     public volunteerShiftService: VolunteerShiftService,
     private backButtonBlock: BackButtonCommunicationService,
     public menu: MenuController,
