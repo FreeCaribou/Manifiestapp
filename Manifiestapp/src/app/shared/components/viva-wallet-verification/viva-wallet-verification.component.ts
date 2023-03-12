@@ -53,7 +53,7 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
     if (this.platform.is('android')) {
       app = 'com.vivawallet.spoc.payapp';
     }
-    if (this.platform.is('android')) {
+    if (this.platform.is('ios')) {
       app = 'viva-wallet://';
     }
 
