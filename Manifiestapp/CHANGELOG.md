@@ -1,8 +1,8 @@
-# 2.1
+# 2.1.1
 ## Patch
 * Rewrite access to website information
 
-# 2.0
+# 2.1.0
 ## Feature
 * Possibility to sell ticket directly with the app (Android)
 

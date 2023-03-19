@@ -37,8 +37,17 @@ export class SellingService {
       case 'comac':
         shop = 'comac';
         break;
-      case 'intal':
-        shop = 'intal';
+      case 'redfox':
+        shop = 'redox';
+        break;
+      case 'base':
+        shop = 'base';
+        break;
+      case 'gvhv':
+        shop = 'gvhv';
+        break;
+      case 'other':
+        shop = 'other';
         break;
       default:
         shop = 'app';
