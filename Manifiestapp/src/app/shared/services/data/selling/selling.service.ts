@@ -38,7 +38,7 @@ export class SellingService {
         shop = 'comac';
         break;
       case 'redfox':
-        shop = 'redox';
+        shop = 'redfox';
         break;
       case 'base':
         shop = 'base';
