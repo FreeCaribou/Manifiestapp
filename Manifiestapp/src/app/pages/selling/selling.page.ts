@@ -66,6 +66,8 @@ export class SellingPage {
 
   finishSellingInfo;
 
+  isIos = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private sellingService: SellingService,
@@ -78,7 +80,8 @@ export class SellingPage {
     public volunteerShiftService: VolunteerShiftService,
     private backButtonBlock: BackButtonCommunicationService,
     public menu: MenuController,
-    private vivaWalletVerification: VivaWalletVerificationCommunicationService
+    private vivaWalletVerification: VivaWalletVerificationCommunicationService,
+    private platform: Platform,
   ) { }
 
   get totalAmount(): number {
@@ -98,6 +101,9 @@ export class SellingPage {
   }
 
   get allHardwareOk(): boolean {
+    if (this.isIos) {
+      return true;
+    } 
     return this.vivaWalletVerification.vivaWalletInstall
       && this.vivaWalletVerification.nfcActivated
       && this.vivaWalletVerification.gpsActivated;
@@ -154,6 +160,12 @@ export class SellingPage {
   }
 
   ionViewWillEnter() {
+    if (this.platform.is('ios')) {
+      this.isIos = true;
+    } else {
+      this.isIos = false;
+    } 
+
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();

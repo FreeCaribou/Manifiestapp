@@ -55,6 +55,7 @@
     "@ngx-translate/http-loader": "^6.0.0",
     "@types/lodash": "^4.14.175",
     "body-parser": "^1.19.0",
+    "cordova-open-native-settings": "^1.5.5",
     "cordova-plugin-appavailability": "^0.4.2",
     "cordova.plugins.diagnostic": "^7.1.1",
     "cors": "^2.8.5",
