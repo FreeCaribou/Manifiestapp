@@ -3,6 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.associated-domains</key>
-	<array/>
+	<array>
+		<string>applinks:gerardweb.eu</string>
+		<string>applinks:www.gerardweb.eu</string>
+		<string>webcredentials:gerardweb.eu</string>
+		<string>webcredentials:www.gerardweb.eu</string>
+	</array>
 </dict>
 </plist>

@@ -52,16 +52,17 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
     let app = '';
     if (this.platform.is('android')) {
       app = 'com.vivawallet.spoc.payapp';
+
+      this.appAvailability.check(app)
+      .then(
+        (yes: boolean) => { this.vivaWalletVerification.vivaWalletInstall = true },
+        (no: boolean) => { this.vivaWalletVerification.vivaWalletInstall = false }
+      );
     }
     if (this.platform.is('ios')) {
       app = 'viva-wallet://';
+      this.vivaWalletVerification.vivaWalletInstall = true;
     }
-
-    this.appAvailability.check(app)
-    .then(
-      (yes: boolean) => { this.vivaWalletVerification.vivaWalletInstall = true },
-      (no: boolean) => { this.vivaWalletVerification.vivaWalletInstall = false }
-    );
   }
 
   goInstallVivaWallet() {

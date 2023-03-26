@@ -421,7 +421,7 @@ export class SellingPage {
       ).subscribe(() => {
         window.open(
           'vivapayclient://pay/v1' +
-          '?appId=be.manifiesta.app' +
+          `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
           '&action=sale' +
           `&amount=${Math.floor(this.totalAmount * 100)}` +
           `&clientTransactionId=${this.clientTransactionId}` +
@@ -438,7 +438,7 @@ export class SellingPage {
   autoVivaWalletAuth() {
     window.open(
       'vivapayclient://pay/v1' +
-      '?appId=be.manifiesta.app' +
+      `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
       `&apikey=${environment.vwAccessSite}` +
       `&apiSecret=${environment.vwAccessCode}` +
       `&pinCode=${environment.vwPinCode}` +
@@ -448,8 +448,8 @@ export class SellingPage {
       '&lockRefund=true' +
       '&lockTransactionsList=true' +
       '&lockMoto=true' +
+      '&skipExternalDeviceSetup=true' +
       '&callback=mycallbackscheme://selling',
-      '_system'
     );
   }
 
