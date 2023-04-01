@@ -28,7 +28,7 @@
     "MyManifiesta": "Mijn ManiFiesta",
     "News": "Nieuws",
     "Selling": "Verkoper",
-    "MySellingDetails": "Mijn verkoopgegevens"
+    "MySellingDetails": "Verkoopsgeschiedenis"
   },
   "Programme": {
     "NoFavorites": "U heeft geen favoriet voor dit moment",
@@ -168,7 +168,7 @@
     "InsuranceEnd": "Als je tijdens het festival problemen of vragen hebt, kun je terecht bij het vrijwilligerssecretariaat (in de vrijwilligerdorp). Indien je meer details wenst over de verzekering, kan je contact opnemen met <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a>",
     "PostalCode": "Postcode",
     "WantSell": "Ik wil tickets verkopen",
-    "SellingGoal": "Verkoopdoel",
+    "SellingGoal": "Hoeveel tickets wil je dit jaar verkopen?",
     "Logout": "Afmelden"
   },
   "Ticket": {
@@ -184,16 +184,16 @@
     "ClientLastname": "Achternaam klant",
     "Buy": "Verkopen",
     "Cancel": "Annuleren",
-    "Details": "Details",
+    "Details": "Gegevens klant",
     "ValidateBuy": "Valideer de betaling",
     "Pay": "Betalen",
-    "EnterSomeDataToBeAbleToSell": "Vul je profielgegevens hier",
-    "HardwareNOK": "Niet alles lijkt klaar op je mobiel om te verkopen",
-    "VivaWalletNotInstall": "Viva Wallet POS niet geïnstalleerd",
+    "EnterSomeDataToBeAbleToSell": "Vul je profielgegevens hier in",
+    "HardwareNOK": "We zijn er bijna, nog een paar details!",
+    "VivaWalletNotInstall": "De app Viva Wallet POS moet geïnstalleerd zijn om betalingen te kunnen ontvangen",
     "InstallVivaWallet": "Viva Wallet POS installeren",
-    "GpsNotActivated": "Locatie / GPS niet geactiveerd",
+    "GpsNotActivated": "Locatiegegevens moeten geactiveerd zijn als beveiliging tegen fraude",
     "ActivateGps": "Locatie/GPS inschakelen",
-    "NfcNotActivated": "NFC niet geactiveerd",
+    "NfcNotActivated": "NFC moet geactiveerd zijn om de bankkaart van de klanten te lezen",
     "ActivateNfc": "NFC inschakelen",
     "GoMyManifiestaForConnect": "Om toegang te krijgen tot de kaartverkoop moet u verbinding maken met My Manifiesta en meer informatie invullen",
     "TicketBuyRecap": "Overzicht verkoop",
@@ -219,11 +219,11 @@
     "CuriousOfOther": "Benieuwd hoeveel de anderen hebben verkocht? Kijk dan hier!",
     "HistoricOfSelling": "Verkoopgeschiedenis",
     "SellingSuccess": "Verkoop geslaagd!",
-    "DataPrivacyUser": "Ik geef toestemming dat mijn gegevens worden opgeslagen, verwerkt en gedeeld. Meer info: <a href='https://www.manifesta.be/privacy'>www.maniifesta.be/privacy</a>",
-    "DataPrivacyClient": "De klant gaat akkoord dat zijn gegevens worden opgeslagen en verwerkt. Meer info: <a href='https://www.manifesta.be/privacy'>www.maniifesta.be/privacy</a>",
+    "DataPrivacyUser": "Ik geef toestemming dat mijn gegevens worden opgeslagen, verwerkt en gedeeld. Meer info: <a href='https://www.manifiesta.be/privacy'>www.manifiesta.be/privacy</a>",
+    "DataPrivacyClient": "De klant gaat akkoord dat zijn gegevens worden opgeslagen en verwerkt. Meer info: <a href='https://www.manifiesta.be/privacy'>www.manifiesta.be/privacy</a>",
     "ClientAcceptKeepData": "De klant aanvaardt dat zijn gegevens worden opgeslagen",
     "IAcceptKeepData": "Ik aanvaardt dat deze gegevens worden opgeslagen",
-    "ClientWantNewsletter": "De klant wil zich abonneren op de nieuwsbrief",
+    "ClientWantNewsletter": "De klant wil zich abonneren op de nieuwsbrief van ManiFiesta",
     "CompleteSellerDepartmentInfoPlease": "Vul uw profiel-informatie in a.u.b.",
     "MyDepartmentInfo": "Mijn profiel",
     "IAmFromWorkerGroup": "Wereld van de arbeid",
@@ -232,8 +232,10 @@
     "BeginSell": "Begin met verkopen",
     "SellerFirstname": "Voornaam",
     "SellerLastname": "Naam",
-    "PostSellingInfo": "{{numberTicket}} ticket(s) verzonden naar {{fullName}} e-mail {{email}} - Referentie {{eventSquareRef}}",
+    "PostSellingInfo": "{{numberTicket}} ticket(s) verzonden naar {{fullName}} e-mail {{email}}",
     "YetXToSell": "Nog {{restingTicket}} ticket(s) te gaan voor je doel",
-    "TimeIncreaseGoal": "Tijd om je doel te verhogen?"
+    "TimeIncreaseGoal": "Tijd om je doel te verhogen?",
+    "NoNfcAvailable": "Jouw smartphone heeft geen NFC-lezer en kan dus geen betalingen met de bankkaart ontvangen. Je kan enkel betalingen ontvangen via QR code (bv. Payconiq).",
+    "ClientWantProof": "Als de klant een bewijs van zijn aankoop wil, laat hem dan de referentie noteren of een foto nemen van dit bericht."
   }
 }

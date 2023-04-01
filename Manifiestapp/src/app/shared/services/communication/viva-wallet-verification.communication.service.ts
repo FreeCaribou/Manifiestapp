@@ -7,4 +7,5 @@ export class VivaWalletVerificationCommunicationService {
   vivaWalletInstall = false;
   gpsActivated = false;
   nfcActivated = false;
+  nfcAvailable = false;
 }

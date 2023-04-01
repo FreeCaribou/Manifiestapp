@@ -9,6 +9,12 @@
   <p>
     {{"Ticket.PostSellingInfo" | translate:finishSellingInfoDataI18NParam}}
   </p>
+  <p>
+    Ref: <strong>{{finishSellingInfo?.order?.reference}}</strong>
+  </p>
+  <h6>
+    {{"Ticket.ClientWantProof" | translate}}
+  </h6>
   <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal" [postSelling]="true">
   </app-my-selling-little-recap>
   <br>

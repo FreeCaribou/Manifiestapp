@@ -22,10 +22,18 @@
     {{"Ticket.ActivateGps" | translate}}
   </ion-button>
 </h6>
-<h6 *ngIf="!vivaWalletVerification.nfcActivated">
+<h6 *ngIf="!vivaWalletVerification.nfcActivated && vivaWalletVerification.nfcAvailable">
   {{"Ticket.NfcNotActivated" | translate}}
   <ion-button expand="block" (click)="goActiveNfc()">
     <ion-icon name="card"></ion-icon>
     {{"Ticket.ActivateNfc" | translate}}
+  </ion-button>
+</h6>
+
+<h6 *ngIf="!vivaWalletVerification.nfcAvailable && !knowNfcNotThere">
+  {{"Ticket.NoNfcAvailable" | translate}}
+  <ion-button expand="block" color="success" (click)="nfcNotAvailableOk()">
+    <ion-icon name="card"></ion-icon>
+    Ok
   </ion-button>
 </h6>

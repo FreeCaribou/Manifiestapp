@@ -46,7 +46,7 @@
   </div>
 
   <div *ngIf="bestSellingDepartment">
-    <ion-accordion-group value="myDepartmentBestSelings">
+    <ion-accordion-group>
       <ion-accordion value="myDepartmentBestSelings">
         <ion-item slot="header">
           <ion-label *ngIf="myDepartment !== 'BASE' || isFromWorkingGroup">{{'Ticket.BestSellerOurDepartment' | translate}}</ion-label>
@@ -60,7 +60,7 @@
   </div>
 
   <div *ngIf="bestSellingAll">
-    <ion-accordion-group value="bestSellingAll">
+    <ion-accordion-group>
       <ion-accordion value="bestSellingAll">
         <ion-item slot="header">
           <ion-label>{{'Ticket.BestSellerNational' | translate}}</ion-label>

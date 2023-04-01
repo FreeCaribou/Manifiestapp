@@ -103,9 +103,9 @@ export class SellingPage {
   get allHardwareOk(): boolean {
     if (this.isIos) {
       return true;
-    } 
+    }
     return this.vivaWalletVerification.vivaWalletInstall
-      && this.vivaWalletVerification.nfcActivated
+      && (this.vivaWalletVerification.nfcActivated || localStorage.getItem(LocalStorageEnum.KnowNotNFC))
       && this.vivaWalletVerification.gpsActivated;
   }
 
@@ -164,7 +164,7 @@ export class SellingPage {
       this.isIos = true;
     } else {
       this.isIos = false;
-    } 
+    }
 
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
     this.buyForm = this.buildBuyForm();
@@ -208,16 +208,18 @@ export class SellingPage {
             this.addClientToNewsletter();
           }
 
+          const tmpSellingJson = JSON.parse(localStorage.getItem(LocalStorageEnum.SellingTmp));
+
           this.loadingCommunication.changeLoaderTo(true);
           this.sellingService.ticketsSale(
-            this.recapSelectedTicket,
-            this.buyForm.value.email,
-            this.buyForm.value.firstname,
-            this.buyForm.value.lastname,
+            tmpSellingJson.recapSelectedTicket,
+            tmpSellingJson.email,
+            tmpSellingJson.firstname,
+            tmpSellingJson.lastname,
             this.transactionId,
-            this.buyForm.value.askSendTicket,
-            this.clientTransactionId,
-            this.addressForm.value,
+            tmpSellingJson.askSendTicket,
+            tmpSellingJson.clientTransactionId,
+            tmpSellingJson.addressForm,
           ).pipe(takeUntil(this.destroyer$)).subscribe(data => {
             this.finishSellingInfo = data;
             this.loadThermometer(true);
@@ -228,6 +230,7 @@ export class SellingPage {
             this.clientTransactionId = undefined;
             this.clientWantNewsletter = false;
             this.clientAcceptData = false;
+            localStorage.removeItem(LocalStorageEnum.SellingTmp);
           }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
         } else {
           this.vivaWalletError();
@@ -412,13 +415,26 @@ export class SellingPage {
     if (!this.disabledBuyButton) {
       this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.SellerEmail)}-${new Date().getTime()}`;
 
+      // TODO type that
+      localStorage.setItem(LocalStorageEnum.SellingTmp, JSON.stringify({
+        recapSelectedTicket: this.recapSelectedTicket,
+        email: this.buyForm.value.email,
+        firstname: this.buyForm.value.firstname,
+        lastname: this.buyForm.value.lastname,
+        askSendTicket: this.buyForm.value.askSendTicket,
+        clientTransactionId: this.clientTransactionId,
+        addressForm: this.addressForm.value,
+      }));
+      const tmpSellingJson = JSON.parse(localStorage.getItem(LocalStorageEnum.SellingTmp));
+
       this.sellingService.ticketsPrepar(
-        this.recapSelectedTicket,
-        this.buyForm.value.email,
-        this.buyForm.value.firstname,
-        this.buyForm.value.lastname,
-        this.clientTransactionId,
+        tmpSellingJson.recapSelectedTicket,
+        tmpSellingJson.email,
+        tmpSellingJson.firstname,
+        tmpSellingJson.lastname,
+        tmpSellingJson.clientTransactionId,
       ).subscribe(() => {
+
         window.open(
           'vivapayclient://pay/v1' +
           `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +

@@ -28,7 +28,7 @@
     "MyManifiesta": "Mon ManiFiesta",
     "News": "Dernières nouvelles",
     "Selling": "Vendeur",
-    "MySellingDetails": "Mes détails de vente"
+    "MySellingDetails": "Historique des ventes"
   },
   "Programme": {
     "NoFavorites": "Vous n'avez pas de favoris pour le moment",
@@ -166,9 +166,9 @@
     "InsurancePartList": "<ul><li>Par dommage corporel, on entend des dommages portant atteinte à votre intégrité physique, mentale ou économique.</li><li>Des accidents peuvent se produire pendant le bénévolat au festival, ainsi que sur votre trajet aller et retour.</li><li>Les dommages matériels en cas d'accident ne sont pas couverts, sauf si tu as besoin d'un certain matériel pour des raisons médicales. Cela signifie par exemple que les vêtements endommagés ne sont pas couverts par l'assurance, mais que les lunettes cassées le sont.</li><li>Au niveau de la responsabilité civile. Cette assurance couvre les dommages que vous pourriez causer au public ou à d'autres tiers. C'est-à-dire les dommages matériels et corporels que vous pourriez causer dans le cadre de votre bénévolat, que vous soyez directement à l’origine du dommage ou que celui-ci résulte d’un défaut de surveillance. Par exemple, vous blessez quelqu'un en portant une table.</li></ul>",
     "InsurancePartPolice": "Nous sommes assurés par CIRCLES GROUP S.A. (numéro de police : CE76709)",
     "InsuranceEnd": "En cas de problème ou pour toute question pendant le festival, vous pouvez vous rendre au secrétariat bénévoles (dans le village bénévoles). Vous pouvez contacter <a href='mailto:volunteers@manifiesta.be'>volunteers@manifiesta.be</a> si vous souhaitez avoir plus de détails sur l'assurance.",
-    "PostalCode": "Code postale",
+    "PostalCode": "Code postal",
     "WantSell": "Je veux vendre des tickets",
-    "SellingGoal": "Objectif de vente",
+    "SellingGoal": "Combien de tickets veux-tu vendre cette année ?",
     "Logout": "Déconnexion"
   },
   "Ticket": {
@@ -184,16 +184,16 @@
     "ClientLastname": "Nom du client",
     "Buy": "Vendre",
     "Cancel": "Annuler",
-    "Details": "Détails",
+    "Details": "Données client",
     "ValidateBuy": "Valider le paiement",
     "Pay": "Payer",
     "EnterSomeDataToBeAbleToSell": "Remplissez vos données de profil",
-    "HardwareNOK": "Tout ne semble pas prêt sur ton gsm pour vendre",
-    "VivaWalletNotInstall": "Viva Wallet POS non installé",
+    "HardwareNOK": "On y est presque, encore quelques détails !",
+    "VivaWalletNotInstall": "L'app Viva Wallet POS doit être installée pour pouvoir accepter des paiements",
     "InstallVivaWallet": "Installer Viva Wallet POS",
-    "GpsNotActivated": "Localisation / GPS non activé",
+    "GpsNotActivated": "Localisation doit être activée comme sécurité anti-fraude",
     "ActivateGps": "Activer Localisation / GPS",
-    "NfcNotActivated": "NFC non activé",
+    "NfcNotActivated": "NFC doit être activée pour lire les cartes en banque des clients",
     "ActivateNfc": "Activer NFC",
     "GoMyManifiestaForConnect": "Pour accèder à la vente de ticket vous devez vous connecter sur My Manifiesta et y remplir des informations",
     "TicketBuyRecap": "Récapitulatif de la vente",
@@ -219,11 +219,11 @@
     "CuriousOfOther": "Curieux de voir combien les autres camarades ont vendu ? Viens voir ici !",
     "HistoricOfSelling": "Historique des ventes",
     "SellingSuccess": "Vente réussie !",
-    "DataPrivacyUser": "J'accepte que mes données soient enregistrées, traitées et partagées. Plus d'infos: <a href='https://www.manifesta.be/privacy'>www.maniifesta.be/privacy</a>",
-    "DataPrivacyClient": "Le client accepte que ses données soient enregistrées et traitées. Plus d’infos : <a href='https://www.manifesta.be/privacy'>www.maniifesta.be/privacy</a>",
+    "DataPrivacyUser": "J'accepte que mes données soient enregistrées, traitées et partagées. Plus d'infos: <a href='https://www.manifiesta.be/privacy'>www.manifiesta.be/privacy</a>",
+    "DataPrivacyClient": "Le client accepte que ses données soient enregistrées et traitées. Plus d’infos : <a href='https://www.manifiesta.be/privacy'>www.manifiesta.be/privacy</a>",
     "ClientAcceptKeepData": "Le client accepte que ses données soient stockées",
     "IAcceptKeepData": "J'accepte que ces données soient stockées",
-    "ClientWantNewsletter": "Le client veut s'inscrire à la newsletter",
+    "ClientWantNewsletter": "Le client veut s'inscrire à la newsletter de ManiFiesta",
     "CompleteSellerDepartmentInfoPlease": "Veuillez remplir vos informations de profil svp",
     "MyDepartmentInfo": "Mon profil",
     "IAmFromWorkerGroup": "Groupe monde du travail",
@@ -232,8 +232,10 @@
     "BeginSell": "Commencer à vendre",
     "SellerFirstname": "Prénom",
     "SellerLastname": "Nom",
-    "PostSellingInfo": "{{numberTicket}} cartes viennent d'être envoyées à {{fullName}} via l'email {{email}} - Référence {{eventSquareRef}}",
+    "PostSellingInfo": "{{numberTicket}} cartes viennent d'être envoyées à {{fullName}} via l'email {{email}}",
     "YetXToSell": "Encore {{restingTicket}} à vendre...",
-    "TimeIncreaseGoal": "Temps d'augmenter ton objectif ?"
+    "TimeIncreaseGoal": "Temps d'augmenter ton objectif ?",
+    "NoNfcAvailable": "Ton smartphone n'a pas de capteur NFC et n'a donc pas la capacité d'accepter des paiements par carte bancaire. Tu pourras uniquement accepter des paiements par QR code (p.ex. Payconiq).",
+    "ClientWantProof": "Si le client souhaite une preuve de son achat, laissez-lui noter la référence ou prendre une photo de ce message."
   }
 }

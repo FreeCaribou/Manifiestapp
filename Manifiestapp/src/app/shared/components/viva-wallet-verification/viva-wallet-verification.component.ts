@@ -4,6 +4,7 @@ import { VivaWalletVerificationCommunicationService } from '../../services/commu
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { AppAvailability } from '@awesome-cordova-plugins/app-availability/ngx';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
+import { LocalStorageEnum } from '../../models/LocalStorage.enum';
 
 @Component({
   selector: 'app-viva-wallet-verification',
@@ -34,11 +35,57 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
     });
   }
 
+  get knowNfcNotThere() {
+    return localStorage.getItem(LocalStorageEnum.KnowNotNFC);
+  }
+
   // TODO for IOS
   verifyNfc() {
-    this.diagnostic.isNFCEnabled()
-      .then(e => { this.vivaWalletVerification.nfcActivated = e; })
-      .catch(e => { this.vivaWalletVerification.nfcActivated = false; });
+    // If NFC is on the phone, we check if enabled or not
+    // If not present, we act like it is to not block everything because Viva Wallet can manage that too
+
+    console.log('hello NFC', this.diagnostic.NFCState)
+
+    this.diagnostic.isNFCPresent()
+      .then((r) => {
+        console.log('NFC present', r, typeof r)
+        this.vivaWalletVerification.nfcAvailable = r;
+        if (r === true) {
+          this.diagnostic.isNFCEnabled()
+          .then(r => { this.vivaWalletVerification.nfcActivated = r; console.log('is enable then', r) })
+          .catch(e => { this.vivaWalletVerification.nfcActivated = false; console.log('is enable catch', e) });
+        }
+      })
+      .catch((e) => {
+        console.log('NFC not present', e)
+        this.vivaWalletVerification.nfcAvailable = false;
+      });
+
+
+    // this.diagnostic.isNFCPresent().then(r => {
+    //   console.log('NFC present ?', r)
+    //   this.vivaWalletVerification.nfcAvailable = r;
+    //   if (r) {
+    //     this.diagnostic.isNFCEnabled()
+    //       .then(e => { this.vivaWalletVerification.nfcActivated = true; })
+    //       .catch(e => { this.vivaWalletVerification.nfcActivated = false;& });
+    //   } else {
+    //     this.vivaWalletVerification.nfcActivated = true;
+    //   }
+    // });
+
+
+    // if (this.diagnostic.NFCState) {
+    //   this.vivaWalletVerification.nfcAvailable = true;
+    //   this.diagnostic.isNFCPresent().then(r => {
+    //     this.diagnostic.isNFCEnabled()
+    //       .then(e => { this.vivaWalletVerification.nfcActivated = e; })
+    //       .catch(e => { this.vivaWalletVerification.nfcActivated = false; });
+    //   }).then(err => { this.vivaWalletVerification.nfcActivated = true; })
+    // } else {
+    //   this.vivaWalletVerification.nfcActivated = true;
+    //   this.vivaWalletVerification.nfcAvailable = false;
+    // }
   }
 
   // TODO for IOS
@@ -54,10 +101,10 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
       app = 'com.vivawallet.spoc.payapp';
 
       this.appAvailability.check(app)
-      .then(
-        (yes: boolean) => { this.vivaWalletVerification.vivaWalletInstall = true },
-        (no: boolean) => { this.vivaWalletVerification.vivaWalletInstall = false }
-      );
+        .then(
+          (yes: boolean) => { this.vivaWalletVerification.vivaWalletInstall = true },
+          (no: boolean) => { this.vivaWalletVerification.vivaWalletInstall = false }
+        );
     }
     if (this.platform.is('ios')) {
       app = 'viva-wallet://';
@@ -95,6 +142,10 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
     if (this.platform.is('ios')) {
       this.openSetting.open('settings');
     }
+  }
+
+  nfcNotAvailableOk() {
+    localStorage.setItem(LocalStorageEnum.KnowNotNFC, 'true');
   }
 
   verifyHardwareForVivaWallet() {

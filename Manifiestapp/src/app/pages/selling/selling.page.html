@@ -27,7 +27,7 @@
           <ion-label color="primary" position="stacked">
             {{"Ticket.SellerFirstname" | translate}}
           </ion-label>
-          <ion-input clearInput type="text" formControlName="firstname" required placeholder="Rosa"
+          <ion-input clearInput type="text" formControlName="firstname" required [placeholder]="'Ticket.SellerFirstname' | translate"
             autocapitalize="words">
           </ion-input>
         </ion-item>
@@ -36,7 +36,7 @@
           <ion-label color="primary" position="stacked">
             {{"Ticket.SellerLastname" | translate}}
           </ion-label>
-          <ion-input clearInput type="text" formControlName="lastname" required placeholder="Luxemburg"
+          <ion-input clearInput type="text" formControlName="lastname" required [placeholder]="'Ticket.SellerLastname' | translate"
             autocapitalize="words">
           </ion-input>
         </ion-item>
@@ -185,7 +185,7 @@
                   <ion-label color="primary" position="stacked">
                     {{"Ticket.ClientFirstname" | translate}}
                   </ion-label>
-                  <ion-input clearInput type="text" formControlName="firstname" required placeholder="Rosa"
+                  <ion-input clearInput type="text" formControlName="firstname" required [placeholder]="'Ticket.SellerFirstname' | translate"
                     autocapitalize="words">
                   </ion-input>
                 </ion-item>
@@ -197,7 +197,7 @@
                   <ion-label color="primary" position="stacked">
                     {{"Ticket.ClientLastname" | translate}}
                   </ion-label>
-                  <ion-input clearInput type="text" formControlName="lastname" required placeholder="Luxemburg"
+                  <ion-input clearInput type="text" formControlName="lastname" required [placeholder]="'Ticket.SellerLastname' | translate"
                     autocapitalize="words">
                   </ion-input>
                 </ion-item>
