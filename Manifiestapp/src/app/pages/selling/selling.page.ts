@@ -201,37 +201,7 @@ export class SellingPage {
 
       else if (this.status && this.hasEveryInfoToSell && this.action == 'sale') {
         if (this.status == 'success' && this.transactionId) {
-          this.showClientDetailForm = false;
-          this.backButtonBlock.removeBlockRef(SellingPage.name);
-
-          if (this.clientWantNewsletter) {
-            this.addClientToNewsletter();
-          }
-
-          const tmpSellingJson = JSON.parse(localStorage.getItem(LocalStorageEnum.SellingTmp));
-
-          this.loadingCommunication.changeLoaderTo(true);
-          this.sellingService.ticketsSale(
-            tmpSellingJson.recapSelectedTicket,
-            tmpSellingJson.email,
-            tmpSellingJson.firstname,
-            tmpSellingJson.lastname,
-            this.transactionId,
-            tmpSellingJson.askSendTicket,
-            tmpSellingJson.clientTransactionId,
-            tmpSellingJson.addressForm,
-          ).pipe(takeUntil(this.destroyer$)).subscribe(data => {
-            this.finishSellingInfo = data;
-            this.loadThermometer(true);
-            this.succeedPaiement();
-            // Put at zero the tickets sell amount / number
-            this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
-            this.transactionId = undefined;
-            this.clientTransactionId = undefined;
-            this.clientWantNewsletter = false;
-            this.clientAcceptData = false;
-            localStorage.removeItem(LocalStorageEnum.SellingTmp);
-          }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
+          this.finalBuy();
         } else {
           this.vivaWalletError();
         }
@@ -248,6 +218,80 @@ export class SellingPage {
     }
 
     this.verifySellerData();
+  }
+
+  // TODO for IOS
+  buy() {
+    if (!this.disabledBuyButton) {
+      this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.SellerEmail)}-${new Date().getTime()}`;
+
+      // TODO type that
+      localStorage.setItem(LocalStorageEnum.SellingTmp, JSON.stringify({
+        recapSelectedTicket: this.recapSelectedTicket,
+        email: this.buyForm.value.email,
+        firstname: this.buyForm.value.firstname,
+        lastname: this.buyForm.value.lastname,
+        askSendTicket: this.buyForm.value.askSendTicket,
+        clientTransactionId: this.clientTransactionId,
+        addressForm: this.addressForm.value,
+      }));
+      const tmpSellingJson = JSON.parse(localStorage.getItem(LocalStorageEnum.SellingTmp));
+
+      this.sellingService.ticketsPrepar(
+        tmpSellingJson.recapSelectedTicket,
+        tmpSellingJson.email,
+        tmpSellingJson.firstname,
+        tmpSellingJson.lastname,
+        tmpSellingJson.clientTransactionId,
+      ).subscribe(() => {
+
+        window.open(
+          'vivapayclient://pay/v1' +
+          `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
+          '&action=sale' +
+          `&amount=${Math.floor(this.totalAmount * 100)}` +
+          `&clientTransactionId=${this.clientTransactionId}` +
+          '&callback=mycallbackscheme://selling',
+          '_system'
+        );
+      });
+    } else {
+      // TODO show message error
+    }
+  }
+
+  finalBuy() {
+    this.showClientDetailForm = false;
+    this.backButtonBlock.removeBlockRef(SellingPage.name);
+
+    if (this.clientWantNewsletter) {
+      this.addClientToNewsletter();
+    }
+
+    const tmpSellingJson = JSON.parse(localStorage.getItem(LocalStorageEnum.SellingTmp));
+
+    this.loadingCommunication.changeLoaderTo(true);
+    this.sellingService.ticketsSale(
+      tmpSellingJson.recapSelectedTicket,
+      tmpSellingJson.email,
+      tmpSellingJson.firstname,
+      tmpSellingJson.lastname,
+      this.transactionId,
+      tmpSellingJson.askSendTicket,
+      tmpSellingJson.clientTransactionId,
+      tmpSellingJson.addressForm,
+    ).pipe(takeUntil(this.destroyer$)).subscribe(data => {
+      this.finishSellingInfo = data;
+      this.loadThermometer(true);
+      this.succeedPaiement();
+      // Put at zero the tickets sell amount / number
+      this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
+      this.transactionId = undefined;
+      this.clientTransactionId = undefined;
+      this.clientWantNewsletter = false;
+      this.clientAcceptData = false;
+      localStorage.removeItem(LocalStorageEnum.SellingTmp);
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
 
@@ -407,46 +451,6 @@ export class SellingPage {
       this.ticketNumberOfSell[index].ticketAmount++;
     } else if (type === 'remove') {
       this.ticketNumberOfSell[index].ticketAmount--;
-    }
-  }
-
-  // TODO for IOS
-  buy() {
-    if (!this.disabledBuyButton) {
-      this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.SellerEmail)}-${new Date().getTime()}`;
-
-      // TODO type that
-      localStorage.setItem(LocalStorageEnum.SellingTmp, JSON.stringify({
-        recapSelectedTicket: this.recapSelectedTicket,
-        email: this.buyForm.value.email,
-        firstname: this.buyForm.value.firstname,
-        lastname: this.buyForm.value.lastname,
-        askSendTicket: this.buyForm.value.askSendTicket,
-        clientTransactionId: this.clientTransactionId,
-        addressForm: this.addressForm.value,
-      }));
-      const tmpSellingJson = JSON.parse(localStorage.getItem(LocalStorageEnum.SellingTmp));
-
-      this.sellingService.ticketsPrepar(
-        tmpSellingJson.recapSelectedTicket,
-        tmpSellingJson.email,
-        tmpSellingJson.firstname,
-        tmpSellingJson.lastname,
-        tmpSellingJson.clientTransactionId,
-      ).subscribe(() => {
-
-        window.open(
-          'vivapayclient://pay/v1' +
-          `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
-          '&action=sale' +
-          `&amount=${Math.floor(this.totalAmount * 100)}` +
-          `&clientTransactionId=${this.clientTransactionId}` +
-          '&callback=mycallbackscheme://selling',
-          '_system'
-        );
-      });
-    } else {
-      // TODO show message error
     }
   }
 
