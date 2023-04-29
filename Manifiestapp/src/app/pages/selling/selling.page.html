@@ -80,11 +80,11 @@
             </ion-card-header>
             <ion-item>
               <ion-label>
-                {{ticketType.price + ticketType.fee | currency:'EUR'}}
-
+                {{ticketType.price | currency:'EUR'}}
                 | {{ticketNumberOfSell[index].ticketPrice *
                 ticketNumberOfSell[index].ticketAmount |
                 currency:'EUR'}}
+                <p>(+ {{ticketType.fee | currency:'EUR'}} {{"Ticket.ServiceCharge" | translate}})</p>
               </ion-label>
 
               <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"

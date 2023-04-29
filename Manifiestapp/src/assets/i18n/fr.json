@@ -236,6 +236,8 @@
     "YetXToSell": "Encore {{restingTicket}} à vendre...",
     "TimeIncreaseGoal": "Temps d'augmenter ton objectif ?",
     "NoNfcAvailable": "Ton smartphone n'a pas de capteur NFC et n'a donc pas la capacité d'accepter des paiements par carte bancaire. Tu pourras uniquement accepter des paiements par QR code (p.ex. Payconiq).",
-    "ClientWantProof": "Si le client souhaite une preuve de son achat, laissez-lui noter la référence ou prendre une photo de ce message."
+    "ClientWantProof": "Si le client souhaite une preuve de son achat, laissez-lui noter la référence ou prendre une photo de ce message.",
+    "ServiceCharge": "Frais de service",
+    "PayconicWarning": "Lors d'un paiement via QR Code - Payconiq, veuillez faire attention à bien appuyer sur \"reçu\" quand le client a payé. C'est très important pour la validation"
   }
 }

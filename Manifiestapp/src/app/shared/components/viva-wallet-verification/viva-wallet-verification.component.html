@@ -37,3 +37,11 @@
     Ok
   </ion-button>
 </h6>
+
+<h6 *ngIf="!knowPayconic">
+  {{"Ticket.PayconicWarning" | translate}}
+  <ion-button expand="block" color="warning" (click)="payconicWarningOk()">
+    <ion-icon name="card"></ion-icon>
+    Ok
+  </ion-button>
+</h6>

@@ -67,6 +67,7 @@ export class SellingPage {
   finishSellingInfo;
 
   isIos = false;
+  noPOS = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -106,7 +107,7 @@ export class SellingPage {
     }
     return this.vivaWalletVerification.vivaWalletInstall
       && (this.vivaWalletVerification.nfcActivated || localStorage.getItem(LocalStorageEnum.KnowNotNFC))
-      && this.vivaWalletVerification.gpsActivated;
+      && this.vivaWalletVerification.gpsActivated && localStorage.getItem(LocalStorageEnum.KnowPayconic) as unknown as boolean;
   }
 
   get recapSelectedTicket(): any[] {
@@ -164,6 +165,12 @@ export class SellingPage {
       this.isIos = true;
     } else {
       this.isIos = false;
+    }
+
+    if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
+      this.noPOS = true;
+    } else {
+      this.noPOS = false;
     }
 
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();

@@ -18,4 +18,5 @@ export enum LocalStorageEnum {
   SellerFromWorkGroup = 'sellerFromWorkGroup',
   SellingTmp = 'sellingTmp',
   KnowNotNFC = 'KnowNotNFC',
+  KnowPayconic= 'KnowPayconic',
 }

@@ -4,7 +4,7 @@ import { BaseService } from "../base.service";
 import { LanguageCommunicationService } from "../../communication/language.communication.service";
 import { LocalStorageEnum } from "src/app/shared/models/LocalStorage.enum";
 import { Observable, of } from "rxjs";
-import { tap } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
 import { VolunteerShiftService } from "../volunteer-shift/volunteer-shift.service";
 
 @Injectable({
@@ -24,7 +24,16 @@ export class SellingService {
   }
 
   getAllDepartments(): Observable<any[]> {
-    return this.baseService.getCall(`${this.baseUrl}departments/${this.languageService.selectedLanguage}`).pipe(tap(d => { this.departmentsCache = d }));
+    return this.baseService.getCall(`${this.baseUrl}departments/${this.languageService.selectedLanguage}`).pipe(
+      map(d => {
+        console.log('map', this.languageService.selectedLanguage, d)
+
+        return d.sort((a, b) => {
+          
+        });
+      }),
+      tap(d => { this.departmentsCache = d })
+    );
   }
 
   getAllProvinceInfo(): Observable<any[]> {
@@ -33,28 +42,7 @@ export class SellingService {
 
   getAllTicketTypes(): Observable<any[]> {
     let shop = localStorage.getItem(LocalStorageEnum.SellerDepartment) || 'app';
-    switch (shop.toLowerCase()) {
-      case 'comac':
-        shop = 'comac';
-        break;
-      case 'redfox':
-        shop = 'redfox';
-        break;
-      case 'base':
-        shop = 'base';
-        break;
-      case 'gvhv':
-        shop = 'gvhv';
-        break;
-      case 'other':
-        shop = 'other';
-        break;
-      default:
-        shop = 'app';
-        break;
-    }
-
-    return this.baseService.getCall(`${this.baseUrl}tickets/types/${shop}`);
+    return this.baseService.getCall(`${this.baseUrl}tickets/types/${shop.toLowerCase()}`);
   }
 
   connectSeller(body): Observable<any> {
