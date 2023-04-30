@@ -224,7 +224,7 @@ export class SellingPage {
         }
       }
 
-      else if (this.t) {
+      else if (this.t && localStorage.getItem(LocalStorageEnum.SellingTmp)) {
         this.transactionId = this.t;
         this.finalBuy();
       }
@@ -296,36 +296,15 @@ export class SellingPage {
       const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode}&paymentmethod=27`;
       console.log('we go to', vwWebUrl)
 
-      const pop = this.inAppBrowser.create(vwWebUrl, '_system');
-      // pop.show();
-      // pop.on('exit').subscribe(exit => {
-      //   console.log('exit', exit)
-      // });
+      // const pop = this.inAppBrowser.create(vwWebUrl, '_system');
 
-      // const vwPopup = window.open(
+      // window.open(
       //   vwWebUrl,
-      //   '_blank',
-      //   'popup'
       // );
 
-      // const openCapacitorSite = async () => {
-      //   await Browser.open({ url: vwWebUrl });
-      // };
+      // this.router.navigateByUrl(vwWebUrl);
 
-      // var popupTick = setInterval(function() {
-      //   if (vwPopup.closed) {
-      //     clearInterval(popupTick);
-      //     console.log('window closed!', vwPopup.get);
-      //   }
-      // }, 500);
-
-
-      // vwPopup.onload = function () {
-      //   console.log('open ?')
-      //   vwPopup.addEventListener('beforeunload', (e) => {
-      //     console.log('eeeeeeeeeeee close', e)
-      //   })
-      // }
+      window.open(vwWebUrl, '_self');
     });
   }
 
