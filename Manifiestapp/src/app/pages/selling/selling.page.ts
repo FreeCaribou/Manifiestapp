@@ -67,8 +67,8 @@ export class SellingPage {
 
   finishSellingInfo;
 
+  // is iphone or web mode
   isIos = false;
-  noPOS = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -82,7 +82,7 @@ export class SellingPage {
     public volunteerShiftService: VolunteerShiftService,
     private backButtonBlock: BackButtonCommunicationService,
     public menu: MenuController,
-    private vivaWalletVerification: VivaWalletVerificationCommunicationService,
+    public vivaWalletVerification: VivaWalletVerificationCommunicationService,
     private platform: Platform,
   ) { }
 
@@ -166,16 +166,12 @@ export class SellingPage {
   }
 
   ionViewWillEnter() {
-    if (this.platform.is('ios') || this.platform.is('desktop') || this.platform.is('mobileweb')) {
+    // weird condition but because it can be mobileweb and android on the same time
+    // If android, direct false
+    if ((this.platform.is('ios') || this.platform.is('desktop') || this.platform.is('mobileweb')) && !this.platform.is('android')) {
       this.isIos = true;
     } else {
       this.isIos = false;
-    }
-
-    if (this.platform.is('desktop') || this.platform.is('mobileweb')) {
-      this.noPOS = true;
-    } else {
-      this.noPOS = false;
     }
 
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();

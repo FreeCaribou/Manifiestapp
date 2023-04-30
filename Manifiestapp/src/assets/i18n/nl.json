@@ -238,6 +238,7 @@
     "NoNfcAvailable": "Jouw smartphone heeft geen NFC-lezer en kan dus geen betalingen met de bankkaart ontvangen. Je kan enkel betalingen ontvangen via QR code (bv. Payconiq).",
     "ClientWantProof": "Als de klant een bewijs van zijn aankoop wil, laat hem dan de referentie noteren of een foto nemen van dit bericht.",
     "ServiceCharge": "Service kosten",
-    "PayconicWarning": "Wanneer u betaalt met QR Code - Payconiq, zorg er dan voor dat u op \"ontvangst\" drukt wanneer de klant betaald heeft. Dit is zeer belangrijk voor de validatie !"
+    "PayconicWarning": "Wanneer u betaalt met QR Code - Payconiq, zorg er dan voor dat u op \"ontvangst\" drukt wanneer de klant betaald heeft. Dit is zeer belangrijk voor de validatie !",
+    "GoToWebVersion": "Problemen met Viva Wallet? Gebruik dus de webversie van de kaartverkoop"
   }
 }

@@ -111,6 +111,14 @@
 
       <app-viva-wallet-verification *ngIf="!allHardwareOk"></app-viva-wallet-verification>
 
+      <div *ngIf="!vivaWalletVerification.nfcAvailable && !isIos">
+        <h4>
+          <a href="https://manifiestapp.vercel.app/selling">
+            {{'Ticket.GoToWebVersion' | translate}}
+          </a>
+        </h4>
+      </div>
+
       <div class="separator-line m-top-medium"></div>
 
       <!-- The information to know which kind of ticket show -->
