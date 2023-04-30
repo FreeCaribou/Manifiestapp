@@ -168,7 +168,7 @@ export class SellingPage {
   ionViewWillEnter() {
     // weird condition but because it can be mobileweb and android on the same time
     // If android, direct false
-    if ((this.platform.is('ios') || this.platform.is('desktop') || this.platform.is('mobileweb')) && !this.platform.is('android')) {
+    if ((this.platform.is('ios') || this.platform.is('desktop') || this.platform.is('mobileweb'))) {
       this.isIos = true;
     } else {
       this.isIos = false;
