@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonModal, MenuController, ModalController, Platform, ToastController } from '@ionic/angular';
@@ -8,16 +8,13 @@ import { LoadingCommunicationService } from 'src/app/shared/services/communicati
 import { SellingService } from 'src/app/shared/services/data/selling/selling.service';
 import { i18nTerms } from 'src/app/shared/utils/i18n-terms';
 import { environment } from 'src/environments/environment';
-import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 import { SellingPostInfoModalComponent } from 'src/app/shared/components/selling-post-info-modal/selling-post-info-modal.component';
 import { takeUntil } from 'rxjs/operators'
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { SellerDepartmentInfoModalComponent } from 'src/app/shared/components/seller-department-info-modal/seller-department-info-modal.component';
 import { BackButtonCommunicationService } from 'src/app/shared/services/communication/back-buttton.communication.service';
 import { VivaWalletVerificationCommunicationService } from 'src/app/shared/services/communication/viva-wallet-verification.communication.service';
-import { Browser } from '@capacitor/browser';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 // TODO Rework EVERYTHING
 @Component({
@@ -87,7 +84,6 @@ export class SellingPage {
     public menu: MenuController,
     private vivaWalletVerification: VivaWalletVerificationCommunicationService,
     private platform: Platform,
-    private inAppBrowser: InAppBrowser,
   ) { }
 
   get totalAmount(): number {
@@ -286,7 +282,6 @@ export class SellingPage {
 
   async openVivaWalletWebPaiement() {
     console.log('hello to web paiement', this.totalAmount, this.totalAmount * 100, Math.floor(this.totalAmount * 100))
-
     this.sellingService.getSellerQrCode({
       amount: Math.floor(this.totalAmount * 100),
       merchantTrns: this.clientTransactionId,
@@ -295,15 +290,6 @@ export class SellingPage {
       // const vwWebUrl = `https://www.vivapayments.com/web2?ref=${order.orderCode}&paymentmethod=27`;
       const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode}&paymentmethod=27`;
       console.log('we go to', vwWebUrl)
-
-      // const pop = this.inAppBrowser.create(vwWebUrl, '_system');
-
-      // window.open(
-      //   vwWebUrl,
-      // );
-
-      // this.router.navigateByUrl(vwWebUrl);
-
       window.open(vwWebUrl, '_self');
     });
   }

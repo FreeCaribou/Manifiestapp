@@ -15,7 +15,6 @@ import { SellingPageModule } from './pages/selling/selling.module';
 import { AppAvailability } from '@awesome-cordova-plugins/app-availability/ngx';
 import { Diagnostic } from '@awesome-cordova-plugins/diagnostic/ngx';
 import { OpenNativeSettings } from '@awesome-cordova-plugins/open-native-settings/ngx';
-import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -45,7 +44,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppAvailability,
     OpenNativeSettings,
     Diagnostic,
-    InAppBrowser,
   ],
   bootstrap: [AppComponent],
 })
