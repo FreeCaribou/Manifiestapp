@@ -288,7 +288,7 @@ export class SellingPage {
     }).subscribe(async order => {
       console.log('ooooooooorder', order)
       // const vwWebUrl = `https://www.vivapayments.com/web2?ref=${order.orderCode}&paymentmethod=27`;
-      const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode}&paymentmethod=27`;
+      const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode}&paymentmethod=27&color=EF4135`;
       console.log('we go to', vwWebUrl)
       window.open(vwWebUrl, '_self');
     });
