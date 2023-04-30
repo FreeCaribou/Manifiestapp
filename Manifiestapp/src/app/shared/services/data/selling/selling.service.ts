@@ -162,4 +162,11 @@ export class SellingService {
     );
   }
 
+  getSellerQrCode(paymentOrder: any): Observable<any> {
+    return this.baseService.postCall(
+      `${this.baseUrl}tickets/seller/qrcode`,
+      paymentOrder
+    );
+  }
+
 }

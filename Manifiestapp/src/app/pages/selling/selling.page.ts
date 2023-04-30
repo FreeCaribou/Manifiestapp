@@ -16,6 +16,8 @@ import { Observable, Subject, Subscription } from 'rxjs';
 import { SellerDepartmentInfoModalComponent } from 'src/app/shared/components/seller-department-info-modal/seller-department-info-modal.component';
 import { BackButtonCommunicationService } from 'src/app/shared/services/communication/back-buttton.communication.service';
 import { VivaWalletVerificationCommunicationService } from 'src/app/shared/services/communication/viva-wallet-verification.communication.service';
+import { Browser } from '@capacitor/browser';
+import { InAppBrowser } from '@awesome-cordova-plugins/in-app-browser/ngx';
 
 // TODO Rework EVERYTHING
 @Component({
@@ -38,6 +40,8 @@ export class SellingPage {
   action: string;
   message: string;
   transactionId: string;
+  // same than transaction id, but via smartcheckout
+  t: string;
   routerUrl: string;
 
   progress = 0;
@@ -83,6 +87,7 @@ export class SellingPage {
     public menu: MenuController,
     private vivaWalletVerification: VivaWalletVerificationCommunicationService,
     private platform: Platform,
+    private inAppBrowser: InAppBrowser,
   ) { }
 
   get totalAmount(): number {
@@ -153,6 +158,10 @@ export class SellingPage {
     return localStorage.getItem(LocalStorageEnum.SellerName);
   }
 
+  get userPlatform() {
+    return this.platform.platforms();
+  }
+
   ionViewDidLeave() {
     this.destroyer$.next(true);
     this.destroyer$.complete();
@@ -161,7 +170,7 @@ export class SellingPage {
   }
 
   ionViewWillEnter() {
-    if (this.platform.is('ios')) {
+    if (this.platform.is('ios') || this.platform.is('desktop') || this.platform.is('mobileweb')) {
       this.isIos = true;
     } else {
       this.isIos = false;
@@ -189,6 +198,7 @@ export class SellingPage {
       this.message = queryParams['message'] || this.activatedRoute.snapshot.queryParamMap.get('message');
       this.action = queryParams['action'] || this.activatedRoute.snapshot.queryParamMap.get('action');
       this.transactionId = queryParams['transactionId'] || this.activatedRoute.snapshot.queryParamMap.get('transactionId');
+      this.t = queryParams['t'] || this.activatedRoute.snapshot.queryParamMap.get('t') || null;
       this.routerUrl = this.router.url;
 
       if (this.status && this.hasEveryInfoToSell && this.action == 'activatePos') {
@@ -212,7 +222,11 @@ export class SellingPage {
         } else {
           this.vivaWalletError();
         }
+      }
 
+      else if (this.t) {
+        this.transactionId = this.t;
+        this.finalBuy();
       }
     });
 
@@ -251,20 +265,68 @@ export class SellingPage {
         tmpSellingJson.lastname,
         tmpSellingJson.clientTransactionId,
       ).subscribe(() => {
-
-        window.open(
-          'vivapayclient://pay/v1' +
-          `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
-          '&action=sale' +
-          `&amount=${Math.floor(this.totalAmount * 100)}` +
-          `&clientTransactionId=${this.clientTransactionId}` +
-          '&callback=mycallbackscheme://selling',
-          '_system'
-        );
+        if (this.isIos) {
+          this.openVivaWalletWebPaiement();
+        } else {
+          window.open(
+            'vivapayclient://pay/v1' +
+            `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
+            '&action=sale' +
+            `&amount=${Math.floor(this.totalAmount * 100)}` +
+            `&clientTransactionId=${this.clientTransactionId}` +
+            '&callback=mycallbackscheme://selling',
+            '_system'
+          );
+        }
       });
     } else {
       // TODO show message error
     }
+  }
+
+  async openVivaWalletWebPaiement() {
+    console.log('hello to web paiement', this.totalAmount, this.totalAmount * 100, Math.floor(this.totalAmount * 100))
+
+    this.sellingService.getSellerQrCode({
+      amount: Math.floor(this.totalAmount * 100),
+      merchantTrns: this.clientTransactionId,
+    }).subscribe(async order => {
+      console.log('ooooooooorder', order)
+      // const vwWebUrl = `https://www.vivapayments.com/web2?ref=${order.orderCode}&paymentmethod=27`;
+      const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode}&paymentmethod=27`;
+      console.log('we go to', vwWebUrl)
+
+      const pop = this.inAppBrowser.create(vwWebUrl, '_system');
+      // pop.show();
+      // pop.on('exit').subscribe(exit => {
+      //   console.log('exit', exit)
+      // });
+
+      // const vwPopup = window.open(
+      //   vwWebUrl,
+      //   '_blank',
+      //   'popup'
+      // );
+
+      // const openCapacitorSite = async () => {
+      //   await Browser.open({ url: vwWebUrl });
+      // };
+
+      // var popupTick = setInterval(function() {
+      //   if (vwPopup.closed) {
+      //     clearInterval(popupTick);
+      //     console.log('window closed!', vwPopup.get);
+      //   }
+      // }, 500);
+
+
+      // vwPopup.onload = function () {
+      //   console.log('open ?')
+      //   vwPopup.addEventListener('beforeunload', (e) => {
+      //     console.log('eeeeeeeeeeee close', e)
+      //   })
+      // }
+    });
   }
 
   finalBuy() {
@@ -484,7 +546,11 @@ export class SellingPage {
     // To be sur to renew the form
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
-    this.autoVivaWalletAuth();
+    if (this.isIos) {
+      this.showClientDetailForm = true;
+    } else {
+      this.autoVivaWalletAuth();
+    }
   }
 
   cancelBuy() {

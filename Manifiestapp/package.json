@@ -36,6 +36,7 @@
     "@awesome-cordova-plugins/app-availability": "^6.2.0",
     "@awesome-cordova-plugins/core": "^6.2.0",
     "@awesome-cordova-plugins/diagnostic": "^6.2.0",
+    "@awesome-cordova-plugins/in-app-browser": "^6.3.0",
     "@awesome-cordova-plugins/open-native-settings": "^6.3.0",
     "@capacitor/android": "3.4.3",
     "@capacitor/app": "1.0.3",
