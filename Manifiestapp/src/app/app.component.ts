@@ -112,12 +112,9 @@ export class AppComponent implements OnInit {
   }
 
   async init() {
-    console.log('init')
     // more routing init
     App.addListener('appUrlOpen', (event: URLOpenListenerEvent) => {
-      console.log('listen to route')
       this.zone.run(() => {
-        console.log('redirect uri', event, event.url)
         const slug = event.url.includes('mycallbackscheme://selling');
         // Expected url call back
         // mycallbackscheme://seller?action=sale&amount=101&clientTransactionId=&message=(-4) USER_CANCEL&status=fail&tid=16220044

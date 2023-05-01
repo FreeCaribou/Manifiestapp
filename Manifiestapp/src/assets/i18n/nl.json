@@ -239,6 +239,7 @@
     "ClientWantProof": "Als de klant een bewijs van zijn aankoop wil, laat hem dan de referentie noteren of een foto nemen van dit bericht.",
     "ServiceCharge": "Service kosten",
     "PayconicWarning": "Wanneer u betaalt met QR Code - Payconiq, zorg er dan voor dat u op \"ontvangst\" drukt wanneer de klant betaald heeft. Dit is zeer belangrijk voor de validatie !",
-    "GoToWebVersion": "Problemen met Viva Wallet? Gebruik dus de webversie van de kaartverkoop"
+    "GoToWebVersion": "Problemen met Viva Wallet? Gebruik dus de webversie van de kaartverkoop",
+    "PaymentSucceesWithoutTicket": "Er is een betaling maar geen ticket verkocht? Contacteer app@manifiesta.be met de e-mail van de klant en het tijdstip van het probleem"
   }
 }

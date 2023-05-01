@@ -26,10 +26,7 @@ export class SellingService {
   getAllDepartments(): Observable<any[]> {
     return this.baseService.getCall(`${this.baseUrl}departments/${this.languageService.selectedLanguage}`).pipe(
       map(d => {
-        console.log('map', this.languageService.selectedLanguage, d)
-
         return d.sort((a, b) => {
-          
         });
       }),
       tap(d => { this.departmentsCache = d })

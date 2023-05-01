@@ -48,26 +48,21 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
     // If NFC is on the phone, we check if enabled or not
     // If not present, we act like it is to not block everything because Viva Wallet can manage that too
 
-    console.log('hello NFC', this.diagnostic.NFCState)
-
     this.diagnostic.isNFCPresent()
       .then((r) => {
-        console.log('NFC present', r, typeof r)
         this.vivaWalletVerification.nfcAvailable = r;
         if (r === true) {
           this.diagnostic.isNFCEnabled()
-          .then(r => { this.vivaWalletVerification.nfcActivated = r; console.log('is enable then', r) })
-          .catch(e => { this.vivaWalletVerification.nfcActivated = false; console.log('is enable catch', e) });
+          .then(r => { this.vivaWalletVerification.nfcActivated = r; })
+          .catch(e => { this.vivaWalletVerification.nfcActivated = false; });
         }
       })
       .catch((e) => {
-        console.log('NFC not present', e)
         this.vivaWalletVerification.nfcAvailable = false;
       });
 
 
     // this.diagnostic.isNFCPresent().then(r => {
-    //   console.log('NFC present ?', r)
     //   this.vivaWalletVerification.nfcAvailable = r;
     //   if (r) {
     //     this.diagnostic.isNFCEnabled()
