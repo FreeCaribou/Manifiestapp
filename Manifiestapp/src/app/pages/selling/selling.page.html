@@ -11,7 +11,7 @@
 
 <ion-content>
 
-  <!-- Test purpose {{userPlatform | json}} -->
+  Test purpose {{userPlatform | json}}
 
   <ng-container *ngIf="!isLogin && sellerLoginForm">
     <form [formGroup]="sellerLoginForm">
@@ -101,9 +101,15 @@
           </ion-card>
 
           <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
-            expand="block" (click)="setOpenModal(true)">
-            <ion-icon name="cart"></ion-icon>
-            {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
+            expand="block" (click)="setOpenModal(true, false)">
+            <ion-icon name="card"></ion-icon>
+            {{"Ticket.BuyWithNfc" | translate}} {{totalAmount | currency:'EUR'}}
+          </ion-button>
+
+          <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
+            expand="block" (click)="setOpenModal(true, true)">
+            <ion-icon name="qr-code"></ion-icon>
+            {{"Ticket.BuyWithQrCode" | translate}} {{totalAmount | currency:'EUR'}}
           </ion-button>
 
           <div class="separator-line m-top-medium"></div>

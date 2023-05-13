@@ -33,7 +33,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="manifiestapp.vercel.app" />
+                <data android:host="manifiestapp-redirect.vercel.app" android:pathPrefix="/selling" android:scheme="https" />
             </intent-filter>
 
             <intent-filter>

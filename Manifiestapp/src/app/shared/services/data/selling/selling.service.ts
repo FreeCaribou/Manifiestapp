@@ -159,9 +159,9 @@ export class SellingService {
     );
   }
 
-  getSellerQrCode(paymentOrder: any): Observable<any> {
+  getSellerQrCode(paymentOrder: any, forApp = false): Observable<any> {
     return this.baseService.postCall(
-      `${this.baseUrl}tickets/seller/qrcode`,
+      `${this.baseUrl}tickets/seller/qrcode${forApp ? '/app' : ''}`,
       paymentOrder
     );
   }

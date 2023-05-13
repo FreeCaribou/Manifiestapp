@@ -70,6 +70,9 @@ export class SellingPage {
   // is iphone or web mode
   isIos = false;
 
+  isInApp = false;
+  takeQrCode = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private sellingService: SellingService,
@@ -174,6 +177,9 @@ export class SellingPage {
       this.isIos = false;
     }
 
+    // If we make capacitor build, we are in app
+    this.isInApp = this.platform.is('capacitor');
+
     this.sellerSellingGoal = this.volunteerShiftService.getSellerSellingGoal();
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
@@ -257,7 +263,7 @@ export class SellingPage {
         tmpSellingJson.lastname,
         tmpSellingJson.clientTransactionId,
       ).subscribe(() => {
-        if (this.isIos) {
+        if (this.isIos || this.takeQrCode) {
           this.openVivaWalletWebPaiement();
         } else {
           window.open(
@@ -280,7 +286,7 @@ export class SellingPage {
     this.sellingService.getSellerQrCode({
       amount: Math.floor(this.totalAmount * 100),
       merchantTrns: this.clientTransactionId,
-    }).subscribe(async order => {
+    }, this.takeQrCode).subscribe(async order => {
       // const vwWebUrl = `https://www.vivapayments.com/web2?ref=${order.orderCode}&paymentmethod=27`;
       const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode}&paymentmethod=27&color=EF4135`;
       window.open(vwWebUrl, '_self');
@@ -491,7 +497,7 @@ export class SellingPage {
       `&pinCode=${environment.vwPinCode}` +
       '&action=activatePos' +
       '&disableManualAmountEntry=true' +
-      '&activateQRCodes=true' +
+      '&activateQRCodes=false' +
       '&lockRefund=true' +
       '&lockTransactionsList=true' +
       '&lockMoto=true' +
@@ -500,11 +506,12 @@ export class SellingPage {
     );
   }
 
-  setOpenModal(isOpen: boolean) {
+  setOpenModal(isOpen: boolean, takeQrCode = false) {
     // To be sur to renew the form
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
-    if (this.isIos) {
+    this.takeQrCode = takeQrCode;
+    if (this.isIos || takeQrCode) {
       this.showClientDetailForm = true;
     } else {
       this.autoVivaWalletAuth();
