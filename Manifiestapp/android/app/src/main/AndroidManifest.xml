@@ -19,6 +19,13 @@
             android:exported="true"
             android:launchMode="singleTask">
 
+          <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:host="manifiestapp-redirect.vercel.app" android:scheme="https" />
+          </intent-filter>
+
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
                 <action android:name="be.manifiesta.app.MainActivity"/>
@@ -27,13 +34,6 @@
                 <data
                 android:scheme="mycallbackscheme"
                 android:host="selling"/>
-            </intent-filter>
-
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:host="manifiestapp-redirect.vercel.app" android:pathPrefix="/selling" android:scheme="https" />
             </intent-filter>
 
             <intent-filter>
