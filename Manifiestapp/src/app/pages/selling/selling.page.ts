@@ -497,7 +497,7 @@ export class SellingPage {
       `&pinCode=${environment.vwPinCode}` +
       '&action=activatePos' +
       '&disableManualAmountEntry=true' +
-      '&activateQRCodes=false' +
+      '&activateQRCodes=true' +
       '&lockRefund=true' +
       '&lockTransactionsList=true' +
       '&lockMoto=true' +

@@ -70,6 +70,10 @@
 
       <!-- <div>{{!vivaWalletVerification.nfcAvailable && isInApp}}</div> -->
 
+      <a *ngIf="!vivaWalletVerification.nfcAvailable && isInApp" class="text-align" href="https://manifiestapp.vercel.app/selling">
+        {{'Ticket.GoWebVersie' | translate }}
+      </a>
+
       <ng-container *ngIf="allHardwareOk">
         <h5 *ngIf="!hasEveryInfoToSell" class="fake-mouse-select" (click)="openSellerDepartmentInfo()">
           {{'Ticket.CompleteSellerDepartmentInfoPlease' | translate}}
