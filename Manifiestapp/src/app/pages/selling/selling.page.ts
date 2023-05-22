@@ -15,6 +15,7 @@ import { Subject, Subscription } from 'rxjs';
 import { SellerDepartmentInfoModalComponent } from 'src/app/shared/components/seller-department-info-modal/seller-department-info-modal.component';
 import { BackButtonCommunicationService } from 'src/app/shared/services/communication/back-buttton.communication.service';
 import { VivaWalletVerificationCommunicationService } from 'src/app/shared/services/communication/viva-wallet-verification.communication.service';
+import { Device } from '@capacitor/device';
 
 // TODO Rework EVERYTHING
 @Component({
@@ -67,9 +68,9 @@ export class SellingPage {
 
   finishSellingInfo;
 
-  // is iphone or web mode
+  // think related to the hardware
+  hardwareInfo;
   isIos = false;
-
   isInApp = false;
   takeQrCode = false;
 
@@ -161,6 +162,12 @@ export class SellingPage {
     return this.platform.platforms();
   }
 
+  // We show the link to the web version when we are on iOS or in Android without NFC
+  // TODO check the version of Android > 8
+  get skipVivaWalletAndShowRedirect() {
+    return (this.isInApp && this.isIos) || (this.isInApp && !this.vivaWalletVerification.nfcAvailable)
+  }
+
   ionViewDidLeave() {
     this.destroyer$.next(true);
     this.destroyer$.complete();
@@ -176,6 +183,14 @@ export class SellingPage {
     } else {
       this.isIos = false;
     }
+
+    Device.getInfo().then(info => {
+      // TODO if Android, try to take the number version
+      // the string of the version number change by phone ...
+      // can be 'android x' or just 'x' ...
+      console.log('info', info);
+      this.hardwareInfo = info
+    })
 
     // If we make capacitor build, we are in app
     this.isInApp = this.platform.is('capacitor');

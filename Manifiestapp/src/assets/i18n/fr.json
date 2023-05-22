@@ -241,6 +241,6 @@
     "PayconicWarning": "Lors d'un paiement via QR Code - Payconiq, veuillez faire attention à bien appuyer sur \"reçu\" quand le client a payé. C'est très important pour la validation",
     "GoToWebVersion": "Soucis avec Viva Wallet ? Utilisez donc la version web de vente de tickets",
     "PaymentSucceesWithoutTicket": "Un paiement a eu lieu mais aucun ticket n'est vendu ? Contactez app@manifiesta.be avec l'email du client et l'heure du soucis",
-    "GoWebVersie": "Vous n'avez pas NFC sur votre téléphone pour vendre avec carte bancaire ? Essayez la version web pour vendra via QR Code et Bancontact."
+    "GoWebVersie": "Pour vendre des tickets avec ton téléphone, tu dois utiliser la version web via ce lien"
   }
 }

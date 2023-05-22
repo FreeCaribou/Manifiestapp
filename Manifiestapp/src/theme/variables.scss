@@ -16,29 +16,55 @@ $medium-size: 16px;
 
 /** Ionic CSS Variables **/
 :root {
-  // Manifiesta primary 2022
-  --ion-color-primary: #f18904;
-  --ion-color-primary-rgb: 241, 137, 4;
-  --ion-color-primary-contrast: #000000;
-  --ion-color-primary-contrast-rgb: 0, 0, 0;
-  --ion-color-primary-shade: #d47904;
-  --ion-color-primary-tint: #f2951d;
+  // Manifiesta primary 2023
+  // --ion-color-primary: #ED5026;
+	// --ion-color-primary-rgb: 237,80,38;
+	// --ion-color-primary-contrast: #ffffff;
+	// --ion-color-primary-contrast-rgb: 255,255,255;
+	// --ion-color-primary-shade: #d14621;
+	// --ion-color-primary-tint: #ef623c;
+  --ion-color-primary: #F59BBB;
+	--ion-color-primary-rgb: 245,155,187;
+	--ion-color-primary-contrast: #000000;
+	--ion-color-primary-contrast-rgb: 0,0,0;
+	--ion-color-primary-shade: #d888a5;
+	--ion-color-primary-tint: #f6a5c2;
 
-  // 2021
-  // --ion-color-primary: #01b2b8;
-  // --ion-color-primary-rgb: 1, 178, 184;
-  // --ion-color-primary-contrast: #ffffff;
-  // --ion-color-primary-contrast-rgb: 255, 255, 255;
-  // --ion-color-primary-shade: #019da2;
-  // --ion-color-primary-tint: #1ababf;
+  // Manifiesta primary 2022
+  // --ion-color-primary: #f18904;
+  // --ion-color-primary-rgb: 241, 137, 4;
+  // --ion-color-primary-contrast: #000000;
+  // --ion-color-primary-contrast-rgb: 0, 0, 0;
+  // --ion-color-primary-shade: #d47904;
+  // --ion-color-primary-tint: #f2951d;
+
+  // Secondary 2023
+  // --ion-color-secondary: #2763D3;
+	// --ion-color-secondary-rgb: 39,99,211;
+	// --ion-color-secondary-contrast: #ffffff;
+	// --ion-color-secondary-contrast-rgb: 255,255,255;
+	// --ion-color-secondary-shade: #2257ba;
+	// --ion-color-secondary-tint: #3d73d7;
+  // --ion-color-secondary: #F7B411;
+	// --ion-color-secondary-rgb: 247,180,17;
+	// --ion-color-secondary-contrast: #000000;
+	// --ion-color-secondary-contrast-rgb: 0,0,0;
+	// --ion-color-secondary-shade: #d99e0f;
+	// --ion-color-secondary-tint: #f8bc29;
+  --ion-color-secondary: #3B953F;
+	--ion-color-secondary-rgb: 59,149,63;
+	--ion-color-secondary-contrast: #ffffff;
+	--ion-color-secondary-contrast-rgb: 255,255,255;
+	--ion-color-secondary-shade: #348337;
+	--ion-color-secondary-tint: #4fa052;
 
   // Secondary 2022
-  --ion-color-secondary: #00a9ac;
-  --ion-color-secondary-rgb: 0, 169, 172;
-  --ion-color-secondary-contrast: #ffffff;
-  --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #009597;
-  --ion-color-secondary-tint: #1ab2b4;
+  // --ion-color-secondary: #00a9ac;
+  // --ion-color-secondary-rgb: 0, 169, 172;
+  // --ion-color-secondary-contrast: #ffffff;
+  // --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  // --ion-color-secondary-shade: #009597;
+  // --ion-color-secondary-tint: #1ab2b4;
 
   // Tertiary 2022
   --ion-color-tertiary: #e53329;

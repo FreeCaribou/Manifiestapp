@@ -1,6 +1,7 @@
 # 2.2.0
 ## Patch
 * Rewrite access to website information
+* New theme color and logo
 
 # 2.1.1
 ## Patch
