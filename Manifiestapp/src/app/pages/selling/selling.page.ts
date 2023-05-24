@@ -303,7 +303,7 @@ export class SellingPage {
       merchantTrns: this.clientTransactionId,
     }, this.takeQrCode).subscribe(async order => {
       // const vwWebUrl = `https://www.vivapayments.com/web2?ref=${order.orderCode}&paymentmethod=27`;
-      const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode}&paymentmethod=27&color=EF4135`;
+      const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode.toString()}&paymentmethod=27&color=EF4135`;
       window.open(vwWebUrl, '_self');
     });
   }
