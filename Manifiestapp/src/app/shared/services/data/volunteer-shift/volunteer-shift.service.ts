@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { EventEmitter, Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { map, tap } from "rxjs/operators";
+import { Observable, forkJoin, of } from "rxjs";
+import { map, mergeMap, switchMap, tap } from "rxjs/operators";
 import { LocalStorageEnum } from "src/app/shared/models/LocalStorage.enum";
 import { environment } from "src/environments/environment";
 import { BaseService } from "../base.service";
@@ -23,16 +23,29 @@ export class VolunteerShiftService {
 
   // TODO-refactor maybe also a mapping of data here ?
   shifts: any[];
-  getShifts(): Observable<any[]> {
+  getShifts(): Observable<any> {
+    console.log('hello')
     if (this.isConnectedToBeeple()) {
       if (!this.shifts || this.shifts.length === 0) {
-        return this.httpClient.get<any[]>(
-          `${environment.beepleBridgeUrl}collaborators/${this.getBeepleVolunteerId()}/enrolments`,
-          { headers: { Token: this.getBeepleVolunteerToken() } }
+        console.log('hello$', this.baseUrl, this.getBeepleVolunteerId())
+        let tmpShift = [];
+        return this.httpClient.get<any>(
+          `${this.baseUrl}sellers/user-shifts/${this.getBeepleVolunteerId()}`,
         ).pipe(
+          map(shift => shift.enrolments),
           map(e => { return this.mapShiftsRemoveOldFromPreviousYear(e); }),
           map(e => { return this.mapSortShiftsByStartDatetime(e); }),
-          tap(s => this.shifts = s),
+          tap(d => { tmpShift = d }),
+          switchMap(d => {
+            return forkJoin(d.map(i => this.getOneShift(i.id)))
+          }),
+          map(d => {
+            for (let i = 0; i < d.length; i++) {
+              tmpShift[i]['team'] = d[i].team;
+            }
+            return tmpShift;
+          }),
+          tap(s => this.shifts = tmpShift),
           tap(s => this.setOfflineList(s)),
         )
       } else {
@@ -42,6 +55,12 @@ export class VolunteerShiftService {
     } else {
       return of([])
     }
+  }
+
+  getOneShift(id): Observable<any> {
+    return this.httpClient.get<any>(
+      `${this.baseUrl}sellers/shift/${id}`,
+    )
   }
 
   login(session): Observable<any> {
@@ -107,15 +126,15 @@ export class VolunteerShiftService {
   mapShiftsRemoveOldFromPreviousYear(shifts: any[]): any[] {
     const yearNow = new Date().getFullYear();
     return shifts.filter(s => {
-      const yearStart = new Date(s.team.shifts[0]?.start_datetime).getFullYear();
+      const yearStart = new Date(s.worked_hours[0]?.shift.start_datetime).getFullYear();
       return yearNow === yearStart;
     });
   }
 
   mapSortShiftsByStartDatetime(shifts: any[]): any[] {
     return shifts.sort((a, b) => {
-      const aDate = new Date(a.team.shifts[0]?.start_datetime).getTime();
-      const bDate = new Date(b.team.shifts[0]?.start_datetime).getTime();
+      const aDate = new Date(a.worked_hours[0]?.shift.start_datetime).getTime();
+      const bDate = new Date(b.worked_hours[0]?.shift.start_datetime).getTime();
       return aDate - bDate;
     });
   }

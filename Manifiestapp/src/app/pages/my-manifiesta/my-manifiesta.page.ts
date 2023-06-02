@@ -59,7 +59,7 @@ export class MyManifiestaPage implements OnDestroy {
       this.loginForm = this.buildLoginForm();
       // this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
       // this.fetchFavoriteProgramme();
-      // this.fetchShifts();
+      this.fetchShifts();
       if (this.isConnected) {
         this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
       }
@@ -97,9 +97,9 @@ export class MyManifiestaPage implements OnDestroy {
         this.loadingCommunication.changeLoaderTo(true);
         this.volunteerShiftService.getShifts().subscribe(d => {
           this.shifts = d;
-          if (reloadFav) {
-            this.fetchFavoriteProgramme();
-          }
+          // if (reloadFav) {
+          //   this.fetchFavoriteProgramme();
+          // }
         }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
       } else {
         this.shifts = this.volunteerShiftService.getOfflineList();
@@ -165,7 +165,7 @@ export class MyManifiestaPage implements OnDestroy {
     this.loadingCommunication.changeLoaderTo(true);
     this.volunteerShiftService.login(this.loginForm.value).subscribe(user => {
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
-      // this.fetchShifts(true);
+      this.fetchShifts(true);
       localStorage.setItem(LocalStorageEnum.VolunteerName, user.name);
       this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
     }, error => {
