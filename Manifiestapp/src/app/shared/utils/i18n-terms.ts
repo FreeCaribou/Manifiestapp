@@ -13,4 +13,8 @@ export const i18nTerms: { [k: string]: { fr: string, nl: string } } = {
     fr: 'Vous êtes bien connecté à Viva Wallet',
     nl: 'U bent succesvol verbonden met Viva Wallet'
   },
+  resetOk: {
+    fr: 'Viva Wallet à bien été remis à zéro',
+    nl: 'Viva Wallet is op nul gezet'
+  }
 };

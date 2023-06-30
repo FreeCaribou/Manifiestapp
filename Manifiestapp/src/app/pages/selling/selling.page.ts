@@ -73,6 +73,7 @@ export class SellingPage {
   isIos = false;
   isInApp = false;
   takeQrCode = false;
+  forceSeeVw = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -165,6 +166,7 @@ export class SellingPage {
   // We show the link to the web version when we are on iOS or in Android without NFC
   // TODO check the version of Android > 8
   get skipVivaWalletAndShowRedirect() {
+    // return true;
     return (this.isInApp && this.isIos) || (this.isInApp && !this.vivaWalletVerification.nfcAvailable)
   }
 
@@ -214,6 +216,14 @@ export class SellingPage {
       this.t = queryParams['t'] || this.activatedRoute.snapshot.queryParamMap.get('t') || null;
       this.routerUrl = this.router.url;
 
+      if (this.action == 'reset') {
+        if (this.status == 'success') {
+          this.vivawalletResetSuccess();
+        } else {
+          console.warn('fail to reset');
+        }
+      }
+
       if (this.status && this.hasEveryInfoToSell && this.action == 'activatePos') {
         if (this.status == 'success' || this.message == 'POS_IS_ALREADY_ACTIVATED') {
           // If we see ticket in the "basket", we show the client detail form
@@ -252,6 +262,10 @@ export class SellingPage {
     }
 
     this.verifySellerData();
+  }
+
+  letMeSeeNormalAppVersion() {
+    this.forceSeeVw = true;
   }
 
   // TODO for IOS
@@ -352,6 +366,18 @@ export class SellingPage {
         queryParams: {},
       });
     const message: string = i18nTerms.paiementOk[this.languageService.selectedLanguage];
+    const toast = await this.toastController.create({
+      header: 'Success',
+      message,
+      icon: 'checkmark-circle-outline',
+      color: 'success',
+      duration: 4000,
+    });
+    toast.present();
+  }
+
+  async vivawalletResetSuccess() {
+    const message: string = i18nTerms.resetOk[this.languageService.selectedLanguage];
     const toast = await this.toastController.create({
       header: 'Success',
       message,
@@ -517,6 +543,16 @@ export class SellingPage {
       '&lockTransactionsList=true' +
       '&lockMoto=true' +
       '&skipExternalDeviceSetup=true' +
+      '&callback=mycallbackscheme://selling',
+    );
+  }
+
+  resetVivaWallet() {
+    window.open(
+      'vivapayclient://pay/v1' +
+      `?appId=be.manifiesta.app` +
+      '&action=reset' +
+      '&softReset=false' +
       '&callback=mycallbackscheme://selling',
     );
   }

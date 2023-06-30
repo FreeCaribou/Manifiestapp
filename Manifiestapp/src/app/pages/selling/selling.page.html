@@ -11,17 +11,21 @@
 
 <ion-content>
 
-  <div class="text-align m-right-medium m-left-medium m-top-medium" *ngIf="skipVivaWalletAndShowRedirect">
+  <div class="text-align m-right-medium m-left-medium m-top-medium" *ngIf="skipVivaWalletAndShowRedirect && !forceSeeVw">
     <a href="https://manifiestapp.vercel.app/selling">
       <h1>
         {{'Ticket.GoWebVersie' | translate }}
       </h1>
     </a>
+
+    <h2 class="m-top-medium fake-mouse-select secondary-color fake-border" (click)="letMeSeeNormalAppVersion()">
+      {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
+    </h2>
   </div>
 
   <!-- Test purpose {{userPlatform | json}} -->
 
-  <ng-container *ngIf="!skipVivaWalletAndShowRedirect">
+  <ng-container *ngIf="!skipVivaWalletAndShowRedirect || forceSeeVw">
     <ng-container *ngIf="!isLogin && sellerLoginForm">
       <form [formGroup]="sellerLoginForm">
   
@@ -79,9 +83,15 @@
   
         <!-- <div>{{!vivaWalletVerification.nfcAvailable && isInApp}}</div> -->
   
-        <a *ngIf="skipVivaWalletAndShowRedirect" class="text-align" href="https://manifiestapp.vercel.app/selling">
-          {{'Ticket.GoWebVersie' | translate }}
-        </a>
+        <div *ngIf="skipVivaWalletAndShowRedirect">
+          <a class="text-align" href="https://manifiestapp.vercel.app/selling">
+            {{'Ticket.GoWebVersie' | translate }}
+          </a>
+          <ion-button *ngIf="!forceSeeVw" class="m-top-medium" expand="block" (click)="letMeSeeNormalAppVersion()">
+            {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
+          </ion-button>
+        </div>
+      
   
         <ng-container *ngIf="allHardwareOk">
           <h5 *ngIf="!hasEveryInfoToSell" class="fake-mouse-select" (click)="openSellerDepartmentInfo()">
@@ -153,6 +163,9 @@
   
         <ion-button expand="block" (click)="openSellerDepartmentInfo()">
           {{"Ticket.MyDepartmentInfo" | translate}}
+        </ion-button>
+        <ion-button *ngIf="isInApp" class="m-top-medium" expand="block" (click)="resetVivaWallet()">
+          {{"Ticket.ResetVivaWallet" | translate}}
         </ion-button>
         <ion-button class="m-top-medium" (click)="clickOnLogout()" color="danger" expand="block">
           {{"Volunteer.Logout" | translate}}

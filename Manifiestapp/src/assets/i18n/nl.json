@@ -242,6 +242,8 @@
     "PayconicWarning": "Wanneer u betaalt met QR Code - Payconiq, zorg er dan voor dat u op \"ontvangst\" drukt wanneer de klant betaald heeft. Dit is zeer belangrijk voor de validatie !",
     "GoToWebVersion": "Problemen met Viva Wallet? Gebruik dus de webversie van de kaartverkoop",
     "PaymentSucceesWithoutTicket": "Er is een betaling maar geen ticket verkocht? Contacteer app@manifiesta.be met de e-mail van de klant en het tijdstip van het probleem",
-    "GoWebVersie": "Om tickets te verkopen met jouw gsm, kan je de webversie gebruiken via onderstaande link"
+    "GoWebVersie": "Om tickets te verkopen met jouw gsm, kan je de webversie gebruiken via onderstaande link",
+    "LetMeSeeNormalAppVersion": "Laat me de versie zien met Viva Wallet en contactloos betalen.",
+    "ResetVivaWallet": "Reset Viva Wallet"
   }
 }
