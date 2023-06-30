@@ -11,14 +11,14 @@
 
 <ion-content>
 
-  <div class="text-align m-right-medium m-left-medium m-top-medium" *ngIf="skipVivaWalletAndShowRedirect && !forceSeeVw">
+  <div class="text-align m-right-medium m-left-medium m-top-medium" *ngIf="skipVivaWalletAndShowRedirect">
     <a href="https://manifiestapp.vercel.app/selling">
       <h1>
         {{'Ticket.GoWebVersie' | translate }}
       </h1>
     </a>
 
-    <h2 class="m-top-medium fake-mouse-select secondary-color fake-border" (click)="letMeSeeNormalAppVersion()">
+    <h2 *ngIf="forceSeeVw" class="m-top-medium fake-mouse-select secondary-color fake-border" (click)="letMeSeeNormalAppVersion()">
       {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
     </h2>
   </div>
