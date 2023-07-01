@@ -18,7 +18,7 @@
       </h1>
     </a>
 
-    <h2 *ngIf="forceSeeVw" class="m-top-medium fake-mouse-select secondary-color fake-border" (click)="letMeSeeNormalAppVersion()">
+    <h2 *ngIf="!forceSeeVw" class="m-top-medium fake-mouse-select secondary-color fake-border" (click)="letMeSeeNormalAppVersion()">
       {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
     </h2>
   </div>
