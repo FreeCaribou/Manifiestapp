@@ -29,7 +29,7 @@ import { SellingPage } from './pages/selling/selling.page';
 export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: 'home', icon: 'home' },
-    // { title: 'Programme', url: 'programme', icon: 'calendar' },
+    { title: 'Programme', url: 'programme', icon: 'calendar' },
     { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
     // { title: 'News', url: 'news-info', icon: 'newspaper' },
     { title: 'Selling', url: 'selling', icon: 'ticket' },

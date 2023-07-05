@@ -1,17 +1,19 @@
 <ion-card class="programme-card-body">
   <div [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
     <ion-thumbnail>
-      <ion-img [src]="event.mainPictureUrl"></ion-img>
+      <ion-img [src]="event.image?.meta?.download_url"></ion-img>
     </ion-thumbnail>
 
     <ion-card-header>
       <ion-card-subtitle>
-        <span *ngIf="event.startDate">{{event.startDate | simpleDatePipe:dateJustWithHour:!connected}} - {{event.endDate |
-          simpleDatePipe:dateJustWithHour:!connected}}</span>
+        <span *ngIf="event.api_event_dates[0]">
+          {{event.api_event_dates[0].start | simpleDatePipe:dateJustWithHour}} -
+          {{event.api_event_dates[0].end |simpleDatePipe:dateJustWithHour}}
+        </span>
         <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>
-      <ion-card-title [innerHtml]="event.headline" color="secondary" class="event-title"></ion-card-title>
-      {{event.localisation?.name}} - {{event.category?.name}}
+      <ion-card-title [innerHtml]="event.title" color="secondary" class="event-title"></ion-card-title>
+      {{event.api_location?.name}} - {{event.api_categories?.primary[0]}}
     </ion-card-header>
   </div>
 
@@ -20,8 +22,9 @@
 
 </ion-card>
 
-<ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav" (click)="onCardHeartClick(event)">
+<!-- <ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav"
+  (click)="onCardHeartClick(event)">
   <ion-fab-button color="tertiary" size="small">
     <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-fab-button>
-</ion-fab>
+</ion-fab> -->

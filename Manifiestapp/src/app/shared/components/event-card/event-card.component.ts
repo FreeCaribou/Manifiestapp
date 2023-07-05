@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EventInterface } from '../../models/Event.interface';
+import { WagtailApiEventItem } from '../../models/Event.interface';
 import { ProgrammeService } from '../../services/data/programme/programme.service';
 import { Network } from '@capacitor/network';
 
@@ -9,7 +9,7 @@ import { Network } from '@capacitor/network';
 })
 export class EventCardComponent implements OnInit {
   @Input()
-  event: EventInterface;
+  event: WagtailApiEventItem;
   @Input()
   dateJustWithHour = true;
 
@@ -23,7 +23,7 @@ export class EventCardComponent implements OnInit {
 
   ngOnInit() { }
 
-  onCardHeartClick(event: EventInterface) {
+  onCardHeartClick(event: WagtailApiEventItem) {
     this.programmeService.changeFavorite(event);
   }
 

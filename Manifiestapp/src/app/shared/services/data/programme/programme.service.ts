@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, WagtailApiEventItem, WagtailApiReturn } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
 import { IProgrammeService } from './programme.service.interface';
@@ -16,6 +16,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { formatDate } from '@angular/common';
 import { LanguageCommunicationService } from '../../communication/language.communication.service';
 import { environment } from '../../../../../environments/environment';
+import { BaseService } from '../base.service';
 
 
 @Injectable({
@@ -23,8 +24,12 @@ import { environment } from '../../../../../environments/environment';
 })
 export class ProgrammeService implements IProgrammeService {
 
-  favoriteChangeEmit = new EventEmitter<EventInterface>();
+  favoriteChangeEmit = new EventEmitter<WagtailApiEventItem>();
   verificationFavoriteLoadEmit = new EventEmitter<boolean>();
+
+  cacheBigBlobProgrammeBrut: WagtailApiReturn;
+  cacheBigBlobProgramme: WagtailApiEventItem[] = [];
+  cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
   constructor(
     private service: ProgrammeDataService,
@@ -32,10 +37,58 @@ export class ProgrammeService implements IProgrammeService {
     private toastController: ToastController,
     private translate: TranslateService,
     private languageService: LanguageCommunicationService,
+    private baseService: BaseService,
   ) {
     this.languageService.langHasChangeEvent.subscribe(e => {
       this.resetListCache();
     })
+  }
+
+  getBigBlobAllProgramme(): Observable<WagtailApiReturn> {
+    if (this.cacheBigBlobProgramme.length > 0) {
+      return of(this.cacheBigBlobProgrammeBrut);
+    }
+    let url = 'https://manifiesta.be/api/v2/pages/?type=event.EventPage';
+    url += '&fields=description,api_event_dates,api_location,image,api_categories';
+    url += '&locale=' + this.languageService.selectedLanguage;
+    url += '&format=json';
+    return this.baseService.getCall(url).pipe(
+      // Map and sort the date and hours
+      map(data => {
+        try {
+          data.items = data.items.map(i => {
+            let dayInString = '';
+            switch (i.api_event_dates[0].day) {
+              case 'SAT':
+                dayInString = '2023-09-09T';
+                break;
+              case 'SUN':
+                dayInString = '2023-09-10T';
+                break;
+            }
+            return {
+              ...i,
+              api_event_dates: [
+                {
+                  day: i.api_event_dates[0].day,
+                  start: dayInString + i.api_event_dates[0].start,
+                  end: dayInString + i.api_event_dates[0].end,
+                }
+              ]
+            }
+          })
+        } catch (e) {
+          console.warn('error in mapping date and hour of event', e)
+        }
+        data.items = data.items.sort((a, b) => {
+          return a.api_event_dates[0].start > b.api_event_dates[0].start;
+        });
+        return data;
+      }),
+      tap(d => this.cacheBigBlobProgramme = d.items),
+      tap(d => this.cacheBigBlobProgrammeBrut = d),
+      tap(() => this.cacheBigBlobProgrammeChangeEmit$.emit()),
+    );
   }
 
   getAllProgramme(): Observable<EventInterface[]> {
@@ -112,7 +165,7 @@ export class ProgrammeService implements IProgrammeService {
     return localStorage.getItem(LocalStorageEnum.FavoriteId)?.split(',') || [];
   }
 
-  async changeFavorite(event: EventInterface) {
+  async changeFavorite(event: WagtailApiEventItem) {
     const isChangedToFavorite = event.favorite = !event.favorite;
     const favoriteId: string[] = this.getFavoriteId();
 
@@ -137,15 +190,16 @@ export class ProgrammeService implements IProgrammeService {
       });
     })
 
-    const allNotif = await (await LocalNotifications.getPending()).notifications;
-    if (event.favorite) {
-      await this.verifyEventHourConflictForNewFav(event);
-      if (!allNotif.find(x => x.id === parseInt(event.id))) {
-        await this.addOneEventNotif(event);
-      }
-    } else {
-      await this.cancelOneEventNotif(event, allNotif);
-    }
+    // TODO adapt the notif
+    // const allNotif = await (await LocalNotifications.getPending()).notifications;
+    // if (event.favorite) {
+    //   await this.verifyEventHourConflictForNewFav(event);
+    //   if (!allNotif.find(x => x.id == event.id)) {
+    //     await this.addOneEventNotif(event);
+    //   }
+    // } else {
+    //   await this.cancelOneEventNotif(event, allNotif);
+    // }
 
     this.favoriteChangeEmit.emit(event);
   }

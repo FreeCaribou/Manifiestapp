@@ -2,6 +2,25 @@ export interface RenderedInterface {
   rendered: string;
 }
 
+export interface WagtailApiReturn {
+  items: WagtailApiEventItem[];
+  meta: {
+    total_count: number;
+  }
+}
+
+export interface WagtailApiEventItem {
+  id: number,
+  api_event_dates: { day: string, start: string, end: string }[];
+  api_location: { name: string, search_id: string };
+  api_categories: {primary: string[], secondart: string[]},
+  description: { type: string, value: string }[];
+  title: string;
+  favorite: boolean;
+  inFavoriteConflict: boolean;
+  image: {meta: {download_url: string}},
+}
+
 export interface DayListEventInterface {
   day: Date;
   events: EventInterface[];

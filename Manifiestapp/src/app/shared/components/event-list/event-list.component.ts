@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Network } from '@capacitor/network';
 import { TranslateService } from '@ngx-translate/core';
-import { DayListEventInterface, EventInterface } from '../../models/Event.interface';
+import { DayListEventInterface, EventInterface, WagtailApiEventItem } from '../../models/Event.interface';
 import { ProgrammeService } from '../../services/data/programme/programme.service';
 
 @Component({
@@ -22,7 +22,7 @@ export class EventListComponent {
     });
   }
 
-  onCardHeartClick(event: EventInterface) {
+  onCardHeartClick(event: any) {
     this.programmeService.changeFavorite(event);
   }
 }

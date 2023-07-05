@@ -3,13 +3,14 @@ import { Router } from '@angular/router';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 import { Network } from '@capacitor/network';
+import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
 @Component({
   selector: 'app-programme',
   templateUrl: './programme.page.html',
 })
 export class ProgrammePage {
-  days: any[];
+  days: any[] = [];
 
   // for the internet connection
   connected = true;
@@ -18,6 +19,7 @@ export class ProgrammePage {
     private infoListService: InfoListService,
     private router: Router,
     public loadingCommunication: LoadingCommunicationService,
+    private programmeService: ProgrammeService,
   ) { }
 
   ionViewWillEnter() {
@@ -32,6 +34,20 @@ export class ProgrammePage {
     //     this.setDays(this.infoListService.getOfflineDaysList())
     //   }
     // });
+
+    this.loadingCommunication.changeLoaderTo(true);
+    this.programmeService.getBigBlobAllProgramme().pipe().subscribe(data => {
+      data.items.forEach(item => {
+        let day = item.api_event_dates[0].day;
+        if (!this.days.includes(day)) {
+          this.days.push(day);
+        }
+      });
+
+      if (!this.router.url.includes('subprogramme')) {
+        this.router.navigate(['programme', 'subprogramme', this.days[0]]);
+      }
+    }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
   }
 
   // The data from WP don't come always in right order for the days
@@ -51,7 +67,7 @@ export class ProgrammePage {
   }
 
   isTabSelected(d): boolean {
-    return this.router.url.includes(d.id);
+    return this.router.url.includes(d);
   }
 
 }

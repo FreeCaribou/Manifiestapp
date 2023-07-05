@@ -8,13 +8,10 @@ import { wpDateToRealDate } from '../utils/wp-date-to-real-date';
 export class SimpleDatePipe implements PipeTransform {
   transform(value: Date | string, withoutDay: any, fromOffline = false): any {
     const stringFormat = withoutDay ? 'HH:mm' : 'dd/MM HH:mm';
-    if (fromOffline) {
-      return formatDate(new Date(value), stringFormat, 'fr');
-    }
     if (value && value instanceof Date) {
       return formatDate(value, stringFormat, 'fr');
-    } else if (value && typeof value === 'string' && parseFloat(value)) {
-      const correctDate = wpDateToRealDate(value);
+    } else if (value && typeof value === 'string') {
+      const correctDate = new Date(value);
       return correctDate ? formatDate(correctDate, stringFormat, 'fr') : 'No hour';
     } else {
       return 'No hour'
