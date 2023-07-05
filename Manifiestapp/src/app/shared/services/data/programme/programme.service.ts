@@ -159,6 +159,8 @@ export class ProgrammeService implements IProgrammeService {
 
   resetListCache() {
     this.programmes = [];
+    this.cacheBigBlobProgramme = [];
+    this.cacheBigBlobProgrammeBrut = null;
   }
 
   getFavoriteId(): string[] {
