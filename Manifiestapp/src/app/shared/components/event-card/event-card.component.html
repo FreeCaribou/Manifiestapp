@@ -10,10 +10,10 @@
           {{event.api_event_dates[0].start | simpleDatePipe:dateJustWithHour}} -
           {{event.api_event_dates[0].end |simpleDatePipe:dateJustWithHour}}
         </span>
-        <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
+        <!-- <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon> -->
       </ion-card-subtitle>
       <ion-card-title [innerHtml]="event.title" color="secondary" class="event-title"></ion-card-title>
-      {{event.api_location?.name}} - {{event.api_categories?.primary[0]}}
+      {{event.api_location?.name}} - {{event.api_categories?.primary | categoriesListPipe}}
     </ion-card-header>
   </div>
 
@@ -22,9 +22,9 @@
 
 </ion-card>
 
-<!-- <ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav"
+<ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav"
   (click)="onCardHeartClick(event)">
   <ion-fab-button color="tertiary" size="small">
     <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-fab-button>
-</ion-fab> -->
+</ion-fab>

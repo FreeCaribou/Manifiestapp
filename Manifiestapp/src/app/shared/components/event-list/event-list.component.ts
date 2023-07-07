@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Network } from '@capacitor/network';
 import { TranslateService } from '@ngx-translate/core';
-import { DayListEventInterface, EventInterface, WagtailApiEventItem } from '../../models/Event.interface';
+import { DayListEventInterface, EventInterface, WagtailApiEventItem, WagtailApiEventItemDaysList } from '../../models/Event.interface';
 import { ProgrammeService } from '../../services/data/programme/programme.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { ProgrammeService } from '../../services/data/programme/programme.servic
 })
 export class EventListComponent {
   @Input()
-  list: DayListEventInterface[];
+  list: WagtailApiEventItemDaysList[];
   @Input()
   dateJustWithHour = true;
 

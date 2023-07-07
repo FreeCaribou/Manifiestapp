@@ -1,28 +1,28 @@
 <ion-list *ngFor="let events of list" lines="none">
 
-  <ion-label *ngIf="events.day" class="m-left-medium">{{ events.day | date:'EEEE dd LLLL':'':translate.currentLang }}
+  <ion-label *ngIf="events.day" class="m-left-medium">{{ events.dayDate | date:'EEEE dd LLLL':'':translate.currentLang}}
   </ion-label>
   <ion-label *ngIf="!events.day" class="m-left-medium">{{ 'Programme.ScheduleNotYetDefined' | translate }}</ion-label>
 
   <ion-item *ngFor="let event of events.events">
     <ion-avatar *ngIf="connected" [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
-      <ion-img [src]="event.mainPictureUrl"></ion-img>
+      <ion-img [src]="event.image?.meta?.download_url"></ion-img>
     </ion-avatar>
     <ion-label>
       <h2 *ngIf="connected" [routerLink]="['/programme', 'event-detail', event.id]"
         class="fake-mouse-select m-left-small">
-        <span [innerHtml]="event.headline" class="secondary-color"></span>
+        <span [innerHtml]="event.title" class="secondary-color"></span>
       </h2>
       <h2 *ngIf="!connected">
-        <span [innerHtml]="event.headline" class="secondary-color"></span>
+        <span [innerHtml]="event.title" class="secondary-color"></span>
       </h2>
       <h3>
-        <span *ngIf="event.startDate" class="medium-color">
-          {{event.startDate | simpleDatePipe:true:!connected}} - {{event.endDate |
-          simpleDatePipe:true:!connected}} <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle"
-            color="warning">
+        <span *ngIf="event.api_event_dates[0].start" class="medium-color">
+          {{event.api_event_dates[0].start | simpleDatePipe:true}} -
+          {{event.api_event_dates[0].end | simpleDatePipe:true}}
+          <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning">
           </ion-icon>
-        </span> - <span class="medium-color">{{event.localisation?.name}}</span>
+        </span> - <span class="medium-color">{{event.api_location?.name}}</span>
       </h3>
     </ion-label>
     <ion-icon *ngIf="connected" class="fake-mouse-select" (click)="onCardHeartClick(event)" color="tertiary"

@@ -9,11 +9,17 @@ export interface WagtailApiReturn {
   }
 }
 
+export interface WagtailApiEventItemDaysList {
+  day: string;
+  dayDate?: Date;
+  events: WagtailApiEventItem[];
+}
+
 export interface WagtailApiEventItem {
   id: number,
   api_event_dates: { day: string, start: string, end: string }[];
   api_location: { name: string, search_id: string };
-  api_categories: {primary: string[], secondart: string[]},
+  api_categories: {primary: string[], secondary: string[]},
   description: { type: string, value: string }[];
   title: string;
   favorite: boolean;

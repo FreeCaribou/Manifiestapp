@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface, WagtailApiEventItem, WagtailApiReturn } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, WagtailApiEventItem, WagtailApiEventItemDaysList, WagtailApiReturn } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
 import { IProgrammeService } from './programme.service.interface';
@@ -18,11 +18,11 @@ import { LanguageCommunicationService } from '../../communication/language.commu
 import { environment } from '../../../../../environments/environment';
 import { BaseService } from '../base.service';
 
-
+// TODO clean old code from wordpress
 @Injectable({
   providedIn: 'root'
 })
-export class ProgrammeService implements IProgrammeService {
+export class ProgrammeService {
 
   favoriteChangeEmit = new EventEmitter<WagtailApiEventItem>();
   verificationFavoriteLoadEmit = new EventEmitter<boolean>();
@@ -41,7 +41,9 @@ export class ProgrammeService implements IProgrammeService {
   ) {
     this.languageService.langHasChangeEvent.subscribe(e => {
       this.resetListCache();
-    })
+    });
+
+    localStorage.removeItem(LocalStorageEnum.FavoriteId);
   }
 
   getBigBlobAllProgramme(): Observable<WagtailApiReturn> {
@@ -85,60 +87,33 @@ export class ProgrammeService implements IProgrammeService {
         });
         return data;
       }),
+      map(e => { return { ...e, items: this.mapToFavorite(e.items) } }),
       tap(d => this.cacheBigBlobProgramme = d.items),
       tap(d => this.cacheBigBlobProgrammeBrut = d),
       tap(() => this.cacheBigBlobProgrammeChangeEmit$.emit()),
     );
   }
 
-  getAllProgramme(): Observable<EventInterface[]> {
-    return this.service.getAllProgramme().pipe(
-      map(e => this.mapArrayRawWpDataToClearData(e)),
-      map(e => this.mapToFavorite(e)),
-      map(e => this.mapOrderByStartDate(e)),
-    );
-  }
-
-  programmes: { days: string, list: EventInterface[] }[] = [];
-  getAllProgrammeFilter(
-    day: string[], locatiesId?: string[], categoriesId?: string[], organizersId?: string[]
-  ): Observable<EventInterface[]> {
-    const programmesCacheIndex = this.programmes.findIndex(x => x.days === day.toString() && x.list);
-    if (programmesCacheIndex === -1) {
-      return this.service.getAllProgrammeFilter(day, locatiesId, categoriesId, organizersId).pipe(
-        map(e => this.mapArrayRawWpDataToClearData(e)),
-        map(e => this.mapToFavorite(e)),
-        map(e => this.mapOrderByStartDate(e)),
-        tap(e => {
-          if (!locatiesId && !organizersId && !categoriesId) {
-            this.programmes.push({ days: day.toString(), list: e })
-            localStorage.setItem(LocalStorageEnum.OfflineProgrammes, JSON.stringify(this.programmes));
-          }
-        }),
+  onlyGetFavoriteProgramme(): Observable<WagtailApiEventItem[]> {
+    const ids = this.getFavoriteId();
+    if (ids.length > 0) {
+      return this.getBigBlobAllProgramme().pipe(
+        map(d => { return d.items.filter(i => ids.includes(i.id.toString())) })
       );
     } else {
-      let tmpProgrammes = this.programmes[programmesCacheIndex].list;
-      if (locatiesId) {
-        tmpProgrammes = tmpProgrammes.filter(x => locatiesId.find(y => y.toString() === x.localisation?.id.toString()));
-      }
-      if (categoriesId) {
-        tmpProgrammes = tmpProgrammes.filter(x => categoriesId.find(y => y.toString() === x.category?.id.toString()));
-      }
-      return of(tmpProgrammes);
+      return of([]);
     }
   }
 
-  getFavoriteProgramme(ids?: string[]): Observable<EventInterface[]> {
+  getFavoriteProgramme(ids?: string[]): Observable<WagtailApiEventItem[]> {
     let shiftsList = [];
     return this.getFavoriteId().length > 0 ?
       this.volunteerShiftService.getShifts().pipe(
         tap(data => { shiftsList = data }),
         switchMap(e => {
-          return this.service.getFavoriteProgramme(this.getFavoriteId()).pipe(
-            map(e => this.mapArrayRawWpDataToClearData(e)),
+          return this.onlyGetFavoriteProgramme().pipe(
             map(e => this.mapToFavorite(e)),
             map(e => this.mapVerifyFavoriteConflict(e, shiftsList)),
-            map(e => this.mapOrderByStartDate(e)),
           )
         })
       )
@@ -158,13 +133,12 @@ export class ProgrammeService implements IProgrammeService {
   // no data call method
 
   resetListCache() {
-    this.programmes = [];
     this.cacheBigBlobProgramme = [];
     this.cacheBigBlobProgrammeBrut = null;
   }
 
   getFavoriteId(): string[] {
-    return localStorage.getItem(LocalStorageEnum.FavoriteId)?.split(',') || [];
+    return localStorage.getItem(LocalStorageEnum.FavoriteId2023)?.split(',') || [];
   }
 
   async changeFavorite(event: WagtailApiEventItem) {
@@ -172,25 +146,17 @@ export class ProgrammeService implements IProgrammeService {
     const favoriteId: string[] = this.getFavoriteId();
 
     if (isChangedToFavorite && !favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId, [event.id.toString()].toString());
+      localStorage.setItem(LocalStorageEnum.FavoriteId2023, [event.id.toString()].toString());
     } else if (isChangedToFavorite && favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId, [...favoriteId, event.id.toString()].toString());
+      localStorage.setItem(LocalStorageEnum.FavoriteId2023, [...favoriteId, event.id.toString()].toString());
     } else if (!isChangedToFavorite && favoriteId) {
       const favoriteIdFiltered = favoriteId.filter(x => x !== event.id.toString());
       if (favoriteIdFiltered.length > 0) {
-        localStorage.setItem(LocalStorageEnum.FavoriteId, favoriteId.filter(x => x !== event.id.toString()).toString())
+        localStorage.setItem(LocalStorageEnum.FavoriteId2023, favoriteId.filter(x => x !== event.id.toString()).toString())
       } else {
-        localStorage.removeItem(LocalStorageEnum.FavoriteId);
+        localStorage.removeItem(LocalStorageEnum.FavoriteId2023);
       }
     }
-
-    this.programmes.forEach(p => {
-      p.list.forEach(l => {
-        if (l.id.toString() === event.id.toString()) {
-          l.favorite = isChangedToFavorite;
-        }
-      });
-    })
 
     // TODO adapt the notif
     // const allNotif = await (await LocalNotifications.getPending()).notifications;
@@ -218,7 +184,7 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   // TODO-refactor divide the code please ...
-  async verifyEventHourConflictForNewFav(event: EventInterface) {
+  async verifyEventHourConflictForNewFav(event: WagtailApiEventItem) {
     this.verificationFavoriteLoadEmit.emit(true);
     const favs = await this.getFavoriteProgramme().toPromise();
     if (favs.length > 1) {
@@ -228,7 +194,7 @@ export class ProgrammeService implements IProgrammeService {
       if (conflicts.length > 0) {
         let message = '';
         conflicts.forEach((x, k) => {
-          message += `"${x.headline}"${k + 1 === conflicts.length ? '' : ' and '}`;
+          message += `"${x.title}"${k + 1 === conflicts.length ? '' : ' and '}`;
         });
         const toast = await this.toastController.create({
           header: await this.translate.get('Programme.HaveConflict').toPromise(),
@@ -263,18 +229,18 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   // TODO beware in production with the date from wp ...
-  async addOneEventNotif(event: EventInterface) {
-    if (!localStorage.getItem(LocalStorageEnum.AvoidNotification) && event.startDate) {
-      const startDateFormated = formatDate(event.startDate, 'HH:mm', 'fr');
+  async addOneEventNotif(event: WagtailApiEventItem) {
+    if (!localStorage.getItem(LocalStorageEnum.AvoidNotification) && event.api_event_dates[0].start) {
+      const startDateFormated = formatDate(event.api_event_dates[0].start, 'HH:mm', 'fr');
       const body = await this.translate.get(
         'Programme.NotificationBody',
-        { event: event?.title?.rendered, startDate: startDateFormated, location: event?.localisation.name }
+        { event: event?.title, startDate: startDateFormated, location: event?.api_location.name }
       ).toPromise();
 
       let scheduleDate: Date;
       if (environment.production) {
         // For production, an half hour before the event
-        scheduleDate = new Date(new Date(event.startDate).getTime() - 1000 * 60 * 30);
+        scheduleDate = new Date(new Date(event.api_event_dates[0].start).getTime() - 1000 * 60 * 30);
       } else {
         // For test, show notification 5 seconds after the click on fav
         scheduleDate = new Date(Date.now() + 1000 * 15);
@@ -285,8 +251,8 @@ export class ProgrammeService implements IProgrammeService {
         await LocalNotifications.schedule({
           notifications: [
             {
-              title: `${event?.title?.rendered} - ${startDateFormated}` || 'Check it',
-              id: parseInt(event.id) || 1,
+              title: `${event?.title} - ${startDateFormated}` || 'Check it',
+              id: event.id || 1,
               body: body,
               largeBody: body,
               schedule: { at: scheduleDate, allowWhileIdle: true },
@@ -331,9 +297,9 @@ export class ProgrammeService implements IProgrammeService {
     return this.getFavoriteId()?.includes(id.toString());
   }
 
-  mapToFavorite(events: EventInterface[]): EventInterface[] {
+  mapToFavorite(events: WagtailApiEventItem[]): WagtailApiEventItem[] {
     events = events.map(x => {
-      x.favorite = this.isFavorite(x.id);
+      x.favorite = this.isFavorite(x.id.toString());
       return x;
     });
     return events;
@@ -344,7 +310,7 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   // TODO-refactor seriously, better code is needed here ...
-  mapVerifyFavoriteConflict(events: EventInterface[], shifts = []): EventInterface[] {
+  mapVerifyFavoriteConflict(events: WagtailApiEventItem[], shifts = []): WagtailApiEventItem[] {
     return events.map(e => {
       e.inFavoriteConflict =
         events.findIndex(i => {
@@ -367,12 +333,18 @@ export class ProgrammeService implements IProgrammeService {
   }
 
   verifyConflictBetweenToRangeOfDate(a, b): boolean {
-    return (
-      moment(a.startDate).isBetween(b.startDate, b.endDate, 'minutes', '()')
-      || moment(a.endDate).isBetween(b.startDate, b.endDate, 'minutes', '()')
-      || (moment(a.startDate).isAfter(b.startDate) && moment(a.endDate).isBefore(b.endDate))
-      || (moment(a.startDate).isBefore(b.startDate) && moment(a.endDate).isAfter(b.endDate))
-    );
+    try {
+      const aStartDate = a.startDate || a.api_event_dates[0].start;
+      const aEndDate = a.endDate || a.api_event_dates[0].end;
+      const bStartDate = b.startDate || b.api_event_dates[0].start;
+      const bEndDate = b.endDate || b.api_event_dates[0].end;
+      return (
+        moment(aStartDate).isBetween(bStartDate, bEndDate, 'minutes', '()')
+        || moment(aEndDate).isBetween(bStartDate, bEndDate, 'minutes', '()')
+        || (moment(aStartDate).isAfter(bStartDate) && moment(aEndDate).isBefore(bEndDate))
+        || (moment(aStartDate).isBefore(bStartDate) && moment(aEndDate).isAfter(bEndDate))
+      );
+    } catch (e) { return false; }
   }
 
   mapOrderByStartDate(events: EventInterface[]): EventInterface[] {
@@ -381,15 +353,25 @@ export class ProgrammeService implements IProgrammeService {
     });
   }
 
-  mapListEventToDayListEvent(events: EventInterface[]): DayListEventInterface[] {
+  mapListEventToDayListEvent(events: WagtailApiEventItem[]): WagtailApiEventItemDaysList[] {
     const dayListEvent = [];
     events.forEach(e => {
-      const index = dayListEvent.findIndex(x => e.startDate?.toISOString().slice(0, 10) === x?.day?.toISOString().slice(0, 10));
+      const index = dayListEvent.findIndex(x => e.api_event_dates[0].day === x?.day);
       if (index > -1) {
         dayListEvent[index].events.push(e);
       } else {
+        let dayDate: Date;
+        switch (e.api_event_dates[0].day) {
+          case 'SAT':
+            dayDate = new Date('2023-09-09');
+            break;
+          case 'SUN':
+            dayDate = new Date('2023-09-10');
+            break;
+        }
         dayListEvent.push({
-          day: e.startDate ? new Date(e.startDate?.toISOString().slice(0, 10)) : null,
+          day: e.api_event_dates[0].day,
+          dayDate,
           events: [e]
         });
       }

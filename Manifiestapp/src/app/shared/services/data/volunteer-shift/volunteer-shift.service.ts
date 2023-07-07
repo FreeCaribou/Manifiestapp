@@ -24,10 +24,8 @@ export class VolunteerShiftService {
   // TODO-refactor maybe also a mapping of data here ?
   shifts: any[];
   getShifts(): Observable<any> {
-    console.log('hello')
     if (this.isConnectedToBeeple()) {
       if (!this.shifts || this.shifts.length === 0) {
-        console.log('hello$', this.baseUrl, this.getBeepleVolunteerId())
         let tmpShift = [];
         return this.httpClient.get<any>(
           `${this.baseUrl}sellers/user-shifts/${this.getBeepleVolunteerId()}`,

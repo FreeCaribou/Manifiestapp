@@ -7,7 +7,7 @@ import { Network } from '@capacitor/network';
 import { IonModal, MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
-import { DayListEventInterface, EventInterface } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, WagtailApiEventItemDaysList } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './my-manifiesta.page.html',
 })
 export class MyManifiestaPage implements OnDestroy {
-  list: DayListEventInterface[];
+  list: WagtailApiEventItemDaysList[];
   favorieChangeEmit: Subscription;
   dateJustWithHour = false;
   haveConflict = false;
@@ -57,8 +57,8 @@ export class MyManifiestaPage implements OnDestroy {
       this.connected = n.connected;
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       this.loginForm = this.buildLoginForm();
-      // this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
-      // this.fetchFavoriteProgramme();
+      this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
+      this.fetchFavoriteProgramme();
       this.fetchShifts();
       if (this.isConnected) {
         this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
@@ -112,11 +112,11 @@ export class MyManifiestaPage implements OnDestroy {
       this.loadingCommunication.changeLoaderTo(true);
       this.programmeService.getFavoriteProgramme().subscribe(data => {
         this.list = this.programmeService.mapListEventToDayListEvent(data);
-        this.programmeService.setOfflineFavoritesList(this.list);
+        // this.programmeService.setOfflineFavoritesList(this.list);
         this.haveConflict = data.findIndex(e => e.inFavoriteConflict) > -1;
       }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
     } else {
-      this.list = this.programmeService.getOfflineFavoritesList();
+      // this.list = this.programmeService.getOfflineFavoritesList();
     }
   }
 

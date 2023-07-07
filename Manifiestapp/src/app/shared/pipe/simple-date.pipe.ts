@@ -1,6 +1,5 @@
 import { formatDate } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import { wpDateToRealDate } from '../utils/wp-date-to-real-date';
 
 @Pipe({
   name: 'simpleDatePipe'

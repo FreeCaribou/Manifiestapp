@@ -1,5 +1,6 @@
 export enum LocalStorageEnum {
   FavoriteId = 'favoriteId',
+  FavoriteId2023 = 'favoriteId2023',
   Language = 'language',
   BeepleId = 'beepleId',
   BeepleToken = 'beepleToken',
