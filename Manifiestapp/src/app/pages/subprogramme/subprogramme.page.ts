@@ -17,19 +17,19 @@ export class SubprogrammePage {
   list: WagtailApiEventItem[];
   listToShow: WagtailApiEventItem[];
   day: EventDayEnum;
+
   locaties: any[];
   locatieSelected: any;
-  organizers: any[];
-  organizerSelected: any;
   categories: any[];
   categorieSelected: any;
+  search: string;
+  // organizers: any[];
+  // organizerSelected: any;
 
   showFilters = false;
 
   // for the internet connection
   connected = true;
-
-  search: string;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -74,9 +74,16 @@ export class SubprogrammePage {
   initList() {
     this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.api_event_dates[0].day === this.dayId);
     this.listToShow = this.list;
+
+    this.locaties = [... new Set(this.list.map(i => i.api_location.name))].map(i => { return { id: i, name: i } });
+    this.categories = [... new Set(
+      this.list.map(i => i.api_categories.primary.join()).filter(i => i).join().split(',')
+        .concat(this.list.map(i => i.api_categories.secondary.join()).filter(i => i).join().split(','))
+    )].map(i => { return { id: i, name: i } });
   }
 
   onSelectChange() {
+    this.makeFilter();
     // this.loadingCommunication.changeLoaderTo(true);
     // this.programmeService.getAllProgrammeFilter(
     //   [this.dayId],
@@ -95,13 +102,27 @@ export class SubprogrammePage {
   }
 
   onSearchChange() {
-    // if (this.search && this.search?.trim() !== '') {
-    //   this.listToShow = this.list.filter(
-    //     x => x.title.rendered.toLowerCase().includes(this.search.toLowerCase())
-    //   );
-    // } else {
-    //   this.listToShow = this.list;
-    // }
+    this.makeFilter();
+  }
+
+  makeFilter() {
+    this.listToShow = this.list;
+
+    if (this.search && this.search?.trim() !== '') {
+      this.listToShow = this.listToShow.filter(
+        x => x.title.toLowerCase().includes(this.search.toLowerCase())
+      );
+    }
+
+    if (this.locatieSelected) {
+      this.listToShow = this.listToShow.filter(e => e.api_location.name == this.locatieSelected);
+    }
+
+    if (this.categorieSelected) {
+      this.listToShow = this.listToShow.filter(e =>
+        e.api_categories.primary.includes(this.categorieSelected) || e.api_categories.secondary.includes(this.categorieSelected)
+      );
+    }
   }
 
 }
