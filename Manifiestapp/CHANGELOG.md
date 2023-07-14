@@ -1,3 +1,7 @@
+# 2.2.1
+## Patch
+* Avoid Viva Wallet for iPhone app
+
 # 2.2.0
 ## Patch
 * Rewrite access to website information
