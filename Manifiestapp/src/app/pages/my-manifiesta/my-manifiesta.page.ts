@@ -67,7 +67,6 @@ export class MyManifiestaPage implements OnDestroy {
       }
 
       this.volunteerShiftService.getLongtextVolunteersBenefits().subscribe(vb => {
-        console.log('dayta', vb)
         this.volunteersBenefits = vb.text;
       });
     });
