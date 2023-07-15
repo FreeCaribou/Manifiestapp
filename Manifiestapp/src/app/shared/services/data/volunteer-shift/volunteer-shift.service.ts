@@ -5,6 +5,7 @@ import { map, mergeMap, switchMap, tap } from "rxjs/operators";
 import { LocalStorageEnum } from "src/app/shared/models/LocalStorage.enum";
 import { environment } from "src/environments/environment";
 import { BaseService } from "../base.service";
+import { LanguageCommunicationService } from "../../communication/language.communication.service";
 
 // TODO-refactor typing
 @Injectable({
@@ -19,6 +20,7 @@ export class VolunteerShiftService {
   constructor(
     private httpClient: HttpClient,
     private baseService: BaseService,
+    private languageService: LanguageCommunicationService,
   ) { }
 
   // TODO-refactor maybe also a mapping of data here ?
@@ -135,6 +137,10 @@ export class VolunteerShiftService {
       const bDate = new Date(b.worked_hours[0]?.shift.start_datetime).getTime();
       return aDate - bDate;
     });
+  }
+
+  getLongtextVolunteersBenefits(): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}admins/longtext/volunteers-benefits/${this.languageService.selectedLanguage}`);
   }
 
   // offline

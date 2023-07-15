@@ -46,6 +46,8 @@
         <h2 *ngIf="!connected" class="m-right-medium m-left-medium">{{'User.NotConnectedForShifts' | translate }}</h2>
         <form *ngIf="!isConnected && loginForm && connected" [formGroup]="loginForm">
 
+          <a class="fake-mouse-select m-right-medium m-left-medium" (click)="openAdvantageModal()">{{'Volunteer.AdvantageTitle' | translate}}</a>
+
           <p [innerHtml]="'User.ConnectionBeeple' | translate" class="m-right-medium m-left-medium"></p>
 
           <ion-grid>
@@ -165,10 +167,7 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
-        <p>{{'Volunteer.AdvantagePartOne' | translate}}</p>
-        <p>{{'Volunteer.AdvantagePartTwo' | translate}}</p>
-        <p>{{'Volunteer.AdvantagePartThree' | translate}}</p>
-        <p>{{'Volunteer.AdvantagePartFour' | translate}}</p>
+        <div [innerHtml]="volunteersBenefits"></div>
       </ion-content>
     </ng-template>
   </ion-modal>

@@ -35,6 +35,8 @@ export class MyManifiestaPage implements OnDestroy {
   connected = true;
   volunteerName: string;
 
+  volunteersBenefits = '';
+
   @ViewChild('advantageModal') advantageModal: IonModal;
   @ViewChild('insuranceModal') insuranceModal: IonModal;
 
@@ -63,6 +65,11 @@ export class MyManifiestaPage implements OnDestroy {
       if (this.isConnected) {
         this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
       }
+
+      this.volunteerShiftService.getLongtextVolunteersBenefits().subscribe(vb => {
+        console.log('dayta', vb)
+        this.volunteersBenefits = vb.text;
+      });
     });
   }
 
