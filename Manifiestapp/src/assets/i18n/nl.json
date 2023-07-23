@@ -244,6 +244,7 @@
     "PaymentSucceesWithoutTicket": "Er is een betaling maar geen ticket verkocht? Contacteer app@manifiesta.be met de e-mail van de klant en het tijdstip van het probleem",
     "GoWebVersie": "Om tickets te verkopen met jouw gsm, kan je de webversie gebruiken via onderstaande link",
     "LetMeSeeNormalAppVersion": "Laat me de versie zien met Viva Wallet en contactloos betalen.",
-    "ResetVivaWallet": "Reset Viva Wallet"
+    "ResetVivaWallet": "Reset Viva Wallet",
+    "OnlyQrCodePlease": "Gebruik ALLEEN de QR Code a.u.b."
   }
 }

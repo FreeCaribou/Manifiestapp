@@ -329,6 +329,8 @@
           </ion-label>
           <ion-toggle slot="end" [checked]="clientAcceptData" (ionChange)="onClientAcceptData($event)"></ion-toggle>
         </ion-item>
+
+        <h1 *ngIf="!isInApp" class="text-align warning-color">{{'Ticket.OnlyQrCodePlease' | translate}}</h1>
   
         <ion-button (click)="buy()" [disabled]="disabledBuyButton" color="secondary" expand="block">
           <ion-icon name="cart"></ion-icon>
