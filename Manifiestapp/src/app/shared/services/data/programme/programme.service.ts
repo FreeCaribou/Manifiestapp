@@ -46,6 +46,23 @@ export class ProgrammeService {
     localStorage.removeItem(LocalStorageEnum.FavoriteId);
   }
 
+  retrieveProgrammeInLoop(url, count = 0, lastArray: EventInterface[] = [], maxPerPage = 20): Observable<any> {
+    let arrayToReturn: EventInterface[] = lastArray;
+    return this.baseService.getCall(`${url}&offset=${maxPerPage * count}&limit=${maxPerPage}`).pipe(
+      switchMap(e => {
+        if (!Array.isArray(e.items)) {
+          return of(lastArray);
+        }
+        arrayToReturn = arrayToReturn.concat(e.items);
+        if (e.items.length === maxPerPage) {
+          return this.retrieveProgrammeInLoop(url, count + 1, arrayToReturn);
+        } else {
+          return of(arrayToReturn);
+        }
+      })
+    );
+  }
+
   getBigBlobAllProgramme(): Observable<WagtailApiReturn> {
     if (this.cacheBigBlobProgramme.length > 0) {
       return of(this.cacheBigBlobProgrammeBrut);
@@ -54,11 +71,11 @@ export class ProgrammeService {
     url += '&fields=description,api_event_dates,api_location,image,api_categories';
     url += '&locale=' + this.languageService.selectedLanguage;
     url += '&format=json';
-    return this.baseService.getCall(url).pipe(
+    return this.retrieveProgrammeInLoop(url).pipe(
       // Map and sort the date and hours
-      map(data => {
+      map(datas => {
         try {
-          data.items = data.items.map(i => {
+          datas = datas.map(i => {
             let dayInString = '';
             switch (i.api_event_dates[0].day) {
               case 'SAT':
@@ -82,12 +99,12 @@ export class ProgrammeService {
         } catch (e) {
           console.warn('error in mapping date and hour of event', e)
         }
-        data.items = data.items.sort((a, b) => {
+        datas = datas.sort((a, b) => {
           return a.api_event_dates[0].start > b.api_event_dates[0].start;
         });
-        return data;
+        return datas;
       }),
-      map(e => { return { ...e, items: this.mapToFavorite(e.items) } }),
+      map(e => { return { ...e, items: this.mapToFavorite(e) } }),
       tap(d => this.cacheBigBlobProgramme = d.items),
       tap(d => this.cacheBigBlobProgrammeBrut = d),
       tap(() => this.cacheBigBlobProgrammeChangeEmit$.emit()),
