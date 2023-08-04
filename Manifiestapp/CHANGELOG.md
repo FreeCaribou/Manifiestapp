@@ -1,3 +1,6 @@
+# 2.2.2
+* Bump for iOS
+
 # 2.2.1
 ## Patch
 * Avoid Viva Wallet for iPhone app
