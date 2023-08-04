@@ -1,6 +1,10 @@
 # 2.2.1
 ## Patch
 * Avoid Viva Wallet for iPhone app
+* All event and not be limited by the limit of the website
+
+## Feature
+* Now dynamic info for volunteer
 
 # 2.2.0
 ## Patch

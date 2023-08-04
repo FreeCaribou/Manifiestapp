@@ -46,7 +46,7 @@ export class ProgrammeService {
     localStorage.removeItem(LocalStorageEnum.FavoriteId);
   }
 
-  retrieveProgrammeInLoop(url, count = 0, lastArray: EventInterface[] = [], maxPerPage = 20): Observable<any> {
+  retrieveProgrammeInLoop(url, count = 0, lastArray: EventInterface[] = [], maxPerPage = 50): Observable<any> {
     let arrayToReturn: EventInterface[] = lastArray;
     return this.baseService.getCall(`${url}&offset=${maxPerPage * count}&limit=${maxPerPage}`).pipe(
       switchMap(e => {
