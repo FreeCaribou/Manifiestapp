@@ -97,13 +97,13 @@ export class ProgrammeService {
             }
           })
         } catch (e) {
-          console.warn('error in mapping date and hour of event', e)
+          console.warn('error in mapping date and hour of event', e);
         }
-        datas = datas.sort((a, b) => {
-          return a.api_event_dates[0].start > b.api_event_dates[0].start;
-        });
         return datas;
       }),
+      map(datas => datas.sort((a, b) => {
+        return new Date(a.api_event_dates[0].start) > new Date(b.api_event_dates[0].start) ? 1 : -1;
+      })),
       map(e => { return { ...e, items: this.mapToFavorite(e) } }),
       tap(d => this.cacheBigBlobProgramme = d.items),
       tap(d => this.cacheBigBlobProgrammeBrut = d),

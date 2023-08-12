@@ -1,3 +1,6 @@
+# 2.2.3
+* Sorting bug in Android for the programm
+
 # 2.2.2
 * Bump for iOS
 
