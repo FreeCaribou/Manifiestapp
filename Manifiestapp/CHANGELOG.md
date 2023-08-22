@@ -1,3 +1,6 @@
+# 2.2.4
+* Change privacy link
+
 # 2.2.3
 * Sorting bug in Android for the programm
 
