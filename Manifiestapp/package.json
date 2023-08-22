@@ -19,10 +19,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "engines": {
-    "node": "14.18.1",
-    "npm": "6.14.15"
-  },
   "private": true,
   "dependencies": {
     "@angular/common": "~12.1.1",
