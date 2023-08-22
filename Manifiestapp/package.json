@@ -14,7 +14,7 @@
     "start-live-android": "ionic cap run android -l --external --prod",
     "serve-lab": "ionic serve --lab --prod",
     "start": "node server.js",
-    "build": "ng build --prod",
+    "build": "ng build --prod --openssl-legacy-provider",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
