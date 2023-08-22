@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NewInfoInterface } from 'src/app/shared/models/NewInfo.interface';
 import { NewsListService } from 'src/app/shared/services/data/news-list/news-list.service';
 import { Network } from '@capacitor/network';
+import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 
 @Component({
   selector: 'app-home',
@@ -19,11 +20,18 @@ export class HomePage {
   diffMinutes: number;
   diffSeconds: number;
 
+  longTextNewInfos = '';
+
   constructor(
     private newsListService: NewsListService,
+    private volunteerShiftService: VolunteerShiftService,
   ) { }
 
   ionViewDidEnter() {
+    this.volunteerShiftService.getLongtextNewInfos().subscribe(ni => {
+      this.longTextNewInfos = ni.text;
+    });
+
     this.count();
     setInterval(() => {
       this.count();

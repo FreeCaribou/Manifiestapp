@@ -1,4 +1,5 @@
 # 2.2.4
+* Long text for the news and overal info
 * Change privacy link
 
 # 2.2.3

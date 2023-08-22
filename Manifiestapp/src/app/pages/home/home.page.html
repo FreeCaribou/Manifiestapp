@@ -18,6 +18,19 @@
     <p class="secondary-color disabled-margin">{{'Info.Date' | translate }}</p> -->
   </div>
 
+  <ion-accordion-group>
+    <ion-accordion>
+      <ion-item slot="header">
+        <ion-label>{{'Info.NewInfos' | translate }}</ion-label>
+      </ion-item>
+      <div slot="content">
+        <div class="m-right-medium m-left-medium">
+          <div [innerHtml]="longTextNewInfos"></div>
+        </div>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
   <ion-grid *ngIf="!isNow" class="primary-color counter m-top-medium m-bt-medium">
     <ion-row>
       <ion-col>Days <h1>{{diffDays}}</h1>
@@ -30,7 +43,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  
+
   <!-- Ticket in pause -->
   <!-- <h2 class="m-right-medium m-left-medium text-align">
     <a href="https://manifiesta.eventsquare.co">{{ 'About.BuyTicket' | translate }}</a>

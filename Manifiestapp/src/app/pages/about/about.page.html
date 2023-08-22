@@ -6,7 +6,11 @@
     <ion-label><a href="mailto:info@manifiesta.be">info@manifiesta.be</a></ion-label>
   </ion-item>
 
-  <ion-accordion-group>
+  <div class="m-right-medium m-left-medium">
+    <div [innerHtml]="longTextInfos"></div>
+  </div>
+
+  <!-- <ion-accordion-group>
     <ion-accordion value="rules">
       <ion-item slot="header">
         <ion-label>{{ 'Info.Rules' | translate }}</ion-label>
@@ -189,7 +193,7 @@
         </ion-item>
       </ion-list>
     </ion-accordion>
-  </ion-accordion-group>
+  </ion-accordion-group> -->
 
   <ion-accordion-group>
     <ion-accordion value="app">

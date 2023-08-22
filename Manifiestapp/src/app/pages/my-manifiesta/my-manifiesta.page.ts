@@ -49,7 +49,6 @@ export class MyManifiestaPage implements OnDestroy {
     public modalController: ModalController,
     private volunteerShiftService: VolunteerShiftService,
     private formBuilder: FormBuilder,
-    private sellingService: SellingService,
   ) {
     this.checkAvoidNotification();
   }

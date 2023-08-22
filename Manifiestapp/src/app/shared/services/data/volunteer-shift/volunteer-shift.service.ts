@@ -143,6 +143,14 @@ export class VolunteerShiftService {
     return this.httpClient.get(`${this.baseUrl}admins/longtext/volunteers-benefits/${this.languageService.selectedLanguage}`);
   }
 
+  getLongtextNewInfos(): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}admins/longtext/general-new-infos/${this.languageService.selectedLanguage}`);
+  }
+
+  getLongtextOveralInfos(): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}admins/longtext/over-info/${this.languageService.selectedLanguage}`);
+  }
+
   // offline
 
   setOfflineList(shifts: any[]) {
