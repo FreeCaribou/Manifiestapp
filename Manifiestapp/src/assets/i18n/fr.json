@@ -246,6 +246,7 @@
     "GoWebVersie": "Pour vendre des tickets avec ton téléphone, tu dois utiliser la version web via ce lien",
     "LetMeSeeNormalAppVersion": "Laissez moi quand même voir la version avec Viva Wallet et paiement sans contact",
     "ResetVivaWallet": "Reset Viva Wallet",
-    "OnlyQrCodePlease": "Utilisez UNIQUEMENT le QR Code svp"
+    "OnlyQrCodePlease": "Utilisez UNIQUEMENT le QR Code svp",
+    "TmpProblem": "Tijdelijk probleem met EventSquare - Gebruik in plaats daarvan deze link https://manifiesta.eventsquare.store/2023"
   }
 }
