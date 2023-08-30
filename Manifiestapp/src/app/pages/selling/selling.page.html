@@ -97,9 +97,15 @@
           <h5 *ngIf="!hasEveryInfoToSell" class="fake-mouse-select" (click)="openSellerDepartmentInfo()">
             {{'Ticket.CompleteSellerDepartmentInfoPlease' | translate}}
           </h5>
+
+          <h1 class="warning-color">
+            <a href="https://manifiesta.eventsquare.store/2023" class="warning-color">
+              {{'Ticket.TmpProblem' | translate}}
+            </a>
+          </h1>
   
           <ng-container *ngIf="hasEveryInfoToSell && ticketTypes?.length > 0">
-            <!-- <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
+            <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
               [class.transparent-background]="ticketType.branding?.image">
               <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
               <ion-card-header *ngIf="!ticketType.branding?.image">
@@ -123,20 +129,14 @@
                   <ion-icon name="add"></ion-icon>
                 </ion-button>
               </ion-item>
-            </ion-card> -->
-
-            <h1 class="warning-color">
-              <a href="https://manifiesta.eventsquare.store/2023" class="warning-color">
-                {{'Ticket.TmpProblem' | translate}}
-              </a>
-            </h1>
+            </ion-card>
   
-            <!-- <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
+            <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
               expand="block" (click)="setOpenModal(true)">
               <ion-icon name="cart"></ion-icon>
               {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
             </ion-button>
-   -->
+  
             <div class="separator-line m-top-medium"></div>
             <a href="mailto:app@manifiesta.be">
               {{'Ticket.PaymentSucceesWithoutTicket' | translate}}
