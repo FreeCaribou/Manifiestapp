@@ -1,6 +1,7 @@
 # 2.2.4
 * Long text for the news and overal info
 * Change privacy link
+* Remove send ticket by mail
 
 # 2.2.3
 * Sorting bug in Android for the programm
