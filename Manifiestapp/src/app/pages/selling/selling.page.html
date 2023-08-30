@@ -99,7 +99,7 @@
           </h5>
   
           <ng-container *ngIf="hasEveryInfoToSell && ticketTypes?.length > 0">
-            <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
+            <!-- <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
               [class.transparent-background]="ticketType.branding?.image">
               <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
               <ion-card-header *ngIf="!ticketType.branding?.image">
@@ -123,14 +123,20 @@
                   <ion-icon name="add"></ion-icon>
                 </ion-button>
               </ion-item>
-            </ion-card>
+            </ion-card> -->
+
+            <h1 class="warning-color">
+              <a href="https://manifiesta.eventsquare.store/2023" class="warning-color">
+                Temporary problem with EventSquare, use this link instead please https://manifiesta.eventsquare.store/2023
+              </a>
+            </h1>
   
-            <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
+            <!-- <ion-button class="m-top-medium" [disabled]="totalAmount <= 0 || !allHardwareOk" color="secondary"
               expand="block" (click)="setOpenModal(true)">
               <ion-icon name="cart"></ion-icon>
               {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
             </ion-button>
-  
+   -->
             <div class="separator-line m-top-medium"></div>
             <a href="mailto:app@manifiesta.be">
               {{'Ticket.PaymentSucceesWithoutTicket' | translate}}
