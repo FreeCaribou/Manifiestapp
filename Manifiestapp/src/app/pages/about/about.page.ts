@@ -10,6 +10,7 @@ export class AboutPage {
 
   longTextInfos = '';
   urlShuttleInfo = '';
+  urlPlanning = '';
 
   constructor(
     private volunteerShiftService: VolunteerShiftService,
@@ -18,6 +19,7 @@ export class AboutPage {
   
   ionViewDidEnter() {
     this.urlShuttleInfo = `https://manifiesta.be/${this.languageService.selectedLanguage}/news/shuttle-info/`;
+    this.urlPlanning = `http://whoissamy.be/MF_TimeTable_${this.languageService.selectedLanguage}_Global.pdf`;
     this.volunteerShiftService.getLongtextOveralInfos().subscribe(ni => {
       this.longTextInfos = ni.text;
     });
