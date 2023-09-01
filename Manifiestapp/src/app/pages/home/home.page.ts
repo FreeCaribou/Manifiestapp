@@ -3,6 +3,7 @@ import { NewInfoInterface } from 'src/app/shared/models/NewInfo.interface';
 import { NewsListService } from 'src/app/shared/services/data/news-list/news-list.service';
 import { Network } from '@capacitor/network';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
+import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 
 @Component({
   selector: 'app-home',
@@ -22,12 +23,16 @@ export class HomePage {
 
   longTextNewInfos = '';
 
+  urlShuttleInfo = '';
+
   constructor(
     private newsListService: NewsListService,
     private volunteerShiftService: VolunteerShiftService,
+    private languageService: LanguageCommunicationService,
   ) { }
 
   ionViewDidEnter() {
+    this.urlShuttleInfo = `https://manifiesta.be/${this.languageService.selectedLanguage}/news/shuttle-info/`;
     this.volunteerShiftService.getLongtextNewInfos().subscribe(ni => {
       this.longTextNewInfos = ni.text;
     });
