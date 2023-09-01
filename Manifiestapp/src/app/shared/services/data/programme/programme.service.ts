@@ -113,6 +113,7 @@ export class ProgrammeService {
 
   onlyGetFavoriteProgramme(): Observable<WagtailApiEventItem[]> {
     const ids = this.getFavoriteId();
+    console.log('perkele', ids)
     if (ids.length > 0) {
       return this.getBigBlobAllProgramme().pipe(
         map(d => { return d.items.filter(i => ids.includes(i.id.toString())) })
@@ -155,6 +156,7 @@ export class ProgrammeService {
   }
 
   getFavoriteId(): string[] {
+    console.log('perkele 1', localStorage.getItem(LocalStorageEnum.FavoriteId2023))
     return localStorage.getItem(LocalStorageEnum.FavoriteId2023)?.split(',') || [];
   }
 
