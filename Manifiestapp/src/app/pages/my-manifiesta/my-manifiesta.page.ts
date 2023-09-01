@@ -58,12 +58,12 @@ export class MyManifiestaPage implements OnDestroy {
       this.connected = n.connected;
       this.isConnected = this.volunteerShiftService.isConnectedToBeeple();
       this.loginForm = this.buildLoginForm();
-      this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
       this.fetchFavoriteProgramme();
       this.fetchShifts();
       if (this.isConnected) {
         this.volunteerName = localStorage.getItem(LocalStorageEnum.VolunteerName);
       }
+      this.favorieChangeEmit = this.programmeService.favoriteChangeEmit.subscribe(() => this.fetchFavoriteProgramme());
 
       this.volunteerShiftService.getLongtextVolunteersBenefits().subscribe(vb => {
         this.volunteersBenefits = vb.text;

@@ -27,30 +27,29 @@ export class VolunteerShiftService {
   shifts: any[];
   getShifts(): Observable<any> {
     if (this.isConnectedToBeeple()) {
-      if (!this.shifts || this.shifts.length === 0) {
-        let tmpShift = [];
-        return this.httpClient.get<any>(
-          `${this.baseUrl}sellers/user-shifts/${this.getBeepleVolunteerId()}`,
-        ).pipe(
-          map(shift => shift.enrolments),
-          map(e => { return this.mapShiftsRemoveOldFromPreviousYear(e); }),
-          map(e => { return this.mapSortShiftsByStartDatetime(e); }),
-          tap(d => { tmpShift = d }),
-          switchMap(d => {
-            return forkJoin(d.map(i => this.getOneShift(i.id)))
-          }),
-          map(d => {
-            for (let i = 0; i < d.length; i++) {
+      let tmpShift = [];
+      return this.httpClient.get<any>(
+        `${this.baseUrl}sellers/user-shifts/${this.getBeepleVolunteerId()}`,
+      ).pipe(
+        map(shift => shift.enrolments),
+        map(e => { return this.mapShiftsRemoveOldFromPreviousYear(e); }),
+        map(e => { return this.mapSortShiftsByStartDatetime(e); }),
+        tap(d => { tmpShift = d }),
+        switchMap(d => {
+          return d.length === 0 ? of([]) : forkJoin(d.map(i => this.getOneShift(i.id)))
+        }),
+        map(d => {
+          if (d.length > 0) {
+            for (let i = 0; i < d.length; i++) {  
               tmpShift[i]['team'] = d[i].team;
             }
-            return tmpShift;
-          }),
-          tap(s => this.shifts = tmpShift),
-          tap(s => this.setOfflineList(s)),
-        )
-      } else {
-        return of(this.shifts);
-      }
+          }
+          return tmpShift;
+        }),
+        tap(s => this.shifts = tmpShift),
+        tap(s => this.setOfflineList(s)),
+      )
+
 
     } else {
       return of([])

@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators'
+import { catchError, map, switchMap, tap } from 'rxjs/operators'
 import { DayListEventInterface, EventInterface, WagtailApiEventItem, WagtailApiEventItemDaysList, WagtailApiReturn } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
@@ -113,7 +113,6 @@ export class ProgrammeService {
 
   onlyGetFavoriteProgramme(): Observable<WagtailApiEventItem[]> {
     const ids = this.getFavoriteId();
-    console.log('perkele', ids)
     if (ids.length > 0) {
       return this.getBigBlobAllProgramme().pipe(
         map(d => { return d.items.filter(i => ids.includes(i.id.toString())) })
@@ -127,13 +126,15 @@ export class ProgrammeService {
     let shiftsList = [];
     return this.getFavoriteId().length > 0 ?
       this.volunteerShiftService.getShifts().pipe(
-        tap(data => { shiftsList = data }),
+        tap(data => {
+          shiftsList = data;
+        }),
         switchMap(e => {
           return this.onlyGetFavoriteProgramme().pipe(
             map(e => this.mapToFavorite(e)),
             map(e => this.mapVerifyFavoriteConflict(e, shiftsList)),
           )
-        })
+        }),
       )
       : of([]);
   }
@@ -156,7 +157,6 @@ export class ProgrammeService {
   }
 
   getFavoriteId(): string[] {
-    console.log('perkele 1', localStorage.getItem(LocalStorageEnum.FavoriteId2023))
     return localStorage.getItem(LocalStorageEnum.FavoriteId2023)?.split(',') || [];
   }
 
