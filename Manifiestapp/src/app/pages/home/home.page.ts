@@ -23,16 +23,12 @@ export class HomePage {
 
   longTextNewInfos = '';
 
-  urlShuttleInfo = '';
-
   constructor(
     private newsListService: NewsListService,
     private volunteerShiftService: VolunteerShiftService,
-    private languageService: LanguageCommunicationService,
   ) { }
 
   ionViewDidEnter() {
-    this.urlShuttleInfo = `https://manifiesta.be/${this.languageService.selectedLanguage}/news/shuttle-info/`;
     this.volunteerShiftService.getLongtextNewInfos().subscribe(ni => {
       this.longTextNewInfos = ni.text;
     });

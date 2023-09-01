@@ -2,7 +2,11 @@
 
 <ion-content>
   <div class="m-right-medium m-left-medium m-top-medium">
-    <h5 class="text-align">{{'General.SeeYouLater' | translate}}</h5>
+
+    <div [innerHtml]="longTextNewInfos"></div>
+
+    <!-- <h5 class="text-align">{{'General.SeeYouLater' | translate}}</h5> -->
+
     <!-- <ion-card *ngFor="let new of list" class="programme-card-body m-bt-medium fake-mouse-select"
       [routerLink]="['/new-detail', new.id]">
       <ion-thumbnail>
