@@ -40,7 +40,7 @@
     "@capacitor/android": "3.4.3",
     "@capacitor/app": "1.0.3",
     "@capacitor/browser": "^1.0.7",
-    "@capacitor/core": "3.3.0",
+    "@capacitor/core": "^3.5.0",
     "@capacitor/device": "^1.1.2",
     "@capacitor/haptics": "1.1.0",
     "@capacitor/ios": "3.4.3",
