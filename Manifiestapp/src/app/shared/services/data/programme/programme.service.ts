@@ -68,7 +68,7 @@ export class ProgrammeService {
       return of(this.cacheBigBlobProgrammeBrut);
     }
     let url = 'https://manifiesta.be/api/v2/pages/?type=event.EventPage';
-    url += '&fields=description,api_event_dates,api_location,image,api_categories';
+    url += '&fields=description,api_event_dates,api_location,image,api_categories,thumbnail';
     url += '&locale=' + this.languageService.selectedLanguage;
     url += '&format=json';
     return this.retrieveProgrammeInLoop(url).pipe(

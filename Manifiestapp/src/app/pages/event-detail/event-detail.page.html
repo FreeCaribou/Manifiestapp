@@ -2,7 +2,7 @@
 
 <ion-content>
   <div *ngIf="event">
-    <img [src]="event.image?.meta?.download_url" width="100%" />
+    <img [src]="event.thumbnail?.url || event.image?.meta?.download_url" width="100%" />
 
     <div class="m-right-medium m-left-medium">
       <h3 class="secondary-color disabled-margin" [innerHtml]="event?.title"></h3>

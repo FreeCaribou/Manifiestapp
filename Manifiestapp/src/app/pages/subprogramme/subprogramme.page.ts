@@ -75,11 +75,15 @@ export class SubprogrammePage {
     this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.api_event_dates[0].day === this.dayId);
     this.listToShow = this.list;
 
-    this.locaties = [... new Set(this.list.map(i => i.api_location.name))].map(i => { return { id: i, name: i } });
+    this.locaties = [... new Set(this.list.map(i => i.api_location.name))].map(i => { return { id: i, name: i } }).sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    });
     this.categories = [... new Set(
       this.list.map(i => i.api_categories.primary.join()).filter(i => i).join().split(',')
         .concat(this.list.map(i => i.api_categories.secondary.join()).filter(i => i).join().split(','))
-    )].map(i => { return { id: i, name: i } });
+    )].map(i => { return { id: i, name: i } }).sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    });
   }
 
   onSelectChange() {

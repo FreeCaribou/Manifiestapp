@@ -1,3 +1,8 @@
+# 2.2.5
+* Sorting category and location list of event
+* Police assurance change
+* Image of event lighter
+
 # 2.2.4
 * Long text for the news and overal info
 * Change privacy link

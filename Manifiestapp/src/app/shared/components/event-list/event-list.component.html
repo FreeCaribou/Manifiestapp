@@ -6,7 +6,7 @@
 
   <ion-item *ngFor="let event of events.events">
     <ion-avatar *ngIf="connected" [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
-      <ion-img [src]="event.image?.meta?.download_url"></ion-img>
+      <ion-img [src]="event.thumbnail?.url || event.image?.meta?.download_url"></ion-img>
     </ion-avatar>
     <ion-label>
       <h2 *ngIf="connected" [routerLink]="['/programme', 'event-detail', event.id]"

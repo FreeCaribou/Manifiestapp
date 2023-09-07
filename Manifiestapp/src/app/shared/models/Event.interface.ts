@@ -24,7 +24,8 @@ export interface WagtailApiEventItem {
   title: string;
   favorite: boolean;
   inFavoriteConflict: boolean;
-  image: {meta: {download_url: string}},
+  image: { meta: { download_url: string } },
+  thumbnail: {url: string, alt: string}
 }
 
 export interface DayListEventInterface {

@@ -1,7 +1,7 @@
 <ion-card class="programme-card-body">
   <div [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
     <ion-thumbnail>
-      <ion-img [src]="event.image?.meta?.download_url"></ion-img>
+      <ion-img [src]="event.thumbnail?.url || event.image?.meta?.download_url"></ion-img>
     </ion-thumbnail>
 
     <ion-card-header>
