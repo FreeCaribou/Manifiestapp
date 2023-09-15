@@ -1,3 +1,6 @@
+# 2.2.7
+* Upgrade stack (Node - npm - Ionic - Angular - Capacitor)
+
 # 2.2.6
 * Long txt for home page
 * Timer for 2024
