@@ -1,3 +1,7 @@
+# 2.2.6
+* Long txt for home page
+* Timer for 2024
+
 # 2.2.5
 * Sorting category and location list of event
 * Police assurance change

@@ -150,6 +150,10 @@ export class VolunteerShiftService {
     return this.httpClient.get(`${this.baseUrl}admins/longtext/over-info/${this.languageService.selectedLanguage}`);
   }
 
+  getLongtextHome(): Observable<any> {
+    return this.httpClient.get(`${this.baseUrl}admins/longtext/home/${this.languageService.selectedLanguage}`);
+  }
+
   // offline
 
   setOfflineList(shifts: any[]) {

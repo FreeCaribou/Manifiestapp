@@ -15,13 +15,13 @@ export class HomePage {
   loadNews = false;
   isNow = false;
 
-  manifiestaDate = new Date('2023-09-09T09:00:00').getTime();
+  manifiestaDate = new Date('2024-09-07T09:00:00').getTime();
   diffDays: number;
   diffHours: number;
   diffMinutes: number;
   diffSeconds: number;
 
-  longTextNewInfos = '';
+  longTextHome = '';
 
   constructor(
     private newsListService: NewsListService,
@@ -29,8 +29,8 @@ export class HomePage {
   ) { }
 
   ionViewDidEnter() {
-    this.volunteerShiftService.getLongtextNewInfos().subscribe(ni => {
-      this.longTextNewInfos = ni.text;
+    this.volunteerShiftService.getLongtextHome().subscribe(textHome => {
+      this.longTextHome = textHome.text;
     });
 
     this.count();
