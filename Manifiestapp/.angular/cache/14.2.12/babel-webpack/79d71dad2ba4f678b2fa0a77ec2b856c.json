@@ -1,1 +1,0 @@
-{"ast":null,"code":"export var NotificationEventEnum = /*#__PURE__*/(() => {\n  (function (NotificationEventEnum) {\n    NotificationEventEnum[\"EventFav\"] = \"EVENT_FAV\";\n  })(NotificationEventEnum || (NotificationEventEnum = {}));\n  return NotificationEventEnum;\n})();","map":null,"metadata":{},"sourceType":"module"}
