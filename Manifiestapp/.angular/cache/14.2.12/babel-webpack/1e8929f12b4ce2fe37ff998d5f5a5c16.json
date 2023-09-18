@@ -1,0 +1,1 @@
+{"ast":null,"code":"var LeafletControlLayersConfig = /** @class */function () {\n  function LeafletControlLayersConfig() {\n    this.baseLayers = {};\n    this.overlays = {};\n  }\n  return LeafletControlLayersConfig;\n}();\nexport { LeafletControlLayersConfig };\n//# sourceMappingURL=leaflet-control-layers-config.model.js.map","map":null,"metadata":{},"sourceType":"module"}
