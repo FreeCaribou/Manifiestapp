@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { registerPlugin } from '@capacitor/core';\nconst LocalNotifications = registerPlugin('LocalNotifications', {\n  web: () => import('./web').then(m => new m.LocalNotificationsWeb())\n});\nexport * from './definitions';\nexport { LocalNotifications }; //# sourceMappingURL=index.js.map","map":null,"metadata":{},"sourceType":"module"}

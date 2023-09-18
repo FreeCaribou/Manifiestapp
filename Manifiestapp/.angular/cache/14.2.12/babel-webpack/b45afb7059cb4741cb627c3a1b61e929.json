@@ -1,0 +1,1 @@
+{"ast":null,"code":"// TODO-refactor Unit Test\nexport function wpDateToRealDate(rawValue, unixtime = true) {\n  if (!rawValue || rawValue === \"\") {\n    return null;\n  }\n\n  return unixtime ? new Date(parseFloat(rawValue) * 1000) : new Date(rawValue) || null;\n}","map":null,"metadata":{},"sourceType":"module"}
