@@ -6,12 +6,22 @@ import { Device } from '@capacitor/device';
 type osType = 'ios' | 'android' | 'windows' | 'mac' | 'unknown';
 
 function Redirection({ os, language }) {
-    if (os === 'ios') {
-        return <p>TODO return to iOS app if present</p>
-    } else if (os === 'android') {
-        return <a href={process.env.NEXT_PUBLIC_ANDROID_REDIRECT}>Open the app</a>
-    }
-    return <a href={process.env.NEXT_PUBLIC_MANIFIESTAPP_URL}>Continue to sell ticket</a>
+    const [text, setText] = useState<string>('Continue to sell ticket');
+    const [url, setUrl] = useState<string>(process.env.NEXT_PUBLIC_MANIFIESTAPP_URL);
+
+    useEffect(() => {
+        if (os === 'ios') {
+            setUrl(process.env.NEXT_PUBLIC_IOS_REDIRECT);
+        } else if (os === 'android') {
+            setUrl(process.env.NEXT_PUBLIC_ANDROID_REDIRECT);
+        }
+    }, [os]);
+
+    return (
+        <a href={url}>
+            <h2>{text}</h2>
+        </a>
+    )
 }
 
 export default function RedirectToApp() {
