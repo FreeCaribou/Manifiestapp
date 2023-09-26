@@ -86,37 +86,10 @@ export class SellingService {
   }
 
   ticketsSale(
-    tickets: any[],
-    email: string,
-    firstname: string,
-    lastname: string,
     transactionId: string,
-    askSendTicket: boolean,
-    clientTransactionId: string,
-    address?: any
   ): Observable<any> {
-    return this.baseService.postCall(
-      `${this.baseUrl}tickets/confirm`,
-      {
-        firstname,
-        lastname,
-        email,
-        language: this.languageService.selectedLanguage,
-        ip: "127.0.0.1",
-        agent: "ManifiestApp",
-        invoice: 0,
-        testmode: 0,
-        sellerId: localStorage.getItem(LocalStorageEnum.SellerEmail),
-        sellerName: localStorage.getItem(LocalStorageEnum.SellerName),
-        tickets,
-        vwTransactionId: transactionId,
-        sellerDepartmentId: localStorage.getItem(LocalStorageEnum.SellerDepartment),
-        sellerPostalCode: localStorage.getItem(LocalStorageEnum.SellerPostalCode),
-        askSendTicket,
-        address,
-        clientTransactionId,
-        fromWorkGroup: localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup) ? true : false
-      }
+    return this.baseService.getCall(
+      `${this.baseUrl}tickets/finishOrderPending/${transactionId}`,
     )
   }
 

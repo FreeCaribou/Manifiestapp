@@ -325,12 +325,15 @@
           </ion-label>
           <ion-toggle slot="end" [checked]="clientAcceptData" (ionChange)="onClientAcceptData($event)"></ion-toggle>
         </ion-item>
-
-        <h1 *ngIf="!isInApp" class="text-align warning-color">{{'Ticket.OnlyQrCodePlease' | translate}}</h1>
   
-        <ion-button (click)="buy()" [disabled]="disabledBuyButton" color="secondary" expand="block">
-          <ion-icon name="cart"></ion-icon>
-          {{"Ticket.Pay" | translate}} {{totalAmount | currency:'EUR'}}
+        <ion-button *ngIf="!isIos" (click)="buy()" [disabled]="disabledBuyButton" color="secondary" expand="block" size="large" class="m-bt-medium">
+          <ion-icon name="card"></ion-icon>
+          {{"Ticket.Pay" | translate}} - Card - {{totalAmount | currency:'EUR'}}
+        </ion-button>
+
+        <ion-button (click)="buy(true)" [disabled]="disabledBuyButton" color="secondary" expand="block" size="large">
+          <ion-icon name="qr-code"></ion-icon>
+          {{"Ticket.Pay" | translate}} - QR Code - {{totalAmount | currency:'EUR'}}
         </ion-button>
 
       </ng-container>

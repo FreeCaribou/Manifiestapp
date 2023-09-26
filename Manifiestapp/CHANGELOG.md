@@ -1,5 +1,7 @@
 # 2.2.7
 * Upgrade stack (Node - npm - Ionic - Angular - Capacitor)
+* Upgrade Android to have QR Code directly and no more Payconiq
+* Upgrade Apple to have QR Code directly
 
 # 2.2.6
 * Long txt for home page

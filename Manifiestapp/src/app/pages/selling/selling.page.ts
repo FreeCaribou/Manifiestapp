@@ -269,7 +269,7 @@ export class SellingPage {
   }
 
   // TODO for IOS
-  buy() {
+  buy(withQrCode = false) {
     if (!this.disabledBuyButton) {
       this.clientTransactionId = `${localStorage.getItem(LocalStorageEnum.SellerEmail)}-${new Date().getTime()}`;
 
@@ -292,7 +292,7 @@ export class SellingPage {
         tmpSellingJson.lastname,
         tmpSellingJson.clientTransactionId,
       ).subscribe(() => {
-        if (this.isIos || this.takeQrCode) {
+        if (withQrCode) {
           this.openVivaWalletWebPaiement();
         } else {
           window.open(
@@ -334,14 +334,7 @@ export class SellingPage {
 
     this.loadingCommunication.changeLoaderTo(true);
     this.sellingService.ticketsSale(
-      tmpSellingJson.recapSelectedTicket,
-      tmpSellingJson.email,
-      tmpSellingJson.firstname,
-      tmpSellingJson.lastname,
       this.transactionId,
-      tmpSellingJson.askSendTicket,
-      tmpSellingJson.clientTransactionId,
-      tmpSellingJson.addressForm,
     ).pipe(takeUntil(this.destroyer$)).subscribe(data => {
       this.finishSellingInfo = data;
       this.loadThermometer(true);
@@ -538,7 +531,6 @@ export class SellingPage {
       `&pinCode=${environment.vwPinCode}` +
       '&action=activatePos' +
       '&disableManualAmountEntry=true' +
-      '&activateQRCodes=true' +
       '&lockRefund=true' +
       '&lockTransactionsList=true' +
       '&lockMoto=true' +
