@@ -1,6 +1,7 @@
 :root {
   --color-primary: #F59BBB;
   --color-secondary: #3B953F;
+  --color-error: red;
 }
 
 * {
@@ -13,4 +14,8 @@
 
 h1 {
   color: var(--color-secondary);
+}
+
+.text-error {
+  color: var(--color-error);
 }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import https from 'https';
+import RedirectToApp from '../shared/redirect-to-app';
 
 // TODO better ui
 // TODO link to mail if problem
@@ -25,16 +26,13 @@ export default async function FinishPayment({
     const ticket = await Promise.resolve(ticketData);
     const error: boolean = !ticket?.data;
 
-    if (error) {
-        return (
-            <div>
-                There is an error - {ticket.message[0]} - ERR CODE {ticket.code}
-            </div>
-        )
-    }
+    const text = error ?
+        `There is an error - ${ticket?.message ? ticket?.message[0] : 'unkown'} - ERR CODE ${ticket?.code}`
+        : `Congratulations, the tickets is selling - REF ${ticket?.data?.order?.reference}`;
     return (
         <div>
-            Congratulations, the tickets is selling - REF {ticket?.data?.order?.reference}
+            <h1 className={error ? 'text-error' : ''}>{text}</h1>
+            <RedirectToApp />
         </div>
     )
 }
