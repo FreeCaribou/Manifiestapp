@@ -104,7 +104,7 @@ export class SellingPage {
   }
 
   get disabledBuyButton(): boolean {
-    return this.totalAmount <= 0 || !this.formValid || !this.allHardwareOk || !this.clientAcceptData;
+    return this.totalAmount <= 0 || !this.formValid || !this.clientAcceptData;
   }
 
   get allHardwareOk(): boolean {
@@ -304,6 +304,7 @@ export class SellingPage {
             '&callback=mycallbackscheme://selling',
             '_system'
           );
+          this.cancelBuy();
         }
       });
     } else {
@@ -319,6 +320,7 @@ export class SellingPage {
       // const vwWebUrl = `https://www.vivapayments.com/web2?ref=${order.orderCode}&paymentmethod=27`;
       const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode.toString()}&paymentmethod=27&color=F59BBB`;
       window.open(vwWebUrl, '_self');
+      this.cancelBuy();
     });
   }
 

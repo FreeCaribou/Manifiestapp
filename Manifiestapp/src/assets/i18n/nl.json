@@ -192,7 +192,7 @@
     "ValidateBuy": "Valideer de betaling",
     "Pay": "Betalen",
     "EnterSomeDataToBeAbleToSell": "Vul je profielgegevens hier in",
-    "HardwareNOK": "We zijn er bijna, nog een paar details!",
+    "HardwareNOK": "Als je via NFC / Card wilt betalen, regel dan eerst deze paar gegevens",
     "VivaWalletNotInstall": "De app Viva Wallet POS moet geïnstalleerd zijn om betalingen te kunnen ontvangen",
     "InstallVivaWallet": "Viva Wallet POS installeren",
     "GpsNotActivated": "Locatiegegevens moeten geactiveerd zijn als beveiliging tegen fraude",
