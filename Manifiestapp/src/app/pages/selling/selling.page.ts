@@ -216,9 +216,13 @@ export class SellingPage {
       this.t = queryParams['t'] || this.activatedRoute.snapshot.queryParamMap.get('t') || null;
       this.routerUrl = this.router.url;
 
+      console.log('ROUTING', this.action)
+
       if (this.action == 'reset') {
         if (this.status == 'success') {
-          this.vivawalletResetSuccess();
+          console.log('RESET IS OK BRO NOW CONNECT')
+          // this.vivawalletResetSuccess();
+          this.autoVivaWalletAuth();
         } else {
           console.warn('fail to reset');
         }
@@ -227,13 +231,26 @@ export class SellingPage {
       if (this.status && this.hasEveryInfoToSell && this.action == 'activatePos') {
         if (this.status == 'success' || this.message == 'POS_IS_ALREADY_ACTIVATED') {
           // If we see ticket in the "basket", we show the client detail form
-          if (this.totalAmount > 0) {
-            this.showClientDetailForm = true;
-            this.backButtonBlock.addBlockRef(SellingPage.name);
-            this.clientWantNewsletter = false;
-            this.clientAcceptData = false;
-          }
+          // if (this.totalAmount > 0) {
+          //   this.showClientDetailForm = true;
+          //   this.backButtonBlock.addBlockRef(SellingPage.name);
+          //   this.clientWantNewsletter = false;
+          //   this.clientAcceptData = false;
+          // }
           // this.vivaWalletConnectSuccess();
+
+          console.log('AUTH IS OK BRO NOW PAY')
+
+          window.open(
+            'vivapayclient://pay/v1' +
+            `?appId=be.manifiesta.app` +
+            '&action=sale' +
+            `&amount=${Math.floor(this.totalAmount * 100)}` +
+            `&clientTransactionId=${this.clientTransactionId}` +
+            '&callback=mycallbackscheme://selling',
+            '_system'
+          );
+          this.cancelBuy();
         } else {
           this.vivaWalletError();
         }
@@ -295,16 +312,7 @@ export class SellingPage {
         if (withQrCode) {
           this.openVivaWalletWebPaiement();
         } else {
-          window.open(
-            'vivapayclient://pay/v1' +
-            `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
-            '&action=sale' +
-            `&amount=${Math.floor(this.totalAmount * 100)}` +
-            `&clientTransactionId=${this.clientTransactionId}` +
-            '&callback=mycallbackscheme://selling',
-            '_system'
-          );
-          this.cancelBuy();
+          this.resetVivaWallet();
         }
       });
     } else {
@@ -317,7 +325,6 @@ export class SellingPage {
       amount: Math.floor(this.totalAmount * 100),
       merchantTrns: this.clientTransactionId,
     }, this.takeQrCode).subscribe(async order => {
-      // const vwWebUrl = `https://www.vivapayments.com/web2?ref=${order.orderCode}&paymentmethod=27`;
       const vwWebUrl = `https://www.vivapayments.com/web/checkout?ref=${order.orderCode.toString()}&paymentmethod=27&color=F59BBB`;
       window.open(vwWebUrl, '_self');
       this.cancelBuy();
@@ -523,11 +530,10 @@ export class SellingPage {
     }
   }
 
-  // TODO for IOS
   autoVivaWalletAuth() {
     window.open(
       'vivapayclient://pay/v1' +
-      `?appId=be.manifiesta${this.isIos ? 'pp' : ''}.app` +
+      `?appId=be.manifiesta.app` +
       `&apikey=${environment.vwAccessSite}` +
       `&apiSecret=${environment.vwAccessCode}` +
       `&pinCode=${environment.vwPinCode}` +
@@ -553,14 +559,18 @@ export class SellingPage {
 
   setOpenModal(isOpen: boolean, takeQrCode = false) {
     // To be sur to renew the form
+    this.clientAcceptData = false;
     this.buyForm = this.buildBuyForm();
     this.addressForm = this.builAddressForm();
     this.takeQrCode = takeQrCode;
-    if (this.isIos || takeQrCode) {
-      this.showClientDetailForm = true;
-    } else {
-      this.autoVivaWalletAuth();
-    }
+
+    this.showClientDetailForm = true;
+    // if (this.isIos || takeQrCode) {
+    //   this.showClientDetailForm = true;
+    // } else {
+    //   this.resetVivaWallet();
+    //   this.autoVivaWalletAuth();
+    // }
   }
 
   cancelBuy() {
