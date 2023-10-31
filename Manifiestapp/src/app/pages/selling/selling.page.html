@@ -1,325 +1,339 @@
-<app-header [title]="'Selling'" *ngIf="!showClientDetailForm"></app-header>
+<ion-content *ngIf="preparationOfVw" class="ion-padding m-top-high text-align">
+  <h1>Preparation of Viva Wallet, please wait</h1>
+  <h2 class="m-top-medium">Step {{vwPreparationStep}} of 2</h2>
+  <ion-button color="success" (click)="vwPreparationNextStep()">
+    Next step
+  </ion-button>
+  <hr>
+  <ion-button color="warning" (click)="forceQuitPreparationVw()" size="small" class="m-top-high">
+    Force quit preparation
+  </ion-button>
+</ion-content>
 
-<ion-header *ngIf="showClientDetailForm">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-button (click)="cancelBuy()">{{"Ticket.Cancel" | translate}}</ion-button>
-    </ion-buttons>
-    <ion-title>{{'Ticket.Details' | translate}}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="!preparationOfVw">
+  <app-header [title]="'Selling'" *ngIf="!showClientDetailForm"></app-header>
 
-<ion-content>
+  <ion-header *ngIf="showClientDetailForm">
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-button (click)="cancelBuy()">{{"Ticket.Cancel" | translate}}</ion-button>
+      </ion-buttons>
+      <ion-title>{{'Ticket.Details' | translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-  <!-- <div class="text-align m-right-medium m-left-medium m-top-medium" *ngIf="skipVivaWalletAndShowRedirect">
-    <a href="https://manifiestapp.vercel.app/selling">
-      <h1>
-        {{'Ticket.GoWebVersie' | translate }}
-      </h1>
-    </a>
+  <ion-content>
 
-    <h2 *ngIf="!forceSeeVw && !isIos" class="m-top-medium fake-mouse-select secondary-color fake-border"
-      (click)="letMeSeeNormalAppVersion()">
-      {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
-    </h2>
-  </div> -->
+    <!-- <div class="text-align m-right-medium m-left-medium m-top-medium" *ngIf="skipVivaWalletAndShowRedirect">
+      <a href="https://manifiestapp.vercel.app/selling">
+        <h1>
+          {{'Ticket.GoWebVersie' | translate }}
+        </h1>
+      </a>
+  
+      <h2 *ngIf="!forceSeeVw && !isIos" class="m-top-medium fake-mouse-select secondary-color fake-border"
+        (click)="letMeSeeNormalAppVersion()">
+        {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
+      </h2>
+    </div> -->
 
-  <!-- Test purpose {{userPlatform | json}} -->
+    <!-- Test purpose {{userPlatform | json}} -->
 
-  <ng-container *ngIf="!isLogin && sellerLoginForm">
-    <form [formGroup]="sellerLoginForm">
-
-      <ion-grid>
-        <ion-item>
-          <ion-label color="primary" position="stacked">
-            {{"User.Email" | translate}}
-          </ion-label>
-          <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be">
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label color="primary" position="stacked">
-            {{"Ticket.SellerFirstname" | translate}}
-          </ion-label>
-          <ion-input clearInput type="text" formControlName="firstname" required
-            [placeholder]="'Ticket.SellerFirstname' | translate" autocapitalize="words">
-          </ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-label color="primary" position="stacked">
-            {{"Ticket.SellerLastname" | translate}}
-          </ion-label>
-          <ion-input clearInput type="text" formControlName="lastname" required
-            [placeholder]="'Ticket.SellerLastname' | translate" autocapitalize="words">
-          </ion-input>
-        </ion-item>
-
-        <ion-item class="m-top-medium">
-          <ion-label>
-            <p [innerHTML]="'Ticket.DataPrivacyUser' | translate">
-            </p>
-          </ion-label>
-          <ion-toggle slot="end" [checked]="sellerAcceptData" (ionChange)="onSellerAcceptData($event)"></ion-toggle>
-        </ion-item>
-
-        <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="secondary" expand="block"
-          [disabled]="!sellerLoginForm.valid || !sellerAcceptData">
-          {{'Ticket.BeginSell' | translate}}
-          <ion-icon slot="end" icon="person"></ion-icon>
-        </ion-button>
-
-      </ion-grid>
-    </form>
-  </ng-container>
-
-  <ng-container *ngIf="!showClientDetailForm">
-
-    <!-- If connected -->
-    <div *ngIf="isLogin" class="m-right-medium m-left-medium">
-
-      <h4 class="text-align">{{'Ticket.HelloSeller' | translate:sellerNameI18NParam}}</h4>
-
-      <!-- <div>{{!vivaWalletVerification.nfcAvailable && isInApp}}</div> -->
-
-      <!-- <div *ngIf="skipVivaWalletAndShowRedirect">
-          <a class="text-align" href="https://manifiestapp.vercel.app/selling">
-            {{'Ticket.GoWebVersie' | translate }}
-          </a>
-          <ion-button *ngIf="!forceSeeVw && !isIos" class="m-top-medium" expand="block"
-            (click)="letMeSeeNormalAppVersion()">
-            {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
-          </ion-button>
-        </div> -->
-
-      <h5 *ngIf="!hasEveryInfoToSell" class="fake-mouse-select" (click)="openSellerDepartmentInfo()">
-        {{'Ticket.CompleteSellerDepartmentInfoPlease' | translate}}
-      </h5>
-
-      <!-- <h1 class="warning-color">
-            <a href="https://manifiesta.eventsquare.store/2023" class="warning-color">
-              {{'Ticket.TmpProblem' | translate}}
-            </a>
-          </h1> -->
-
-      <ng-container *ngIf="hasEveryInfoToSell && ticketTypes?.length > 0">
-        <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
-          [class.transparent-background]="ticketType.branding?.image">
-          <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
-          <ion-card-header *ngIf="!ticketType.branding?.image">
-            <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
-          </ion-card-header>
-          <ion-item>
-            <ion-label>
-              {{ticketType.price | currency:'EUR'}}
-              | {{ticketNumberOfSell[index].ticketPrice *
-              ticketNumberOfSell[index].ticketAmount |
-              currency:'EUR'}}
-              <p>(+ {{ticketType.fee | currency:'EUR'}} {{"Ticket.ServiceCharge" | translate}})</p>
-            </ion-label>
-
-            <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
-              (click)="changeAmountTicket(index, 'remove')">
-              <ion-icon name="remove"></ion-icon>
-            </ion-button>
-            <ion-input [(ngModel)]="ticketNumberOfSell[index].ticketAmount" type="number" min="0"></ion-input>
-            <ion-button slot="end" (click)="changeAmountTicket(index, 'add')">
-              <ion-icon name="add"></ion-icon>
-            </ion-button>
-          </ion-item>
-        </ion-card>
-
-        <ion-button class="m-top-medium" [disabled]="totalAmount <= 0" color="secondary" expand="block"
-          (click)="setOpenModal(true)">
-          <ion-icon name="cart"></ion-icon>
-          {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
-        </ion-button>
-
-        <div class="separator-line m-top-medium"></div>
-        <a href="mailto:app@manifiesta.be">
-          {{'Ticket.PaymentSucceesWithoutTicket' | translate}}
-        </a>
-      </ng-container>
-
-      <div class="separator-line m-top-medium"></div>
-
-      <!-- The information to know which kind of ticket show -->
-      <ng-container>
-        <ion-button class="m-top-medium" expand="block" (click)="goMyDetails()">
-          <ion-icon name="ticket-outline"></ion-icon>
-          {{"Ticket.HistoricOfSelling" | translate}}
-        </ion-button>
-      </ng-container>
-
-      <div class="separator-line m-top-medium"></div>
-
-      <ion-button expand="block" (click)="openSellerDepartmentInfo()">
-        {{"Ticket.MyDepartmentInfo" | translate}}
-      </ion-button>
-      <ion-button class="m-top-medium" (click)="clickOnLogout()" color="danger" expand="block">
-        {{"Volunteer.Logout" | translate}}
-        <ion-icon slot="end" icon="power"></ion-icon>
-      </ion-button>
-    </div>
-
-  </ng-container>
-
-
-  <!-- Client info -->
-  <ng-container *ngIf="showClientDetailForm && buyForm && addressForm">
-
-    <ion-content class="ion-padding">
-
-      <ng-container>
-        <h4>
-          {{"Ticket.TicketBuyRecap" | translate}}
-        </h4>
-        <p *ngFor="let t of recapSelectedTicket">
-          {{t.ticketAmount}}x {{t.ticketLabel}}: {{t.ticketTotalPrice | currency:'EUR'}}
-        </p>
-      </ng-container>
-
-      <form *ngIf="buyForm" [formGroup]="buyForm">
-
-        <h4 class="m-right-medium m-left-medium">
-          {{'Ticket.ClientInformation' | translate}}
-        </h4>
+    <ng-container *ngIf="!isLogin && sellerLoginForm">
+      <form [formGroup]="sellerLoginForm">
 
         <ion-grid>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.ClientEmail" | translate}}
-                </ion-label>
-                <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.VerificationClientEmail" | translate}}
-                </ion-label>
-                <ion-input clearInput type="email" formControlName="verificationEmail" required
-                  placeholder="email@something.be">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.ClientFirstname" | translate}}
-                </ion-label>
-                <ion-input clearInput type="text" formControlName="firstname" required
-                  [placeholder]="'Ticket.SellerFirstname' | translate" autocapitalize="words">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.ClientLastname" | translate}}
-                </ion-label>
-                <ion-input clearInput type="text" formControlName="lastname" required
-                  [placeholder]="'Ticket.SellerLastname' | translate" autocapitalize="words">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
+          <ion-item>
+            <ion-label color="primary" position="stacked">
+              {{"User.Email" | translate}}
+            </ion-label>
+            <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label color="primary" position="stacked">
+              {{"Ticket.SellerFirstname" | translate}}
+            </ion-label>
+            <ion-input clearInput type="text" formControlName="firstname" required
+              [placeholder]="'Ticket.SellerFirstname' | translate" autocapitalize="words">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label color="primary" position="stacked">
+              {{"Ticket.SellerLastname" | translate}}
+            </ion-label>
+            <ion-input clearInput type="text" formControlName="lastname" required
+              [placeholder]="'Ticket.SellerLastname' | translate" autocapitalize="words">
+            </ion-input>
+          </ion-item>
+
+          <ion-item class="m-top-medium">
+            <ion-label>
+              <p [innerHTML]="'Ticket.DataPrivacyUser' | translate">
+              </p>
+            </ion-label>
+            <ion-toggle slot="end" [checked]="sellerAcceptData" (ionChange)="onSellerAcceptData($event)"></ion-toggle>
+          </ion-item>
+
+          <ion-button class="padding-not-stick-edges" (click)="clickOnLogin()" color="secondary" expand="block"
+            [disabled]="!sellerLoginForm.valid || !sellerAcceptData">
+            {{'Ticket.BeginSell' | translate}}
+            <ion-icon slot="end" icon="person"></ion-icon>
+          </ion-button>
 
         </ion-grid>
       </form>
+    </ng-container>
 
-      <ng-container *ngIf="buyForm.value.askSendTicket">
-        <form *ngIf="addressForm" [formGroup]="addressForm">
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.ClientStreet" | translate}}
-                </ion-label>
-                <ion-input clearInput type="text" formControlName="street" required placeholder="Caserne Street"
-                  autocapitalize="words">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.ClientNumber" | translate}}
-                </ion-label>
-                <ion-input clearInput type="text" formControlName="number" required placeholder="86">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.ClientPostCode" | translate}}
-                </ion-label>
-                <ion-input clearInput type="number" formControlName="postCode" required placeholder="1000">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-item>
-                <ion-label color="primary" position="stacked">
-                  {{"Ticket.ClientCity" | translate}}
-                </ion-label>
-                <ion-input clearInput type="text" formControlName="city" required placeholder="Brussels"
-                  autocapitalize="words">
-                </ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>
-        </form>
-      </ng-container>
+    <ng-container *ngIf="!showClientDetailForm">
 
-      <ion-item class="m-top-medium">
-        <ion-label>
-          {{'Ticket.ClientWantNewsletter' | translate}}
-        </ion-label>
-        <ion-toggle slot="end" [checked]="clientWantNewsletter"
-          (ionChange)="onClientWantNewsletter($event)"></ion-toggle>
-      </ion-item>
+      <!-- If connected -->
+      <div *ngIf="isLogin" class="m-right-medium m-left-medium">
 
-      <ion-item lass="m-top-medium">
-        <ion-label>
-          <p [innerHTML]="'Ticket.DataPrivacyClient' | translate">
+        <h4 class="text-align">{{'Ticket.HelloSeller' | translate:sellerNameI18NParam}}</h4>
+
+        <!-- <div>{{!vivaWalletVerification.nfcAvailable && isInApp}}</div> -->
+
+        <!-- <div *ngIf="skipVivaWalletAndShowRedirect">
+            <a class="text-align" href="https://manifiestapp.vercel.app/selling">
+              {{'Ticket.GoWebVersie' | translate }}
+            </a>
+            <ion-button *ngIf="!forceSeeVw && !isIos" class="m-top-medium" expand="block"
+              (click)="letMeSeeNormalAppVersion()">
+              {{"Ticket.LetMeSeeNormalAppVersion" | translate}}
+            </ion-button>
+          </div> -->
+
+        <h5 *ngIf="!hasEveryInfoToSell" class="fake-mouse-select" (click)="openSellerDepartmentInfo()">
+          {{'Ticket.CompleteSellerDepartmentInfoPlease' | translate}}
+        </h5>
+
+        <!-- <h1 class="warning-color">
+              <a href="https://manifiesta.eventsquare.store/2023" class="warning-color">
+                {{'Ticket.TmpProblem' | translate}}
+              </a>
+            </h1> -->
+
+        <ng-container *ngIf="hasEveryInfoToSell && ticketTypes?.length > 0">
+          <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
+            [class.transparent-background]="ticketType.branding?.image">
+            <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
+            <ion-card-header *ngIf="!ticketType.branding?.image">
+              <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
+            </ion-card-header>
+            <ion-item>
+              <ion-label>
+                {{ticketType.price | currency:'EUR'}}
+                | {{ticketNumberOfSell[index].ticketPrice *
+                ticketNumberOfSell[index].ticketAmount |
+                currency:'EUR'}}
+                <p>(+ {{ticketType.fee | currency:'EUR'}} {{"Ticket.ServiceCharge" | translate}})</p>
+              </ion-label>
+
+              <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
+                (click)="changeAmountTicket(index, 'remove')">
+                <ion-icon name="remove"></ion-icon>
+              </ion-button>
+              <ion-input [(ngModel)]="ticketNumberOfSell[index].ticketAmount" type="number" min="0"></ion-input>
+              <ion-button slot="end" (click)="changeAmountTicket(index, 'add')">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+            </ion-item>
+          </ion-card>
+
+          <ion-button class="m-top-medium" [disabled]="totalAmount <= 0" color="secondary" expand="block"
+            (click)="setOpenModal(true)">
+            <ion-icon name="cart"></ion-icon>
+            {{"Ticket.Buy" | translate}} {{totalAmount | currency:'EUR'}}
+          </ion-button>
+
+          <div class="separator-line m-top-medium"></div>
+          <a href="mailto:app@manifiesta.be">
+            {{'Ticket.PaymentSucceesWithoutTicket' | translate}}
+          </a>
+        </ng-container>
+
+        <div class="separator-line m-top-medium"></div>
+
+        <!-- The information to know which kind of ticket show -->
+        <ng-container>
+          <ion-button class="m-top-medium" expand="block" (click)="goMyDetails()">
+            <ion-icon name="ticket-outline"></ion-icon>
+            {{"Ticket.HistoricOfSelling" | translate}}
+          </ion-button>
+        </ng-container>
+
+        <div class="separator-line m-top-medium"></div>
+
+        <ion-button expand="block" (click)="openSellerDepartmentInfo()">
+          {{"Ticket.MyDepartmentInfo" | translate}}
+        </ion-button>
+        <ion-button class="m-top-medium" (click)="clickOnLogout()" color="danger" expand="block">
+          {{"Volunteer.Logout" | translate}}
+          <ion-icon slot="end" icon="power"></ion-icon>
+        </ion-button>
+      </div>
+
+    </ng-container>
+
+
+    <!-- Client info -->
+    <ng-container *ngIf="showClientDetailForm && buyForm && addressForm">
+
+      <ion-content class="ion-padding">
+
+        <ng-container>
+          <h4>
+            {{"Ticket.TicketBuyRecap" | translate}}
+          </h4>
+          <p *ngFor="let t of recapSelectedTicket">
+            {{t.ticketAmount}}x {{t.ticketLabel}}: {{t.ticketTotalPrice | currency:'EUR'}}
           </p>
-        </ion-label>
-        <ion-toggle slot="end" [checked]="clientAcceptData" (ionChange)="onClientAcceptData($event)"></ion-toggle>
-      </ion-item>
+        </ng-container>
 
-      <ion-button (click)="buy(true)" [disabled]="disabledBuyButton" color="secondary" expand="block" size="large"
-        class="m-bt-medium m-top-medium">
-        <ion-icon name="qr-code"></ion-icon>
-        {{"Ticket.Pay" | translate}} - QR Code - {{totalAmount | currency:'EUR'}}
-      </ion-button>
+        <form *ngIf="buyForm" [formGroup]="buyForm">
 
-      <app-viva-wallet-verification *ngIf="!isIos && !allHardwareOk"></app-viva-wallet-verification>
-      <ion-button *ngIf="!isIos && allHardwareOk" (click)="buy()" [disabled]="disabledBuyButton" color="secondary"
-        expand="block" size="large">
-        <ion-icon name="card"></ion-icon>
-        {{"Ticket.Pay" | translate}} - Card - {{totalAmount | currency:'EUR'}}
-      </ion-button>
+          <h4 class="m-right-medium m-left-medium">
+            {{'Ticket.ClientInformation' | translate}}
+          </h4>
 
-    </ion-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.ClientEmail" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="email" formControlName="email" required placeholder="email@something.be">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.VerificationClientEmail" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="email" formControlName="verificationEmail" required
+                    placeholder="email@something.be">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.ClientFirstname" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="text" formControlName="firstname" required
+                    [placeholder]="'Ticket.SellerFirstname' | translate" autocapitalize="words">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.ClientLastname" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="text" formControlName="lastname" required
+                    [placeholder]="'Ticket.SellerLastname' | translate" autocapitalize="words">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
 
-  </ng-container>
+          </ion-grid>
+        </form>
 
-</ion-content>
+        <ng-container *ngIf="buyForm.value.askSendTicket">
+          <form *ngIf="addressForm" [formGroup]="addressForm">
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.ClientStreet" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="text" formControlName="street" required placeholder="Caserne Street"
+                    autocapitalize="words">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.ClientNumber" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="text" formControlName="number" required placeholder="86">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.ClientPostCode" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="number" formControlName="postCode" required placeholder="1000">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12">
+                <ion-item>
+                  <ion-label color="primary" position="stacked">
+                    {{"Ticket.ClientCity" | translate}}
+                  </ion-label>
+                  <ion-input clearInput type="text" formControlName="city" required placeholder="Brussels"
+                    autocapitalize="words">
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </form>
+        </ng-container>
+
+        <ion-item class="m-top-medium">
+          <ion-label>
+            {{'Ticket.ClientWantNewsletter' | translate}}
+          </ion-label>
+          <ion-toggle slot="end" [checked]="clientWantNewsletter"
+            (ionChange)="onClientWantNewsletter($event)"></ion-toggle>
+        </ion-item>
+
+        <ion-item lass="m-top-medium">
+          <ion-label>
+            <p [innerHTML]="'Ticket.DataPrivacyClient' | translate">
+            </p>
+          </ion-label>
+          <ion-toggle slot="end" [checked]="clientAcceptData" (ionChange)="onClientAcceptData($event)"></ion-toggle>
+        </ion-item>
+
+        <ion-button (click)="buy(true)" [disabled]="disabledBuyButton" color="secondary" expand="block" size="large"
+          class="m-bt-medium m-top-medium">
+          <ion-icon name="qr-code"></ion-icon>
+          {{"Ticket.Pay" | translate}} - QR Code - {{totalAmount | currency:'EUR'}}
+        </ion-button>
+
+        <app-viva-wallet-verification *ngIf="!isIos && !allHardwareOk"></app-viva-wallet-verification>
+        <ion-button *ngIf="!isIos && allHardwareOk" (click)="buy()" [disabled]="disabledBuyButton" color="secondary"
+          expand="block" size="large">
+          <ion-icon name="card"></ion-icon>
+          {{"Ticket.Pay" | translate}} - Card - {{totalAmount | currency:'EUR'}}
+        </ion-button>
+
+      </ion-content>
+
+    </ng-container>
+
+  </ion-content>
+</ng-container>

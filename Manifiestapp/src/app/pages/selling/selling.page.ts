@@ -75,6 +75,9 @@ export class SellingPage {
   takeQrCode = false;
   forceSeeVw = false;
 
+  preparationOfVw = false;
+  vwPreparationStep = 0;
+
   constructor(
     private formBuilder: FormBuilder,
     private sellingService: SellingService,
@@ -222,7 +225,8 @@ export class SellingPage {
         if (this.status == 'success') {
           console.log('RESET IS OK BRO NOW CONNECT')
           // this.vivawalletResetSuccess();
-          this.autoVivaWalletAuth();
+          this.preparationOfVw = true;
+          this.vwPreparationStep = 1;
         } else {
           console.warn('fail to reset');
         }
@@ -241,16 +245,8 @@ export class SellingPage {
 
           console.log('AUTH IS OK BRO NOW PAY')
 
-          window.open(
-            'vivapayclient://pay/v1' +
-            `?appId=be.manifiesta.app` +
-            '&action=sale' +
-            `&amount=${Math.floor(this.totalAmount * 100)}` +
-            `&clientTransactionId=${this.clientTransactionId}` +
-            '&callback=mycallbackscheme://selling',
-            '_system'
-          );
-          this.cancelBuy();
+          this.preparationOfVw = true;
+          this.vwPreparationStep = 2;
         } else {
           this.vivaWalletError();
         }
@@ -283,6 +279,29 @@ export class SellingPage {
 
   letMeSeeNormalAppVersion() {
     this.forceSeeVw = true;
+  }
+
+  forceQuitPreparationVw() {
+    this.preparationOfVw = false;
+    this.vwPreparationStep = 0;
+  }
+
+  vwPreparationNextStep() {
+    if (this.vwPreparationStep === 1) {
+      this.autoVivaWalletAuth();
+    } else if (this.vwPreparationStep === 2) {
+      window.open(
+        'vivapayclient://pay/v1' +
+        `?appId=be.manifiesta.app` +
+        '&action=sale' +
+        `&amount=${Math.floor(this.totalAmount * 100)}` +
+        `&clientTransactionId=${this.clientTransactionId}` +
+        '&callback=mycallbackscheme://selling',
+        '_system'
+      );
+      this.preparationOfVw = false;
+      this.cancelBuy();
+    }
   }
 
   // TODO for IOS
@@ -545,9 +564,11 @@ export class SellingPage {
       '&skipExternalDeviceSetup=true' +
       '&callback=mycallbackscheme://selling',
     );
+    this.preparationOfVw = false;
   }
 
   resetVivaWallet() {
+    this.preparationOfVw = false;
     window.open(
       'vivapayclient://pay/v1' +
       `?appId=be.manifiesta.app` +
