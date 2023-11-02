@@ -80,7 +80,8 @@ export class SellingService {
         sellerDepartmentId: localStorage.getItem(LocalStorageEnum.SellerDepartment),
         sellerPostalCode: localStorage.getItem(LocalStorageEnum.SellerPostalCode),
         clientTransactionId,
-        fromWorkGroup: localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup) ? true : false
+        fromWorkGroup: localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup) ? true : false,
+        edition: '2024',
       }
     )
   }
@@ -107,7 +108,7 @@ export class SellingService {
 
   getMySellingInformation(): Observable<any> {
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/seller/${localStorage.getItem(LocalStorageEnum.SellerEmail)}`
+      `${this.baseUrl}tickets/sellingInformation/seller/${localStorage.getItem(LocalStorageEnum.SellerEmail)}/2024`
     );
   }
 
