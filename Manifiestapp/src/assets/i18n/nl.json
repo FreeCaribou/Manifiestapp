@@ -249,6 +249,12 @@
     "LetMeSeeNormalAppVersion": "Laat me de versie zien met Viva Wallet en contactloos betalen.",
     "ResetVivaWallet": "Reset Viva Wallet",
     "OnlyQrCodePlease": "Gebruik ALLEEN de QR Code a.u.b.",
-    "TmpProblem": "Tijdelijk probleem met EventSquare - Gebruik in plaats daarvan deze link https://manifiesta.eventsquare.store/2023 - We zullen de gemiste verkopen zo snel mogelijk herstellen, maak geen duplicaten aub."
+    "TmpProblem": "Tijdelijk probleem met EventSquare - Gebruik in plaats daarvan deze link https://manifiesta.eventsquare.store/2023 - We zullen de gemiste verkopen zo snel mogelijk herstellen, maak geen duplicaten aub.",
+    "PreparVW": "Voorbereiding voor Viva Wallet",
+    "NextStep": "Volgende stap",
+    "ForceQuitPreparVW": "Uitstapvoorbereiding",
+    "StepXOnTwo": "Stap {{vwPreparationStep}} van 2",
+    "NextStepConnexion": "Log in op Viva Wallet",
+    "NextStepPayment": "Betaling"
   }
 }

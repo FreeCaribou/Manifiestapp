@@ -144,6 +144,10 @@ export class SellingPage {
     return { sellerName: this.sellerName }
   }
 
+  get vwPreparationStepI18NParam() {
+    return { vwPreparationStep: this.vwPreparationStep }
+  }
+
   get progressGetter() {
     return this.progress;
   }

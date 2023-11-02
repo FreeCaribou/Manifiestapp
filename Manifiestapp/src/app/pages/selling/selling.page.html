@@ -1,12 +1,20 @@
 <ion-content *ngIf="preparationOfVw" class="ion-padding m-top-high text-align">
-  <h1>Preparation of Viva Wallet, please wait</h1>
-  <h2 class="m-top-medium">Step {{vwPreparationStep}} of 2</h2>
-  <ion-button color="success" (click)="vwPreparationNextStep()">
-    Next step
+  <h1 class="primary-color">{{'Ticket.PreparVW' | translate}}</h1>
+  <h2 class="m-top-medium secondary-color">{{'Ticket.StepXOnTwo' | translate:vwPreparationStepI18NParam}}</h2>
+  <h3>
+    <span *ngIf="vwPreparationStep === 1">
+      {{'Ticket.NextStepConnexion' | translate}}
+    </span>
+    <span *ngIf="vwPreparationStep === 2">
+      {{'Ticket.NextStepPayment' | translate}}
+    </span>
+  </h3>
+  <ion-button color="success" (click)="vwPreparationNextStep()" size="large">
+    {{'Ticket.NextStep' | translate}}
   </ion-button>
   <hr>
   <ion-button color="warning" (click)="forceQuitPreparationVw()" size="small" class="m-top-high">
-    Force quit preparation
+    {{'Ticket.ForceQuitPreparVW' | translate}}
   </ion-button>
 </ion-content>
 
