@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "3PLK64KR87.be.manifiestapp.app",
+        "paths": ["*"]
+      }
+    ]
+  }
+}
