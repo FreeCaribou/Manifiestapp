@@ -114,13 +114,13 @@ export class SellingService {
 
   getMyCurrentDepartmentSellingInformation(): Observable<any> {
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/department/top-ten/${localStorage.getItem(LocalStorageEnum.SellerDepartment)}/${localStorage.getItem(LocalStorageEnum.SellerPostalCode)}`
+      `${this.baseUrl}tickets/sellingInformation/department/top-ten/${localStorage.getItem(LocalStorageEnum.SellerDepartment)}/${localStorage.getItem(LocalStorageEnum.SellerPostalCode)}/2024`
     );
   }
 
   getAllSellingInformation(): Observable<any> {
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/seller/top-ten`
+      `${this.baseUrl}tickets/sellingInformation/seller/top-ten/2024`
     );
   }
 
@@ -129,7 +129,7 @@ export class SellingService {
     const sellerDepartement = localStorage.getItem(LocalStorageEnum.SellerDepartment);
     const fromWorkGroup = localStorage.getItem(LocalStorageEnum.SellerFromWorkGroup);
     return this.baseService.getCall(
-      `${this.baseUrl}tickets/sellingInformation/postCode/${postCode}/${sellerDepartement}/${fromWorkGroup}`
+      `${this.baseUrl}tickets/sellingInformation/postCode/${postCode}/${sellerDepartement}/${fromWorkGroup}/2024`
     );
   }
 
