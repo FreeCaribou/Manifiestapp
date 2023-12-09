@@ -15,7 +15,8 @@
     "Confirm": "Confirmer",
     "Map": "Le plan",
     "TimeTable": "Planning horaire",
-    "Maintext": "ManiFiesta? C'est deux jours pour voir le monde tel qu'il devrait être. Venez fêter avec nous le 9 et 10 septembre 2023. Imaginer des alternatives pour l'avenir et agir ensemble... À ManiFiesta, nous parlons la langue de la solidarité et de la diversité."
+    "Maintext": "ManiFiesta? C'est deux jours pour voir le monde tel qu'il devrait être. Venez fêter avec nous le 9 et 10 septembre 2023. Imaginer des alternatives pour l'avenir et agir ensemble... À ManiFiesta, nous parlons la langue de la solidarité et de la diversité.",
+    "LineOr": "---------- OU ----------"
   },
   "Menu": {
     "Home": "Home",
@@ -193,11 +194,11 @@
     "Pay": "Payer",
     "EnterSomeDataToBeAbleToSell": "Remplissez vos données de profil",
     "HardwareNOK": "Si vous souhaitez payer via NFC / Carte, veuillez régler ces quelques détails d'abord",
-    "VivaWalletNotInstall": "L'app Viva Wallet POS doit être installée pour pouvoir accepter des paiements",
-    "InstallVivaWallet": "Installer Viva Wallet POS",
+    "VivaWalletNotInstall": "L'app viva.com Terminal doit être installée pour pouvoir accepter des paiements par carte",
+    "InstallVivaWallet": "Installer le Terminal",
     "GpsNotActivated": "Localisation doit être activée comme sécurité anti-fraude",
-    "ActivateGps": "Activer Localisation / GPS",
-    "NfcNotActivated": "NFC doit être activée pour lire les cartes en banque des clients",
+    "ActivateGps": "Activer GPS",
+    "NfcNotActivated": "NFC doit être activée pour lire les cartes de banque des clients",
     "ActivateNfc": "Activer NFC",
     "GoMyManifiestaForConnect": "Pour accèder à la vente de ticket vous devez vous connecter sur My Manifiesta et y remplir des informations",
     "TicketBuyRecap": "Récapitulatif de la vente",
@@ -255,6 +256,8 @@
     "ForceQuitPreparVW": "Quitter la préparation",
     "StepXOnTwo": "Étape {{vwPreparationStep}} sur 2",
     "NextStepConnexion": "Connexion à Viva Wallet",
-    "NextStepPayment": "Paiement"
+    "NextStepPayment": "Paiement",
+    "PayByQrCode": "Payer par QR Code",
+    "PayByCard": "Payer par carte"
   }
 }

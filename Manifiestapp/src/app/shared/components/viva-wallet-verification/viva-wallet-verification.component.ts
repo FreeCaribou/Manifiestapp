@@ -39,10 +39,6 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
     return localStorage.getItem(LocalStorageEnum.KnowNotNFC);
   }
 
-  get knowPayconic() {
-    return localStorage.getItem(LocalStorageEnum.KnowPayconic);
-  }
-
   // TODO for IOS
   verifyNfc() {
     // If NFC is on the phone, we check if enabled or not
@@ -145,10 +141,6 @@ export class VivaWalletVerificationComponent implements AfterViewInit, OnInit {
 
   nfcNotAvailableOk() {
     localStorage.setItem(LocalStorageEnum.KnowNotNFC, 'true');
-  }
-
-  payconicWarningOk() {
-    localStorage.setItem(LocalStorageEnum.KnowPayconic, 'true');
   }
 
   verifyHardwareForVivaWallet() {

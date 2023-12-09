@@ -15,7 +15,8 @@
     "Confirm": "Bevestigen",
     "Map": "Plattegrond",
     "TimeTable": "Tijdschema",
-    "Maintext": "ManiFiesta? Dat is twee dagen lang de wereld zoals hij zou moeten zijn. Kom met ons feesten op 9 en 10 september 2023. Alternatieven voor de toekomst bedenken en in beweging komen… Op ManiFiesta spreken we de taal van solidariteit en diversiteit."
+    "Maintext": "ManiFiesta? Dat is twee dagen lang de wereld zoals hij zou moeten zijn. Kom met ons feesten op 9 en 10 september 2023. Alternatieven voor de toekomst bedenken en in beweging komen… Op ManiFiesta spreken we de taal van solidariteit en diversiteit.",
+    "LineOr": "---------- OF ----------"
   },
   "Menu": {
     "Home": "Home",
@@ -193,10 +194,10 @@
     "Pay": "Betalen",
     "EnterSomeDataToBeAbleToSell": "Vul je profielgegevens hier in",
     "HardwareNOK": "Als je via NFC / Card wilt betalen, regel dan eerst deze paar gegevens",
-    "VivaWalletNotInstall": "De app Viva Wallet POS moet geïnstalleerd zijn om betalingen te kunnen ontvangen",
-    "InstallVivaWallet": "Viva Wallet POS installeren",
+    "VivaWalletNotInstall": "De viva.com Terminal app moet geïnstalleerd zijn om kaartbetalingen te kunnen accepteren",
+    "InstallVivaWallet": "De Terminal installeren",
     "GpsNotActivated": "Locatiegegevens moeten geactiveerd zijn als beveiliging tegen fraude",
-    "ActivateGps": "Locatie/GPS inschakelen",
+    "ActivateGps": "GPS inschakelen",
     "NfcNotActivated": "NFC moet geactiveerd zijn om de bankkaart van de klanten te lezen",
     "ActivateNfc": "NFC inschakelen",
     "GoMyManifiestaForConnect": "Om toegang te krijgen tot de kaartverkoop moet u verbinding maken met My Manifiesta en meer informatie invullen",
@@ -255,6 +256,8 @@
     "ForceQuitPreparVW": "Uitstapvoorbereiding",
     "StepXOnTwo": "Stap {{vwPreparationStep}} van 2",
     "NextStepConnexion": "Log in op Viva Wallet",
-    "NextStepPayment": "Betaling"
+    "NextStepPayment": "Betaling",
+    "PayByQrCode": "Betalen met QR Code",
+    "PayByCard": "Betalen met kaart"
   }
 }
