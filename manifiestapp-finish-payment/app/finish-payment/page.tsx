@@ -27,9 +27,10 @@ export default async function FinishPayment({
 
     console.log('error and ticket', ticket?.data, !ticket?.data, error)
 
+    const props = {error, ticket};
     return (
         <div>
-            <FinishPaymentComponent error={error} ticket={ticket}/>
+            <FinishPaymentComponent props={props}/>
         </div>
     )
 }

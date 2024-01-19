@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Device } from '@capacitor/device';
 import RedirectToApp from './redirect-to-app';
 
-export default function FinishPaymentComponent(props: { error: boolean, ticket: any }) {
+export default function FinishPaymentComponent({props}) {
     const [languageCode, setLanguageCode] = useState<string>('en');
 
     useEffect(() => {
