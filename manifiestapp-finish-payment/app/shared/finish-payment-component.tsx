@@ -17,17 +17,17 @@ export default function FinishPaymentComponent(props: { error: boolean, ticket: 
         const currentLang = languageCode.slice(0, 2);
         let text = props.error ?
             `There is an error - ${props.ticket?.message ? props.ticket?.message[0] : 'unkown'} - ERR CODE ${props.ticket?.code}`
-            : `Congratulations, the tickets is selling - REF ${props.ticket?.data?.order?.reference} - You have sold ${props.ticket?.data.totalTicketsForThisEditionForThisSeller} tickets`;
+            : `Congratulations, the tickets is selling - REF ${props.ticket?.data?.order?.reference} - You have sold ${props.ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`;
         switch (currentLang) {
             case 'fr':
                 text = props.error ?
                 `Une erreur est survenu - ${props.ticket?.message ? props.ticket?.message[0] : 'unkown'} - ERR CODE ${props.ticket?.code}`
-                : `Félicitation, la commande est finalisée - REF ${props.ticket?.data?.order?.reference} - Tu as vendu ${props.ticket?.data.totalTicketsForThisEditionForThisSeller} tickets`;
+                : `Félicitation, la commande est finalisée - REF ${props.ticket?.data?.order?.reference} - Tu as vendu ${props.ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`;
                 break;
             case 'nl':
                 text = props.error ?
                 `Er is een fout opgetreden - ${props.ticket?.message ? props.ticket?.message[0] : 'unkown'} - ERR CODE ${props.ticket?.code}`
-                : `Gefeliciteerd, uw bestelling is nu voltooid - REF ${props.ticket?.data?.order?.reference} - Je hebt verkocht ${props.ticket?.data.totalTicketsForThisEditionForThisSeller} tickets`;
+                : `Gefeliciteerd, uw bestelling is nu voltooid - REF ${props.ticket?.data?.order?.reference} - Je hebt verkocht ${props.ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`;
                 break;
         }
         return text;
