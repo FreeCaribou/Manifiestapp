@@ -25,10 +25,11 @@ export default async function FinishPayment({
     const ticket = await Promise.resolve(ticketData);
     const error: boolean = !vivaWalletTransactionId || !ticket?.data;
 
-    const props = {error, ticket};
+    console.log('error and ticket', ticket?.data, !ticket?.data, error)
+
     return (
         <div>
-            <FinishPaymentComponent {...props}/>
+            <FinishPaymentComponent error={error} ticket={ticket}/>
         </div>
     )
 }
