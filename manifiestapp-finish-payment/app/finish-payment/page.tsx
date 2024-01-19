@@ -1,6 +1,6 @@
 import axios from 'axios';
 import https from 'https';
-import RedirectToApp from '../shared/redirect-to-app';
+import FinishPaymentComponent from '../shared/finish-payment-component';
 
 // TODO better ui
 // TODO link to mail if problem
@@ -23,15 +23,12 @@ export default async function FinishPayment({
     const vivaWalletTransactionId = searchParams?.t;
     const ticketData = vivaWalletTransactionId ? askTicket(vivaWalletTransactionId as string) : { data: {} };
     const ticket = await Promise.resolve(ticketData);
-    const error: boolean = !ticket?.data;
+    const error: boolean = !vivaWalletTransactionId || !ticket?.data;
 
-    const text = error ?
-        `There is an error - ${ticket?.message ? ticket?.message[0] : 'unkown'} - ERR CODE ${ticket?.code}`
-        : `Congratulations, the tickets is selling - REF ${ticket?.data?.order?.reference} - You have sold ${ticket?.data.totalTicketsForThisEditionForThisSeller} tickets`;
+    const props = {error, ticket};
     return (
         <div>
-            <h1 className={error ? 'text-error' : ''}>{text}</h1>
-            <RedirectToApp />
+            <FinishPaymentComponent {...props}/>
         </div>
     )
 }

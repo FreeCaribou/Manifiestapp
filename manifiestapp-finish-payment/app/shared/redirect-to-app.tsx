@@ -17,6 +17,14 @@ function Redirection({ os, language }) {
         }
     }, [os]);
 
+    useEffect(() => {
+        if (language.slice(0, 2) === 'fr') {
+            setText('Continuer à vendre des tickets');
+        } else if (language.slice(0, 2) === 'nl') {
+            setText('Tickets blijven verkopen');
+        }
+    }, [language]);
+
     return (
         <a href={url}>
             <h2>{text}</h2>
@@ -30,11 +38,9 @@ export default function RedirectToApp() {
 
     useEffect(() => {
         Device.getInfo().then(info => {
-            console.log('info device', info);
             setOs(info.operatingSystem);
         });
         Device.getLanguageCode().then(languageCode => {
-            console.log('language code', languageCode);
             setLanguageCode(languageCode.value);
         })
     }, []);
