@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { Device } from '@capacitor/device';
 import RedirectToApp from './redirect-to-app';
 
-export default function FinishPaymentComponent({props}) {
+export default function FinishPaymentComponent({ props }) {
     const [languageCode, setLanguageCode] = useState<string>('en');
 
     useEffect(() => {
@@ -58,10 +58,10 @@ export default function FinishPaymentComponent({props}) {
 
     return (
         <div>
+            <h3>{getNotForClientText()}</h3>
             <h1 className={props.error ? 'text-error' : ''}>{getFinishText()}</h1>
-            <h4>{getNotForClientText()}</h4>
-            <a href='mailto:app@manifiesta.be'><h3>{getMailText()}</h3></a>
             <RedirectToApp />
+            <a href='mailto:app@manifiesta.be'><h3>{getMailText()}</h3></a>
         </div>
     )
 }
