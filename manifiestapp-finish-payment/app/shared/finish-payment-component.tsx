@@ -41,10 +41,26 @@ export default function FinishPaymentComponent({props}) {
         return text;
     }
 
+    function getMailText() {
+        const currentLang = languageCode.slice(0, 2);
+        const email = 'app@manifiesta.be';
+        let text = `A problem ? A Question ? Send an email at ${email} and a volunteer will answer as soon as possible`;
+        switch (currentLang) {
+            case 'fr':
+                text = `Un problème ? Une question ? Envoyez un email à ${email} et un bénévole vous répondra aussi vite que possible.`;
+                break;
+            case 'nl':
+                text = `Een probleem? Een vraag ? Stuur een e-mail naar ${email} en een vrijwilliger zal zo snel mogelijk antwoorden.`;
+                break;
+        }
+        return text;
+    }
+
     return (
         <div>
             <h1 className={props.error ? 'text-error' : ''}>{getFinishText()}</h1>
             <h4>{getNotForClientText()}</h4>
+            <a href='mailto:app@manifiesta.be'><h3>{getMailText()}</h3></a>
             <RedirectToApp />
         </div>
     )
