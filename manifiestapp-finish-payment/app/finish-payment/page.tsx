@@ -27,10 +27,22 @@ export default async function FinishPayment({
 
     console.log('error and ticket', ticket?.data, !ticket?.data, error)
 
-    const props = {error, ticket};
+    const messages = {
+        en: error ?
+            `There is an error - ${ticket?.message ? ticket?.message[0] : 'unkown'} - ERR CODE ${ticket?.code}`
+            : `Congratulations, the tickets is selling - REF ${ticket?.data?.order?.reference} - You have sold ${ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`,
+        fr: error ?
+            `Une erreur est survenu - ${ticket?.message ? ticket?.message[0] : 'unkown'} - ERR CODE ${ticket?.code}`
+            : `Félicitation, la commande est finalisée - REF ${ticket?.data?.order?.reference} - Tu as vendu ${ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`,
+        nl: error ?
+            `Er is een fout opgetreden - ${ticket?.message ? ticket?.message[0] : 'unkown'} - ERR CODE ${ticket?.code}`
+            : `Gefeliciteerd, uw bestelling is nu voltooid - REF ${ticket?.data?.order?.reference} - Je hebt verkocht ${ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`,
+    }
+
+    const props = { error, messages };
     return (
         <div>
-            <FinishPaymentComponent props={props}/>
+            <FinishPaymentComponent props={props} />
         </div>
     )
 }

@@ -15,19 +15,13 @@ export default function FinishPaymentComponent({props}) {
 
     function getFinishText() {
         const currentLang = languageCode.slice(0, 2);
-        let text = props.error ?
-            `There is an error - ${props.ticket?.message ? props.ticket?.message[0] : 'unkown'} - ERR CODE ${props.ticket?.code}`
-            : `Congratulations, the tickets is selling - REF ${props.ticket?.data?.order?.reference} - You have sold ${props.ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`;
+        let text = props.messages?.en;
         switch (currentLang) {
             case 'fr':
-                text = props.error ?
-                `Une erreur est survenu - ${props.ticket?.message ? props.ticket?.message[0] : 'unkown'} - ERR CODE ${props.ticket?.code}`
-                : `Félicitation, la commande est finalisée - REF ${props.ticket?.data?.order?.reference} - Tu as vendu ${props.ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`;
+                text = props.messages?.fr;
                 break;
             case 'nl':
-                text = props.error ?
-                `Er is een fout opgetreden - ${props.ticket?.message ? props.ticket?.message[0] : 'unkown'} - ERR CODE ${props.ticket?.code}`
-                : `Gefeliciteerd, uw bestelling is nu voltooid - REF ${props.ticket?.data?.order?.reference} - Je hebt verkocht ${props.ticket?.data?.totalTicketsForThisEditionForThisSeller} tickets`;
+                text = props.messages?.nl;
                 break;
         }
         return text;
