@@ -57,6 +57,7 @@ export class ProgrammeService {
         const allEventsOccurencesSplitted = [];
         data.forEach(d => {
           d.field_occurrences.forEach(occurrence => {
+            // TODO better date, real date and not just string date
             allEventsOccurencesSplitted.push({
               ...d,
               field_occurrence: occurrence,
