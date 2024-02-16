@@ -23,6 +23,11 @@ export class ProgrammePage {
   ) { }
 
   ionViewWillEnter() {
+    this.loadingCommunication.changeLoaderTo(true);
+    this.programmeService.getEvents().subscribe(data => {
+      console.log('data ?', data)
+    }).add(() => this.loadingCommunication.changeLoaderTo(false));
+
     // Network.getStatus().then(n => {
     //   this.connected = n.connected;
     //   if (this.connected) {
@@ -35,19 +40,19 @@ export class ProgrammePage {
     //   }
     // });
 
-    this.loadingCommunication.changeLoaderTo(true);
-    this.programmeService.getBigBlobAllProgramme().pipe().subscribe(data => {
-      data.items.forEach(item => {
-        let day = item.api_event_dates[0].day;
-        if (!this.days.includes(day)) {
-          this.days.push(day);
-        }
-      });
+    // this.loadingCommunication.changeLoaderTo(true);
+    // this.programmeService.getBigBlobAllProgramme().pipe().subscribe(data => {
+    //   data.items.forEach(item => {
+    //     let day = item.api_event_dates[0].day;
+    //     if (!this.days.includes(day)) {
+    //       this.days.push(day);
+    //     }
+    //   });
 
-      if (!this.router.url.includes('subprogramme')) {
-        this.router.navigate(['programme', 'subprogramme', this.days[0]]);
-      }
-    }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
+    //   if (!this.router.url.includes('subprogramme')) {
+    //     this.router.navigate(['programme', 'subprogramme', this.days[0]]);
+    //   }
+    // }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
   }
 
   // The data from WP don't come always in right order for the days

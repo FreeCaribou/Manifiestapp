@@ -31,6 +31,8 @@ export class ProgrammeService {
   cacheBigBlobProgramme: WagtailApiEventItem[] = [];
   cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
+  dataUrl = environment.webDataUrl;
+
   constructor(
     private service: ProgrammeDataService,
     private volunteerShiftService: VolunteerShiftService,
@@ -44,6 +46,28 @@ export class ProgrammeService {
     });
 
     localStorage.removeItem(LocalStorageEnum.FavoriteId);
+  }
+
+  getEvents(): Observable<Event[]> {
+    return this.baseService.bypassCors(`${this.dataUrl}events.${this.languageService.selectedLanguage}.json`).pipe(
+      map(d => d.data),
+      map(data => {
+        // An event can have multiple occurences (date - hours)
+        // For the listing on the app we need to extract that and duplicate the event by each occurence for the timelines
+        const allEventsOccurencesSplitted = [];
+        data.forEach(d => {
+          d.field_occurrences.forEach(occurrence => {
+            allEventsOccurencesSplitted.push({
+              ...d,
+              field_occurrence: occurrence,
+              parentId: d.id,
+              id: occurrence.id,
+            })
+          })
+        });
+        return allEventsOccurencesSplitted;
+      })
+    );
   }
 
   retrieveProgrammeInLoop(url, count = 0, lastArray: EventInterface[] = [], maxPerPage = 50): Observable<any> {

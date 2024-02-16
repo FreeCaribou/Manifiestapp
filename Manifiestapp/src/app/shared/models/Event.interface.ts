@@ -1,3 +1,7 @@
+export interface IEvent {
+  
+} 
+
 export interface RenderedInterface {
   rendered: string;
 }
