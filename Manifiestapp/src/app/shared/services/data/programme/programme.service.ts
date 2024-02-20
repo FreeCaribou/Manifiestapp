@@ -33,9 +33,6 @@ export class ProgrammeService {
 
   dataUrl = environment.webDataUrl;
 
-  saturday = new Date('09/07/2024');
-  sunday = new Date('09/08/2024');
-
   constructor(
     private service: ProgrammeDataService,
     private volunteerShiftService: VolunteerShiftService,
@@ -59,10 +56,12 @@ export class ProgrammeService {
    * @returns Date
    */
   buildOneDateHourFromData(day: 'sat' | 'sun', hoursInSecond: number): Date {
+    const saturday = new Date('09/07/2024');
+    const sunday = new Date('09/08/2024');
     const hours = Math.floor(hoursInSecond / 3600);
     hoursInSecond -= hours*3600;
     const minutes = Math.floor(hoursInSecond / 60);
-    const baseDate = day === 'sat' ? this.saturday : this.sunday;
+    const baseDate = day === 'sat' ? saturday : sunday;
     baseDate.setHours(hours);
     baseDate.setMinutes(minutes);
     baseDate.setSeconds(0);
@@ -87,6 +86,9 @@ export class ProgrammeService {
 
             allEventsOccurencesSplitted.push({
               ...d,
+              picture: d.field_image?.field_media_image?.image_style_uri?.wide,
+              // TODO for picture, check what is the thumbnail and the big one
+              thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide,
               field_occurrence: occurrence,
               parentId: d.id,
               id: occurrence.id,
