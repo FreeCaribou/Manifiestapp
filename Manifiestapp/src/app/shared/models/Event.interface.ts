@@ -1,6 +1,7 @@
 export interface IEvent {
-  
-} 
+  [key: string]: any;
+  field_occurrence?: { start: Date, end: Date, field_day: string }
+}
 
 export interface RenderedInterface {
   rendered: string;
@@ -23,13 +24,13 @@ export interface WagtailApiEventItem {
   id: number,
   api_event_dates: { day: string, start: string, end: string }[];
   api_location: { name: string, search_id: string };
-  api_categories: {primary: string[], secondary: string[]},
+  api_categories: { primary: string[], secondary: string[] },
   description: { type: string, value: string }[];
   title: string;
   favorite: boolean;
   inFavoriteConflict: boolean;
   image: { meta: { download_url: string } },
-  thumbnail: {url: string, alt: string}
+  thumbnail: { url: string, alt: string }
 }
 
 export interface DayListEventInterface {

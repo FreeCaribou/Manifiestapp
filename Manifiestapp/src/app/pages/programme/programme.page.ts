@@ -26,6 +26,17 @@ export class ProgrammePage {
     this.loadingCommunication.changeLoaderTo(true);
     this.programmeService.getEvents().subscribe(data => {
       console.log('data ?', data)
+      data.forEach(d => {
+        let day = d.field_occurrence?.field_day;
+        if (!this.days.includes(day)) {
+          this.days.push(day);
+        }
+      });
+
+      console.log('and the final ?', this.days)
+      if (!this.router.url.includes('subprogramme')) {
+        this.router.navigate(['programme', 'subprogramme', this.days[0]]);
+      }
     }).add(() => this.loadingCommunication.changeLoaderTo(false));
 
     // Network.getStatus().then(n => {
@@ -40,19 +51,18 @@ export class ProgrammePage {
     //   }
     // });
 
-    // this.loadingCommunication.changeLoaderTo(true);
-    // this.programmeService.getBigBlobAllProgramme().pipe().subscribe(data => {
-    //   data.items.forEach(item => {
-    //     let day = item.api_event_dates[0].day;
-    //     if (!this.days.includes(day)) {
-    //       this.days.push(day);
-    //     }
-    //   });
-
-    //   if (!this.router.url.includes('subprogramme')) {
-    //     this.router.navigate(['programme', 'subprogramme', this.days[0]]);
-    //   }
-    // }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
+    this.loadingCommunication.changeLoaderTo(true);
+    this.programmeService.getBigBlobAllProgramme().pipe().subscribe(data => {
+      data.items.forEach(item => {
+        let day = item.api_event_dates[0].day;
+        if (!this.days.includes(day)) {
+          this.days.push(day);
+        }
+      });
+      if (!this.router.url.includes('subprogramme')) {
+        this.router.navigate(['programme', 'subprogramme', this.days[0]]);
+      }
+    }).add(() => {this.loadingCommunication.changeLoaderTo(false);});
   }
 
   // The data from WP don't come always in right order for the days

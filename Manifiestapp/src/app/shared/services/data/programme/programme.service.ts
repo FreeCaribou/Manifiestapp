@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface, WagtailApiEventItem, WagtailApiEventItemDaysList, WagtailApiReturn } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, IEvent, WagtailApiEventItem, WagtailApiEventItemDaysList, WagtailApiReturn } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { ProgrammeDataService } from './programme.data.service';
 import { IProgrammeService } from './programme.service.interface';
@@ -24,14 +24,17 @@ import { BaseService } from '../base.service';
 })
 export class ProgrammeService {
 
-  favoriteChangeEmit = new EventEmitter<WagtailApiEventItem>();
+  favoriteChangeEmit = new EventEmitter<IEvent>();
   verificationFavoriteLoadEmit = new EventEmitter<boolean>();
 
   cacheBigBlobProgrammeBrut: WagtailApiReturn;
-  cacheBigBlobProgramme: WagtailApiEventItem[] = [];
+  cacheBigBlobProgramme: IEvent[] = [];
   cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
   dataUrl = environment.webDataUrl;
+
+  saturday = new Date('09/07/2024');
+  sunday = new Date('09/08/2024');
 
   constructor(
     private service: ProgrammeDataService,
@@ -48,7 +51,18 @@ export class ProgrammeService {
     localStorage.removeItem(LocalStorageEnum.FavoriteId);
   }
 
-  getEvents(): Observable<Event[]> {
+  buildOneDateHourFromData(day: 'sat' | 'sun', hoursInSecond: number): Date {
+    const hours = Math.floor(hoursInSecond / 3600);
+    hoursInSecond -= hours*3600;
+    const minutes = Math.floor(hoursInSecond / 60);
+    const baseDate = day === 'sat' ? this.saturday : this.sunday;
+    baseDate.setHours(hours);
+    baseDate.setMinutes(minutes);
+    baseDate.setSeconds(0);
+    return baseDate;
+  }
+
+  getEvents(): Observable<IEvent[]> {
     return this.baseService.bypassCors(`${this.dataUrl}events.${this.languageService.selectedLanguage}.json`).pipe(
       map(d => d.data),
       map(data => {
@@ -58,16 +72,22 @@ export class ProgrammeService {
         data.forEach(d => {
           d.field_occurrences.forEach(occurrence => {
             // TODO better date, real date and not just string date
+            // TODO check the field_moved to know what to use as data in an occurrence ...
+
+            occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
+            occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
+
             allEventsOccurencesSplitted.push({
               ...d,
               field_occurrence: occurrence,
               parentId: d.id,
               id: occurrence.id,
-            })
-          })
+            });
+          });
         });
         return allEventsOccurencesSplitted;
-      })
+      }),
+      tap(items => this.cacheBigBlobProgramme = items),
     );
   }
 
@@ -185,7 +205,7 @@ export class ProgrammeService {
     return localStorage.getItem(LocalStorageEnum.FavoriteId2023)?.split(',') || [];
   }
 
-  async changeFavorite(event: WagtailApiEventItem) {
+  async changeFavorite(event: IEvent) {
     const isChangedToFavorite = event.favorite = !event.favorite;
     const favoriteId: string[] = this.getFavoriteId();
 

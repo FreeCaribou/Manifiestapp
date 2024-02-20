@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EventInterface, WagtailApiEventItem } from '../../models/Event.interface';
+import { EventInterface, IEvent, WagtailApiEventItem } from '../../models/Event.interface';
 
 @Component({
   selector: 'app-event-list-card',
@@ -7,7 +7,7 @@ import { EventInterface, WagtailApiEventItem } from '../../models/Event.interfac
 })
 export class EventListCardComponent {
   @Input()
-  list: WagtailApiEventItem[];
+  list: IEvent[];
   @Input()
   dateJustWithHour = true;
 }

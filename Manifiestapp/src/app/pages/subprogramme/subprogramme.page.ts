@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { EventInterface, WagtailApiEventItem } from 'src/app/shared/models/Event.interface';
+import { EventInterface, IEvent, WagtailApiEventItem } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
@@ -14,8 +14,8 @@ import { Network } from '@capacitor/network';
 })
 export class SubprogrammePage {
   dayId: string;
-  list: WagtailApiEventItem[];
-  listToShow: WagtailApiEventItem[];
+  list: IEvent[];
+  listToShow: IEvent[];
   day: EventDayEnum;
 
   locaties: any[];
@@ -72,18 +72,32 @@ export class SubprogrammePage {
   }
 
   initList() {
-    this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.api_event_dates[0].day === this.dayId);
+    if (this.programmeService.cacheBigBlobProgramme.length === 0) {
+      this.programmeService.getEvents().subscribe(() => {
+        this.buildList();
+      })
+    } else {
+      this.buildList();
+    }
+  }
+
+  buildList() {
+    this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_occurrence.field_day === this.dayId);
     this.listToShow = this.list;
 
-    this.locaties = [... new Set(this.list.map(i => i.api_location.name))].map(i => { return { id: i, name: i } }).sort((a, b) => {
-      return a.name > b.name ? 1 : -1;
-    });
-    this.categories = [... new Set(
-      this.list.map(i => i.api_categories.primary.join()).filter(i => i).join().split(',')
-        .concat(this.list.map(i => i.api_categories.secondary.join()).filter(i => i).join().split(','))
-    )].map(i => { return { id: i, name: i } }).sort((a, b) => {
-      return a.name > b.name ? 1 : -1;
-    });
+    console.log('and the list of the day isss', this.dayId, this.list, this.programmeService.cacheBigBlobProgramme)
+
+    // TODO rebuild that !
+
+    // this.locaties = [... new Set(this.list.map(i => i.api_location.name))].map(i => { return { id: i, name: i } }).sort((a, b) => {
+    //   return a.name > b.name ? 1 : -1;
+    // });
+    // this.categories = [... new Set(
+    //   this.list.map(i => i.api_categories.primary.join()).filter(i => i).join().split(',')
+    //     .concat(this.list.map(i => i.api_categories.secondary.join()).filter(i => i).join().split(','))
+    // )].map(i => { return { id: i, name: i } }).sort((a, b) => {
+    //   return a.name > b.name ? 1 : -1;
+    // });
   }
 
   onSelectChange() {
