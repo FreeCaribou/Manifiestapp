@@ -51,6 +51,13 @@ export class ProgrammeService {
     localStorage.removeItem(LocalStorageEnum.FavoriteId);
   }
 
+  /**
+   * We receive the date of an event in a weird way to build date
+   * We have the day (sat or sun, for saturday or sunday) and the second of the event (or the horus but in string)
+   * @param day 
+   * @param hoursInSecond 
+   * @returns Date
+   */
   buildOneDateHourFromData(day: 'sat' | 'sun', hoursInSecond: number): Date {
     const hours = Math.floor(hoursInSecond / 3600);
     hoursInSecond -= hours*3600;
@@ -62,6 +69,7 @@ export class ProgrammeService {
     return baseDate;
   }
 
+  // TODO comment all the workflow here
   getEvents(): Observable<IEvent[]> {
     return this.baseService.bypassCors(`${this.dataUrl}events.${this.languageService.selectedLanguage}.json`).pipe(
       map(d => d.data),
