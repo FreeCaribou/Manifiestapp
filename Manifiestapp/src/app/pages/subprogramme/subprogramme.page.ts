@@ -22,6 +22,8 @@ export class SubprogrammePage {
   locatieSelected: any;
   categories: any[];
   categorieSelected: any;
+  languages: any[];
+  languageSelected: any;
   search: string;
   // organizers: any[];
   // organizerSelected: any;
@@ -87,11 +89,17 @@ export class SubprogrammePage {
 
     console.log('and the list of the day isss', this.dayId, this.list, this.programmeService.cacheBigBlobProgramme)
 
-    // TODO rebuild that !
+    this.locaties = [... new Set(this.list.map(i => i.field_occurrence.field_location.title))].map(i => { return { id: i, name: i } }).sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    });
 
-    // this.locaties = [... new Set(this.list.map(i => i.api_location.name))].map(i => { return { id: i, name: i } }).sort((a, b) => {
-    //   return a.name > b.name ? 1 : -1;
-    // });
+    const langBrut = [].concat(...this.list.map(l => l.field_language.map(v => { return { id: v.name, name: v.name } })))
+    this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    });
+
+    // TODO rebuild that ! and add language ...
+
     // this.categories = [... new Set(
     //   this.list.map(i => i.api_categories.primary.join()).filter(i => i).join().split(',')
     //     .concat(this.list.map(i => i.api_categories.secondary.join()).filter(i => i).join().split(','))
