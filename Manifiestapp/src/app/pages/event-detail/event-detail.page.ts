@@ -65,7 +65,7 @@ export class EventDetailPage {
   }
 
   onCardHeartClick(event: WagtailApiEventItem) {
-    this.programmeService.changeFavorite(event);
+    // this.programmeService.changeFavorite(event);
   }
 
 }

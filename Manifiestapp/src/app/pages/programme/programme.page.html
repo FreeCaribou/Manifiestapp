@@ -6,7 +6,7 @@
     <ion-tab-bar slot="top">
       <ion-tab-button *ngFor="let d of days" [tab]="'subprogramme/'+d"
         [class.custom-tab-selected]="isTabSelected(d)">
-        <ion-label>{{ d }}</ion-label>
+        <ion-label>{{ 'Day.' + d | translate }}</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

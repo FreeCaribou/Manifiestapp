@@ -4,9 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'categoriesListPipe'
 })
 export class CategoriesListPipe implements PipeTransform {
-  transform(value: string[]): any {
+  transform(value: { title: string }[]): any {
     if (value && Array.isArray(value)) {
-      return value.join(', ');
+      return value.map(v => v.title).join(', ');
     } else {
       return ''
     }

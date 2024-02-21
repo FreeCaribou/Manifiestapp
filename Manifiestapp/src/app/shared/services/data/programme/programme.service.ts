@@ -59,7 +59,7 @@ export class ProgrammeService {
     const saturday = new Date('09/07/2024');
     const sunday = new Date('09/08/2024');
     const hours = Math.floor(hoursInSecond / 3600);
-    hoursInSecond -= hours*3600;
+    hoursInSecond -= hours * 3600;
     const minutes = Math.floor(hoursInSecond / 60);
     const baseDate = day === 'sat' ? saturday : sunday;
     baseDate.setHours(hours);
@@ -71,7 +71,6 @@ export class ProgrammeService {
   // TODO comment all the workflow here
   getEvents(): Observable<IEvent[]> {
     return this.baseService.bypassCors(`${this.dataUrl}events.${this.languageService.selectedLanguage}.json`).pipe(
-      map(d => d.data),
       map(data => {
         // An event can have multiple occurences (date - hours)
         // For the listing on the app we need to extract that and duplicate the event by each occurence for the timelines
@@ -87,8 +86,7 @@ export class ProgrammeService {
             allEventsOccurencesSplitted.push({
               ...d,
               picture: d.field_image?.field_media_image?.image_style_uri?.wide,
-              // TODO for picture, check what is the thumbnail and the big one
-              thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide,
+              thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide_teaser || d.field_image?.field_media_image?.image_style_uri?.wide,
               field_occurrence: occurrence,
               parentId: d.id,
               id: occurrence.id,
