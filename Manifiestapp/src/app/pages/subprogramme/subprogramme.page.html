@@ -17,7 +17,7 @@
           </ion-input>
         </ion-item>
 
-        <ion-item *ngIf="locaties && connected">
+        <ion-item *ngIf="locaties">
           <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
           <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
@@ -25,7 +25,7 @@
           </ion-select>
         </ion-item>
 
-        <ion-item *ngIf="languages && connected">
+        <ion-item *ngIf="languages">
           <ion-label position="floating">{{'Programme.Languages' | translate}}</ion-label>
           <ion-select [(ngModel)]="languageSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
@@ -33,7 +33,7 @@
           </ion-select>
         </ion-item>
 
-        <ion-item *ngIf="categories && connected">
+        <ion-item *ngIf="categories">
           <ion-label position="floating">{{'Programme.Categories' | translate}}</ion-label>
           <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>

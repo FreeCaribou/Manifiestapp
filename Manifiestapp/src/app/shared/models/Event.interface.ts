@@ -2,6 +2,7 @@ export interface IEvent {
   [key: string]: any;
   field_categories: {title: string}[];
   field_language: {name: string}[];
+  field_type: {name: string};
   field_occurrence?: { start: Date, end: Date, field_day: string, field_location: {title: string} }
 }
 

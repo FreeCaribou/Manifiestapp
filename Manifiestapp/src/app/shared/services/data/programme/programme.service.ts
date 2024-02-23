@@ -27,7 +27,6 @@ export class ProgrammeService {
   favoriteChangeEmit = new EventEmitter<IEvent>();
   verificationFavoriteLoadEmit = new EventEmitter<boolean>();
 
-  cacheBigBlobProgrammeBrut: WagtailApiReturn;
   cacheBigBlobProgramme: IEvent[] = [];
   cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
@@ -70,6 +69,9 @@ export class ProgrammeService {
 
   // TODO comment all the workflow here
   getEvents(): Observable<IEvent[]> {
+    if (this.cacheBigBlobProgramme?.length > 0) {
+      return of(this.cacheBigBlobProgramme);
+    }
     return this.baseService.bypassCors(`${this.dataUrl}events.${this.languageService.selectedLanguage}.json`).pipe(
       map(data => {
         // An event can have multiple occurences (date - hours)
@@ -117,9 +119,6 @@ export class ProgrammeService {
   }
 
   getBigBlobAllProgramme(): Observable<WagtailApiReturn> {
-    if (this.cacheBigBlobProgramme.length > 0) {
-      return of(this.cacheBigBlobProgrammeBrut);
-    }
     let url = 'https://manifiesta.be/api/v2/pages/?type=event.EventPage';
     url += '&fields=description,api_event_dates,api_location,image,api_categories,thumbnail';
     url += '&locale=' + this.languageService.selectedLanguage;
@@ -159,7 +158,6 @@ export class ProgrammeService {
       })),
       map(e => { return { ...e, items: this.mapToFavorite(e) } }),
       tap(d => this.cacheBigBlobProgramme = d.items),
-      tap(d => this.cacheBigBlobProgrammeBrut = d),
       tap(() => this.cacheBigBlobProgrammeChangeEmit$.emit()),
     );
   }
@@ -206,7 +204,6 @@ export class ProgrammeService {
 
   resetListCache() {
     this.cacheBigBlobProgramme = [];
-    this.cacheBigBlobProgrammeBrut = null;
   }
 
   getFavoriteId(): string[] {

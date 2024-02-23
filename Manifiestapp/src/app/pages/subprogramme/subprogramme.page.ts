@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
-import { EventInterface, IEvent, WagtailApiEventItem } from 'src/app/shared/models/Event.interface';
+import { IEvent } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
-import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
-import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-subprogramme',
@@ -20,23 +17,23 @@ export class SubprogrammePage {
 
   locaties: any[];
   locatieSelected: any;
+  // Type in the backend taxonomy
   categories: any[];
   categorieSelected: any;
   languages: any[];
   languageSelected: any;
+  // Category in the backend taxonomy
+  subcategories: any[];
+  subcategorieSelected: any;
   search: string;
   // organizers: any[];
   // organizerSelected: any;
 
   showFilters = false;
 
-  // for the internet connection
-  connected = true;
-
   constructor(
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
-    private infoListService: InfoListService,
     public loadingCommunication: LoadingCommunicationService
   ) { }
 
@@ -46,31 +43,7 @@ export class SubprogrammePage {
     this.initList();
     this.programmeService.cacheBigBlobProgrammeChangeEmit$.subscribe(() => {
       this.initList();
-    })
-
-    // Network.getStatus().then(n => {
-    //   this.connected = n.connected;
-    //   if (this.connected) {
-    //     this.loadingCommunication.changeLoaderTo(true);
-    //     forkJoin([
-    //       this.programmeService.getAllProgrammeFilter([this.dayId]),
-    //       this.infoListService.getVenues(),
-    //       this.infoListService.getEventCategories(),
-    //       // this.infoListService.getOrganizers(),
-    //     ]).subscribe(datas => {
-    //       this.list = datas[0];
-    //       this.listToShow = this.list;
-    //       this.locaties = datas[1];
-    //       this.categories = datas[2];
-    //       // this.organizers = datas[3];
-    //     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
-
-    //     this.programmeService.verificationFavoriteLoadEmit.subscribe(load => this.loadingCommunication.changeLoaderTo(load));
-    //   } else {
-    //     this.list = this.programmeService.getOfflineProgrammesList([this.dayId]);
-    //     this.listToShow = this.list;
-    //   }
-    // });
+    });
   }
 
   initList() {
@@ -87,9 +60,11 @@ export class SubprogrammePage {
     this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_occurrence.field_day === this.dayId);
     this.listToShow = this.list;
 
-    console.log('and the list of the day isss', this.dayId, this.list, this.programmeService.cacheBigBlobProgramme)
-
     this.locaties = [... new Set(this.list.map(i => i.field_occurrence.field_location.title))].map(i => { return { id: i, name: i } }).sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    });
+
+    this.categories = [... new Set(this.list.map(i => i.field_type.name))].map(i => { return { id: i, name: i } }).sort((a, b) => {
       return a.name > b.name ? 1 : -1;
     });
 
@@ -98,8 +73,7 @@ export class SubprogrammePage {
       return a.name > b.name ? 1 : -1;
     });
 
-    // TODO rebuild that ! and add language ...
-
+    // TODO rebuild that for the subcategorie (categorie in the back) also in the search !
     // this.categories = [... new Set(
     //   this.list.map(i => i.api_categories.primary.join()).filter(i => i).join().split(',')
     //     .concat(this.list.map(i => i.api_categories.secondary.join()).filter(i => i).join().split(','))
@@ -110,17 +84,6 @@ export class SubprogrammePage {
 
   onSelectChange() {
     this.makeFilter();
-    // this.loadingCommunication.changeLoaderTo(true);
-    // this.programmeService.getAllProgrammeFilter(
-    //   [this.dayId],
-    //   this.locatieSelected ? [this.locatieSelected] : null,
-    //   this.categorieSelected ? [this.categorieSelected] : null,
-    //   // this.organizerSelected ? [this.organizerSelected] : null,
-    // ).subscribe(data => {
-    //   this.list = data;
-    //   this.listToShow = this.list;
-    //   this.onSearchChange();
-    // }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
   }
 
   ionViewWillLeave() {
@@ -141,14 +104,17 @@ export class SubprogrammePage {
     }
 
     if (this.locatieSelected) {
-      this.listToShow = this.listToShow.filter(e => e.api_location.name == this.locatieSelected);
+      this.listToShow = this.listToShow.filter(e => e.field_occurrence.field_location.title == this.locatieSelected);
     }
 
     if (this.categorieSelected) {
-      this.listToShow = this.listToShow.filter(e =>
-        e.api_categories.primary.includes(this.categorieSelected) || e.api_categories.secondary.includes(this.categorieSelected)
-      );
+      this.listToShow = this.listToShow.filter(e =>e.field_type.name == this.categorieSelected);
     }
-  }
 
+    if (this.languageSelected) {
+      this.listToShow = this.listToShow.filter(l => l.field_language.findIndex(x => x.name === this.languageSelected) > -1);
+    }
+
+    // TODO search for subcategorie
+  }
 }
