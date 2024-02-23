@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MapOptions, Layer } from 'leaflet';
-import { EventInterface, WagtailApiEventItem } from 'src/app/shared/models/Event.interface';
+import { IEvent, WagtailApiEventItem } from 'src/app/shared/models/Event.interface';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { MapCommunicationService } from 'src/app/shared/services/communication/map.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
-import { Network } from '@capacitor/network';
 
 @Component({
   selector: 'app-event-detail',
@@ -13,7 +12,7 @@ import { Network } from '@capacitor/network';
 })
 export class EventDetailPage {
   id: string;
-  event: WagtailApiEventItem;
+  event: IEvent;
   defaultHref = '/programme';
 
   options: MapOptions;
@@ -32,8 +31,10 @@ export class EventDetailPage {
   ionViewDidEnter() {
     this.loadingCommunication.changeLoaderTo(true);
     this.id = this.activatedRoute.snapshot.params.id;
-    this.programmeService.getBigBlobAllProgramme().subscribe(data => {
-      this.event = data.items.find(i => i.id.toString() == this.id);
+    this.programmeService.getEvent(this.id).subscribe(data => {
+      // TODO one day we will have a map here
+      console.log('one event', data)
+      this.event = data;
     }).add(() => this.loadingCommunication.changeLoaderTo(false));
 
     // Network.getStatus().then(n => {
@@ -64,8 +65,8 @@ export class EventDetailPage {
     // });
   }
 
-  onCardHeartClick(event: WagtailApiEventItem) {
-    // this.programmeService.changeFavorite(event);
+  onCardHeartClick(event: IEvent) {
+    this.programmeService.changeFavorite(event);
   }
 
 }

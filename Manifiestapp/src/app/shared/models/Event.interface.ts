@@ -1,9 +1,13 @@
 export interface IEvent {
   [key: string]: any;
+  id: string;
   field_categories: {title: string}[];
   field_language: {name: string}[];
   field_type: {name: string};
-  field_occurrence?: { start: Date, end: Date, field_day: string, field_location: {title: string} }
+  field_occurrence?: { start: Date, end: Date, field_day: string, field_location: {title: string} };
+  picture: string;
+  thumbnail: string;
+  parentId: string;
 }
 
 export interface RenderedInterface {

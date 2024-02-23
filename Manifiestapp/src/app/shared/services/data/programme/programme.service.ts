@@ -79,9 +79,6 @@ export class ProgrammeService {
         const allEventsOccurencesSplitted = [];
         data.forEach(d => {
           d.field_occurrences.forEach(occurrence => {
-            // TODO better date, real date and not just string date
-            // TODO check the field_moved to know what to use as data in an occurrence ...
-
             occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
             occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
 
@@ -98,6 +95,12 @@ export class ProgrammeService {
         return allEventsOccurencesSplitted;
       }),
       tap(items => this.cacheBigBlobProgramme = items),
+    );
+  }
+
+  getEvent(id: string): Observable<IEvent> {
+    return this.getEvents().pipe(
+      map(list => list.find(e => e.id == id)),
     );
   }
 
@@ -188,16 +191,6 @@ export class ProgrammeService {
         }),
       )
       : of([]);
-  }
-
-  getEvent(id: string): Observable<EventInterface> {
-    return this.service.getEvent(id).pipe(
-      map(e => this.mapRawWpDataToClearData(e)),
-      map(x => {
-        x.favorite = this.isFavorite(id);
-        return x;
-      }),
-    );
   }
 
   // no data call method

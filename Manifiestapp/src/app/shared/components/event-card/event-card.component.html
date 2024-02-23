@@ -15,7 +15,7 @@
       <ion-card-title [innerHtml]="event.title" color="secondary" class="event-title"></ion-card-title>
       <!-- TODO show location and cat and lang -->
       <div>
-        {{event.field_occurrence?.field_location?.title}} - {{event.field_category | categoriesListPipe}}
+        {{event.field_occurrence?.field_location?.title}} - {{event.field_type.name}}
       </div>
       <div>
         {{event.field_language | languagesListPipe}}
