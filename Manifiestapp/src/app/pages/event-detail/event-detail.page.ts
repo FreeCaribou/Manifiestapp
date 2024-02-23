@@ -24,7 +24,6 @@ export class EventDetailPage {
   constructor(
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
-    private mapCommunication: MapCommunicationService,
     public loadingCommunication: LoadingCommunicationService,
   ) { }
 
@@ -34,6 +33,7 @@ export class EventDetailPage {
     this.programmeService.getEvent(this.id).subscribe(data => {
       // TODO one day we will have a map here
       this.event = data;
+      console.log('the event', this.event)
     }).add(() => this.loadingCommunication.changeLoaderTo(false));
 
     // Network.getStatus().then(n => {

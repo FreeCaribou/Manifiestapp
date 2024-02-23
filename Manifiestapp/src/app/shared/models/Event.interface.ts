@@ -1,14 +1,15 @@
 export interface IEvent {
   [key: string]: any;
   id: string;
-  field_categories: {title: string}[];
-  field_language: {name: string}[];
-  field_type: {name: string};
-  field_occurrence?: { start: Date, end: Date, field_day: string, field_location: {title: string} };
+  field_categories: { title: string }[];
+  field_language: { name: string }[];
+  field_type: { name: string };
+  field_occurrence?: { start: Date, end: Date, field_day: string, field_location: { title: string } };
   picture: string;
   thumbnail: string;
   parentId: string;
   favorite?: boolean;
+  field_speakers: { field_description: string, title: string, field_image: { field_media_image: { image_style_uri: { wide: string } } } }[];
 }
 
 export interface IEventItemDaysList {
