@@ -8,7 +8,16 @@ export interface IEvent {
   picture: string;
   thumbnail: string;
   parentId: string;
+  favorite?: boolean;
 }
+
+export interface IEventItemDaysList {
+  day: string;
+  dayDate?: Date;
+  events: IEvent[];
+}
+
+
 
 export interface RenderedInterface {
   rendered: string;

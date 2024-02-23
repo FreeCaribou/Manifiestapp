@@ -33,7 +33,6 @@ export class EventDetailPage {
     this.id = this.activatedRoute.snapshot.params.id;
     this.programmeService.getEvent(this.id).subscribe(data => {
       // TODO one day we will have a map here
-      console.log('one event', data)
       this.event = data;
     }).add(() => this.loadingCommunication.changeLoaderTo(false));
 
