@@ -1,13 +1,17 @@
 import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { icon, latLng, Layer, marker, tileLayer, MapOptions } from 'leaflet';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MapCommunicationService {
 
-  constructor(@Inject(DOCUMENT) private doc) { }
+  constructor(
+    @Inject(DOCUMENT) private doc,
+    public router: Router,
+  ) { }
 
   getOptionsMap(lat: number = 51.22375, lng: number = 2.90052, zoom: number = 17, minZoom: number = 16): MapOptions {
     return {
@@ -28,11 +32,11 @@ export class MapCommunicationService {
   getMainMapMarker(): Layer[] {
     return [
       this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
-      this.createMarker(51.22353, 2.90210, 'main-stage', 'main-stage'),
+      this.createMarker(51.22353, 2.90210, 'Main Stage !', 'Main_Stage', true),
     ]
   }
 
-  createMarker(lat: number, lng: number, label: string, id: string): Layer {
+  createMarker(lat: number, lng: number, label: string, id: string, haveLink = false): Layer {
     return marker(
       [lat, lng],
       {
@@ -41,10 +45,17 @@ export class MapCommunicationService {
           iconUrl: 'leaflet/marker-icon.png',
         })
       }
-    ).bindPopup('<p id="link-' + id + '" data-id=" ' + id + '">' + label + '</p>').on('popupopen', () => {
+    ).bindPopup('<p id="link-' + id + '" data-id=" ' + id + '" data-haveLink="' + haveLink + '">' + label + '</p>').on('popupopen', () => {
       this.doc.querySelector('#link-' + id)
         .addEventListener('click', (e) => {
-          const id = e.target.getAttribute('data-id');
+          try {
+            const id = e.target.getAttribute('data-id').toString().replaceAll('_', ' ').trim();
+            const haveLink = e.target.getAttribute('data-haveLink');
+            console.log('hello id', id, haveLink)
+            if (haveLink == 'true') {
+              this.router.navigate(['programme', 'subprogramme', 'localisation', id]);
+            }
+          } catch (e) { }
         });
     })
   }
