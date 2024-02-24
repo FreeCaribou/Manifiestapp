@@ -7,15 +7,14 @@
     <ion-card-header>
       <ion-card-subtitle>
         <span *ngIf="event.field_occurrence">
+          <span *ngIf="!dateJustWithHour">{{'Day.' + event.field_occurrence.field_day| translate}}</span>
           {{event.field_occurrence.start | date:'HH:mm'}} -
           {{event.field_occurrence.end |date:'HH:mm'}}
         </span>
-        <!-- <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon> -->
       </ion-card-subtitle>
       <ion-card-title [innerHtml]="event.title" color="secondary" class="event-title"></ion-card-title>
-      <!-- TODO show location and cat and lang -->
       <div>
-        {{event.field_occurrence?.field_location?.title}} - {{event.field_type.name}}
+        <span *ngIf="showLocalisation">{{event.field_occurrence?.field_location?.title}} - </span>{{event.field_type.name}}
       </div>
       <div>
         {{event.field_language | languagesListPipe}}

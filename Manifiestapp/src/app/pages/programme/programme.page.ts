@@ -8,8 +8,6 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
   templateUrl: './programme.page.html',
 })
 export class ProgrammePage {
-  days: any[] = [];
-
   // for the internet connection
   connected = true;
 
@@ -20,35 +18,9 @@ export class ProgrammePage {
   ) { }
 
   ionViewWillEnter() {
-    this.loadingCommunication.changeLoaderTo(true);
-    this.programmeService.getEvents().subscribe(data => {
-      data.forEach(d => {
-        let day = d.field_occurrence?.field_day;
-        if (!this.days.includes(day)) {
-          this.days.push(day);
-        }
-      });
-
-      if (!this.router.url.includes('subprogramme')) {
-        this.router.navigate(['programme', 'subprogramme', this.days[0]]);
-      }
-    }).add(() => this.loadingCommunication.changeLoaderTo(false));
-  }
-
-  // The data from WP don't come always in right order for the days
-  // We look for the slug, kind of WP id
-  // Slug will be day-<number of the day event>-lang(nl||fr)
-  setDays(data: any[]) {
-    this.days = data.sort((a, b) => {
-      return a.slug < b.slug ? -1 : 1;
-    });
     if (!this.router.url.includes('subprogramme')) {
-      this.router.navigate(['programme', 'subprogramme', data[0]?.id]);
+      this.router.navigate(['programme', 'subprogramme', 'date', 'sat']);
     }
-  }
-
-  ionViewWillLeave() {
-    this.days = [];
   }
 
   isTabSelected(d): boolean {

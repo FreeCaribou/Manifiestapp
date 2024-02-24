@@ -1,0 +1,10 @@
+<ion-content>
+    <ion-tabs>
+      <ion-tab-bar slot="top">
+        <ion-tab-button *ngFor="let l of localisations" [tab]="l"
+          [class.custom-tab-selected]="isTabSelected(l)">
+          <ion-label>{{l}}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-content>

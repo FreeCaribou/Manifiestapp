@@ -1,50 +1,10 @@
 <ion-content>
-
-  <ion-accordion-group>
-    <ion-accordion value="filter">
-      <ion-item slot="header">
-        <ion-label>{{"Programme.Filter" | translate}} - {{categorieSelected}} {{locatieSelected}} {{languageSelected}}</ion-label>
-      </ion-item>
-
-      <ion-list slot="content">
-
-        <ion-item>
-          <ion-label color="primary" position="stacked">
-            {{"Programme.Search" | translate}}
-          </ion-label>
-          <ion-input clearInput type="text" [placeholder]="'Programme.Search' | translate" [(ngModel)]="search"
-            (ngModelChange)="onSearchChange()">
-          </ion-input>
-        </ion-item>
-
-        <ion-item *ngIf="categories">
-          <ion-label position="floating">{{'Programme.Categories' | translate}}</ion-label>
-          <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()" interface="popover">
-            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-            <ion-select-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item *ngIf="locaties">
-          <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
-          <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
-            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-            <ion-select-option *ngFor="let v of locaties" [value]="v.id">{{v.name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item *ngIf="languages">
-          <ion-label position="floating">{{'Programme.Languages' | translate}}</ion-label>
-          <ion-select [(ngModel)]="languageSelected" (ionChange)="onSelectChange()" interface="popover">
-            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-            <ion-select-option *ngFor="let v of languages" [value]="v.id">{{v.name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-
-    </ion-accordion>
-  </ion-accordion-group>
-
-  <app-event-list-card [list]="listToShow"></app-event-list-card>
-
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button *ngFor="let d of days" [tab]="'subprogramme/date/'+d"
+        [class.custom-tab-selected]="isTabSelected(d)">
+        <ion-label>{{ 'Day.' + d | translate }}</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

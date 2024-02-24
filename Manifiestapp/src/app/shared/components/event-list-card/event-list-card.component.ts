@@ -10,4 +10,6 @@ export class EventListCardComponent {
   list: IEvent[];
   @Input()
   dateJustWithHour = true;
+  @Input()
+  showLocalisation = true;
 }

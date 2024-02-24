@@ -1,36 +1,13 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IEvent } from 'src/app/shared/models/Event.interface';
-import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
 @Component({
-  selector: 'app-subprogramme',
-  templateUrl: './subprogramme.page.html',
+  selector: 'app-subprogramme-date-tab',
+  templateUrl: './subprogramme-date-tab.page.html',
 })
-export class SubprogrammePage {
-  dayId: string;
-  list: IEvent[];
-  listToShow: IEvent[];
-  day: EventDayEnum;
-
-  locaties: any[];
-  locatieSelected: any;
-  // Type in the backend taxonomy
-  categories: any[];
-  categorieSelected: any;
-  languages: any[];
-  languageSelected: any;
-  // Category in the backend taxonomy
-  subcategories: any[];
-  subcategorieSelected: any;
-  search: string;
-  // organizers: any[];
-  // organizerSelected: any;
-
-  showFilters = false;
-
+export class SubprogrammeDateTabPage {
   days: any[] = [];
 
   constructor(
