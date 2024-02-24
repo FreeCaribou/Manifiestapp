@@ -30,7 +30,7 @@
         </div>
       </div>
       <h5 [innerHtml]="event.field_description"></h5>
-      <div *ngIf="event.field_speakers">
+      <div *ngIf="event.field_speakers?.length > 0">
         <ion-grid>
           <ion-row>
             <ion-col *ngFor="let speaker of event.field_speakers" size-xs="4" size-sm="4" size-lg="3">

@@ -3,7 +3,7 @@
   <ion-accordion-group>
     <ion-accordion value="filter">
       <ion-item slot="header">
-        <ion-label>{{"Programme.Filter" | translate}}</ion-label>
+        <ion-label>{{"Programme.Filter" | translate}} - {{categorieSelected}} {{locatieSelected}} {{languageSelected}}</ion-label>
       </ion-item>
 
       <ion-list slot="content">
@@ -15,6 +15,14 @@
           <ion-input clearInput type="text" [placeholder]="'Programme.Search' | translate" [(ngModel)]="search"
             (ngModelChange)="onSearchChange()">
           </ion-input>
+        </ion-item>
+
+        <ion-item *ngIf="categories">
+          <ion-label position="floating">{{'Programme.Categories' | translate}}</ion-label>
+          <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()" interface="popover">
+            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+            <ion-select-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</ion-select-option>
+          </ion-select>
         </ion-item>
 
         <ion-item *ngIf="locaties">
@@ -30,14 +38,6 @@
           <ion-select [(ngModel)]="languageSelected" (ionChange)="onSelectChange()" interface="popover">
             <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
             <ion-select-option *ngFor="let v of languages" [value]="v.id">{{v.name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-
-        <ion-item *ngIf="categories">
-          <ion-label position="floating">{{'Programme.Categories' | translate}}</ion-label>
-          <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()" interface="popover">
-            <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
-            <ion-select-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-list>

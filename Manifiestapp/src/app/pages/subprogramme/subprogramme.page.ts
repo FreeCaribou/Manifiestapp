@@ -80,6 +80,14 @@ export class SubprogrammePage {
     // )].map(i => { return { id: i, name: i } }).sort((a, b) => {
     //   return a.name > b.name ? 1 : -1;
     // });
+
+    const preSelectLocatie = this.activatedRoute.snapshot?.queryParams?.locatie;
+    const included = this.locaties.map(x => x.name).includes(preSelectLocatie)
+    console.log('hallo world', this.activatedRoute.snapshot.queryParams, this.locaties, preSelectLocatie, included)
+    if (!!preSelectLocatie && included) {
+      this.locatieSelected = preSelectLocatie;
+      this.makeFilter();
+    }
   }
 
   onSelectChange() {
