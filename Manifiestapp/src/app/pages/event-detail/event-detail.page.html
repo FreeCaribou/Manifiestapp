@@ -10,13 +10,13 @@
       <div class="event-detail-maininfo" *ngIf="event.field_occurrence">
         <div class="event-detail-maininfo-detail">
           <h4 class="primary-color disabled-margin">
-            <div>
+            <div [routerLink]="['/programme', 'subprogramme', 'date', event.field_occurrence.field_day]" class="fake-mouse-select">
               <ion-icon name="calendar-number-outline" size="small"></ion-icon> {{'Day.' +
               event.field_occurrence.field_day | translate}}
               {{event.field_occurrence.start| date:'HH:mm'}} -
               {{event.field_occurrence.end| date:'HH:mm'}}
             </div>
-            <div>
+            <div [routerLink]="['/programme', 'subprogramme', 'localisation', event.field_occurrence.field_location.title]" class="fake-mouse-select">
               <ion-icon name="map-outline" size="small"></ion-icon> {{event.field_occurrence.field_location.title}}
             </div>
             <div>
