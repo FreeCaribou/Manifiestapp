@@ -11,6 +11,7 @@
           {{event.field_occurrence.start | date:'HH:mm'}} -
           {{event.field_occurrence.end |date:'HH:mm'}}
         </span>
+        <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>
       <ion-card-title [innerHtml]="event.title" color="secondary" class="event-title"></ion-card-title>
       <div>
