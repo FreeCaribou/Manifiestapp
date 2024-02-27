@@ -12,6 +12,8 @@ import { SubprogrammeDatePage } from './subprogramme-date/subprogramme-date.page
 import { SubprogrammeDateTabPage } from './subprogramme-date/subprogramme-date-tab.page';
 import { SubprogrammeLocalisationTabPage } from './subprogramme-localisation/subprogramme-localisation-tab.page';
 import { SubprogrammeLocalisationPage } from './subprogramme-localisation/subprogramme-localisation.page';
+import { SubprogrammeTypeTabPage } from './subprogramme-type/subprogramme-type-tab.page';
+import { SubprogrammeTypePage } from './subprogramme-type/subprogramme-type.page';
 
 @NgModule({
   imports: [
@@ -26,7 +28,9 @@ import { SubprogrammeLocalisationPage } from './subprogramme-localisation/subpro
     SubprogrammeDatePage,
     SubprogrammeDateTabPage,
     SubprogrammeLocalisationTabPage,
-    SubprogrammeLocalisationPage
+    SubprogrammeLocalisationPage,
+    SubprogrammeTypeTabPage,
+    SubprogrammeTypePage,
   ]
 })
 export class SubprogrammePageModule { }

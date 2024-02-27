@@ -12,4 +12,6 @@ export class EventListCardComponent {
   dateJustWithHour = true;
   @Input()
   showLocalisation = true;
+  @Input()
+  showType = true;
 }

@@ -14,6 +14,8 @@ export class EventCardComponent implements OnInit {
   dateJustWithHour = true;
   @Input()
   showLocalisation = true;
+  @Input()
+  showType = true;
 
   connected = false;
 
