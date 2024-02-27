@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
@@ -11,7 +11,6 @@ export class SubprogrammeLocalisationTabPage {
   localisations: any[] = [];
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
     public loadingCommunication: LoadingCommunicationService,
     private router: Router,
@@ -19,14 +18,10 @@ export class SubprogrammeLocalisationTabPage {
 
   ionViewWillEnter() {
     this.loadingCommunication.changeLoaderTo(true);
-    this.programmeService.getEvents().subscribe(data => {
-      data.forEach(d => {
-        let localisation = d.field_occurrence?.field_location.title;
-        if (!this.localisations.includes(localisation)) {
-          this.localisations.push(localisation);
-        }
-      });
-    }).add(() => this.loadingCommunication.changeLoaderTo(false));
+    this.programmeService.getEventLocalisations().subscribe(data => {
+      this.localisations = data;
+    })
+    .add(() => this.loadingCommunication.changeLoaderTo(false));
   }
 
   isTabSelected(d): boolean {

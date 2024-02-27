@@ -103,6 +103,30 @@ export class ProgrammeService {
     );
   }
 
+  getEventTypes(): Observable<string[]> {
+    return this.getEvents().pipe(
+      map(data => {
+        return [... new Set(data.map(d => d.field_type.name).sort())];
+      }),
+    );
+  }
+
+  getEventLocalisations(): Observable<string[]> {
+    return this.getEvents().pipe(
+      map(data => {
+        return [... new Set(data.sort((a, b) => {
+          if (a.field_occurrence.field_location.path.current === '/location/main-stage') {
+            return -1;
+          } else if (b.field_occurrence.field_location.path.current === '/location/main-stage') {
+            return 1;
+          } else {
+            return a.name > b.name ? 1 : -1;
+          }
+        }).map(d => d.field_occurrence.field_location.title))];
+      }),
+    );
+  }
+
   retrieveProgrammeInLoop(url, count = 0, lastArray: EventInterface[] = [], maxPerPage = 50): Observable<any> {
     let arrayToReturn: EventInterface[] = lastArray;
     return this.baseService.getCall(`${url}&offset=${maxPerPage * count}&limit=${maxPerPage}`).pipe(

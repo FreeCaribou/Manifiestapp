@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IEvent } from 'src/app/shared/models/Event.interface';
-import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 

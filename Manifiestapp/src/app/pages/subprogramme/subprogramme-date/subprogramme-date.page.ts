@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { IEvent } from 'src/app/shared/models/Event.interface';
 import { EventDayEnum } from 'src/app/shared/models/EventDay.enum';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
@@ -57,21 +58,20 @@ export class SubprogrammeDatePage {
   }
 
   buildList() {
-    this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_occurrence.field_day === this.dayId);
-    this.listToShow = this.list;
-
-    this.locaties = [... new Set(this.list.map(i => i.field_occurrence.field_location.title))].map(i => { return { id: i, name: i } }).sort((a, b) => {
-      return a.name > b.name ? 1 : -1;
+    forkJoin([
+      this.programmeService.getEventTypes(),
+      this.programmeService.getEventLocalisations(),
+    ]).subscribe(([eventTypes, eventLocalisations]) => {
+      this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_occurrence.field_day === this.dayId);
+      this.listToShow = this.list;
+      this.locaties = eventLocalisations.map(i => { return { id: i, name: i } });
+      this.categories = eventTypes.map(i => { return { id: i, name: i } });
+      const langBrut = [].concat(...this.list.map(l => l.field_language.map(v => { return { id: v.name, name: v.name } })))
+      this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {
+        return a.name > b.name ? 1 : -1;
+      });
     });
 
-    this.categories = [... new Set(this.list.map(i => i.field_type.name))].map(i => { return { id: i, name: i } }).sort((a, b) => {
-      return a.name > b.name ? 1 : -1;
-    });
-
-    const langBrut = [].concat(...this.list.map(l => l.field_language.map(v => { return { id: v.name, name: v.name } })))
-    this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {
-      return a.name > b.name ? 1 : -1;
-    });
 
     // TODO rebuild that for the subcategorie (categorie in the back) also in the search !
     // this.categories = [... new Set(

@@ -10,7 +10,7 @@
         <ion-label><h1>{{ 'Day.Date' | translate }}</h1></ion-label>
       </ion-tab-button>
       <!-- TODO not direct put main stage, check what to do -->
-      <ion-tab-button [tab]="'subprogramme/localisation/Main Stage'"
+      <ion-tab-button [tab]="'subprogramme/localisation/' + firstEventLocalisation"
         [class.custom-tab-selected]="isTabSelected('localisation')">
         <ion-label><h1>{{ 'General.Localisation' | translate }}</h1></ion-label>
       </ion-tab-button>
