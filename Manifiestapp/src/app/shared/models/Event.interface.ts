@@ -4,7 +4,7 @@ export interface IEvent {
   field_categories: { name: string }[];
   field_language: { name: string }[];
   field_type: { name: string };
-  field_occurrence?: { start: Date, end: Date, field_day: string, field_location: { title: string, path: {current: string} } };
+  field_occurrence?: { start: Date, end: Date, field_day: string, field_location: ILocalisation };
   picture: string;
   thumbnail: string;
   parentId: string;
@@ -16,6 +16,10 @@ export interface IEventItemDaysList {
   day: string;
   dayDate?: Date;
   events: IEvent[];
+}
+
+export interface ILocalisation {
+  title: string, path: {current: string}
 }
 
 

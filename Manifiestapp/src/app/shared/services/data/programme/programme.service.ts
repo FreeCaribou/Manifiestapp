@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
@@ -112,6 +112,15 @@ export class ProgrammeService {
   }
 
   getEventLocalisations(): Observable<string[]> {
+    return this.getEventLocalisationsDetail().pipe(
+      map(data => {
+        return [... new Set(data.map(d => d.title))];
+      }),
+    );
+  }
+
+  getEventLocalisationsDetail(): Observable<ILocalisation[]> {
+    // TODO bug delete duplicate ...
     return this.getEvents().pipe(
       map(data => {
         return [... new Set(data.sort((a, b) => {
@@ -122,7 +131,7 @@ export class ProgrammeService {
           } else {
             return a.name > b.name ? 1 : -1;
           }
-        }).map(d => d.field_occurrence.field_location.title))];
+        }).map(d => d.field_occurrence.field_location))];
       }),
     );
   }
