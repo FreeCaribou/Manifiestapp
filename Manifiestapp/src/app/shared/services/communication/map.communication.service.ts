@@ -45,7 +45,9 @@ export class MapCommunicationService {
           iconUrl: 'leaflet/marker-icon.png',
         })
       }
-    ).bindPopup('<p id="link-' + id + '" data-id=" ' + id + '" data-haveLink="' + haveLink + '">' + label + '</p>').on('popupopen', () => {
+    ).bindPopup(
+      `<p id="link-${id}" data-id="${id}" data-haveLink="${haveLink}" ${haveLink ? 'class="fake-mouse-select"' : ''}>${label}</p>`
+    ).on('popupopen', () => {
       this.doc.querySelector('#link-' + id)
         .addEventListener('click', (e) => {
           try {
