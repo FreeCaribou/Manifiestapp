@@ -16,7 +16,7 @@ export class MapCommunicationService {
     private programmeService: ProgrammeService,
   ) { }
 
-  getOptionsMap(lat: number = 51.22375, lng: number = 2.90052, zoom: number = 18, minZoom: number = 17): MapOptions {
+  getOptionsMap(lat: number = 51.22353, lng: number = 2.90210, zoom: number = 18, minZoom: number = 17): MapOptions {
     return {
       layers: [
         tileLayer(
