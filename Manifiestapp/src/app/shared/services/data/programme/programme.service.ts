@@ -121,9 +121,14 @@ export class ProgrammeService {
 
   getEventLocalisationsDetail(): Observable<ILocalisation[]> {
     // TODO bug delete duplicate ...
+
+    // this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {
+    //   return a.name > b.name ? 1 : -1;
+    // });
+
     return this.getEvents().pipe(
       map(data => {
-        return [... new Set(data.sort((a, b) => {
+        return [... new Map(data.sort((a, b) => {
           if (a.field_occurrence.field_location.path.current === '/location/main-stage') {
             return -1;
           } else if (b.field_occurrence.field_location.path.current === '/location/main-stage') {
@@ -131,7 +136,7 @@ export class ProgrammeService {
           } else {
             return a.name > b.name ? 1 : -1;
           }
-        }).map(d => d.field_occurrence.field_location))];
+        }).map(d => d.field_occurrence.field_location).map(m => [m.id, m])).values()];
       }),
     );
   }

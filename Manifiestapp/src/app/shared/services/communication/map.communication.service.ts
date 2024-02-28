@@ -2,6 +2,8 @@ import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { icon, latLng, Layer, marker, tileLayer, MapOptions } from 'leaflet';
 import { Router } from '@angular/router';
+import { ProgrammeService } from '../data/programme/programme.service';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +13,10 @@ export class MapCommunicationService {
   constructor(
     @Inject(DOCUMENT) private doc,
     public router: Router,
+    private programmeService: ProgrammeService,
   ) { }
 
-  getOptionsMap(lat: number = 51.22375, lng: number = 2.90052, zoom: number = 17, minZoom: number = 16): MapOptions {
+  getOptionsMap(lat: number = 51.22375, lng: number = 2.90052, zoom: number = 18, minZoom: number = 17): MapOptions {
     return {
       layers: [
         tileLayer(
@@ -29,11 +32,17 @@ export class MapCommunicationService {
     };
   }
 
-  getMainMapMarker(): Layer[] {
-    return [
-      this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
-      this.createMarker(51.22353, 2.90210, 'Main Stage !', 'Main_Stage', true),
-    ]
+  getMainMapMarker(): Observable<Layer[]> {
+    return this.programmeService.getEventLocalisationsDetail().pipe(
+      map(data => {
+        console.log('data of the localisation', data)
+        // TODO make a map(lol)ping with the localisation provide by the website
+        return [
+          this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
+          this.createMarker(51.22353, 2.90210, 'Main Stage !', 'Main_Stage', true),
+        ]
+      })
+    )
   }
 
   createMarker(lat: number, lng: number, label: string, id: string, haveLink = false): Layer {
@@ -46,7 +55,7 @@ export class MapCommunicationService {
         })
       }
     ).bindPopup(
-      `<p id="link-${id}" data-id="${id}" data-haveLink="${haveLink}" ${haveLink ? 'class="fake-mouse-select"' : ''}>${label}</p>`
+      `<p id="link-${id}" data-id="${id}" data-haveLink="${haveLink}" ${haveLink ? 'class="fake-mouse-select tertiary-color"' : ''}>${label}</p>`
     ).on('popupopen', () => {
       this.doc.querySelector('#link-' + id)
         .addEventListener('click', (e) => {

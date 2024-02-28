@@ -19,7 +19,7 @@ export interface IEventItemDaysList {
 }
 
 export interface ILocalisation {
-  title: string, path: {current: string}
+  title: string, path: {current: string}, id: string,
 }
 
 

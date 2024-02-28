@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MapCommunicationService } from 'src/app/shared/services/communication/map.communication.service';
 import { Layer, MapOptions } from 'leaflet';
+import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 
 @Component({
   selector: 'app-map',
@@ -11,11 +12,17 @@ export class MapPage {
   options: MapOptions;
   markers: Layer[];
 
-  constructor(private mapCommunication: MapCommunicationService) { }
+  constructor(
+    private mapCommunication: MapCommunicationService,
+    private loadingCommunication: LoadingCommunicationService,
+  ) { }
 
   ionViewDidEnter() {
-    this.options = this.mapCommunication.getOptionsMap();
-    this.markers = this.mapCommunication.getMainMapMarker();
+    this.loadingCommunication.changeLoaderTo(true);
+    this.mapCommunication.getMainMapMarker().subscribe(data => {
+      this.options = this.mapCommunication.getOptionsMap();
+      this.markers = data;
+    }).add(() => { this.loadingCommunication.changeLoaderTo(false) });
   }
 
 }
