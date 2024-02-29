@@ -33,14 +33,14 @@ export class MapCommunicationService {
   }
 
   getMainMapMarker(): Observable<Layer[]> {
+    // TODO check the data from aaaaaall the localisation (need change in service too so)
+    // TODO and check for each if there are event or not (if there are event, make the link, if not, dont)
     return this.programmeService.getEventLocalisationsDetail().pipe(
       map(data => {
         console.log('data of the localisation', data)
-        // TODO make a map(lol)ping with the localisation provide by the website
         const baseMarkers = [
           this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
         ];
-        // TODO play with ID of localisation to retrieve the good thing later for the linking to the good route
         data.forEach(d => {
           if (d.field_geolocation) {
             baseMarkers.push(
