@@ -37,6 +37,20 @@ export class MapCommunicationService {
       map(data => {
         console.log('data of the localisation', data)
         // TODO make a map(lol)ping with the localisation provide by the website
+        const baseMarkers = [
+          this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
+        ];
+        // TODO play with ID of localisation to retrieve the good thing later for the linking to the good route
+        data.forEach(d => {
+          if (d.field_geolocation) {
+            baseMarkers.push(
+              this.createMarker(
+                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.title.replace(' ', '_'), true
+              )
+            );
+          }
+        });
+        return baseMarkers;
         return [
           this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
           this.createMarker(51.22353, 2.90210, 'Main Stage !', 'Main_Stage', true),
