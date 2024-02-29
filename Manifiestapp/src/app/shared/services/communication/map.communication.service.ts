@@ -45,16 +45,12 @@ export class MapCommunicationService {
           if (d.field_geolocation) {
             baseMarkers.push(
               this.createMarker(
-                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.title.replace(' ', '_'), true
+                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.id, true
               )
             );
           }
         });
         return baseMarkers;
-        return [
-          this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
-          this.createMarker(51.22353, 2.90210, 'Main Stage !', 'Main_Stage', true),
-        ]
       })
     )
   }
@@ -78,7 +74,12 @@ export class MapCommunicationService {
             const haveLink = e.target.getAttribute('data-haveLink');
             console.log('hello id', id, haveLink)
             if (haveLink == 'true') {
-              this.router.navigate(['programme', 'subprogramme', 'localisation', id]);
+              this.programmeService.getEventLocalisationsDetail().subscribe(localisations => {
+                const localisation = localisations.find(x => x.id === id);
+                if (localisation) {
+                  this.router.navigate(['programme', 'subprogramme', 'localisation', localisation.title]);
+                }
+              })
             }
           } catch (e) { }
         });
