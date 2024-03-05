@@ -1,10 +1,21 @@
 <ion-content>
-    <ion-tabs>
-      <ion-tab-bar slot="top">
-        <ion-tab-button *ngFor="let l of localisations" [tab]="l"
-          [class.custom-tab-selected]="isTabSelected(l)">
-          <ion-label>{{l}}</ion-label>
-        </ion-tab-button>
-      </ion-tab-bar>
-    </ion-tabs>
-  </ion-content>
+
+  <ion-item *ngIf="localisations">
+    <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
+    <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
+      <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
+      <ion-select-option *ngFor="let v of localisations" [value]="v.id">{{v.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- <app-event-list-card [list]="listToShow" [dateJustWithHour]="false" [showLocalisation]="false"></app-event-list-card> -->
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of listToShow" size="12">
+        <app-event-card [event]="item" [dateJustWithHour]="false" [showLocalisation]="false">
+        </app-event-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

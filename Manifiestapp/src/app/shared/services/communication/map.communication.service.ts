@@ -72,12 +72,12 @@ export class MapCommunicationService {
           try {
             const id = e.target.getAttribute('data-id').toString().replaceAll('_', ' ').trim();
             const haveLink = e.target.getAttribute('data-haveLink');
-            console.log('hello id', id, haveLink)
+            console.log('hello id of the place', id, haveLink)
             if (haveLink == 'true') {
               this.programmeService.getEventLocalisationsDetail().subscribe(localisations => {
                 const localisation = localisations.find(x => x.id === id);
                 if (localisation) {
-                  this.router.navigate(['programme', 'subprogramme', 'localisation', localisation.title]);
+                  this.router.navigate(['programme', 'subprogramme', 'localisation'], { queryParams: { place: localisation.title } });
                 }
               })
             }

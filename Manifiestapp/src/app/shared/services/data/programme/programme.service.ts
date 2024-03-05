@@ -77,17 +77,19 @@ export class ProgrammeService {
         const allEventsOccurencesSplitted = [];
         data.forEach(d => {
           d.field_occurrences.forEach(occurrence => {
-            occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
-            occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
-
-            allEventsOccurencesSplitted.push({
-              ...d,
-              picture: d.field_image?.field_media_image?.image_style_uri?.wide,
-              thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide_teaser || d.field_image?.field_media_image?.image_style_uri?.wide,
-              field_occurrence: occurrence,
-              parentId: d.id,
-              id: occurrence.id,
-            });
+            if (occurrence.field_day) {
+              occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
+              occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
+  
+              allEventsOccurencesSplitted.push({
+                ...d,
+                picture: d.field_image?.field_media_image?.image_style_uri?.wide,
+                thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide_teaser || d.field_image?.field_media_image?.image_style_uri?.wide,
+                field_occurrence: occurrence,
+                parentId: d.id,
+                id: occurrence.id,
+              });
+            }
           });
         });
         return allEventsOccurencesSplitted;

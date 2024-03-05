@@ -23,12 +23,6 @@ const routes: Routes = [
   {
     path: 'localisation',
     component: SubprogrammeLocalisationTabPage,
-    children: [
-      {
-        path: ':place',
-        component: SubprogrammeLocalisationPage,
-      },
-    ]
   },
   {
     path: 'type',
