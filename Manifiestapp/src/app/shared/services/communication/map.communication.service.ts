@@ -65,7 +65,7 @@ export class MapCommunicationService {
         })
       }
     ).bindPopup(
-      `<p id="link-${id}" data-id="${id}" data-haveLink="${haveLink}" ${haveLink ? 'class="fake-mouse-select tertiary-color"' : ''}>${label}</p>`
+      `<p id="link-${id}" data-id="${id}" data-haveLink="${haveLink}" ${haveLink ? 'class="fake-mouse-select heart-color"' : ''}>${label}</p>`
     ).on('popupopen', () => {
       this.doc.querySelector('#link-' + id)
         .addEventListener('click', (e) => {

@@ -55,7 +55,7 @@
     </div> -->
 
   <ion-fab *ngIf="event" vertical="bottom" horizontal="end" slot="fixed" (click)="onCardHeartClick(event)">
-    <ion-fab-button color="tertiary">
+    <ion-fab-button color="heart">
       <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
     </ion-fab-button>
   </ion-fab>

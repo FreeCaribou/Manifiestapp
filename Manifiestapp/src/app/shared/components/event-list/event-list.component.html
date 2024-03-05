@@ -25,7 +25,7 @@
         </span> - <span class="medium-color">{{event.field_occurrence.field_location.title}}</span>
       </h3>
     </ion-label>
-    <ion-icon *ngIf="connected" class="fake-mouse-select" (click)="onCardHeartClick(event)" color="tertiary"
+    <ion-icon *ngIf="connected" class="fake-mouse-select" (click)="onCardHeartClick(event)" color="heart"
       [name]="event.favorite ? 'heart' : 'heart-outline'">
     </ion-icon>
   </ion-item>

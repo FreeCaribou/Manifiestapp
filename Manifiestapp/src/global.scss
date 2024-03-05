@@ -248,6 +248,14 @@ ion-menu {
   color: var(--ion-color-warning);
 }
 
+.heart-color {
+  color: var(--ion-color-heart);
+}
+
+.background-color {
+  color: var(--ion-color-background);
+}
+
 .font-italic {
   font-size: italic;
 }
@@ -398,4 +406,8 @@ ion-modal::part(backdrop) {
   border: 1px solid;
   border-radius: 8px;
   padding: 10px;
+}
+
+ion-tabs, ion-tab-bar, ion-tab-button, app-event-list-card {
+  background-color: var(--ion-color-background);
 }

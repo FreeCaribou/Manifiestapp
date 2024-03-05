@@ -1,4 +1,4 @@
-<ion-card class="programme-card-body">
+<ion-card class="programme-card-body" color="secondary">
   <div [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
     <ion-thumbnail>
       <ion-img [src]="event.thumbnail|| event.picture"></ion-img>
@@ -13,7 +13,7 @@
         </span>
         <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>
-      <ion-card-title [innerHtml]="event.title" color="secondary" class="event-title"></ion-card-title>
+      <ion-card-title [innerHtml]="event.title" class="event-title"></ion-card-title>
       <div>
         <span *ngIf="showLocalisation">{{event.field_occurrence?.field_location?.title}}</span>
         <span *ngIf="showLocalisation && showType"> - </span>
@@ -32,7 +32,7 @@
 
 <ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav"
   (click)="onCardHeartClick(event)">
-  <ion-fab-button color="tertiary" size="small">
+  <ion-fab-button color="heart" size="small">
     <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-fab-button>
 </ion-fab>
