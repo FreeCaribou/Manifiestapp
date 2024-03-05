@@ -8,14 +8,6 @@
     </ion-select>
   </ion-item>
 
-  <!-- <app-event-list-card [list]="listToShow" [dateJustWithHour]="false" [showLocalisation]="false"></app-event-list-card> -->
-  <ion-grid>
-    <ion-row>
-      <ion-col *ngFor="let item of listToShow" size="12">
-        <app-event-card [event]="item" [dateJustWithHour]="false" [showLocalisation]="false">
-        </app-event-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
+  <app-event-list-card [list]="listToShow" [dateJustWithHour]="false" [showLocalisation]="false"
+    [simpleList]="true"></app-event-list-card>
 </ion-content>

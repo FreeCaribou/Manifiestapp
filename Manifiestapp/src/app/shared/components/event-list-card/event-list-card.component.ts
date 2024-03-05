@@ -4,6 +4,7 @@ import { EventInterface, IEvent, WagtailApiEventItem } from '../../models/Event.
 @Component({
   selector: 'app-event-list-card',
   templateUrl: './event-list-card.component.html',
+  // styles: ['* {background-color: var(--ion-color-background);}']
 })
 export class EventListCardComponent {
   @Input()
@@ -14,4 +15,6 @@ export class EventListCardComponent {
   showLocalisation = true;
   @Input()
   showType = true;
+
+  @Input() simpleList = false;
 }

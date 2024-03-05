@@ -7,6 +7,7 @@ import { ProgrammeService } from 'src/app/shared/services/data/programme/program
 @Component({
   selector: 'app-programme',
   templateUrl: './programme.page.html',
+  // styles: ['* {background-color: var(--ion-color-background);}']
 })
 export class ProgrammePage {
   // for the internet connection
