@@ -1,8 +1,6 @@
 <app-header [title]="'Map'"></app-header>
 
-<ion-content>
-
+<ion-content class="ion-no-padding" slot="fixed">
   <div *ngIf="options" class="main-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
   </div>
-
 </ion-content>

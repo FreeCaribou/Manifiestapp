@@ -16,7 +16,14 @@
     "Map": "Plattegrond",
     "TimeTable": "Tijdschema",
     "Maintext": "ManiFiesta? Dat is twee dagen lang de wereld zoals hij zou moeten zijn. Kom met ons feesten op 9 en 10 september 2023. Alternatieven voor de toekomst bedenken en in beweging komen… Op ManiFiesta spreken we de taal van solidariteit en diversiteit.",
-    "LineOr": "---------- OF ----------"
+    "LineOr": "---------- OF ----------",
+    "Localisation": "Locatie",
+    "Type": "Type"
+  },
+  "Day": {
+    "sat": "Zaterdag",
+    "sun": "Zondag",
+    "Date": "Date"
   },
   "Menu": {
     "Home": "Home",
@@ -48,7 +55,8 @@
     "ScheduleNotYetDefined": "Uur nog niet gedefinieerd",
     "NoConnectionNodetail": "Komen terug naar deze pagina met een internetverbinding voor details.",
     "Search": "Zoeken",
-    "Filter": "Filter"
+    "Filter": "Filter",
+    "Languages": "Talen"
   },
   "Info": {
     "GeneralInfo": "Algemene informatie",

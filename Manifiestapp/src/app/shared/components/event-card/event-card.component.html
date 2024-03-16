@@ -1,19 +1,27 @@
-<ion-card class="programme-card-body">
+<ion-card class="programme-card-body" color="secondary">
   <div [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
     <ion-thumbnail>
-      <ion-img [src]="event.thumbnail?.url || event.image?.meta?.download_url"></ion-img>
+      <ion-img [src]="event.thumbnail|| event.picture"></ion-img>
     </ion-thumbnail>
 
     <ion-card-header>
       <ion-card-subtitle>
-        <span *ngIf="event.api_event_dates[0]">
-          {{event.api_event_dates[0].start | simpleDatePipe:dateJustWithHour}} -
-          {{event.api_event_dates[0].end |simpleDatePipe:dateJustWithHour}}
+        <span *ngIf="event.field_occurrence && event.field_occurrence.start">
+          <span *ngIf="!dateJustWithHour">{{'Day.' + event.field_occurrence.field_day| translate}}</span>
+          {{event.field_occurrence.start | date:'HH:mm'}} -
+          {{event.field_occurrence.end |date:'HH:mm'}}
         </span>
-        <!-- <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon> -->
+        <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning"></ion-icon>
       </ion-card-subtitle>
-      <ion-card-title [innerHtml]="event.title" color="secondary" class="event-title"></ion-card-title>
-      {{event.api_location?.name}} - {{event.api_categories?.primary | categoriesListPipe}}
+      <ion-card-title [innerHtml]="event.title" class="event-title"></ion-card-title>
+      <div>
+        <span *ngIf="showLocalisation">{{event.field_occurrence?.field_location?.title}}</span>
+        <span *ngIf="showLocalisation && showType"> - </span>
+        <span *ngIf="showType">{{event.field_type.name}}</span>
+      </div>
+      <div>
+        {{event.field_language | languagesListPipe}}
+      </div>
     </ion-card-header>
   </div>
 
@@ -24,7 +32,7 @@
 
 <ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav"
   (click)="onCardHeartClick(event)">
-  <ion-fab-button color="tertiary" size="small">
+  <ion-fab-button color="heart" size="small">
     <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-fab-button>
 </ion-fab>

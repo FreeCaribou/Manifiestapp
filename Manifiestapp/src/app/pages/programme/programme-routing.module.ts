@@ -9,7 +9,7 @@ const routes: Routes = [
     component: ProgrammePage,
     children: [
       {
-        path: 'subprogramme/:dayId',
+        path: 'subprogramme',
         loadChildren: () => import('../subprogramme/subprogramme.module').then(m => m.SubprogrammePageModule)
       },
     ]

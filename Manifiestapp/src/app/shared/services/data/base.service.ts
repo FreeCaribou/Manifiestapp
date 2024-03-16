@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class BaseService {
   baseUrl: string = environment.baseUrl;
+  apiUrl: string = environment.apiUrl;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -27,6 +28,10 @@ export class BaseService {
 
   postCall(url: string, body): Observable<any> {
     return this.httpClient.post(url, body)
+  }
+
+  bypassCors(url: string): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}bypass-cors`, {url})
   }
 
 }

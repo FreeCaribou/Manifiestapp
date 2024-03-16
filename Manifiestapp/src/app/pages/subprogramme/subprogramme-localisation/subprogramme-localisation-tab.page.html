@@ -1,0 +1,12 @@
+<ion-content>
+
+  <ion-item *ngIf="localisations">
+    <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
+    <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
+      <ion-select-option *ngFor="let v of localisations" [value]="v.id">{{v.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <app-event-list-card [list]="listToShow" [dateJustWithHour]="false" [showLocalisation]="false"
+    [simpleList]="true"></app-event-list-card>
+</ion-content>

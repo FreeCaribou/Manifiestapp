@@ -1,0 +1,10 @@
+<ion-content>
+    <ion-tabs>
+      <ion-tab-bar slot="top">
+        <ion-tab-button *ngFor="let d of days" [tab]="d"
+          [class.custom-tab-selected]="isTabSelected(d)">
+          <ion-label>{{ 'Day.' + d | translate }}</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-content>

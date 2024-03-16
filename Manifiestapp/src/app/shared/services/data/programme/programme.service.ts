@@ -1,14 +1,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface, WagtailApiEventItem, WagtailApiEventItemDaysList, WagtailApiReturn } from 'src/app/shared/models/Event.interface';
+import { map, switchMap, tap } from 'rxjs/operators'
+import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
-import { ProgrammeDataService } from './programme.data.service';
-import { IProgrammeService } from './programme.service.interface';
-
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
-import { wpDateToRealDate } from 'src/app/shared/utils/wp-date-to-real-date';
 import * as moment from 'moment';
 import { ToastController } from '@ionic/angular';
 import { VolunteerShiftService } from '../volunteer-shift/volunteer-shift.service';
@@ -24,15 +20,17 @@ import { BaseService } from '../base.service';
 })
 export class ProgrammeService {
 
-  favoriteChangeEmit = new EventEmitter<WagtailApiEventItem>();
+  favoriteChangeEmit = new EventEmitter<IEvent>();
   verificationFavoriteLoadEmit = new EventEmitter<boolean>();
 
-  cacheBigBlobProgrammeBrut: WagtailApiReturn;
-  cacheBigBlobProgramme: WagtailApiEventItem[] = [];
+  cacheBigBlobProgramme: IEvent[] = [];
   cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
+  dataUrl = environment.webDataUrl;
+
+  favoriteIdEnumOfTheYear = LocalStorageEnum.FavoriteId2024;
+
   constructor(
-    private service: ProgrammeDataService,
     private volunteerShiftService: VolunteerShiftService,
     private toastController: ToastController,
     private translate: TranslateService,
@@ -44,6 +42,106 @@ export class ProgrammeService {
     });
 
     localStorage.removeItem(LocalStorageEnum.FavoriteId);
+  }
+
+  /**
+   * We receive the date of an event in a weird way to build date
+   * We have the day (sat or sun, for saturday or sunday) and the second of the event (or the horus but in string)
+   * @param day 
+   * @param hoursInSecond 
+   * @returns Date
+   */
+  buildOneDateHourFromData(day: 'sat' | 'sun', hoursInSecond: number): Date {
+    const saturday = new Date('09/07/2024');
+    const sunday = new Date('09/08/2024');
+    const hours = Math.floor(hoursInSecond / 3600);
+    hoursInSecond -= hours * 3600;
+    const minutes = Math.floor(hoursInSecond / 60);
+    const baseDate = day === 'sat' ? saturday : sunday;
+    baseDate.setHours(hours);
+    baseDate.setMinutes(minutes);
+    baseDate.setSeconds(0);
+    return baseDate;
+  }
+
+  // TODO comment all the workflow here
+  getEvents(): Observable<IEvent[]> {
+    if (this.cacheBigBlobProgramme?.length > 0) {
+      return of(this.cacheBigBlobProgramme);
+    }
+    return this.baseService.bypassCors(`${this.dataUrl}events.${this.languageService.selectedLanguage}.json`).pipe(
+      map(data => {
+        // An event can have multiple occurences (date - hours)
+        // For the listing on the app we need to extract that and duplicate the event by each occurence for the timelines
+        const allEventsOccurencesSplitted = [];
+        data.forEach(d => {
+          d.field_occurrences.forEach(occurrence => {
+            if (occurrence.field_day) {
+              if (occurrence.field_time) {
+                occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
+                occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
+              }
+  
+              allEventsOccurencesSplitted.push({
+                ...d,
+                picture: d.field_image?.field_media_image?.image_style_uri?.wide,
+                thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide_teaser || d.field_image?.field_media_image?.image_style_uri?.wide,
+                field_occurrence: occurrence,
+                parentId: d.id,
+                id: occurrence.id,
+              });
+            }
+          });
+        });
+        return allEventsOccurencesSplitted;
+      }),
+      map(items => this.mapToFavorite(items)),
+      tap(items => this.cacheBigBlobProgramme = items),
+    );
+  }
+
+  getEvent(id: string): Observable<IEvent> {
+    return this.getEvents().pipe(
+      map(list => list.find(e => e.id == id)),
+    );
+  }
+
+  getEventTypes(): Observable<string[]> {
+    return this.getEvents().pipe(
+      map(data => {
+        return [... new Set(data.map(d => d.field_type.name).sort())];
+      }),
+    );
+  }
+
+  getEventLocalisations(): Observable<string[]> {
+    return this.getEventLocalisationsDetail().pipe(
+      map(data => {
+        return [... new Set(data.map(d => d.title))];
+      }),
+    );
+  }
+
+  getEventLocalisationsDetail(): Observable<ILocalisation[]> {
+    // TODO bug delete duplicate ...
+
+    // this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {
+    //   return a.name > b.name ? 1 : -1;
+    // });
+
+    return this.getEvents().pipe(
+      map(data => {
+        return [... new Map(data.sort((a, b) => {
+          if (a.field_occurrence.field_location.title === 'Main Stage') {
+            return -1;
+          } else if (b.field_occurrence.field_location.title === 'Main Stage') {
+            return 1;
+          } else {
+            return a.name > b.name ? 1 : -1;
+          }
+        }).map(d => d.field_occurrence.field_location).map(m => [m.id, m])).values()];
+      }),
+    );
   }
 
   retrieveProgrammeInLoop(url, count = 0, lastArray: EventInterface[] = [], maxPerPage = 50): Observable<any> {
@@ -63,66 +161,18 @@ export class ProgrammeService {
     );
   }
 
-  getBigBlobAllProgramme(): Observable<WagtailApiReturn> {
-    if (this.cacheBigBlobProgramme.length > 0) {
-      return of(this.cacheBigBlobProgrammeBrut);
-    }
-    let url = 'https://manifiesta.be/api/v2/pages/?type=event.EventPage';
-    url += '&fields=description,api_event_dates,api_location,image,api_categories,thumbnail';
-    url += '&locale=' + this.languageService.selectedLanguage;
-    url += '&format=json';
-    return this.retrieveProgrammeInLoop(url).pipe(
-      // Map and sort the date and hours
-      map(datas => {
-        try {
-          datas = datas.map(i => {
-            let dayInString = '';
-            switch (i.api_event_dates[0].day) {
-              case 'SAT':
-                dayInString = '2023-09-09T';
-                break;
-              case 'SUN':
-                dayInString = '2023-09-10T';
-                break;
-            }
-            return {
-              ...i,
-              api_event_dates: [
-                {
-                  day: i.api_event_dates[0].day,
-                  start: dayInString + i.api_event_dates[0].start,
-                  end: dayInString + i.api_event_dates[0].end,
-                }
-              ]
-            }
-          })
-        } catch (e) {
-          console.warn('error in mapping date and hour of event', e);
-        }
-        return datas;
-      }),
-      map(datas => datas.sort((a, b) => {
-        return new Date(a.api_event_dates[0].start) > new Date(b.api_event_dates[0].start) ? 1 : -1;
-      })),
-      map(e => { return { ...e, items: this.mapToFavorite(e) } }),
-      tap(d => this.cacheBigBlobProgramme = d.items),
-      tap(d => this.cacheBigBlobProgrammeBrut = d),
-      tap(() => this.cacheBigBlobProgrammeChangeEmit$.emit()),
-    );
-  }
-
-  onlyGetFavoriteProgramme(): Observable<WagtailApiEventItem[]> {
+  onlyGetFavoriteProgramme(): Observable<IEvent[]> {
     const ids = this.getFavoriteId();
     if (ids.length > 0) {
-      return this.getBigBlobAllProgramme().pipe(
-        map(d => { return d.items.filter(i => ids.includes(i.id.toString())) })
+      return this.getEvents().pipe(
+        map(d => { return d.filter(i => ids.includes(i.id.toString())) })
       );
     } else {
       return of([]);
     }
   }
 
-  getFavoriteProgramme(ids?: string[]): Observable<WagtailApiEventItem[]> {
+  getFavoriteProgramme(ids?: string[]): Observable<IEvent[]> {
     let shiftsList = [];
     return this.getFavoriteId().length > 0 ?
       this.volunteerShiftService.getShifts().pipe(
@@ -139,41 +189,30 @@ export class ProgrammeService {
       : of([]);
   }
 
-  getEvent(id: string): Observable<EventInterface> {
-    return this.service.getEvent(id).pipe(
-      map(e => this.mapRawWpDataToClearData(e)),
-      map(x => {
-        x.favorite = this.isFavorite(id);
-        return x;
-      }),
-    );
-  }
-
   // no data call method
 
   resetListCache() {
     this.cacheBigBlobProgramme = [];
-    this.cacheBigBlobProgrammeBrut = null;
   }
 
   getFavoriteId(): string[] {
-    return localStorage.getItem(LocalStorageEnum.FavoriteId2023)?.split(',') || [];
+    return localStorage.getItem(this.favoriteIdEnumOfTheYear)?.split(',') || [];
   }
 
-  async changeFavorite(event: WagtailApiEventItem) {
+  async changeFavorite(event: IEvent) {
     const isChangedToFavorite = event.favorite = !event.favorite;
     const favoriteId: string[] = this.getFavoriteId();
 
     if (isChangedToFavorite && !favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId2023, [event.id.toString()].toString());
+      localStorage.setItem(this.favoriteIdEnumOfTheYear, [event.id.toString()].toString());
     } else if (isChangedToFavorite && favoriteId) {
-      localStorage.setItem(LocalStorageEnum.FavoriteId2023, [...favoriteId, event.id.toString()].toString());
+      localStorage.setItem(this.favoriteIdEnumOfTheYear, [...favoriteId, event.id.toString()].toString());
     } else if (!isChangedToFavorite && favoriteId) {
       const favoriteIdFiltered = favoriteId.filter(x => x !== event.id.toString());
       if (favoriteIdFiltered.length > 0) {
-        localStorage.setItem(LocalStorageEnum.FavoriteId2023, favoriteId.filter(x => x !== event.id.toString()).toString())
+        localStorage.setItem(this.favoriteIdEnumOfTheYear, favoriteId.filter(x => x !== event.id.toString()).toString())
       } else {
-        localStorage.removeItem(LocalStorageEnum.FavoriteId2023);
+        localStorage.removeItem(this.favoriteIdEnumOfTheYear);
       }
     }
 
@@ -203,7 +242,7 @@ export class ProgrammeService {
   }
 
   // TODO-refactor divide the code please ...
-  async verifyEventHourConflictForNewFav(event: WagtailApiEventItem) {
+  async verifyEventHourConflictForNewFav(event: IEvent) {
     this.verificationFavoriteLoadEmit.emit(true);
     const favs = await this.getFavoriteProgramme().toPromise();
     if (favs.length > 1) {
@@ -247,19 +286,18 @@ export class ProgrammeService {
     this.verificationFavoriteLoadEmit.emit(false);
   }
 
-  // TODO beware in production with the date from wp ...
-  async addOneEventNotif(event: WagtailApiEventItem) {
-    if (!localStorage.getItem(LocalStorageEnum.AvoidNotification) && event.api_event_dates[0].start) {
-      const startDateFormated = formatDate(event.api_event_dates[0].start, 'HH:mm', 'fr');
+  async addOneEventNotif(event: IEvent) {
+    if (!localStorage.getItem(LocalStorageEnum.AvoidNotification) && event.field_occurrence.start) {
+      const startDateFormated = formatDate(event.field_occurrence.start, 'HH:mm', 'fr');
       const body = await this.translate.get(
         'Programme.NotificationBody',
-        { event: event?.title, startDate: startDateFormated, location: event?.api_location.name }
+        { event: event?.title, startDate: startDateFormated, location: event?.field_occurrence.field_location.title }
       ).toPromise();
 
       let scheduleDate: Date;
       if (environment.production) {
         // For production, an half hour before the event
-        scheduleDate = new Date(new Date(event.api_event_dates[0].start).getTime() - 1000 * 60 * 30);
+        scheduleDate = new Date(new Date(event.field_occurrence.start).getTime() - 1000 * 60 * 30);
       } else {
         // For test, show notification 5 seconds after the click on fav
         scheduleDate = new Date(Date.now() + 1000 * 15);
@@ -271,7 +309,7 @@ export class ProgrammeService {
           notifications: [
             {
               title: `${event?.title} - ${startDateFormated}` || 'Check it',
-              id: event.id || 1,
+              id: parseInt(event.id.split('').filter(x => ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"].includes(x)).join('')) || 1,
               body: body,
               largeBody: body,
               schedule: { at: scheduleDate, allowWhileIdle: true },
@@ -316,7 +354,7 @@ export class ProgrammeService {
     return this.getFavoriteId()?.includes(id.toString());
   }
 
-  mapToFavorite(events: WagtailApiEventItem[]): WagtailApiEventItem[] {
+  mapToFavorite(events: IEvent[]): IEvent[] {
     events = events.map(x => {
       x.favorite = this.isFavorite(x.id.toString());
       return x;
@@ -329,7 +367,7 @@ export class ProgrammeService {
   }
 
   // TODO-refactor seriously, better code is needed here ...
-  mapVerifyFavoriteConflict(events: WagtailApiEventItem[], shifts = []): WagtailApiEventItem[] {
+  mapVerifyFavoriteConflict(events: IEvent[], shifts = []): IEvent[] {
     return events.map(e => {
       e.inFavoriteConflict =
         events.findIndex(i => {
@@ -353,10 +391,10 @@ export class ProgrammeService {
 
   verifyConflictBetweenToRangeOfDate(a, b): boolean {
     try {
-      const aStartDate = a.startDate || a.api_event_dates[0].start;
-      const aEndDate = a.endDate || a.api_event_dates[0].end;
-      const bStartDate = b.startDate || b.api_event_dates[0].start;
-      const bEndDate = b.endDate || b.api_event_dates[0].end;
+      const aStartDate = a.startDate || a.field_occurrence.start;
+      const aEndDate = a.endDate || a.field_occurrence.end;
+      const bStartDate = b.startDate || b.field_occurrence.start;
+      const bEndDate = b.endDate || b.field_occurrence.end;
       return (
         moment(aStartDate).isBetween(bStartDate, bEndDate, 'minutes', '()')
         || moment(aEndDate).isBetween(bStartDate, bEndDate, 'minutes', '()')
@@ -372,55 +410,34 @@ export class ProgrammeService {
     });
   }
 
-  mapListEventToDayListEvent(events: WagtailApiEventItem[]): WagtailApiEventItemDaysList[] {
+  mapListEventToDayListEvent(events: IEvent[]): IEventItemDaysList[] {
     const dayListEvent = [];
     events.forEach(e => {
-      const index = dayListEvent.findIndex(x => e.api_event_dates[0].day === x?.day);
+      const index = dayListEvent.findIndex(x => e.field_occurrence.field_day === x?.day);
       if (index > -1) {
         dayListEvent[index].events.push(e);
       } else {
         let dayDate: Date;
-        switch (e.api_event_dates[0].day) {
-          case 'SAT':
-            dayDate = new Date('2023-09-09');
+        switch (e.field_occurrence.field_day) {
+          case 'sat':
+            dayDate = new Date('2024-09-07');
             break;
-          case 'SUN':
-            dayDate = new Date('2023-09-10');
+          case 'sun':
+            dayDate = new Date('2024-09-08');
             break;
         }
         dayListEvent.push({
-          day: e.api_event_dates[0].day,
+          day: e.field_occurrence.field_day,
           dayDate,
           events: [e]
         });
       }
     });
 
-    return dayListEvent;
+    return dayListEvent.sort((a, b) => {
+      return a.dayDate.getTime() < b.dayDate.getTime() ? -1 : 1;
+    });
   }
-
-
-  // Mapping the data from WordPress to cleaner data for the app
-
-  mapArrayRawWpDataToClearData(events: EventInterface[]): EventInterface[] {
-    return events.map(e => { return this.mapRawWpDataToClearData(e) });
-  }
-
-  mapRawWpDataToClearData(event: EventInterface): EventInterface {
-    event.startDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['start-hour']?.formatted, false);
-    event.endDate = wpDateToRealDate(event['toolset-meta']?.['info-evenement']?.['end-hour']?.formatted, false);
-    event.headline = event.title?.rendered;
-    event.mainPictureUrl = event._embedded?.['wp:featuredmedia'] && event._embedded?.['wp:featuredmedia'][0]?.source_url ?
-      event._embedded?.['wp:featuredmedia'][0]?.source_url : 'assets/pictures/manifiesta-title-logo.jpg';
-    event.localisation = event._embedded?.['wp:term'] ?
-      event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'locatie'))?.[0] : null;
-    event.category = event._embedded?.['wp:term'] ?
-      event._embedded?.['wp:term'].find(x => x?.find(y => y.taxonomy === 'programmacategorie'))?.[0] : null;
-    event.day = event._embedded?.['wp:term'] ?
-      event._embedded?.['wp:term'].find(x => x?.find(y => y?.taxonomy === 'dag'))?.[0] : null;
-    return event;
-  }
-
 
   // offline
 

@@ -27,6 +27,7 @@ import { MySellingLittleRecapComponent } from './components/my-selling-little-re
 import { SellerDepartmentInfoModalComponent } from './components/seller-department-info-modal/seller-department-info-modal.component';
 import { VivaWalletVerificationComponent } from './components/viva-wallet-verification/viva-wallet-verification.component';
 import { CategoriesListPipe } from './pipe/categories-list.pipe';
+import { LanguagesListPipe } from './pipe/languages-list.pipe';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CategoriesListPipe } from './pipe/categories-list.pipe';
     EventListComponent,
     SimpleDatePipe,
     CategoriesListPipe,
+    LanguagesListPipe,
     SelectLangComponent,
     ThermometerComponent,
     SellingPostInfoModalComponent,
@@ -64,6 +66,7 @@ import { CategoriesListPipe } from './pipe/categories-list.pipe';
     LeafletModule,
     SimpleDatePipe,
     CategoriesListPipe,
+    LanguagesListPipe,
     EventListComponent,
     FormsModule,
     ReactiveFormsModule,

@@ -6,7 +6,7 @@
 
   <ion-item *ngFor="let event of events.events">
     <ion-avatar *ngIf="connected" [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
-      <ion-img [src]="event.thumbnail?.url || event.image?.meta?.download_url"></ion-img>
+      <ion-img [src]="event.thumbnail || event.picture"></ion-img>
     </ion-avatar>
     <ion-label>
       <h2 *ngIf="connected" [routerLink]="['/programme', 'event-detail', event.id]"
@@ -17,15 +17,15 @@
         <span [innerHtml]="event.title" class="secondary-color"></span>
       </h2>
       <h3>
-        <span *ngIf="event.api_event_dates[0].start" class="medium-color">
-          {{event.api_event_dates[0].start | simpleDatePipe:true}} -
-          {{event.api_event_dates[0].end | simpleDatePipe:true}}
+        <span *ngIf="event.field_occurrence.start" class="medium-color">
+          {{event.field_occurrence.start | date:'HH:mm'}} -
+          {{event.field_occurrence.end | date:'HH:mm'}}
           <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning">
           </ion-icon>
-        </span> - <span class="medium-color">{{event.api_location?.name}}</span>
+        </span> - <span class="medium-color">{{event.field_occurrence.field_location.title}}</span>
       </h3>
     </ion-label>
-    <ion-icon *ngIf="connected" class="fake-mouse-select" (click)="onCardHeartClick(event)" color="tertiary"
+    <ion-icon *ngIf="connected" class="fake-mouse-select" (click)="onCardHeartClick(event)" color="heart"
       [name]="event.favorite ? 'heart' : 'heart-outline'">
     </ion-icon>
   </ion-item>

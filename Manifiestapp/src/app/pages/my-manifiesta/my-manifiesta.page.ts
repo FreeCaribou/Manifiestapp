@@ -7,12 +7,11 @@ import { Network } from '@capacitor/network';
 import { IonModal, MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
-import { DayListEventInterface, EventInterface, WagtailApiEventItemDaysList } from 'src/app/shared/models/Event.interface';
+import { IEventItemDaysList } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
-import { SellingService } from 'src/app/shared/services/data/selling/selling.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 import { environment } from 'src/environments/environment';
 
@@ -21,7 +20,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './my-manifiesta.page.html',
 })
 export class MyManifiestaPage implements OnDestroy {
-  list: WagtailApiEventItemDaysList[];
+  list: IEventItemDaysList[];
   favorieChangeEmit: Subscription;
   dateJustWithHour = false;
   haveConflict = false;
