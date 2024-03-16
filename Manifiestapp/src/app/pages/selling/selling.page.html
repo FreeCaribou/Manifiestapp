@@ -327,18 +327,20 @@
           <ion-toggle slot="end" [checked]="clientAcceptData" (ionChange)="onClientAcceptData($event)"></ion-toggle>
         </ion-item>
         
+        <ion-button (click)="buy(true)" [disabled]="disabledBuyButton" expand="block" color="secondary" size="large">
+          <ion-icon name="qr-code"></ion-icon>
+          {{"Ticket.PayByQrCode" | translate}}
+        </ion-button>
+
+        <p *ngIf="!isIos" class="m-bt-medium m-top-medium text-align">{{"General.LineOr" | translate}}</p>
+        
         <app-viva-wallet-verification *ngIf="!isIos && !allHardwareOk"></app-viva-wallet-verification>
         <ion-button *ngIf="!isIos && allHardwareOk" (click)="buy()" [disabled]="disabledBuyButton" color="secondary"
           expand="block" size="large">
           <ion-icon name="card"></ion-icon>
           {{"Ticket.PayByCard" | translate}}
         </ion-button>
-        <p *ngIf="!isIos" class="m-bt-medium m-top-medium text-align">{{"General.LineOr" | translate}}</p>
 
-        <ion-button (click)="buy(true)" [disabled]="disabledBuyButton" expand="block" color="secondary" size="large">
-          <ion-icon name="qr-code"></ion-icon>
-          {{"Ticket.PayByQrCode" | translate}}
-        </ion-button>
 
 
       </ion-content>
