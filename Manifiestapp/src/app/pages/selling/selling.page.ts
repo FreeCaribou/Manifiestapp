@@ -115,8 +115,8 @@ export class SellingPage {
       return true;
     }
     return this.vivaWalletVerification.vivaWalletInstall
-      && (this.vivaWalletVerification.nfcActivated || localStorage.getItem(LocalStorageEnum.KnowNotNFC))
-      && this.vivaWalletVerification.gpsActivated && localStorage.getItem(LocalStorageEnum.KnowPayconic) as unknown as boolean;
+      && this.vivaWalletVerification.nfcActivated
+      && this.vivaWalletVerification.gpsActivated;
   }
 
   get recapSelectedTicket(): any[] {
