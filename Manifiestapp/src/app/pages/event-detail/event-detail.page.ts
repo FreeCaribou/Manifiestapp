@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MapOptions, Layer } from 'leaflet';
-import { IEvent, WagtailApiEventItem } from 'src/app/shared/models/Event.interface';
+import { IEvent } from 'src/app/shared/models/Event.interface';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { MapCommunicationService } from 'src/app/shared/services/communication/map.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
@@ -33,7 +33,6 @@ export class EventDetailPage {
     this.programmeService.getEvent(this.id).subscribe(data => {
       // TODO one day we will have a map here
       this.event = data;
-      console.log('the event', this.event)
     }).add(() => this.loadingCommunication.changeLoaderTo(false));
 
     // Network.getStatus().then(n => {

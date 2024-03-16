@@ -1,11 +1,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators'
+import { map, switchMap, tap } from 'rxjs/operators'
 import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
-import { wpDateToRealDate } from 'src/app/shared/utils/wp-date-to-real-date';
 import * as moment from 'moment';
 import { ToastController } from '@ionic/angular';
 import { VolunteerShiftService } from '../volunteer-shift/volunteer-shift.service';
@@ -78,8 +77,10 @@ export class ProgrammeService {
         data.forEach(d => {
           d.field_occurrences.forEach(occurrence => {
             if (occurrence.field_day) {
-              occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
-              occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
+              if (occurrence.field_time) {
+                occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
+                occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
+              }
   
               allEventsOccurencesSplitted.push({
                 ...d,
@@ -131,9 +132,9 @@ export class ProgrammeService {
     return this.getEvents().pipe(
       map(data => {
         return [... new Map(data.sort((a, b) => {
-          if (a.field_occurrence.field_location.path.current === '/location/main-stage') {
+          if (a.field_occurrence.field_location.title === 'Main Stage') {
             return -1;
-          } else if (b.field_occurrence.field_location.path.current === '/location/main-stage') {
+          } else if (b.field_occurrence.field_location.title === 'Main Stage') {
             return 1;
           } else {
             return a.name > b.name ? 1 : -1;

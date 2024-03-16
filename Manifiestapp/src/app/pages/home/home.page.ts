@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
 import { NewInfoInterface } from 'src/app/shared/models/NewInfo.interface';
 import { NewsListService } from 'src/app/shared/services/data/news-list/news-list.service';
-import { Network } from '@capacitor/network';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
-import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 
 @Component({
   selector: 'app-home',

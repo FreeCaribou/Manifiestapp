@@ -6,7 +6,7 @@
 
     <ion-card-header>
       <ion-card-subtitle>
-        <span *ngIf="event.field_occurrence">
+        <span *ngIf="event.field_occurrence && event.field_occurrence.start">
           <span *ngIf="!dateJustWithHour">{{'Day.' + event.field_occurrence.field_day| translate}}</span>
           {{event.field_occurrence.start | date:'HH:mm'}} -
           {{event.field_occurrence.end |date:'HH:mm'}}

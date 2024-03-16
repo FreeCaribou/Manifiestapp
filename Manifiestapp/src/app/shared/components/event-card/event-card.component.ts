@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IEvent, WagtailApiEventItem } from '../../models/Event.interface';
+import { IEvent } from '../../models/Event.interface';
 import { ProgrammeService } from '../../services/data/programme/programme.service';
 import { Network } from '@capacitor/network';
 

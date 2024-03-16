@@ -7,7 +7,7 @@ import { Network } from '@capacitor/network';
 import { IonModal, MenuController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
-import { DayListEventInterface, EventInterface, IEventItemDaysList } from 'src/app/shared/models/Event.interface';
+import { IEventItemDaysList } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';

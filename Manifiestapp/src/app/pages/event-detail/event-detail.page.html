@@ -23,7 +23,7 @@
               <ion-icon name="pricetags-outline" size="small"></ion-icon> {{event.field_type.name}} |
               {{event.field_categories | categoriesListPipe}}
             </div>
-            <div>
+            <div *ngIf="event.field_language?.length > 0">
               <ion-icon name="chatbubbles-outline" size="small"></ion-icon> {{event.field_language | languagesListPipe}}
             </div>
           </h4>

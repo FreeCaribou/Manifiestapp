@@ -26,6 +26,10 @@ export class SubprogrammeDateTabPage {
           this.days.push(day);
         }
       });
+      console.log('dat', this.days)
+      this.days = this.days.sort((a,b) => {
+        return a === 'sun' ? 1 : -1;
+      })
 
       if (!this.router.url.includes('subprogramme')) {
         this.router.navigate(['programme', 'subprogramme', 'day', this.days[0]]);
