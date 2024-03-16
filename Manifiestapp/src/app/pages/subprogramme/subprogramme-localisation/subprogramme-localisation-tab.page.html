@@ -3,7 +3,6 @@
   <ion-item *ngIf="localisations">
     <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
     <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
-      <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
       <ion-select-option *ngFor="let v of localisations" [value]="v.id">{{v.name}}</ion-select-option>
     </ion-select>
   </ion-item>
