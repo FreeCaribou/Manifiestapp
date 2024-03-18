@@ -33,13 +33,14 @@ $high-size: 24px;
 	// --ion-color-primary-contrast-rgb: 0,0,0;
 	// --ion-color-primary-shade: #ca2d24;
 	// --ion-color-primary-tint: #e8473e;
-  // 2023 primary
-  // --ion-color-primary: #F59BBB;
-	// --ion-color-primary-rgb: 245,155,187;
-	// --ion-color-primary-contrast: #000000;
-	// --ion-color-primary-contrast-rgb: 0,0,0;
-	// --ion-color-primary-shade: #d888a5;
-	// --ion-color-primary-tint: #f6a5c2;
+
+  // 2023 primary - pink
+  --ion-color-pink: #F59BBB;
+	--ion-color-pink-rgb: 245,155,187;
+	--ion-color-pink-contrast: #000000;
+	--ion-color-pink-contrast-rgb: 0,0,0;
+	--ion-color-pink-shade: #d888a5;
+	--ion-color-pink-tint: #f6a5c2;
 
   // Secondary 2024
 	--ion-color-secondary: #f15423;
@@ -161,7 +162,6 @@ $high-size: 24px;
 	--ion-color-tint: var(--ion-color-bronze-tint);
 }
 
-
 .ion-color-heart {
 	--ion-color-base: var(--ion-color-heart);
 	--ion-color-base-rgb: var(--ion-color-heart-rgb);
@@ -169,6 +169,15 @@ $high-size: 24px;
 	--ion-color-contrast-rgb: var(--ion-color-heart-contrast-rgb);
 	--ion-color-shade: var(--ion-color-heart-shade);
 	--ion-color-tint: var(--ion-color-heart-tint);
+}
+
+.ion-color-pink {
+	--ion-color-base: var(--ion-color-pink);
+	--ion-color-base-rgb: var(--ion-color-pink-rgb);
+	--ion-color-contrast: var(--ion-color-pink-contrast);
+	--ion-color-contrast-rgb: var(--ion-color-pink-contrast-rgb);
+	--ion-color-shade: var(--ion-color-pink-shade);
+	--ion-color-tint: var(--ion-color-pink-tint);
 }
 
 .ion-color-facebook {

@@ -1,54 +1,54 @@
 <app-header [title]="event?.title" [withoutI18n]="true" [defaultHref]="defaultHref"></app-header>
 
-<ion-content>
+<ion-content class="unset-bottom">
   <div *ngIf="event">
     <img [src]="event.picture" width="100%" />
-
-    <div class="m-right-medium m-left-medium">
-      <h2 class="secondary-color m-bt-medium" [innerHtml]="event?.title"></h2>
-
-      <div class="event-detail-maininfo" *ngIf="event.field_occurrence">
-        <div class="event-detail-maininfo-detail">
-          <h4 class="primary-color disabled-margin">
-            <div [routerLink]="['/programme', 'subprogramme', 'date', event.field_occurrence.field_day]" class="fake-mouse-select">
-              <ion-icon name="calendar-number-outline" size="small"></ion-icon> {{'Day.' +
-              event.field_occurrence.field_day | translate}}
-              {{event.field_occurrence.start| date:'HH:mm'}} -
-              {{event.field_occurrence.end| date:'HH:mm'}}
-            </div>
-            <div [routerLink]="['/programme', 'subprogramme', 'localisation', event.field_occurrence.field_location.title]" class="fake-mouse-select">
-              <ion-icon name="map-outline" size="small"></ion-icon> {{event.field_occurrence.field_location.title}}
-            </div>
-            <div>
-              <ion-icon name="pricetags-outline" size="small"></ion-icon> {{event.field_type.name}} |
-              {{event.field_categories | categoriesListPipe}}
-            </div>
-            <div *ngIf="event.field_language?.length > 0">
-              <ion-icon name="chatbubbles-outline" size="small"></ion-icon> {{event.field_language | languagesListPipe}}
-            </div>
-          </h4>
+    <div class="poster-background p-bt-medium">
+      <div class="m-right-medium m-left-medium">
+        <h2 class="m-bt-medium null-margin-top" [innerHtml]="event?.title"></h2>
+  
+        <div class="event-detail-maininfo" *ngIf="event.field_occurrence">
+          <div class="event-detail-maininfo-detail">
+            <h4 class="disabled-margin">
+              <div [routerLink]="['/programme', 'subprogramme', 'date', event.field_occurrence.field_day]" class="fake-mouse-select">
+                <ion-icon name="calendar-number-outline" size="small"></ion-icon> {{'Day.' +
+                event.field_occurrence.field_day | translate}}
+                {{event.field_occurrence.start| date:'HH:mm'}} -
+                {{event.field_occurrence.end| date:'HH:mm'}}
+              </div>
+              <div>
+                <ion-icon name="map-outline" size="small"></ion-icon> {{event.field_occurrence.field_location.title}}
+              </div>
+              <div>
+                <ion-icon name="pricetags-outline" size="small"></ion-icon> {{event.field_type.name}} |
+                {{event.field_categories | categoriesListPipe}}
+              </div>
+              <div *ngIf="event.field_language?.length > 0">
+                <ion-icon name="chatbubbles-outline" size="small"></ion-icon> {{event.field_language | languagesListPipe}}
+              </div>
+            </h4>
+          </div>
+        </div>
+        <h5 [innerHtml]="event.field_description"></h5>
+        <div *ngIf="event.field_speakers?.length > 0">
+          <ion-grid>
+            <ion-row>
+              <ion-col *ngFor="let speaker of event.field_speakers" size-xs="4" size-sm="4" size-lg="3">
+                <ion-card>
+                  <ion-avatar class="m-left-medium m-top-small">
+                    <ion-img [src]="speaker.field_image.field_media_image.image_style_uri.wide"></ion-img>
+                  </ion-avatar>
+                  <ion-card-header>
+                    <ion-card-title [innerHTML]="speaker.title"></ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content [innerHTML]="speaker.field_description"></ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </div>
       </div>
-      <h5 [innerHtml]="event.field_description"></h5>
-      <div *ngIf="event.field_speakers?.length > 0">
-        <ion-grid>
-          <ion-row>
-            <ion-col *ngFor="let speaker of event.field_speakers" size-xs="4" size-sm="4" size-lg="3">
-              <ion-card>
-                <ion-avatar class="m-left-medium m-top-small">
-                  <ion-img [src]="speaker.field_image.field_media_image.image_style_uri.wide"></ion-img>
-                </ion-avatar>
-                <ion-card-header>
-                  <ion-card-title [innerHTML]="speaker.title"></ion-card-title>
-                </ion-card-header>
-                <ion-card-content [innerHTML]="speaker.field_description"></ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
     </div>
-
   </div>
 
   <!-- <div *ngIf="options" class="event-detail-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
