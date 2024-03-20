@@ -4,9 +4,9 @@
   <div *ngIf="event">
     <ion-img [src]="event.picture" width="100%" />
     
-    <div class="poster-background p-bt-high p-top-medium">
+    <div class="colored-background p-bt-high">
       
-      <ion-card color="secondary" *ngIf="event.field_occurrence">
+      <!-- <ion-card color="secondary" *ngIf="event.field_occurrence">
         <ion-card-header>
           <ion-card-title>
             <h2 [innerHtml]="event?.title"></h2>
@@ -35,14 +35,14 @@
         <ion-card-content>
           <h5 [innerHtml]="event.field_description"></h5>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
 
-      <!-- <div class="m-right-medium m-left-medium p-top-medium">
-        <h2 class="m-bt-medium null-margin-top" [innerHtml]="event?.title"></h2>
+      <div class="m-right-medium m-left-medium p-top-medium">
+        <h2 class="m-bt-medium null-margin-top secondary-color" [innerHtml]="event?.title"></h2>
   
         <div class="event-detail-maininfo" *ngIf="event.field_occurrence">
           <div class="event-detail-maininfo-detail">
-            <h4 class="disabled-margin">
+            <h4 class="disabled-margin primary-color">
               <div [routerLink]="['/programme', 'subprogramme', 'date', event.field_occurrence.field_day]" class="fake-mouse-select">
                 <ion-icon name="calendar-number-outline" size="small"></ion-icon> {{'Day.' +
                 event.field_occurrence.field_day | translate}}
@@ -62,7 +62,7 @@
             </h4>
           </div>
         </div>
-        <h5 [innerHtml]="event.field_description"></h5>
+        <p [innerHtml]="event.field_description"></p>
         <div *ngIf="event.field_speakers?.length > 0">
           <ion-grid>
             <ion-row>
@@ -80,7 +80,7 @@
             </ion-row>
           </ion-grid>
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 

@@ -1,4 +1,4 @@
-<ion-card class="programme-card-body" color="secondary">
+<ion-card class="programme-card-body" [color]="event.favorite ? 'pink' : 'secondary'">
   <div [routerLink]="['/programme', 'event-detail', event.id]" class="fake-mouse-select">
     <ion-thumbnail>
       <ion-img [src]="event.thumbnail|| event.picture"></ion-img>
