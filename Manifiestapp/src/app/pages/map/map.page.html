@@ -3,4 +3,26 @@
 <ion-content class="ion-no-padding" slot="fixed">
   <div *ngIf="options" class="main-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
   </div>
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="scanQrCode()">
+    <ion-fab-button color="secondary" id="open-modal">
+      <ion-icon name="qr-code-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+  <ion-modal trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancel()">Cancel</ion-button>
+          </ion-buttons>
+          <ion-title>Welcome</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          Hallo QR Code
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

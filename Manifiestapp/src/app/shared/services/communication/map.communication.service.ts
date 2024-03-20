@@ -39,13 +39,13 @@ export class MapCommunicationService {
       map(data => {
         console.log('data of the localisation', data)
         const baseMarkers = [
-          this.createMarker(51.22427, 2.89793, 'entrance', 'entrance'),
+          this.createMarker(51.22366886322361, 2.8979757651092526, 'Entrance', 'Entrance'),
         ];
         data.forEach(d => {
           if (d.field_geolocation) {
             baseMarkers.push(
               this.createMarker(
-                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.id, true
+                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.id, true, './assets/pictures/avatar_red.jpg'
               )
             );
           }
@@ -55,13 +55,13 @@ export class MapCommunicationService {
     )
   }
 
-  createMarker(lat: number, lng: number, label: string, id: string, haveLink = false): Layer {
+  createMarker(lat: number, lng: number, label: string, id: string, haveLink = false, picture = './assets/pictures/avatar_color.png'): Layer {
     return marker(
       [lat, lng],
       {
         icon: icon({
-          iconSize: [25, 41],
-          iconUrl: 'leaflet/marker-icon.png',
+          iconSize: [24, 24],
+          iconUrl: picture,
         })
       }
     ).bindPopup(

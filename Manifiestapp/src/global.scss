@@ -442,3 +442,8 @@ ion-tabs, ion-tab-bar, ion-tab-button, app-programme {
 .null-margin-top {
   margin-top: unset;
 }
+
+body.scanner-active {
+  --background: transparent;
+  --ion-background-color: transparent;
+}
