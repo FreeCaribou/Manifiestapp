@@ -37,7 +37,6 @@
     "@awesome-cordova-plugins/core": "^6.2.0",
     "@awesome-cordova-plugins/diagnostic": "^6.2.0",
     "@awesome-cordova-plugins/open-native-settings": "^6.3.0",
-    "@capacitor-community/barcode-scanner": "^2.1.1",
     "@capacitor/android": "3.4.3",
     "@capacitor/app": "1.0.3",
     "@capacitor/browser": "^1.0.7",
