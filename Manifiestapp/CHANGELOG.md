@@ -1,3 +1,8 @@
+# 2.3.1
+* New theme color
+* Direct see program by type or localisation
+* Improvement of payment
+
 # 2.2.8
 * Upgrade Apple to have QR Code directly
 * Bug link to android app version
