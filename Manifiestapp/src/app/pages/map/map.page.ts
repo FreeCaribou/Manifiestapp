@@ -54,6 +54,7 @@ export class MapPage {
         if (value.includes('https://manifiesta.be/')) {
           // TODO be more careful and make verification
           // Put that in a component just for the qr code, so we put that where ever we want later !
+          // Hide that for web versie
           const splitted = value.split('/');
           console.log('we go to ', splitted[splitted.length - 1])
           this.router.navigate(['programme', 'subprogramme', 'localisation'], { queryParams: { place: splitted[splitted.length - 1] } });
