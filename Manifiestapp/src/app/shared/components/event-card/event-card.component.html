@@ -32,7 +32,7 @@
 
 <ion-fab *ngIf="connected" vertical="top" horizontal="end" slot="fixed" class="ion-fab-event-card-fav"
   (click)="onCardHeartClick(event)">
-  <ion-fab-button color="heart" size="small">
+  <ion-fab-button [color]="event.favorite ? 'pink' : 'heart'" size="small">
     <ion-icon [name]="event.favorite ? 'heart' : 'heart-outline'"></ion-icon>
   </ion-fab-button>
 </ion-fab>
