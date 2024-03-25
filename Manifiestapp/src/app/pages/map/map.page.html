@@ -1,6 +1,6 @@
 <app-header [title]="'Map'"></app-header>
 
-<ion-content class="ion-no-padding" slot="fixed">
+<ion-content class="ion-no-padding background-color" slot="fixed">
   <div *ngIf="options" class="main-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
   </div>
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="scanQrCode()">
