@@ -96,6 +96,19 @@ export class ProgrammeService {
         return allEventsOccurencesSplitted;
       }),
       map(items => this.mapToFavorite(items)),
+      map(items => items.sort((eventA, eventB) => {
+        if (!eventA.field_occurrence?.start && eventB.field_occurrence?.start) {
+          return -1;
+        } else if (eventA.field_occurrence?.start && !eventB.field_occurrence?.start) {
+          return 1;
+        } else {
+          try {
+            return new Date(eventA.field_occurrence?.start) > new Date(eventB.field_occurrence.start) ? 1 : -1;
+          } catch(e) {
+            return 1;
+          }
+        }
+      })),
       tap(items => this.cacheBigBlobProgramme = items),
     );
   }
