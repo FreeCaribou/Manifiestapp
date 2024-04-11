@@ -32,8 +32,9 @@
 }
 
 // TODO check to put that rule with some case and not always
-ion-content {
+ion-content.background-color {
   // --padding-bottom: 35px;
+  --ion-background-color: var(--ion-color-background);
 }
 
 h1,
@@ -82,7 +83,7 @@ ion-menu ion-content::part(scroll) {
 }
 
 ion-menu {
-  --ion-background-color: var(--ion-color-primary);
+  --ion-background-color: var(--ion-color-primary) !important;
   --ion-text-color: var(--ion-color-primary-contrast);
 
   ion-list {
@@ -111,7 +112,7 @@ ion-menu {
 
     ion-item.selected {
       color: var(--ion-color-secondary);
-      background-color: rgba(var(--ion-color-secondary-rgb), 0.14);
+      background-color: rgba(var(--ion-color-secondary-rgb), 0.14) !important;
 
       ion-icon {
         color: var(--ion-color-secondary) !important;
@@ -263,6 +264,10 @@ ion-menu {
 
 .warning-color {
   color: var(--ion-color-warning);
+}
+
+.dark-color {
+  color: var(--ion-color-dark);
 }
 
 .heart-color {
@@ -429,10 +434,6 @@ ion-tabs, ion-tab-bar, ion-tab-button, app-programme {
   background-color: var(--ion-color-background);
 }
 
-.colored-background {
-  background-color: var(--ion-color-background);
-}
-
 .poster-background {
   background: no-repeat url('./assets/pictures/background-poster.png');
   background-size: 100%;
@@ -441,4 +442,23 @@ ion-tabs, ion-tab-bar, ion-tab-button, app-programme {
 
 .null-margin-top {
   margin-top: unset;
+}
+
+// Hide all elements - for scanning qr code
+body.barcode-scanner-active {
+  visibility: hidden;
+  --background: transparent;
+  --ion-background-color: transparent;
+}
+
+// Show only the barcode scanner modal
+.barcode-scanner-modal {
+  visibility: visible;
+}
+
+@media (prefers-color-scheme: dark) {
+  .barcode-scanner-modal {
+    --background: transparent;
+    --ion-background-color: transparent;
+  }
 }

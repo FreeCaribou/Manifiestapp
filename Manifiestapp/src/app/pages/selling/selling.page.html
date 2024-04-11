@@ -1,4 +1,4 @@
-<ion-content *ngIf="preparationOfVw" class="ion-padding m-top-high text-align">
+<ion-content *ngIf="preparationOfVw" class="ion-padding m-top-high text-align background-color">
   <h1 class="primary-color">{{'Ticket.PreparVW' | translate}}</h1>
   <h2 class="m-top-medium secondary-color">{{'Ticket.StepXOnTwo' | translate:vwPreparationStepI18NParam}}</h2>
   <h3>
@@ -30,7 +30,7 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
+  <ion-content class="background-color">
 
     <!-- <div class="text-align m-right-medium m-left-medium m-top-medium" *ngIf="skipVivaWalletAndShowRedirect">
       <a href="https://manifiestapp.vercel.app/selling">
@@ -132,14 +132,15 @@
               <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
             </ion-card-header>
             <ion-item>
-              <ion-label>
+              <ion-label color="dark">
                 {{ticketType.price | currency:'EUR'}}
                 | {{ticketNumberOfSell[index].ticketPrice *
                 ticketNumberOfSell[index].ticketAmount |
                 currency:'EUR'}}
                 <p>(+ {{ticketType.fee | currency:'EUR'}} {{"Ticket.ServiceCharge" | translate}})</p>
               </ion-label>
-
+            </ion-item>
+            <ion-item>
               <ion-button [disabled]="ticketNumberOfSell[index].ticketAmount <= 0"
                 (click)="changeAmountTicket(index, 'remove')">
                 <ion-icon name="remove"></ion-icon>
@@ -158,7 +159,7 @@
           </ion-button>
 
           <div class="separator-line m-top-medium"></div>
-          <a href="mailto:app@manifiesta.be">
+          <a href="mailto:app@manifiesta.be" class="dark-color">
             {{'Ticket.PaymentSucceesWithoutTicket' | translate}}
           </a>
         </ng-container>
