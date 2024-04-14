@@ -48,22 +48,18 @@ export class SubprogrammeDatePage {
   }
 
   initList() {
-    if (this.programmeService.cacheBigBlobProgramme.length === 0) {
-      this.programmeService.getEvents().subscribe(() => {
-        this.buildList();
-      })
-    } else {
-      this.buildList();
-    }
+    this.programmeService.getEvents().subscribe((items) => {
+      this.buildList([...items]);
+    })
   }
 
-  buildList() {
+  buildList(items: IEvent[]) {
     forkJoin([
       this.programmeService.getEventTypes(),
       this.programmeService.getEventLocalisations(),
     ]).subscribe(([eventTypes, eventLocalisations]) => {
-      this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_occurrence.field_day === this.dayId);
-      this.listToShow = this.list;
+      this.list = items.filter(p => p.field_occurrence.field_day === this.dayId);
+      this.listToShow = [...this.list];
       this.locaties = eventLocalisations.map(i => { return { id: i, name: i } });
       this.categories = eventTypes.map(i => { return { id: i, name: i } });
       const langBrut = [].concat(...this.list.map(l => l.field_language.map(v => { return { id: v.name, name: v.name } })))
@@ -108,7 +104,7 @@ export class SubprogrammeDatePage {
     }
 
     if (this.categorieSelected) {
-      this.listToShow = this.listToShow.filter(e =>e.field_type.name == this.categorieSelected);
+      this.listToShow = this.listToShow.filter(e => e.field_type.name == this.categorieSelected);
     }
 
     if (this.languageSelected) {

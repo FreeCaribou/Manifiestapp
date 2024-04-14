@@ -81,7 +81,7 @@ export class ProgrammeService {
                 occurrence.start = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.from);
                 occurrence.end = this.buildOneDateHourFromData(occurrence.field_day, occurrence.field_time?.raw?.to);
               }
-  
+
               allEventsOccurencesSplitted.push({
                 ...d,
                 picture: d.field_image?.field_media_image?.image_style_uri?.wide,
@@ -96,20 +96,28 @@ export class ProgrammeService {
         return allEventsOccurencesSplitted;
       }),
       map(items => this.mapToFavorite(items)),
-      map(items => items.sort((eventA, eventB) => {
-        if (!eventA.field_occurrence?.start && eventB.field_occurrence?.start) {
-          return -1;
-        } else if (eventA.field_occurrence?.start && !eventB.field_occurrence?.start) {
-          return 1;
-        } else {
-          try {
-            return new Date(eventA.field_occurrence?.start) > new Date(eventB.field_occurrence.start) ? 1 : -1;
-          } catch(e) {
+      map(items => {
+        const withoutStart = items.filter(x => !x.field_occurrence?.start);
+        const withStart = items.filter(x => !!x.field_occurrence?.start);
+        withStart.sort((eventA, eventB) => {
+          if (!eventA.field_occurrence?.start && eventB.field_occurrence?.start) {
             return 1;
+          } else if (eventA.field_occurrence?.start && !eventB.field_occurrence?.start) {
+            return -1;
+          } else {
+            try {
+              return new Date(eventA.field_occurrence?.start).toISOString() > new Date(eventB.field_occurrence.start).toISOString() ? 1 : -1;
+            } catch (e) {
+              return 1;
+            }
           }
-        }
-      })),
-      tap(items => this.cacheBigBlobProgramme = items),
+        })
+
+        return withStart.concat(withoutStart);
+      }),
+      tap(items => {
+        this.cacheBigBlobProgramme = items
+      }),
     );
   }
 

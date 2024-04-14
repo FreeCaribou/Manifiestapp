@@ -40,9 +40,7 @@ export class SubprogrammeLocalisationPage {
 
   buildList() {
     // TODO check if we make filter
-    this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_occurrence.field_location.title === this.place).sort((a,b) => {
-        return a.field_occurrence?.start > b.field_occurrence?.start ? 1 : -1;
-    });
+    this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_occurrence.field_location.title === this.place);
     this.listToShow = this.list;
   }
 

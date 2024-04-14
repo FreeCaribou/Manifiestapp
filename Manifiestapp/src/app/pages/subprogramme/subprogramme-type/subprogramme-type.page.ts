@@ -40,9 +40,7 @@ export class SubprogrammeTypePage {
 
   buildList() {
     // TODO check if we make filter
-    this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_type.name === this.type).sort((a,b) => {
-        return a.field_occurrence?.start > b.field_occurrence?.start ? 1 : -1;
-    });
+    this.list = this.programmeService.cacheBigBlobProgramme.filter(p => p.field_type.name === this.type);
     this.listToShow = this.list;
   }
 
