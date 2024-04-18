@@ -9,6 +9,7 @@ export interface IEvent {
   thumbnail: string;
   parentId: string;
   favorite?: boolean;
+  field_weight?: number;
   field_speakers: { field_description: string, title: string, field_image: { field_media_image: { image_style_uri: { wide: string } } } }[];
 }
 

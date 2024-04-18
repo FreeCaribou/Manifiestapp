@@ -79,6 +79,8 @@
       <h1>{{'General.Welcome' | translate}}</h1>
     </div>
 
+    <app-event-list-card [list]="topProgramme" [simpleList]="true" [withBackground]="false"></app-event-list-card>
+
     <div class="m-right-medium m-left-medium">
       <!-- <div *ngIf="loadNews" class="m-top-medium text-align">
         <ion-spinner name="lines" color="primary"></ion-spinner>

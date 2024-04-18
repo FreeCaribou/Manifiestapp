@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { IEvent } from 'src/app/shared/models/Event.interface';
 import { NewInfoInterface } from 'src/app/shared/models/NewInfo.interface';
 import { NewsListService } from 'src/app/shared/services/data/news-list/news-list.service';
+import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 
 @Component({
@@ -21,14 +23,21 @@ export class HomePage {
 
   longTextHome = '';
 
+  topProgramme: IEvent[] = [];
+
   constructor(
     private newsListService: NewsListService,
     private volunteerShiftService: VolunteerShiftService,
+    private programmeService: ProgrammeService,
   ) { }
 
   ionViewDidEnter() {
     this.volunteerShiftService.getLongtextHome().subscribe(textHome => {
       this.longTextHome = textHome.text;
+    });
+
+    this.programmeService.getEventsTopX(3).subscribe(mainEvents => {
+      this.topProgramme = mainEvents;
     });
 
     this.count();

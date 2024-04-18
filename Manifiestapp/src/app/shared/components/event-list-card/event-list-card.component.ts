@@ -15,6 +15,6 @@ export class EventListCardComponent {
   showLocalisation = true;
   @Input()
   showType = true;
-
   @Input() simpleList = false;
+  @Input() withBackground = true;
 }

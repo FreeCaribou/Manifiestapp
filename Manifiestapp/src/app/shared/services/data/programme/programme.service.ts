@@ -127,6 +127,16 @@ export class ProgrammeService {
     );
   }
 
+  getEventsTopX(top: number): Observable<IEvent[]> {
+    return this.getEvents().pipe(
+      map(events => {
+        return events.sort((a,b) => {
+          return a.field_weight > b.field_weight ? 1 : -1;
+        }).slice(0, top);
+      }),
+    );
+  }
+
   getEventTypes(): Observable<string[]> {
     return this.getEvents().pipe(
       map(data => {
