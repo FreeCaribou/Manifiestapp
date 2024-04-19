@@ -20,10 +20,10 @@
     "Localisation": "Locatie",
     "Type": "Type",
     "ManifiestaComeBack": "ManiFiesta komt terug in :",
-    "Days": "dagen",
-    "Hours": "uren",
-    "Minutes": "minuten",
-    "Seconds": "seconden"
+    "Days": "Dagen",
+    "Hours": "Uren",
+    "Minutes": "Minuten",
+    "Seconds": "S."
   },
   "Day": {
     "sat": "Zaterdag",

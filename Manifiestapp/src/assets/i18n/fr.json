@@ -20,10 +20,10 @@
     "Localisation": "Localisation",
     "Type": "Type",
     "ManifiestaComeBack": "ManiFiesta reviens dans :",
-    "Days": "jours",
-    "Hours": "heures",
-    "Minutes": "minutes",
-    "Seconds": "secondes"
+    "Days": "Jours",
+    "Hours": "Heures",
+    "Minutes": "Minutes",
+    "Seconds": "S."
   },
   "Day": {
     "sat": "Samedi",
