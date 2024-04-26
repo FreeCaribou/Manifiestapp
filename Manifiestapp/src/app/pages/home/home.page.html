@@ -1,6 +1,6 @@
 <app-header [title]="'Home'"></app-header>
 
-<ion-content>
+<ion-content class="background-color">
   <div class="poster-background-home">
     <img alt="manifiesta-front-page" width="100%" src="assets/pictures/manifiesta-home-page-v2.png" />
 
@@ -8,19 +8,19 @@
       <h3 class="text-align margin-unset">{{'General.ManifiestaComeBack' | translate}}</h3>
 
       <ion-row>
-        <ion-col>
+        <ion-col class="text-align">
           <h6 class="margin-unset heart-color">{{'General.Days' | translate}}</h6>
           <h1 class="secondary-color margin-unset">{{diffDays}}</h1>
         </ion-col>
-        <ion-col>
+        <ion-col class="text-align">
           <h6 class="margin-unset heart-color">{{'General.Hours' | translate}}</h6>
           <h1 class="secondary-color margin-unset">{{diffHours}}</h1>
         </ion-col>
-        <ion-col>
+        <ion-col class="text-align">
           <h6 class="margin-unset heart-color">{{'General.Minutes' | translate}}</h6>
           <h1 class="secondary-color margin-unset">{{diffMinutes}}</h1>
         </ion-col>
-        <ion-col>
+        <ion-col class="text-align">
           <h6 class="margin-unset heart-color">{{'General.Seconds' | translate}}</h6>
           <h1 class="secondary-color margin-unset">{{diffSeconds}}</h1>
         </ion-col>
@@ -69,7 +69,7 @@
       <h1>{{'General.Welcome' | translate}}</h1>
     </div>
 
-    <app-event-list-card [list]="topProgramme" [simpleList]="true" [withBackground]="false"></app-event-list-card>
+    <!-- <app-event-list-card [list]="topProgramme" [simpleList]="true" [withBackground]="false"></app-event-list-card> -->
 
     <div class="m-right-medium m-left-medium">
       <!-- <div *ngIf="loadNews" class="m-top-medium text-align">

@@ -30,10 +30,10 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'Programme', url: 'programme', icon: 'calendar' },
-    { title: 'News', url: 'news-info', icon: 'newspaper' },
+    // { title: 'News', url: 'news-info', icon: 'newspaper' },ks
     { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
     { title: 'Selling', url: 'selling', icon: 'ticket' },
-    { title: 'About', url: 'about', icon: 'information-circle' },
+    // { title: 'About', url: 'about', icon: 'information-circle' },
     // { title: 'Map', url: 'map', icon: 'map' },
   ];
 
