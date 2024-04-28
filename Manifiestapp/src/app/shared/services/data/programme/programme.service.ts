@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
@@ -24,6 +24,7 @@ export class ProgrammeService {
   verificationFavoriteLoadEmit = new EventEmitter<boolean>();
 
   cacheBigBlobProgramme: IEvent[] = [];
+  cacheSpeakers: ISpeaker[] = [];
   cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
   dataUrl = environment.webDataUrl;
@@ -67,7 +68,7 @@ export class ProgrammeService {
   // TODO comment all the workflow here
   getEvents(): Observable<IEvent[]> {
     if (this.cacheBigBlobProgramme?.length > 0) {
-      return of(this.cacheBigBlobProgramme);
+      return of([...this.cacheBigBlobProgramme]);
     }
     return this.baseService.bypassCors(`${this.dataUrl}events.${this.languageService.selectedLanguage}.json`).pipe(
       map(data => {
@@ -100,7 +101,9 @@ export class ProgrammeService {
         const withoutStart = items.filter(x => !x.field_occurrence?.start);
         const withStart = items.filter(x => !!x.field_occurrence?.start);
         withStart.sort((eventA, eventB) => {
-          if (!eventA.field_occurrence?.start && eventB.field_occurrence?.start) {
+          if (!eventA.field_occurrence?.start && !eventB.field_occurrence?.start) {
+            return eventA.field_weight > eventB.field_weight ? 1 : -1;
+          } else if (!eventA.field_occurrence?.start && eventB.field_occurrence?.start) {
             return 1;
           } else if (eventA.field_occurrence?.start && !eventB.field_occurrence?.start) {
             return -1;
@@ -116,7 +119,7 @@ export class ProgrammeService {
         return withStart.concat(withoutStart);
       }),
       tap(items => {
-        this.cacheBigBlobProgramme = items
+        this.cacheBigBlobProgramme = [...items]
       }),
     );
   }
@@ -130,7 +133,7 @@ export class ProgrammeService {
   getEventsTopX(top: number): Observable<IEvent[]> {
     return this.getEvents().pipe(
       map(events => {
-        return events.sort((a,b) => {
+        return events.sort((a, b) => {
           return a.field_weight > b.field_weight ? 1 : -1;
         }).slice(0, top);
       }),
@@ -224,6 +227,7 @@ export class ProgrammeService {
 
   resetListCache() {
     this.cacheBigBlobProgramme = [];
+    this.cacheSpeakers = [];
   }
 
   getFavoriteId(): string[] {
@@ -470,38 +474,44 @@ export class ProgrammeService {
     });
   }
 
-  // offline
+  // Speaker
 
-  setOfflineFavoritesList(events: DayListEventInterface[]) {
-    localStorage.setItem(LocalStorageEnum.OfflineFavorites, JSON.stringify(events));
-  }
-
-  getOfflineFavoritesList(): DayListEventInterface[] {
-    const tmp = localStorage.getItem(LocalStorageEnum.OfflineFavorites);
-    if (tmp) {
-      try {
-        return JSON.parse(localStorage.getItem(LocalStorageEnum.OfflineFavorites));
-      } catch (e) {
-        return [];
-      }
-    } else {
-      return [];
+  getSpeakers(): Observable<ISpeaker[]> {
+    if (this.cacheSpeakers?.length > 0) {
+      return of([...this.cacheSpeakers]);
     }
+    return this.baseService.bypassCors(`${this.dataUrl}event_speakers.${this.languageService.selectedLanguage}.json`).pipe(
+      map((items: ISpeaker[]) => {
+        return items.sort((a, b) => {
+          return a.field_weight > b.field_weight ? 1 : -1;
+        })
+      }),
+      map(items => {
+        return items.map(d => {
+          return {
+            ...d,
+            picture: d.field_image?.field_media_image?.image_style_uri?.wide,
+            thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide_teaser || d.field_image?.field_media_image?.image_style_uri?.wide,
+          }
+        })
+      }),
+      tap(items => {
+        this.cacheSpeakers = [...items]
+      }),
+    );
   }
 
-  getOfflineProgrammesList(day: string[]): EventInterface[] {
-    const tmp = localStorage.getItem(LocalStorageEnum.OfflineProgrammes);
-    if (tmp) {
-      try {
-        const programmesOffline = JSON.parse(localStorage.getItem(LocalStorageEnum.OfflineProgrammes));
-        const programmesCache = programmesOffline.find(x => x.days === day.toString());
-        return programmesCache?.list || [];
-      } catch (e) {
-        return [];
-      }
-    } else {
-      return [];
-    }
+  getSpeaker(id: string): Observable<ISpeaker> {
+    return this.getSpeakers().pipe(
+      map(list => list.find(e => e.id == id)),
+    );
   }
 
+  getSpeakersTopX(top: number): Observable<ISpeaker[]> {
+    return this.getSpeakers().pipe(
+      map(speakers => {
+        return speakers.slice(0, top);
+      }),
+    );
+  }
 }

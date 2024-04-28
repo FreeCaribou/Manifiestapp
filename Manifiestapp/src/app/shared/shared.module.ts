@@ -12,7 +12,6 @@ import { SimpleDatePipe } from './pipe/simple-date.pipe';
 import { SelectLangComponent } from './components/select-lang/select-lang.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { VolunteerShiftService } from './services/data/volunteer-shift/volunteer-shift.service';
 import { environment } from 'src/environments/environment';
 import { InfoListDataService } from './services/data/info-list/info-list.data.service';
 import { InfoListMockService } from './services/data/info-list/info-list.mock.service';
@@ -28,6 +27,8 @@ import { SellerDepartmentInfoModalComponent } from './components/seller-departme
 import { VivaWalletVerificationComponent } from './components/viva-wallet-verification/viva-wallet-verification.component';
 import { CategoriesListPipe } from './pipe/categories-list.pipe';
 import { LanguagesListPipe } from './pipe/languages-list.pipe';
+import { SpeakerListComponent } from './components/speaker-list/speaker-list.component';
+import { SpeakerCardComponent } from './components/speaker-card/speaker-card.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,8 @@ import { LanguagesListPipe } from './pipe/languages-list.pipe';
     EventCardComponent,
     EventListCardComponent,
     EventListComponent,
+    SpeakerListComponent,
+    SpeakerCardComponent,
     SimpleDatePipe,
     CategoriesListPipe,
     LanguagesListPipe,
@@ -75,6 +78,8 @@ import { LanguagesListPipe } from './pipe/languages-list.pipe';
     TopSellerListComponent,
     MySellingLittleRecapComponent,
     VivaWalletVerificationComponent,
+    SpeakerListComponent,
+    SpeakerCardComponent,
   ],
   providers: [
     MapCommunicationService,

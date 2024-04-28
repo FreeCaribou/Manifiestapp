@@ -7,6 +7,7 @@
     "ng": "ng",
     "ionic-serve": "ionic serve",
     "ionic-serve-prod-mode": "NODE_OPTIONS=--openssl-legacy-provider; ionic serve --prod",
+    "ressources-app-icon": "npx capacitor-assets generate",
     "resources-app-icon-android": "cordova-res android --skip-config --copy",
     "resources-app-icon-ios": "cordova-res ios --skip-config --copy",
     "build-for-app-android": "ionic build --prod && ionic cap copy android && ionic cap sync android && ionic capacitor build --prod android",

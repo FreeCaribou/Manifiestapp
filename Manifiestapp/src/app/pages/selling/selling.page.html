@@ -127,7 +127,7 @@
         <ng-container *ngIf="hasEveryInfoToSell && ticketTypes?.length > 0">
           <ion-card *ngFor="let ticketType of ticketTypes; let index = index" color="secondary"
             [class.transparent-background]="ticketType.branding?.image">
-            <img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
+            <ion-img *ngIf="ticketType.branding?.image" [alt]="ticketType.name" [src]="ticketType.branding?.image" />
             <ion-card-header *ngIf="!ticketType.branding?.image">
               <ion-card-title>{{ticketType.name}} - {{ticketType.description}}</ion-card-title>
             </ion-card-header>

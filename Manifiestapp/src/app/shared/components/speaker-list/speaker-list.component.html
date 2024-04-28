@@ -1,0 +1,16 @@
+<ion-grid>
+    <ion-row>
+        <ng-container *ngIf="!simpleList">
+            <ion-col *ngFor="let item of list" size-xs="6" size-sm="6" size-lg="4">
+                <app-speaker-card [speaker]="item">
+                </app-speaker-card>
+            </ion-col>
+        </ng-container>
+        <ng-container *ngIf="simpleList">
+            <ion-col *ngFor="let item of list" size="12">
+                <app-speaker-card [speaker]="item">
+                </app-speaker-card>
+            </ion-col>
+        </ng-container>
+    </ion-row>
+</ion-grid>

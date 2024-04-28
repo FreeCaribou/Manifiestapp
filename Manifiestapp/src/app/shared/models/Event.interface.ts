@@ -10,7 +10,7 @@ export interface IEvent {
   parentId: string;
   favorite?: boolean;
   field_weight?: number;
-  field_speakers: { field_description: string, title: string, field_image: { field_media_image: { image_style_uri: { wide: string } } } }[];
+  field_speakers: { field_description: string, title: string, field_image: { field_media_image: { image_style_uri: { wide: string, wide_teaser: string } } } }[];
 }
 
 export interface IEventItemDaysList {
@@ -20,10 +20,18 @@ export interface IEventItemDaysList {
 }
 
 export interface ILocalisation {
-  title: string, path: { current: string }, id: string, field_geolocation: { lat: number, lon: number }
+  title: string, path: { current: string, translation: string }, id: string, field_geolocation: { lat: number, lon: number }
 }
 
-
+export interface ISpeaker {
+  id: string;
+  field_description: string;
+  field_image: { field_media_image: { image_style_uri: { wide: string, wide_teaser: string } } };
+  field_teaser: string;
+  field_weight: number;
+  title: string;
+  [key: string]: any;
+}
 
 export interface RenderedInterface {
   rendered: string;

@@ -2,7 +2,12 @@
 
 <ion-content class="background-color">
   <div class="poster-background-home">
-    <img alt="manifiesta-front-page" width="100%" src="assets/pictures/manifiesta-home-page-v2.png" />
+    <ion-img alt="manifiesta-front-page" width="100%" src="assets/pictures/manifiesta-home-page-v2.png" />
+
+    <!-- Ticket in pause -->
+    <!-- <h2 class="m-right-medium m-left-medium text-align">
+      <a href="https://manifiesta.eventsquare.co">{{ 'About.BuyTicket' | translate }}</a>
+    </h2> -->
 
     <ion-grid *ngIf="!isNow" class="counter m-bt-medium">
       <h3 class="text-align margin-unset">{{'General.ManifiestaComeBack' | translate}}</h3>
@@ -25,77 +30,15 @@
           <h1 class="secondary-color margin-unset">{{diffSeconds}}</h1>
         </ion-col>
       </ion-row>
-
-      <!-- <ion-row>
-        <ion-col class="text-align-end">
-          <h1 class="secondary-color m-right-medium margin-unset">{{diffDays}}</h1>
-        </ion-col>
-        <ion-col class="ion-align-self-end">
-          <h6 class="margin-unset">{{'General.Days' | translate}}</h6>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="text-align-end">
-          <h1 class="secondary-color m-right-medium margin-unset">{{diffHours}}</h1>
-        </ion-col>
-        <ion-col class="ion-align-self-end">
-          <h6 class="margin-unset">{{'General.Hours' | translate}}</h6>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="text-align-end">
-          <h1 class="secondary-color m-right-medium margin-unset">{{diffMinutes}}</h1>
-        </ion-col>
-        <ion-col class="ion-align-self-end">
-          <h6 class="margin-unset">{{'General.Minutes' | translate}}</h6>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col class="text-align-end">
-          <h1 class="secondary-color m-right-medium margin-unset">{{diffSeconds}}</h1>
-        </ion-col>
-        <ion-col class="ion-align-self-end">
-          <h6 class="margin-unset">{{'General.Seconds' | translate}}</h6>
-        </ion-col>
-      </ion-row> -->
     </ion-grid>
-
-    <!-- Ticket in pause -->
-    <!-- <h2 class="m-right-medium m-left-medium text-align">
-      <a href="https://manifiesta.eventsquare.co">{{ 'About.BuyTicket' | translate }}</a>
-    </h2> -->
 
     <div *ngIf="isNow" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
       <h1>{{'General.Welcome' | translate}}</h1>
     </div>
 
-    <!-- <app-event-list-card [list]="topProgramme" [simpleList]="true" [withBackground]="false"></app-event-list-card> -->
+    <app-event-list-card [list]="topProgramme" [simpleList]="true" [withBackground]="false"></app-event-list-card>
+    <app-speaker-list [list]="topSpeakers" [simpleList]="true"></app-speaker-list>
 
-    <div class="m-right-medium m-left-medium">
-      <!-- <div *ngIf="loadNews" class="m-top-medium text-align">
-        <ion-spinner name="lines" color="primary"></ion-spinner>
-      </div>
-      <div *ngIf="!loadNews">
-        <ion-card *ngFor="let new of news" class="programme-card-body m-bt-medium fake-mouse-select"
-          [routerLink]="['/new-detail', new.id]">
-          <ion-thumbnail>
-            <ion-img [src]="new.mainPictureUrl"></ion-img>
-          </ion-thumbnail>
-  
-          <ion-card-header>
-            <ion-card-subtitle>
-            </ion-card-subtitle>
-            <ion-card-title [innerHtml]="new.headline" color="secondary"></ion-card-title>
-          </ion-card-header>
-  
-          <ion-card-content [innerHtml]="new.shortText">
-          </ion-card-content>
-        </ion-card>
-      </div>
-  
-      <h6 *ngIf="news?.length === 0 && !loadNews" class="home-description-text m-top-medium">{{'Info.HomePresentation' |
-        translate }}</h6> -->
-    </div>
   </div>
 
 </ion-content>

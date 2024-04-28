@@ -1,0 +1,13 @@
+<ion-card class="programme-card-body" color="secondary">
+    <div [routerLink]="['/speaker', 'speaker-detail', speaker.id]" class="fake-mouse-select">
+      <ion-thumbnail>
+        <ion-img [src]="speaker.thumbnail || speaker.picture"></ion-img>
+      </ion-thumbnail>
+      <ion-card-header>
+        <ion-card-title [innerHtml]="speaker.title" class="event-title"></ion-card-title>
+      </ion-card-header>
+    </div>
+    <ion-card-content>
+    </ion-card-content>
+  </ion-card>
+  

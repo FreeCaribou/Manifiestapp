@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IEvent } from 'src/app/shared/models/Event.interface';
+import { IEvent, ISpeaker } from 'src/app/shared/models/Event.interface';
 import { NewInfoInterface } from 'src/app/shared/models/NewInfo.interface';
 import { NewsListService } from 'src/app/shared/services/data/news-list/news-list.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
@@ -24,6 +24,7 @@ export class HomePage {
   longTextHome = '';
 
   topProgramme: IEvent[] = [];
+  topSpeakers: ISpeaker[] = [];
 
   constructor(
     private newsListService: NewsListService,
@@ -39,6 +40,11 @@ export class HomePage {
     this.programmeService.getEventsTopX(3).subscribe(mainEvents => {
       this.topProgramme = mainEvents;
     });
+
+    this.programmeService.getSpeakersTopX(3).subscribe(mainSpeakers => {
+      console.log('and the speakers', mainSpeakers)
+      this.topSpeakers = mainSpeakers;
+    })
 
     this.count();
     setInterval(() => {
