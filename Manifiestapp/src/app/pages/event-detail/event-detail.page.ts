@@ -33,7 +33,6 @@ export class EventDetailPage {
     this.programmeService.getEvent(this.id).subscribe(data => {
       // TODO one day we will have a map here
       this.event = data;
-      console.log('event detail', data)
     }).add(() => this.loadingCommunication.changeLoaderTo(false));
 
     // Network.getStatus().then(n => {

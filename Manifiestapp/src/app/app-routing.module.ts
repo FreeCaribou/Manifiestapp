@@ -43,6 +43,10 @@ const routes: Routes = [
     path: 'new-detail/:id',
     loadChildren: () => import('./pages/new-detail/new-detail.module').then( m => m.NewDetailPageModule)
   },
+  {
+    path: 'speakers',
+    loadChildren: () => import('./pages/speakers/speakers.module').then( m => m.SpeakersPageModule)
+  },
 
 
   // failback routes

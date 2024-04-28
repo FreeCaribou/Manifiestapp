@@ -30,6 +30,7 @@ export class AppComponent implements OnInit {
   public appPages = [
     { title: 'Home', url: 'home', icon: 'home' },
     { title: 'Programme', url: 'programme', icon: 'calendar' },
+    { title: 'Speakers', url: 'speakers', icon: 'chatbubbles' },
     // { title: 'News', url: 'news-info', icon: 'newspaper' },ks
     { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
     { title: 'Selling', url: 'selling', icon: 'ticket' },

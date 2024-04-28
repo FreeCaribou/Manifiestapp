@@ -27,7 +27,6 @@ export class HomePage {
   topSpeakers: ISpeaker[] = [];
 
   constructor(
-    private newsListService: NewsListService,
     private volunteerShiftService: VolunteerShiftService,
     private programmeService: ProgrammeService,
   ) { }
@@ -42,7 +41,6 @@ export class HomePage {
     });
 
     this.programmeService.getSpeakersTopX(3).subscribe(mainSpeakers => {
-      console.log('and the speakers', mainSpeakers)
       this.topSpeakers = mainSpeakers;
     })
 

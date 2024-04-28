@@ -1,0 +1,15 @@
+<app-header [title]="speaker?.title" [withoutI18n]="true" [defaultHref]="defaultHref"></app-header>
+
+<ion-content class="unset-bottom background-color">
+    <div *ngIf="speaker">
+        <ion-img [src]="speaker.picture" width="100%" />
+
+        <div class="p-bt-high">
+            <div class="m-right-medium m-left-medium p-top-medium">
+                <h2 class="m-bt-medium null-margin-top secondary-color" [innerHtml]="speaker?.title"></h2>
+                <!-- TODO list of social media -->
+                <p [innerHtml]="speaker.field_description"></p>
+                <!-- TODO list of the events -->
+            </div>
+        </div>
+    </div>
