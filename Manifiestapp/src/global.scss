@@ -475,3 +475,8 @@ body.barcode-scanner-active {
     --ion-background-color: transparent;
   }
 }
+
+ion-tab-bar {
+  overflow-x: scroll;
+  justify-content: left;
+}
