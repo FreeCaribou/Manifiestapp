@@ -60,7 +60,7 @@ export class SubprogrammeDatePage {
     ]).subscribe(([eventTypes, eventLocalisations]) => {
       this.list = items.filter(p => p.field_occurrence.field_day === this.dayId);
       this.listToShow = [...this.list];
-      this.locaties = eventLocalisations.map(i => { return { id: i, name: i } });
+      this.locaties = eventLocalisations.map(i => { return { id: i, name: i } }).filter(x => x.name && x.id);
       this.categories = eventTypes.map(i => { return { id: i, name: i } });
       const langBrut = [].concat(...this.list.map(l => l.field_language.map(v => { return { id: v.name, name: v.name } })))
       this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {

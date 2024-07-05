@@ -30,7 +30,7 @@ export class SubprogrammeLocalisationTabPage {
       this.programmeService.getEvents(),
     ])
     .subscribe(([localisations, data]) => {
-      this.localisations = localisations.map(i => { return { id: i, name: i } });
+      this.localisations = localisations.map(i => { return { id: i, name: i } }).filter(x => x.name && x.id);
       this.list = data;
       if (this.activatedRoute.snapshot.queryParams?.place) {
         const decodedQueryParamPlace = decodeURIComponent(this.activatedRoute.snapshot.queryParams.place);
