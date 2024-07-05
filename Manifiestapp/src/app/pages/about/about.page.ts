@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
+import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 
 @Component({
@@ -12,9 +13,12 @@ export class AboutPage {
   urlShuttleInfo = '';
   urlPlanning = '';
 
+  sponsors = [];
+
   constructor(
     private volunteerShiftService: VolunteerShiftService,
     private languageService: LanguageCommunicationService,
+    private infoService: InfoListService,
   ) { }
   
   ionViewDidEnter() {
@@ -23,6 +27,8 @@ export class AboutPage {
     this.volunteerShiftService.getLongtextOveralInfos().subscribe(ni => {
       this.longTextInfos = ni.text;
     });
+
+    this.infoService.getSponsors().subscribe(s => this.sponsors = s);
   }
 
 }

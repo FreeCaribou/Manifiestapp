@@ -34,8 +34,8 @@ export class AppComponent implements OnInit {
     // { title: 'News', url: 'news-info', icon: 'newspaper' },
     { title: 'MyManifiesta', url: 'my-manifiesta', icon: 'person-circle' },
     { title: 'Selling', url: 'selling', icon: 'ticket' },
-    // { title: 'About', url: 'about', icon: 'information-circle' },
     // { title: 'Map', url: 'map', icon: 'map' },
+    { title: 'About', url: 'about', icon: 'information-circle' },
   ];
 
   subBackButton: Subscription;

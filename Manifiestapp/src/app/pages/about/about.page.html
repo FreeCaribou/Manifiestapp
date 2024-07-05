@@ -6,7 +6,20 @@
     <ion-label><a href="mailto:info@manifiesta.be">info@manifiesta.be</a></ion-label>
   </ion-item>
 
-  <ion-item>
+  <ion-accordion-group>
+    <ion-accordion value="sponsor">
+      <ion-item slot="header">
+        <ion-label>{{'General.Sponsor' | translate}}</ion-label>
+      </ion-item>
+      <div slot="content" class="background-primary-color">
+        <a *ngFor="let sponsor of sponsors" [href]="sponsor.field_link">
+          <ion-img [src]="sponsor.field_logo?.field_media_image?.image_style_uri?.logo" [alt]="sponsor.name"></ion-img>
+        </a>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
+
+  <!-- <ion-item>
     <a [href]="urlShuttleInfo">
       <h5>Shuttle Info</h5>
     </a>
@@ -20,11 +33,11 @@
     <a [href]="urlPlanning">
       <h5>{{'General.TimeTable' | translate}}</h5>
     </a>
-  </ion-item>
+  </ion-item> -->
 
-  <div class="m-right-medium m-left-medium">
+  <!-- <div class="m-right-medium m-left-medium">
     <div [innerHtml]="longTextInfos"></div>
-  </div>
+  </div> -->
 
   <!-- <ion-accordion-group>
     <ion-accordion value="rules">
@@ -219,7 +232,8 @@
       <ion-item slot="content">
         <p>
           {{ 'About.Dev' | translate }}
-          <a href="https://github.com/FreeCaribou/Manifiestapp" class="text-align"><ion-icon name="logo-github"></ion-icon></a>
+          <a href="https://github.com/FreeCaribou/Manifiestapp" class="text-align"><ion-icon
+              name="logo-github"></ion-icon></a>
         </p>
       </ion-item>
     </ion-accordion>

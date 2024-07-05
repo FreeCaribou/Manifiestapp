@@ -30,6 +30,10 @@ export class InfoListService implements IInfoListService {
     return this.baseService.bypassCors(`${this.dataUrl}transport_pages.${this.languageService.selectedLanguage}.json`);
   }
 
+  getSponsors(): Observable<any[]> {
+    return this.baseService.bypassCors(`${this.dataUrl}sponsors.${this.languageService.selectedLanguage}.json`);
+  }
+
   venues: any[];
   getVenues(): Observable<any[]> {
     if (!this.venues || this.venues.length === 0) {

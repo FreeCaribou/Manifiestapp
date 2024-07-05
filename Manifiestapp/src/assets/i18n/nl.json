@@ -24,7 +24,8 @@
     "Hours": "Uren",
     "Minutes": "Minuten",
     "Seconds": "S.",
-    "FreeTransport": "Gratis vervoer"
+    "FreeTransport": "Gratis vervoer",
+    "Sponsor": "Sponsoren"
   },
   "Day": {
     "sat": "Zaterdag",
