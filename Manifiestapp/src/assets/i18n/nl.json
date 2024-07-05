@@ -23,7 +23,8 @@
     "Days": "Dagen",
     "Hours": "Uren",
     "Minutes": "Minuten",
-    "Seconds": "S."
+    "Seconds": "S.",
+    "FreeTransport": "Gratis vervoer"
   },
   "Day": {
     "sat": "Zaterdag",

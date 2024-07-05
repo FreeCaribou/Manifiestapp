@@ -16,7 +16,7 @@
   </h5>
 
   <!-- Favorite Programme -->
-  <ion-accordion-group value="favoriteProgramme">
+  <ion-accordion-group>
     <ion-accordion value="favoriteProgramme">
       <ion-item slot="header">
         <ion-label>{{'Programme.YourFavoris' | translate }}</ion-label>
@@ -35,9 +35,34 @@
     </ion-accordion>
   </ion-accordion-group>
 
+  <!-- Transport -->
+   <ion-accordion-group>
+    <ion-accordion value="transport">
+      <ion-item slot="header">
+        <ion-label>{{'General.FreeTransport' | translate }}</ion-label>
+      </ion-item>
+      <div slot="content">
+        <ion-accordion-group class="p-left-medium">
+          <ion-accordion *ngFor="let transport of transportsInfos" [value]="transport.id">
+            <ion-item slot="header">
+              <ion-label>{{transport.title}}</ion-label>
+            </ion-item>
+            <div slot="content">
+              <div [innerHTML]="transport.field_general_info"></div>
+              <div [innerHTML]="transport.field_train_info"></div>
+              <div [innerHTML]="transport.field_bus_info"></div>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+   
+      </div>
+    </ion-accordion>
+   </ion-accordion-group>
+
+
 
   <!-- Shifts Volunteers -->
-  <ion-accordion-group value="shiftsVolunteers">
+  <ion-accordion-group>
     <ion-accordion value="shiftsVolunteers">
       <ion-item slot="header">
         <ion-label>{{'General.ShiftsVolunteers' | translate }}</ion-label>
@@ -120,7 +145,7 @@
 
 
   <!-- Options -->
-  <ion-accordion-group value="opties">
+  <ion-accordion-group>
     <ion-accordion value="opties">
       <ion-item slot="header">
         <ion-label>{{'General.Options' | translate }}</ion-label>

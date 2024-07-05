@@ -9,8 +9,10 @@ import { Subscription } from 'rxjs';
 import { SelectLangComponent } from 'src/app/shared/components/select-lang/select-lang.component';
 import { IEventItemDaysList } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
+import { ITransportInfo } from 'src/app/shared/models/TransportInfo.interface';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
+import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 import { environment } from 'src/environments/environment';
@@ -33,6 +35,7 @@ export class MyManifiestaPage implements OnDestroy {
   // for the internet connection
   connected = true;
   volunteerName: string;
+  transportsInfos: ITransportInfo[] = [];
 
   volunteersBenefits = '';
 
@@ -48,6 +51,7 @@ export class MyManifiestaPage implements OnDestroy {
     public modalController: ModalController,
     private volunteerShiftService: VolunteerShiftService,
     private formBuilder: FormBuilder,
+    private infoService: InfoListService,
   ) {
     this.checkAvoidNotification();
   }
@@ -67,6 +71,10 @@ export class MyManifiestaPage implements OnDestroy {
       this.volunteerShiftService.getLongtextVolunteersBenefits().subscribe(vb => {
         this.volunteersBenefits = vb.text;
       });
+
+      this.infoService.getTransportsInfo().subscribe(data => {
+        this.transportsInfos = data;
+      })
     });
   }
 

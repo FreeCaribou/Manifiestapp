@@ -5,19 +5,29 @@ import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LanguageCommunicationService } from '../../communication/language.communication.service';
 import { InfoListDataService } from './info-list.data.service';
 import { IInfoListService } from './info-list.service.interface';
+import { environment } from 'src/environments/environment';
+import { BaseService } from '../base.service';
+import { ITransportInfo } from 'src/app/shared/models/TransportInfo.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InfoListService implements IInfoListService {
 
+  dataUrl = environment.webDataUrl;
+
   constructor(
     private service: InfoListDataService,
-    private languageService: LanguageCommunicationService
+    private languageService: LanguageCommunicationService,
+    private baseService: BaseService,
   ) {
     this.languageService.langHasChangeEvent.subscribe(e => {
       this.resetInfoListCache();
     })
+  }
+
+  getTransportsInfo(): Observable<ITransportInfo[]> {
+    return this.baseService.bypassCors(`${this.dataUrl}transport_pages.${this.languageService.selectedLanguage}.json`);
   }
 
   venues: any[];
