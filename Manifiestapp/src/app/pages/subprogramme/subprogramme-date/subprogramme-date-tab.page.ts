@@ -26,7 +26,6 @@ export class SubprogrammeDateTabPage {
           this.days.push(day);
         }
       });
-      console.log('dat', this.days)
       this.days = this.days.sort((a,b) => {
         return a === 'sun' ? 1 : -1;
       })

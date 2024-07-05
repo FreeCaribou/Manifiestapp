@@ -47,7 +47,7 @@ export class ProgrammeService {
 
   /**
    * We receive the date of an event in a weird way to build date
-   * We have the day (sat or sun, for saturday or sunday) and the second of the event (or the horus but in string)
+   * We have the day (sat or sun, for saturday or sunday) and the second of the event (or the hours but in string)
    * @param day 
    * @param hoursInSecond 
    * @returns Date
@@ -58,7 +58,11 @@ export class ProgrammeService {
     const hours = Math.floor(hoursInSecond / 3600);
     hoursInSecond -= hours * 3600;
     const minutes = Math.floor(hoursInSecond / 60);
-    const baseDate = day === 'sat' ? saturday : sunday;
+    // Warning
+    // If the event is on saturday but with an hours before the opening of the festival (10 AM), it's in reality on sunday
+    // The workaround here work for the festival during two day
+    // We need to be carefull in the futur
+    const baseDate = day === 'sat' && hours > 8 ? saturday : sunday;
     baseDate.setHours(hours);
     baseDate.setMinutes(minutes);
     baseDate.setSeconds(0);
