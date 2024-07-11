@@ -45,7 +45,7 @@ export class MapCommunicationService {
           if (d.field_geolocation) {
             baseMarkers.push(
               this.createMarker(
-                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.id, true, './assets/pictures/avatar_red.jpg'
+                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.uuid, true, './assets/pictures/avatar_red.jpg'
               )
             );
           }
@@ -75,7 +75,7 @@ export class MapCommunicationService {
             console.log('hello id of the place', id, haveLink)
             if (haveLink == 'true') {
               this.programmeService.getEventLocalisationsDetail().subscribe(localisations => {
-                const localisation = localisations.find(x => x.id === id);
+                const localisation = localisations.find(x => x.uuid === id);
                 if (localisation) {
                   this.router.navigate(['programme', 'subprogramme', 'localisation'], { queryParams: { place: localisation.title } });
                 }

@@ -4,7 +4,12 @@ export interface IEvent {
   field_categories: { name: string }[];
   field_language: { name: string }[];
   field_type: { name: string };
-  field_occurrence?: { start: Date, end: Date, field_day: string, field_location: ILocalisation };
+  field_occurrence?: { 
+    start: Date, 
+    end: Date, 
+    field_day: string, 
+    location: ISimpleLocalisation,
+   };
   picture: string;
   thumbnail: string;
   parentId: string;
@@ -19,8 +24,8 @@ export interface IEventItemDaysList {
   events: IEvent[];
 }
 
-export interface ILocalisation {
-  title: string, path: { current: string, translation: string }, id: string, field_geolocation: { lat: number, lon: number }
+export interface ISimpleLocalisation {
+  title: string, path: { current: string, translation: string }, uuid: string, field_geolocation: { lat: number, lon: number }
 }
 
 export interface ISpeaker {

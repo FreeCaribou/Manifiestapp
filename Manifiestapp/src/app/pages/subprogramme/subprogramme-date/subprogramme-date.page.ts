@@ -100,7 +100,7 @@ export class SubprogrammeDatePage {
     }
 
     if (this.locatieSelected) {
-      this.listToShow = this.listToShow.filter(e => e.field_occurrence.field_location.title == this.locatieSelected);
+      this.listToShow = this.listToShow.filter(e => e.field_occurrence.location?.title == this.locatieSelected);
     }
 
     if (this.categorieSelected) {

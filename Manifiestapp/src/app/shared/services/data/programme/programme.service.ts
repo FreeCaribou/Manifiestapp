@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ISimpleLocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
@@ -160,7 +160,7 @@ export class ProgrammeService {
     );
   }
 
-  getEventLocalisationsDetail(): Observable<ILocalisation[]> {
+  getEventLocalisationsDetail(): Observable<ISimpleLocalisation[]> {
     // TODO bug delete duplicate ...
 
     // this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {
@@ -170,14 +170,14 @@ export class ProgrammeService {
     return this.getEvents().pipe(
       map(data => {
         return [... new Map(data.sort((a, b) => {
-          if (a.field_occurrence.field_location.title === 'Main Stage') {
+          if (a.field_occurrence.location?.title === 'Main Stage') {
             return -1;
-          } else if (b.field_occurrence.field_location.title === 'Main Stage') {
+          } else if (b.field_occurrence.location?.title === 'Main Stage') {
             return 1;
           } else {
             return a.name > b.name ? 1 : -1;
           }
-        }).map(d => d.field_occurrence.field_location).map(m => [m.id, m])).values()];
+        }).map(d => d.field_occurrence.location).filter(x => !!x).map(m => [m.uuid, m])).values()];
       }),
     );
   }
@@ -330,7 +330,7 @@ export class ProgrammeService {
       const startDateFormated = formatDate(event.field_occurrence.start, 'HH:mm', 'fr');
       const body = await this.translate.get(
         'Programme.NotificationBody',
-        { event: event?.title, startDate: startDateFormated, location: event?.field_occurrence.field_location.title }
+        { event: event?.title, startDate: startDateFormated, location: event?.field_occurrence.location?.title }
       ).toPromise();
 
       let scheduleDate: Date;

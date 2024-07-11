@@ -6,6 +6,7 @@
 * Avoid miss of localisation in search
 * Better order of event
 * For select dropdown, no more dropdown but popover now
+* Field_location is now location for an event
 
 # 2.3.1
 * New theme color

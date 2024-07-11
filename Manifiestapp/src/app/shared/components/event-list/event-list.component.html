@@ -22,7 +22,7 @@
           {{event.field_occurrence.end | date:'HH:mm'}}
           <ion-icon *ngIf="event.inFavoriteConflict" name="alert-circle" color="warning">
           </ion-icon>
-        </span> - <span class="medium-color">{{event.field_occurrence.field_location.title}}</span>
+        </span> - <span class="medium-color">{{event.field_occurrence.location?.title}}</span>
       </h3>
     </ion-label>
     <ion-icon *ngIf="connected" class="fake-mouse-select" (click)="onCardHeartClick(event)" color="heart"

@@ -15,7 +15,7 @@
       </ion-card-subtitle>
       <ion-card-title [innerHtml]="event.title" class="event-title"></ion-card-title>
       <div>
-        <span *ngIf="showLocalisation">{{event.field_occurrence?.field_location?.title}}</span>
+        <span *ngIf="showLocalisation">{{event.field_occurrence?.location?.title}}</span>
         <span *ngIf="showLocalisation && showType"> - </span>
         <span *ngIf="showType">{{event.field_type.name}}</span>
       </div>

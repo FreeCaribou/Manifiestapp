@@ -49,7 +49,7 @@ export class SubprogrammeLocalisationTabPage {
 
   onSelectChange() {
     if (this.locatieSelected) {
-      this.listToShow = this.list.filter(e => e.field_occurrence.field_location.title == this.locatieSelected);
+      this.listToShow = this.list.filter(e => e.field_occurrence.location?.title == this.locatieSelected);
     }
   }
 
