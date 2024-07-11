@@ -19,7 +19,7 @@
   
           <ion-item *ngIf="categories">
             <ion-label position="floating">{{'Programme.Categories' | translate}}</ion-label>
-            <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()" interface="popover">
+            <ion-select [(ngModel)]="categorieSelected" (ionChange)="onSelectChange()">
               <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
               <ion-select-option *ngFor="let c of categories" [value]="c.id">{{c.name}}</ion-select-option>
             </ion-select>
@@ -27,7 +27,7 @@
   
           <ion-item *ngIf="locaties">
             <ion-label position="floating">{{'Programme.Locations' | translate}}</ion-label>
-            <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()" interface="popover">
+            <ion-select [(ngModel)]="locatieSelected" (ionChange)="onSelectChange()">
               <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
               <ion-select-option *ngFor="let v of locaties" [value]="v.id">{{v.name}}</ion-select-option>
             </ion-select>
@@ -35,7 +35,7 @@
   
           <ion-item *ngIf="languages">
             <ion-label position="floating">{{'Programme.Languages' | translate}}</ion-label>
-            <ion-select [(ngModel)]="languageSelected" (ionChange)="onSelectChange()" interface="popover">
+            <ion-select [(ngModel)]="languageSelected" (ionChange)="onSelectChange()">
               <ion-select-option [value]="null">{{'General.All' | translate}}</ion-select-option>
               <ion-select-option *ngFor="let v of languages" [value]="v.id">{{v.name}}</ion-select-option>
             </ion-select>

@@ -1,3 +1,12 @@
+# 2.4.0
+* Sponsor
+* Transport information
+* Capacitor stack to v5
+* Tab bar too long fix
+* Avoid miss of localisation in search
+* Better order of event
+* For select dropdown, no more dropdown but popover now
+
 # 2.3.1
 * New theme color
 * Direct see program by type or localisation

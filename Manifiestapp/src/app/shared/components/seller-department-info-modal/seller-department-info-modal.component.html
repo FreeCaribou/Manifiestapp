@@ -13,7 +13,7 @@
         {{"Ticket.Department" | translate}}
       </ion-label>
       <ion-select [placeholder]="'Ticket.DepartmentChoice' | translate" [value]="sellerDepartement"
-        interface="popover" (ionChange)="onSellerDepartementChange($event)">
+       (ionChange)="onSellerDepartementChange($event)">
         <ion-select-option *ngFor="let d of departements" [value]="d.code">{{d.label}}</ion-select-option>
       </ion-select>
     </ion-item>
