@@ -7,8 +7,8 @@ android {
         applicationId "be.manifiesta.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20304
-        versionName "2.03.04"
+        versionCode 200400
+        versionName "2.04.00"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
