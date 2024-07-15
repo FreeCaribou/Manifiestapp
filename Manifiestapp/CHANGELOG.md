@@ -1,3 +1,6 @@
+# 2.4.1
+* Google want more privacy info
+
 # 2.4.0
 * Sponsor
 * Transport information
