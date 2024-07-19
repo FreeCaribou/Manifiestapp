@@ -42,7 +42,7 @@ export class MapCommunicationService {
       }),
       map((data) => {
         const baseMarkers = [
-          this.createMarker(51.22366886322361, 2.8979757651092526, 'Entrance', 'Entrance'),
+          this.createMarker(51.22366886322361, 2.8979757651092526, 'Entrance', 'Entrance', false, './assets/pictures/avatar_color.jpg'),
         ];
         // To have localisation that have event and geo point there
         const localisationsPresentDetail: ILocalisation[] = data[1]
@@ -61,12 +61,17 @@ export class MapCommunicationService {
             )
           );
         });
+
+        // Add WC and other
+        baseMarkers.push(this.createMarker(51.22307, 2.89834, 'WC', 'WC'));
+        baseMarkers.push(this.createMarker(51.22451, 2.90185, 'WC', 'WC'));
+        baseMarkers.push(this.createMarker(51.22344949880343, 2.9008206611179572, 'WC', 'WC'));
         return baseMarkers;
       })
     )
   }
 
-  createMarker(lat: number, lng: number, label: string, id: string, haveLink = false, picture = './assets/pictures/avatar_color.jpg'): Layer {
+  createMarker(lat: number, lng: number, label: string, id: string, haveLink = false, picture = './assets/pictures/avatar_yellow.jpg'): Layer {
     return marker(
       [lat, lng],
       {
