@@ -17,7 +17,7 @@ export class MapCommunicationService {
     private programmeService: ProgrammeService,
   ) { }
 
-  getOptionsMap(lat: number = 51.22353, lng: number = 2.90210, zoom: number = 18, minZoom: number = 17): MapOptions {
+  getOptionsMap(lat: number = 51.223546536033716, lng: number = 2.8998166168913353, zoom: number = 17, minZoom: number = 17): MapOptions {
     return {
       layers: [
         tileLayer(
@@ -48,8 +48,6 @@ export class MapCommunicationService {
         const localisationsPresentDetail: ILocalisation[] = data[1]
         .filter(x => data[0].find(y => y.uuid === x.id))
         .filter(x => x.field_geolocation);
-        console.log('data of the localisations with food', data[1].filter(j => j.hasFoodOrDrink))
-        console.log('data of the localisations to show', localisationsPresentDetail)
         localisationsPresentDetail.forEach(d => {
           let logoColor = 'red';
           if (d.title === 'Main Stage') {
