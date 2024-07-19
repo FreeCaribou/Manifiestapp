@@ -9,7 +9,7 @@
                 <h2 class="m-bt-medium null-margin-top secondary-color" [innerHtml]="speaker?.title"></h2>
                 <!-- TODO list of social media -->
                 <p [innerHtml]="speaker.field_description"></p>
-                <!-- TODO list of the events -->
+                <app-event-list-card *ngIf="linkedEvents?.length > 0" [list]="linkedEvents" [simpleList]="true" [withBackground]="false"></app-event-list-card>
             </div>
         </div>
     </div>

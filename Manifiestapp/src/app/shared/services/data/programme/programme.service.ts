@@ -134,6 +134,12 @@ export class ProgrammeService {
     );
   }
 
+  getEventsByParentId(id: string): Observable<IEvent[]> {
+    return this.getEvents().pipe(
+      map(list => list.filter(e => e.parentId == id)),
+    );
+  }
+
   getEventsTopX(top: number): Observable<IEvent[]> {
     return this.getEvents().pipe(
       map(events => {

@@ -1,5 +1,6 @@
 # 2.5.0
 * A MAP !!!
+* Show the events of a speaker
 
 # 2.4.1
 * Google dont like the Beeple privacy info

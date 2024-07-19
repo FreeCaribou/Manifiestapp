@@ -51,6 +51,7 @@ export interface ISpeaker {
   field_teaser: string;
   field_weight: number;
   title: string;
+  related_events: {uuid: string}[];
   [key: string]: any;
 }
 
