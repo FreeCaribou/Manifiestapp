@@ -5,6 +5,9 @@ import { IEvent } from 'src/app/shared/models/Event.interface';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { MapCommunicationService } from 'src/app/shared/services/communication/map.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
+import { Clipboard } from '@capacitor/clipboard';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-event-detail',
@@ -25,6 +28,8 @@ export class EventDetailPage {
     private activatedRoute: ActivatedRoute,
     private programmeService: ProgrammeService,
     public loadingCommunication: LoadingCommunicationService,
+    private languageService: TranslateService,
+    public toastController: ToastController,
   ) { }
 
   ionViewDidEnter() {
@@ -65,6 +70,23 @@ export class EventDetailPage {
 
   onCardHeartClick(event: IEvent) {
     this.programmeService.changeFavorite(event);
+  }
+
+  copyToShare() {
+    const link = `https://manifiesta.be/${this.languageService.currentLang}${this.event.path.current}`;
+    Clipboard.write({string: link}).then(() => {
+      this.toastController.create({
+        message: link,
+        icon: 'share-social-outline',
+        color: 'success',
+        position: 'top',
+        duration: 2000,
+        animated: true,
+        translucent: true,
+      }).then(toast => {
+        toast.present();
+      });
+    });
   }
 
 }

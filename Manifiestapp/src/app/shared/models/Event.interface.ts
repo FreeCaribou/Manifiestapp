@@ -1,6 +1,7 @@
 export interface IEvent {
   [key: string]: any;
   id: string;
+  path: {current: string};
   field_categories: { name: string }[];
   field_language: { name: string }[];
   field_type: { name: string };

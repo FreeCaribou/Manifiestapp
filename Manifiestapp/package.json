@@ -41,6 +41,7 @@
     "@capacitor/android": "^5.0.0",
     "@capacitor/app": "^5.0.0",
     "@capacitor/browser": "^5.0.0",
+    "@capacitor/clipboard": "^5.0.0",
     "@capacitor/core": "^5.0.0",
     "@capacitor/device": "^5.0.0",
     "@capacitor/haptics": "^5.0.0",

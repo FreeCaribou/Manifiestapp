@@ -32,6 +32,9 @@
           </div>
         </div>
         <p [innerHtml]="event.field_description"></p>
+        <h6 class="fake-mouse-select primary-color" *ngIf="event.path?.current" (click)="copyToShare()">
+          <ion-icon name="share-social-outline" size="small"></ion-icon> {{'General.CopyLinkToShare' | translate}} 
+        </h6>
         <!-- TODO Speaker here -->
         <!-- <div *ngIf="event.field_speakers?.length > 0">
           <ion-grid>
