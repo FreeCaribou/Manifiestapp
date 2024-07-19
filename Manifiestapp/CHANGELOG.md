@@ -1,3 +1,6 @@
+# 2.5.0
+* A MAP !!!
+
 # 2.4.1
 * Google dont like the Beeple privacy info
 

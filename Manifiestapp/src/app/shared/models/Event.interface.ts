@@ -24,8 +24,24 @@ export interface IEventItemDaysList {
   events: IEvent[];
 }
 
+export interface IFoodDrink {
+  id: string;
+  label: string;
+  price: {value: string; currency: string;}
+}
+
+export interface ILocalisation {
+  title: string, path: { current: string, translation: string }, id: string, 
+  field_geolocation: { lat: number, lon: number },
+  field_drinks: IFoodDrink[],
+  field_drinks_unique: IFoodDrink[],
+  field_food: IFoodDrink[],
+  field_food_unique: IFoodDrink[],
+  hasFoodOrDrink: boolean,
+}
+
 export interface ISimpleLocalisation {
-  title: string, path: { current: string, translation: string }, uuid: string, field_geolocation: { lat: number, lon: number }
+  title: string, path: { current: string, translation: string }, uuid: string
 }
 
 export interface ISpeaker {

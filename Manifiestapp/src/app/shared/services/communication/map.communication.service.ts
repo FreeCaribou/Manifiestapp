@@ -3,7 +3,8 @@ import { DOCUMENT } from '@angular/common';
 import { icon, latLng, Layer, marker, tileLayer, MapOptions } from 'leaflet';
 import { Router } from '@angular/router';
 import { ProgrammeService } from '../data/programme/programme.service';
-import { Observable, map } from 'rxjs';
+import { Observable, forkJoin, map, mergeMap, of } from 'rxjs';
+import { ILocalisation } from '../../models/Event.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -36,26 +37,38 @@ export class MapCommunicationService {
     // TODO check the data from aaaaaall the localisation (need change in service too so)
     // TODO and check for each if there are event or not (if there are event, make the link, if not, dont)
     return this.programmeService.getEventLocalisationsDetail().pipe(
-      map(data => {
-        console.log('data of the localisation', data)
+      mergeMap(data => {
+        return forkJoin([of(data), this.programmeService.getLocalisations()])
+      }),
+      map((data) => {
         const baseMarkers = [
           this.createMarker(51.22366886322361, 2.8979757651092526, 'Entrance', 'Entrance'),
         ];
-        data.forEach(d => {
-          if (d.field_geolocation) {
-            baseMarkers.push(
-              this.createMarker(
-                d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.uuid, true, './assets/pictures/avatar_red.jpg'
-              )
-            );
+        // To have localisation that have event and geo point there
+        const localisationsPresentDetail: ILocalisation[] = data[1]
+        .filter(x => data[0].find(y => y.uuid === x.id))
+        .filter(x => x.field_geolocation);
+        console.log('data of the localisations with food', data[1].filter(j => j.hasFoodOrDrink))
+        console.log('data of the localisations to show', localisationsPresentDetail)
+        localisationsPresentDetail.forEach(d => {
+          let logoColor = 'red';
+          if (d.title === 'Main Stage') {
+            logoColor = 'color';
+          } else if (d.hasFoodOrDrink) {
+            logoColor = 'green';
           }
+          baseMarkers.push(
+            this.createMarker(
+              d.field_geolocation.lat, d.field_geolocation.lon, d.title, d.id, true, `./assets/pictures/avatar_${logoColor}.jpg`
+            )
+          );
         });
         return baseMarkers;
       })
     )
   }
 
-  createMarker(lat: number, lng: number, label: string, id: string, haveLink = false, picture = './assets/pictures/avatar_color.png'): Layer {
+  createMarker(lat: number, lng: number, label: string, id: string, haveLink = false, picture = './assets/pictures/avatar_color.jpg'): Layer {
     return marker(
       [lat, lng],
       {

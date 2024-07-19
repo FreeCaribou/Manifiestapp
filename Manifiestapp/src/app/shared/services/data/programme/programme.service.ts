@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators'
-import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ISimpleLocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
+import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation, ISimpleLocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
 import { NotificationEventEnum } from 'src/app/shared/models/NotificationEvent.enum';
@@ -179,6 +179,19 @@ export class ProgrammeService {
           }
         }).map(d => d.field_occurrence.location).filter(x => !!x).map(m => [m.uuid, m])).values()];
       }),
+    );
+  }
+
+  getLocalisations(): Observable<ILocalisation[]> {
+    return this.baseService.bypassCors(`${this.dataUrl}event_locations.${this.languageService.selectedLanguage}.json`).pipe(
+      map(data => {
+        return data.map(l => {
+          return {
+            ...l,
+            hasFoodOrDrink: l.field_drinks?.length > 0 || l.field_drinks_unique?.length > 0 || l.field_food?.length > 0 || l.field_food_unique?.length > 0,
+          }
+        })
+      })
     );
   }
 

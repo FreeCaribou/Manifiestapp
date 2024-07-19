@@ -3,11 +3,11 @@
 <ion-content class="ion-no-padding background-color" slot="fixed">
   <div *ngIf="options" class="main-map" leaflet [leafletOptions]="options" [leafletLayers]="markers">
   </div>
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="scanQrCode()">
+  <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="scanQrCode()">
     <ion-fab-button color="secondary" id="open-modal">
       <ion-icon name="qr-code-outline"></ion-icon>
     </ion-fab-button>
-  </ion-fab>
+  </ion-fab> -->
   <ion-modal trigger="open-modal">
     <ng-template>
       <ion-header>
