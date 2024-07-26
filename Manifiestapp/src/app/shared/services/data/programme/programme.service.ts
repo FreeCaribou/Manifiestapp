@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators'
+import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators'
 import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation, ISimpleLocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
@@ -205,6 +205,20 @@ export class ProgrammeService {
     return this.getLocalisations().pipe(
       map(data => data.find(x => x.title === title))
     );
+  }
+
+  getQrCodeInfo(): Observable<any> {
+    return this.baseService.bypassCors(`${this.dataUrl}qr.json`);
+  }
+
+  getQrCodeLocalisationTitle(qrCode: string): Observable<string> {
+    return this.getQrCodeInfo().pipe(
+      map(data => data[qrCode]),
+      mergeMap(qr => {
+        return this.getOneLocalisationById(qr.uuid);
+      }),
+      map(localisation => localisation.title)
+    )
   }
 
   retrieveProgrammeInLoop(url, count = 0, lastArray: EventInterface[] = [], maxPerPage = 50): Observable<any> {

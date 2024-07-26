@@ -3,6 +3,7 @@
 * Show the events of a speaker
 * Link of event in the copy board
 * Show foods and drinks on localisation
+* Scan QR Code for localisation
 
 # 2.4.1
 * Google dont like the Beeple privacy info

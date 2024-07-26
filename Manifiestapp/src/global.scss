@@ -492,3 +492,22 @@ ion-tab-bar {
   overflow-x: scroll;
   justify-content: left;
 }
+
+// Hide all elements for the QR Code scanning
+body.barcode-scanner-active {
+  visibility: hidden;
+  --background: transparent;
+  --ion-background-color: transparent;
+}
+
+// Show only the barcode scanner modal
+.barcode-scanner-modal {
+  visibility: visible;
+}
+
+@media (prefers-color-scheme: dark) {
+  .barcode-scanner-modal {
+    --background: transparent;
+    --ion-background-color: transparent;
+  }
+}
