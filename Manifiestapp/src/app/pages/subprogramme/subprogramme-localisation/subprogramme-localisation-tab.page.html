@@ -7,6 +7,34 @@
     </ion-select>
   </ion-item>
 
+  <div *ngIf="localisationSelectedDetail?.hasFoodOrDrink">
+    <ion-accordion-group>
+      <ion-accordion>
+        <ion-item slot="header">
+          <ion-label>{{'Info.FoodAndDrinkHere' | translate}}</ion-label>
+        </ion-item>
+        <div class="ion-padding" slot="content">
+          <ion-list *ngIf="localisationSelectedDetail.field_drinks?.length > 0">
+            <ion-list-header lines="full">
+              <ion-label>{{'Info.Drinks' | translate}}</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let drink of localisationSelectedDetail.field_drinks">
+              <ion-label>{{drink.label}} {{drink.price?.value}}{{drink.price?.currency}}</ion-label>
+            </ion-item>
+          </ion-list>
+          <ion-list *ngIf="localisationSelectedDetail.field_food?.length > 0">
+            <ion-list-header lines="full">
+              <ion-label>{{'Info.Foods' | translate}}</ion-label>
+            </ion-list-header>
+            <ion-item *ngFor="let food of localisationSelectedDetail.field_food">
+              <ion-label>{{food.label}} {{food.price?.value}}{{food.price?.currency}}</ion-label>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </div>
+
   <app-event-list-card [list]="listToShow" [dateJustWithHour]="false" [showLocalisation]="false"
     [simpleList]="true"></app-event-list-card>
 </ion-content>

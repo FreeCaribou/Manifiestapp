@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
-import { IEvent } from 'src/app/shared/models/Event.interface';
+import { IEvent, ILocalisation } from 'src/app/shared/models/Event.interface';
 import { LoadingCommunicationService } from 'src/app/shared/services/communication/loading.communication.service';
 import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 
@@ -15,6 +15,8 @@ export class SubprogrammeLocalisationTabPage {
 
   list: IEvent[];
   listToShow: IEvent[];
+
+  localisationSelectedDetail: ILocalisation;
 
   constructor(
     private programmeService: ProgrammeService,
@@ -50,6 +52,16 @@ export class SubprogrammeLocalisationTabPage {
   onSelectChange() {
     if (this.locatieSelected) {
       this.listToShow = this.list.filter(e => e.field_occurrence.location?.title == this.locatieSelected);
+
+      try {
+        this.programmeService.getOneLocalisationByTitle(this.locatieSelected).subscribe(detail => {
+          detail.field_drinks = detail.field_drinks.concat(detail.field_drinks_unique);
+          detail.field_food = detail.field_food.concat(detail.field_food_unique);
+          console.log('detail', detail)
+          this.localisationSelectedDetail = detail;
+        });
+      } catch(e) {}
+
     }
   }
 

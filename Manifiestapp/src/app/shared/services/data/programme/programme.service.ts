@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators'
+import { filter, map, switchMap, tap } from 'rxjs/operators'
 import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation, ISimpleLocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
 import { LocalNotifications, PendingLocalNotificationSchema } from '@capacitor/local-notifications';
@@ -167,12 +167,6 @@ export class ProgrammeService {
   }
 
   getEventLocalisationsDetail(): Observable<ISimpleLocalisation[]> {
-    // TODO bug delete duplicate ...
-
-    // this.languages = [... new Map(langBrut.map((m) => [m.id, m])).values()].sort((a, b) => {
-    //   return a.name > b.name ? 1 : -1;
-    // });
-
     return this.getEvents().pipe(
       map(data => {
         return [... new Map(data.sort((a, b) => {
@@ -198,6 +192,18 @@ export class ProgrammeService {
           }
         })
       })
+    );
+  }
+
+  getOneLocalisationById(id: string): Observable<ILocalisation> {
+    return this.getLocalisations().pipe(
+      map(data => data.find(x => x.id === id))
+    );
+  }
+
+  getOneLocalisationByTitle(title: string): Observable<ILocalisation> {
+    return this.getLocalisations().pipe(
+      map(data => data.find(x => x.title === title))
     );
   }
 
