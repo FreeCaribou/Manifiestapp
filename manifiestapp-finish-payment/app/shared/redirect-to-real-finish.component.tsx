@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from 'react';
 import { Device } from '@capacitor/device';
-import RedirectToApp from './redirect-to-app';
+import Link from 'next/link';
 
-export default function FinishPaymentComponent({ props }) {
+
+export default function RedirectToRealFinish({ props }) {
     const [languageCode, setLanguageCode] = useState<string>('en');
 
     useEffect(() => {
@@ -12,20 +13,6 @@ export default function FinishPaymentComponent({ props }) {
             setLanguageCode(languageCode.value);
         })
     }, []);
-
-    function getFinishText() {
-        const currentLang = languageCode.slice(0, 2);
-        let text = props.messages?.en;
-        switch (currentLang) {
-            case 'fr':
-                text = props.messages?.fr;
-                break;
-            case 'nl':
-                text = props.messages?.nl;
-                break;
-        }
-        return text;
-    }
 
     function getNotForClientText() {
         const currentLang = languageCode.slice(0, 2);
@@ -41,16 +28,15 @@ export default function FinishPaymentComponent({ props }) {
         return text;
     }
 
-    function getMailText() {
+    function getContinueText() {
         const currentLang = languageCode.slice(0, 2);
-        const email = 'app@manifiesta.be';
-        let text = `A problem ? A Question ? Send an email at ${email} and a volunteer will answer as soon as possible`;
+        let text = `You are the seller ? Continue here to finish the selling please!`;
         switch (currentLang) {
             case 'fr':
-                text = `Un problème ? Une question ? Envoyez un email à ${email} et un bénévole vous répondra aussi vite que possible.`;
+                text = `Vous êtes le vendeur ? Continuez ici pour finir la vente svp !`;
                 break;
             case 'nl':
-                text = `Een probleem? Een vraag ? Stuur een e-mail naar ${email} en een vrijwilliger zal zo snel mogelijk antwoorden.`;
+                text = `Ga hier verder om de verkoop af te ronden a.u.b!`;
                 break;
         }
         return text;
@@ -59,9 +45,14 @@ export default function FinishPaymentComponent({ props }) {
     return (
         <div>
             <h3>{getNotForClientText()}</h3>
-            <h1 className={props.error ? 'text-error' : ''}>{getFinishText()}</h1>
-            <RedirectToApp />
-            <a href='mailto:app@manifiesta.be'><h3>{getMailText()}</h3></a>
+            <Link href={{
+                pathname: '/next-payment',
+                query: { t: props.vivaWalletTransactionId },
+            }}>
+                <button type='button'>
+                    <h1>{getContinueText()}</h1>
+                </button>
+            </Link>
         </div>
     )
 }

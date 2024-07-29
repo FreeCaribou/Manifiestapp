@@ -19,3 +19,8 @@ h1 {
 .text-error {
   color: var(--color-error);
 }
+
+button {
+  background-color: var(--color-secondary);
+  border-radius: 15px;
+}
