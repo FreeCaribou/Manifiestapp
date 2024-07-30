@@ -16,13 +16,13 @@ export default function RedirectToRealFinish({ props }) {
 
     function getNotForClientText() {
         const currentLang = languageCode.slice(0, 2);
-        let text = `This message is only for the seller, if you are the client, you don't need to pay attention and you can close this page`;
+        let text = `This message is only for the seller, if you are the client, you don't need to pay attention.`;
         switch (currentLang) {
             case 'fr':
-                text = `Ce message s'adresse uniquement au vendeur, si vous êtes le client, vous n'avez pas besoin d'y prêter attention. Vous pouvez fermer la page.`;
+                text = `Ce message s'adresse uniquement au vendeur, si vous êtes le client, vous n'avez pas besoin d'y prêter attention.`;
                 break;
             case 'nl':
-                text = `Dit bericht is alleen voor de verkoper, als je de klant bent, hoef je niet op te letten. U kunt de pagina sluiten`;
+                text = `Dit bericht is alleen voor de verkoper, als je de klant bent, hoef je niet op te letten.`;
                 break;
         }
         return text;
@@ -30,13 +30,13 @@ export default function RedirectToRealFinish({ props }) {
 
     function getContinueText() {
         const currentLang = languageCode.slice(0, 2);
-        let text = `You are the seller ? Continue here to finish the selling please!`;
+        let text = `You are the seller ? Click here to finish the selling please!`;
         switch (currentLang) {
             case 'fr':
-                text = `Vous êtes le vendeur ? Continuez ici pour finir la vente svp !`;
+                text = `Vous êtes le vendeur ? Cliquez ici pour finir la vente svp !`;
                 break;
             case 'nl':
-                text = `Ga hier verder om de verkoop af te ronden a.u.b!`;
+                text = `Bent u de verkoper? Klik hier om de verkoop af te ronden a.u.n.!`;
                 break;
         }
         return text;
