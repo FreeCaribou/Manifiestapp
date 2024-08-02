@@ -1,6 +1,6 @@
 :root {
-  --color-primary: #F59BBB;
-  --color-secondary: #3B953F;
+  --color-primary: #f7b512;
+  --color-secondary: #f15423;
   --color-error: red;
   --color-warning: #e0ac08;
 }
@@ -26,6 +26,6 @@ h1 {
 }
 
 button {
-  background-color: var(--color-warning);
+  background-color: var(--color-secondary);
   border-radius: 15px;
 }
