@@ -25,6 +25,8 @@ export class ProgrammeService {
 
   cacheBigBlobProgramme: IEvent[] = [];
   cacheSpeakers: ISpeaker[] = [];
+  cacheLocalisations: ILocalisation[] = [];
+  cacheQrCode: any;
   cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
   dataUrl = environment.webDataUrl;
@@ -46,30 +48,16 @@ export class ProgrammeService {
   }
 
   /**
-   * We receive the date of an event in a weird way to build date
-   * We have the day (sat or sun, for saturday or sunday) and the second of the event (or the hours but in string)
-   * @param day 
-   * @param hoursInSecond 
-   * @returns Date
+   * The bigs calls that we need to cache
+   * - get events
+   * - get speakers
+   * - get localisations details
+   * - get QR Code information
    */
-  buildOneDateHourFromData(day: 'sat' | 'sun', hoursInSecond: number): Date {
-    const saturday = new Date('09/07/2024');
-    const sunday = new Date('09/08/2024');
-    const hours = Math.floor(hoursInSecond / 3600);
-    hoursInSecond -= hours * 3600;
-    const minutes = Math.floor(hoursInSecond / 60);
-    // Warning
-    // If the event is on saturday but with an hours before the opening of the festival (10 AM), it's in reality on sunday
-    // The workaround here work for the festival during two day
-    // We need to be carefull in the futur
-    const baseDate = day === 'sat' && hours > 8 ? saturday : sunday;
-    baseDate.setHours(hours);
-    baseDate.setMinutes(minutes);
-    baseDate.setSeconds(0);
-    return baseDate;
-  }
 
-  // TODO comment all the workflow here
+  /**
+   * @returns list of events
+   */
   getEvents(): Observable<IEvent[]> {
     if (this.cacheBigBlobProgramme?.length > 0) {
       return of([...this.cacheBigBlobProgramme]);
@@ -128,6 +116,96 @@ export class ProgrammeService {
     );
   }
 
+  /**
+   * @returns list of speakers
+   */
+  getSpeakers(): Observable<ISpeaker[]> {
+    if (this.cacheSpeakers?.length > 0) {
+      return of([...this.cacheSpeakers]);
+    }
+    return this.baseService.bypassCors(`${this.dataUrl}event_speakers.${this.languageService.selectedLanguage}.json`).pipe(
+      map((items: ISpeaker[]) => {
+        return items.sort((a, b) => {
+          return a.field_weight > b.field_weight ? 1 : -1;
+        })
+      }),
+      map(items => {
+        return items.map(d => {
+          return {
+            ...d,
+            picture: d.field_image?.field_media_image?.image_style_uri?.wide,
+            thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide_teaser || d.field_image?.field_media_image?.image_style_uri?.wide,
+          }
+        })
+      }),
+      tap(items => {
+        this.cacheSpeakers = [...items]
+      }),
+    );
+  }
+
+  /**
+   * @returns list of localisations with full details of it
+   */
+  getLocalisations(): Observable<ILocalisation[]> {
+    if (this.cacheLocalisations.length > 0) {
+      return of (this.cacheLocalisations);
+    }
+    return this.baseService.bypassCors(`${this.dataUrl}event_locations.${this.languageService.selectedLanguage}.json`).pipe(
+      map(data => {
+        return data.map(l => {
+          return {
+            ...l,
+            hasFoodOrDrink: l.field_drinks?.length > 0 || l.field_drinks_unique?.length > 0 || l.field_food?.length > 0 || l.field_food_unique?.length > 0,
+          }
+        })
+      }),
+      tap(data => this.cacheLocalisations = data),
+    );
+  }
+
+  /**
+   * @returns list of qr code information that is needed when we scan one
+   */
+  getQrCodeInfo(): Observable<any> {
+    if (this.cacheQrCode) {
+      return of(this.cacheQrCode);
+    }
+    return this.baseService.bypassCors(`${this.dataUrl}qr.json`).pipe(
+      tap(data => this.cacheQrCode = data)
+    );
+  }
+
+
+  /**
+   * Other method
+   */
+
+
+  /**
+   * We receive the date of an event in a weird way to build date
+   * We have the day (sat or sun, for saturday or sunday) and the second of the event (or the hours but in string)
+   * @param day 
+   * @param hoursInSecond 
+   * @returns Date
+   */
+  buildOneDateHourFromData(day: 'sat' | 'sun', hoursInSecond: number): Date {
+    const saturday = new Date('09/07/2024');
+    const sunday = new Date('09/08/2024');
+    const hours = Math.floor(hoursInSecond / 3600);
+    hoursInSecond -= hours * 3600;
+    const minutes = Math.floor(hoursInSecond / 60);
+    // Warning
+    // If the event is on saturday but with an hours before the opening of the festival (10 AM), it's in reality on sunday
+    // The workaround here work for the festival during two day
+    // We need to be carefull in the futur
+    const baseDate = day === 'sat' && hours > 8 ? saturday : sunday;
+    baseDate.setHours(hours);
+    baseDate.setMinutes(minutes);
+    baseDate.setSeconds(0);
+    return baseDate;
+  }
+
   getEvent(id: string): Observable<IEvent> {
     return this.getEvents().pipe(
       map(list => list.find(e => e.id == id)),
@@ -182,19 +260,6 @@ export class ProgrammeService {
     );
   }
 
-  getLocalisations(): Observable<ILocalisation[]> {
-    return this.baseService.bypassCors(`${this.dataUrl}event_locations.${this.languageService.selectedLanguage}.json`).pipe(
-      map(data => {
-        return data.map(l => {
-          return {
-            ...l,
-            hasFoodOrDrink: l.field_drinks?.length > 0 || l.field_drinks_unique?.length > 0 || l.field_food?.length > 0 || l.field_food_unique?.length > 0,
-          }
-        })
-      })
-    );
-  }
-
   getOneLocalisationById(id: string): Observable<ILocalisation> {
     return this.getLocalisations().pipe(
       map(data => data.find(x => x.id === id))
@@ -205,10 +270,6 @@ export class ProgrammeService {
     return this.getLocalisations().pipe(
       map(data => data.find(x => x.title === title))
     );
-  }
-
-  getQrCodeInfo(): Observable<any> {
-    return this.baseService.bypassCors(`${this.dataUrl}qr.json`);
   }
 
   getQrCodeLocalisationTitle(qrCode: string): Observable<string> {
@@ -519,30 +580,7 @@ export class ProgrammeService {
 
   // Speaker
 
-  getSpeakers(): Observable<ISpeaker[]> {
-    if (this.cacheSpeakers?.length > 0) {
-      return of([...this.cacheSpeakers]);
-    }
-    return this.baseService.bypassCors(`${this.dataUrl}event_speakers.${this.languageService.selectedLanguage}.json`).pipe(
-      map((items: ISpeaker[]) => {
-        return items.sort((a, b) => {
-          return a.field_weight > b.field_weight ? 1 : -1;
-        })
-      }),
-      map(items => {
-        return items.map(d => {
-          return {
-            ...d,
-            picture: d.field_image?.field_media_image?.image_style_uri?.wide,
-            thumbnail: d.field_image?.field_media_image?.image_style_uri?.wide_teaser || d.field_image?.field_media_image?.image_style_uri?.wide,
-          }
-        })
-      }),
-      tap(items => {
-        this.cacheSpeakers = [...items]
-      }),
-    );
-  }
+
 
   getSpeaker(id: string): Observable<ISpeaker> {
     return this.getSpeakers().pipe(

@@ -209,7 +209,7 @@ export class SellingPage {
     this.addressForm = this.builAddressForm();
     this.sellerLoginForm = this.buildSellerLoginForm();
 
-    this.backButtonBlock.goBackSellingPage.pipe(takeUntil(this.destroyer$)).subscribe(() => {
+    this.backButtonBlock.goBackPreviousAction.pipe(takeUntil(this.destroyer$)).subscribe(() => {
       this.cancelBuy();
     })
 

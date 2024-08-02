@@ -7,7 +7,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 export class BackButtonCommunicationService {
   readonly blockReference: string[] = [];
 
-  readonly goBackSellingPage = new EventEmitter<void>();
+  readonly goBackPreviousAction = new EventEmitter<void>();
 
   addBlockRef(ref: string) {
     this.blockReference.push(ref);
@@ -20,7 +20,7 @@ export class BackButtonCommunicationService {
     }
   }
 
-  sendGoBackToSellingPage() {
-    this.goBackSellingPage.emit();
+  sendGoBackToPreviousAction() {
+    this.goBackPreviousAction.emit();
   }
 }

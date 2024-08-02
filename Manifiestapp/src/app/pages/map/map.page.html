@@ -6,7 +6,7 @@
   </div>
 
   <!-- QR Code part -->
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="scanQrCode()">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" (click)="scanQrCode()" *ngIf="isAppMode">
     <ion-fab-button color="secondary" id="open-modal">
       <ion-icon name="qr-code-outline"></ion-icon>
     </ion-fab-button>

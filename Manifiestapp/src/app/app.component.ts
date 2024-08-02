@@ -154,12 +154,6 @@ export class AppComponent implements OnInit {
       this.platform.platforms(),
       this.languageCommunication.translate.currentLang, environment.production
     );
-    // when the user tap on the physical back button of the device, we want to close the app
-    // but not for all page !
-    const pageWithoutBackButton = [
-      '/programme/event-detail',
-      '/programme/new-detail'
-    ];
     this.showNewsletterButton = this.pagesToShowNewsletterButton.findIndex(x => this.router.url.includes(x)) > -1;
 
     this.router.events.pipe(
@@ -183,8 +177,8 @@ export class AppComponent implements OnInit {
           // We need to verify that we are not on the menu
           if (!data && !snapshotData.noBackExit && this.backButtonBlock.blockReference?.length === 0) {
             navigator[app].exitApp();
-          } else if (this.backButtonBlock.blockReference?.length > 0 && this.backButtonBlock.blockReference.includes(SellingPage.name)) {
-            this.backButtonBlock.sendGoBackToSellingPage();
+          } else if (this.backButtonBlock.blockReference?.length > 0) {
+            this.backButtonBlock.sendGoBackToPreviousAction();
           }
         });
       });
