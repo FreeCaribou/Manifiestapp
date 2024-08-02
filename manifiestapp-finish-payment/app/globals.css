@@ -2,6 +2,7 @@
   --color-primary: #F59BBB;
   --color-secondary: #3B953F;
   --color-error: red;
+  --color-warning: #e0ac08;
 }
 
 * {
@@ -20,7 +21,11 @@ h1 {
   color: var(--color-error);
 }
 
+.text-warning {
+  color: var(--color-warning);
+}
+
 button {
-  background-color: var(--color-secondary);
+  background-color: var(--color-warning);
   border-radius: 15px;
 }
