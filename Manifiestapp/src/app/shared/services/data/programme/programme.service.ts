@@ -13,8 +13,10 @@ import { formatDate } from '@angular/common';
 import { LanguageCommunicationService } from '../../communication/language.communication.service';
 import { environment } from '../../../../../environments/environment';
 import { BaseService } from '../base.service';
+import { IFaq } from 'src/app/shared/models/FAQ.interface';
 
 // TODO clean old code from wordpress
+// TODO refactor and divid code, with the call to backend and then the rest divid by feature
 @Injectable({
   providedIn: 'root'
 })
@@ -27,6 +29,7 @@ export class ProgrammeService {
   cacheSpeakers: ISpeaker[] = [];
   cacheLocalisations: ILocalisation[] = [];
   cacheQrCode: any;
+  cacheFaq: IFaq[] = [];
   cacheBigBlobProgrammeChangeEmit$ = new EventEmitter<void>();
 
   dataUrl = environment.webDataUrl;
@@ -53,7 +56,19 @@ export class ProgrammeService {
    * - get speakers
    * - get localisations details
    * - get QR Code information
+   * - get FAQ
    */
+
+  /**
+   * When lang change we need to reset the data
+   */
+  resetListCache() {
+    this.cacheBigBlobProgramme = [];
+    this.cacheSpeakers = [];
+    this.cacheLocalisations = [];
+    this.cacheQrCode = undefined;
+    this.cacheFaq = [];
+  }
 
   /**
    * @returns list of events
@@ -173,6 +188,18 @@ export class ProgrammeService {
     }
     return this.baseService.bypassCors(`${this.dataUrl}qr.json`).pipe(
       tap(data => this.cacheQrCode = data)
+    );
+  }
+
+  /**
+   * @returns list of faq info
+   */
+  getFAQ(): Observable<IFaq[]> {
+    if (this.cacheFaq.length > 0) {
+      return of(this.cacheFaq);
+    }
+    return this.baseService.bypassCors(`${this.dataUrl}faq_pages.${this.languageService.selectedLanguage}.json`).pipe(
+      tap(data => this.cacheFaq = data)
     );
   }
 
@@ -325,13 +352,6 @@ export class ProgrammeService {
         }),
       )
       : of([]);
-  }
-
-  // no data call method
-
-  resetListCache() {
-    this.cacheBigBlobProgramme = [];
-    this.cacheSpeakers = [];
   }
 
   getFavoriteId(): string[] {

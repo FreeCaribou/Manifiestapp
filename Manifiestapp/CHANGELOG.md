@@ -4,6 +4,7 @@
 * Link of event in the copy board
 * Show foods and drinks on localisation
 * Scan QR Code for localisation
+* FAQ
 
 # 2.4.1
 * Google dont like the Beeple privacy info

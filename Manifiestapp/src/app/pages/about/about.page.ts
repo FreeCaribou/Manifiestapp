@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { IFaq } from 'src/app/shared/models/FAQ.interface';
 import { LanguageCommunicationService } from 'src/app/shared/services/communication/language.communication.service';
 import { InfoListService } from 'src/app/shared/services/data/info-list/info-list.service';
+import { ProgrammeService } from 'src/app/shared/services/data/programme/programme.service';
 import { VolunteerShiftService } from 'src/app/shared/services/data/volunteer-shift/volunteer-shift.service';
 
 @Component({
@@ -12,6 +14,7 @@ export class AboutPage {
   longTextInfos = '';
   urlShuttleInfo = '';
   urlPlanning = '';
+  FAQs: IFaq[] = [];
 
   sponsors = [];
 
@@ -19,6 +22,7 @@ export class AboutPage {
     private volunteerShiftService: VolunteerShiftService,
     private languageService: LanguageCommunicationService,
     private infoService: InfoListService,
+    private programmeService: ProgrammeService,
   ) { }
   
   ionViewDidEnter() {
@@ -29,6 +33,11 @@ export class AboutPage {
     });
 
     this.infoService.getSponsors().subscribe(s => this.sponsors = s);
+
+    this.programmeService.getFAQ().subscribe(data => {
+      console.log('data', data)
+      this.FAQs = data;
+    })
   }
 
 }
