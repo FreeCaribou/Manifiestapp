@@ -36,7 +36,7 @@ export default function RedirectToRealFinish({ props }) {
                 text = `Vous êtes le vendeur ? Cliquez ici pour finir la vente svp !`;
                 break;
             case 'nl':
-                text = `Bent u de verkoper? Klik hier om de verkoop af te ronden a.u.n.!`;
+                text = `Bent u de verkoper? Klik hier om de verkoop af te ronden a.u.b.!`;
                 break;
         }
         return text;
