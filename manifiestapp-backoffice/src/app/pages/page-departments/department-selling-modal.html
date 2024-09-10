@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>Detail selling of {{data.name}} - Total: {{data.quantity}}</h1>
+
+<button mat-raised-button color="primary" (click)="export()">Export</button>
+
+<div mat-dialog-content>
+  <h2>Tickets types summary</h2>
+  <app-tickets-types-count [details]="data.details"></app-tickets-types-count>
+  <h2>Sellings details</h2>
+  <ng-container *ngFor="let d of data.details">
+    <p>{{d.date | date:'medium'}} </p>
+    <p>{{d.sellerId}} <span *ngIf="d.fromWorkGroup">(work group)</span> to {{d.clientName}} (post code: {{d.sellerPostalCode}})</p>
+    <app-details-tickets [tickets]="d.ticketInfo"></app-details-tickets>
+    <br>
+    <br>
+  </ng-container>
+</div>

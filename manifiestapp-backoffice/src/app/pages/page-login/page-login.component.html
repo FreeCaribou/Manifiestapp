@@ -1,0 +1,19 @@
+<h1>Login</h1>
+
+<form *ngIf="!token" [formGroup]="loginForm" (submit)="login()">
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput formControlName="password" type="password">
+  </mat-form-field>
+  <br>
+  <button mat-raised-button [disabled]="!loginForm.valid" color="primary" (click)="login()">Login</button>
+  <br>
+  <p>{{errorMessage}}</p>
+</form>
+
+<button *ngIf="token" mat-raised-button color="warn" (click)="logout()">Logout</button>

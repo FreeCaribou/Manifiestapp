@@ -1,0 +1,125 @@
+<h1>All tickets</h1>
+<h2>Total selling: {{sellingInformationsAmountTickets}}</h2>
+
+<button mat-raised-button color="primary" (click)="export()">Export</button>
+<br>
+
+<!-- <mat-slide-toggle [checked]="iLikeChart" (toggleChange)="iLikeChartChange()">
+  I like graphs and charts
+</mat-slide-toggle> -->
+
+<div *ngIf="iLikeChart">
+  <canvasjs-chart [options]="chartOptions" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+  <canvasjs-chart [options]="chart2Options" [styles]="{width: '100%', height:'360px'}"></canvasjs-chart>
+</div>
+<br>
+
+<div style="margin-top: 25px;">
+  <h3>Filter</h3>
+
+  <mat-slide-toggle [checked]="isWorkingGroup" (toggleChange)="changeWorkingGroup()">
+    Working group
+  </mat-slide-toggle>
+
+  <mat-form-field style="margin-left: 15px;">
+    <mat-label>Postal Code</mat-label>
+    <mat-select multiple (selectionChange)="filtering()" [formControl]="zipSelected">
+      <mat-option *ngFor="let zip of zipList" [value]="zip">
+        {{zip}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-label>Postal Code Search</mat-label>
+    <input matInput [(ngModel)]="zipAsked" (input)="filtering()">
+  </mat-form-field>
+
+  <mat-form-field style="margin-left: 15px;">
+    <mat-label>Channel</mat-label>
+    <mat-select multiple (selectionChange)="filtering()" [formControl]="channelSelected">
+      <mat-option *ngFor="let channel of channelList" [value]="channel">
+        {{channel}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field style="margin-left: 15px;">
+    <mat-label>Seller Name</mat-label>
+    <mat-select multiple (selectionChange)="filtering()" [formControl]="sellerNameSelected">
+      <mat-option *ngFor="let sellerName of sellerNameList" [value]="sellerName">
+        {{sellerName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-icon matSuffix>search</mat-icon>
+    <mat-label>Seller Name Search</mat-label>
+    <input matInput [(ngModel)]="sellerNameAsked" (input)="filtering()">
+  </mat-form-field>
+
+</div>
+
+<table mat-table [dataSource]="table" class="mb-2">
+  <ng-container matColumnDef="action">
+    <th mat-header-cell *matHeaderCellDef>Edit</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-icon-button color="primary" aria-label="edit" (click)="edit(element)">
+        <mat-icon fontIcon="edit"></mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef>Type</th>
+    <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="clientName">
+    <th mat-header-cell *matHeaderCellDef>Client Name</th>
+    <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="channel">
+    <th mat-header-cell *matHeaderCellDef>Channel</th>
+    <td mat-cell *matCellDef="let element"> {{element.channel}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="zip">
+    <th mat-header-cell *matHeaderCellDef>zip</th>
+    <td mat-cell *matCellDef="let element"> {{element.zip}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Date</th>
+    <td mat-cell *matCellDef="let element"> {{element.date | date:'dd/MM (HH:mm)'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="price">
+    <th mat-header-cell *matHeaderCellDef>Price</th>
+    <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="sellerName">
+    <th mat-header-cell *matHeaderCellDef>Seller Name</th>
+    <td mat-cell *matCellDef="let element"> {{element.sellerName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="workGroup">
+    <th mat-header-cell *matHeaderCellDef>Work group ?</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon *ngIf="element.workGroup" fontIcon="check_circle">
+      </mat-icon>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="merchRef">
+    <th mat-header-cell *matHeaderCellDef>Merch Ref</th>
+    <td mat-cell *matCellDef="let element">
+      {{element.merchRef}}
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedDepartmentColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedDepartmentColumns;"></tr>
+</table>

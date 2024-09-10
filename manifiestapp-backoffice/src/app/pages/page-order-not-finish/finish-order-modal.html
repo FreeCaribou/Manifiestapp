@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Find the Merchant Reference {{data.clientTransactionId}}</h1>
+
+<div mat-dialog-content>
+  <p>The Transaction id is ?</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Transaction id</mat-label>
+    <input matInput [(ngModel)]="data.vwTransactionId">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="warn" (click)="onNoClick()">Cancel</button>
+  <button mat-button color="primary" cdkFocusInitial (click)="finish()">Finish the process</button>
+</div>

@@ -1,0 +1,45 @@
+<h1>Order not finish</h1>
+
+<hr>
+Provide a VivaWallet Excel (in beta) <input type="file" class="file-upload" (change)="receiveExcelFile($event)" #fileUpload>
+<h1 *ngIf="verificationOccur" class="loading-color">Verification pending - Loading - Wait please</h1>
+<hr>
+
+<table mat-table [dataSource]="data" class="mb-2" matSort>
+  <ng-container matColumnDef="merchantReference">
+    <th mat-header-cell *matHeaderCellDef>Merchant Ref.</th>
+    <td mat-cell *matCellDef="let element">{{element.clientTransactionId}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="date">
+    <th mat-header-cell *matHeaderCellDef>Date</th>
+    <td mat-cell *matCellDef="let element"> {{element.orderDate | date:'medium'}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Client Name</th>
+    <td mat-cell *matCellDef="let element"> {{element.clientName}} {{element.clientLastName}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef>Client Email</th>
+    <td mat-cell *matCellDef="let element"> {{element.clientEmail}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="details">
+    <th mat-header-cell *matHeaderCellDef>Tickets Info</th>
+    <td mat-cell *matCellDef="let element">
+      <app-details-tickets [tickets]="element.ticketInfo"></app-details-tickets>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-raised-button color="accent" (click)="finishProcessModal(element)">Finish the process</button>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedSellersColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedSellersColumns;"></tr>
+</table>

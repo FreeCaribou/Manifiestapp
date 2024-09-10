@@ -1,0 +1,16 @@
+<!-- <mat-toolbar color="primary">
+  <span>Manifiesta Ticket Admin Panel</span>
+  <div>
+    <a mat-button routerLink="/home" [class.selected]="url === '/home'">Home</a>
+    <a mat-button routerLink="/departments" [class.selected]="url === '/departments'">Departments</a>
+    <a mat-button routerLink="/physical-tickets" [class.selected]="url === '/physical-tickets'">Physical Tickets</a>
+  </div>
+</mat-toolbar> -->
+
+<div class="loader" *ngIf="loaderService.loading$ | async">
+  <mat-spinner class="inner-loader"></mat-spinner>
+</div>
+
+<app-menu></app-menu>
+
+<!-- <router-outlet></router-outlet> -->

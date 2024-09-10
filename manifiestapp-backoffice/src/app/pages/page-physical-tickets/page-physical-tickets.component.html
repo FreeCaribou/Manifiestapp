@@ -1,0 +1,35 @@
+<h1>A list of address to send tickets</h1>
+
+<table mat-table [dataSource]="physicalTickets" class="mb-2">
+  <ng-container matColumnDef="eventsquareReference">
+    <th mat-header-cell *matHeaderCellDef>Event Square Ref</th>
+    <td mat-cell *matCellDef="let element"> {{element.eventsquareReference}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="address">
+    <th mat-header-cell *matHeaderCellDef>Address</th>
+    <td mat-cell *matCellDef="let element">
+      <div>{{element.street}} {{element.number}} </div>
+      <div>{{element.postCode}} {{element.city}}</div>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element"> {{element.firstName}} {{element.lastName}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="sendDone">
+    <th mat-header-cell *matHeaderCellDef>Is send ?</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-slide-toggle [checked]="element.sendDone" (toggleChange)="onSendDoneToggleChange(element)">
+        {{element.sendDone}}
+      </mat-slide-toggle>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedPhysicalTicketsColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedPhysicalTicketsColumns;"></tr>
+</table>
+
+<mat-spinner *ngIf="isLoading"></mat-spinner>
