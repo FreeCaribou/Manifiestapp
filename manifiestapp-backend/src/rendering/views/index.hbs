@@ -1,0 +1,30 @@
+<p>
+  Hello {{ loud message }} Welcome you
+</p>
+
+<form method="POST" action="">
+  <div class="mb-3">
+    <label class="form-label">Firstname</label>
+    <input type="text" name="firstName">
+  </div>
+
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Lastname</label>
+    <input type="text" name="lastName">
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Email address</label>
+    <input type="email" name="email">
+  </div>
+
+  <button type="submit" class="btn btn-primary">New</button>
+</form>
+
+<ul>
+  {{#each sellers}}
+  <li>{{this.email}}</li>
+  {{else}}
+  <p>No seller</p>
+  {{/each}}
+</ul>
