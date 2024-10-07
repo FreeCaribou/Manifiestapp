@@ -30,16 +30,19 @@ export class TicketsController {
     return this.ticketsService.getAllTicketTypes(shop);
   }
 
+  // Prepar the ordering before the payment
   @Post('/prepar')
   preparOrder(@Body() preparTickets: PreparTicketsDto) {
     return this.ticketsService.preparOrder(preparTickets);
   }
 
+  // Finish the order by passing the viva wallet id
   @Get('/finishOrderPending/:vwId')
   finishOrderWithVivaWalletTransactionId(@Param('vwId') vwId: string) {
-    return this.ticketsService.finishOrderWithVivaWalletTransactionId(vwId);
+    return this.ticketsService.poolingTicket(vwId);
   }
 
+  // Retrieve a viva wallet transaction by his id
   @Get('/transaction/:id')
   getTransactionById(@Param('id') id: string) {
     return this.ticketsService.getTransactionById(id);
@@ -99,6 +102,9 @@ export class TicketsController {
     return this.ticketsService.getPayconicQrCode(paymentOrder, false);
   }
 
+
+  // Viva wallet hook part
+
   getWebhookKey() {
     const req = firstValueFrom(
       this.httpService.get<any>(
@@ -123,14 +129,18 @@ export class TicketsController {
     return promise2;
   }
 
+  // Route used by viva wallet to retrieve our identity
   @Get('/vw/webhooks/payment/success')
   getWebhooksVwPaymentSuccess() {
     return this.getWebhookKey();
   }
 
+  // Route that will be used by Viva Wallet to send us the notification of a new paiment
+  // The body look like https://developer.viva.com/webhooks-for-payments/transaction-payment-created/#response-example
+  // The usefull id is EventData.TransactionId, this is with that that we will retrieve the usefull info
   @Post('/vw/webhooks/payment/success')
   postWebhooksVwPaymentSuccess(@Body() body: any) {
-    console.log('hello payment success');
+    this.ticketsService.finishOrderWithVivaWalletTransactionId(body.EventData.TransactionId);
   }
 
 }

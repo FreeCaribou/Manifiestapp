@@ -32,6 +32,7 @@
     "@nestjs/platform-socket.io": "9.1.6",
     "@nestjs/typeorm": "^9.0.1",
     "@nestjs/websockets": "9.1.6",
+    "@sparticuz/chromium": "^92.0.0",
     "@types/express-handlebars": "^5.3.0",
     "@types/hbs": "^4.0.1",
     "@types/jsonwebtoken": "^8.5.9",
@@ -44,14 +45,14 @@
     "handlebars": "^4.7.7",
     "hbs": "^4.2.0",
     "jsonwebtoken": "^8.5.1",
+    "manifiesta-tickets-backend": "file:",
     "mysql": "^2.18.1",
     "puppeteer": "^19.11.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.7",
     "typeorm": "^0.3.10",
-    "xlsx": "^0.18.5",
-    "@sparticuz/chromium": "^92.0.0"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@nestjs/cli": "^9.0.0",
