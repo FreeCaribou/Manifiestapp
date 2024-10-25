@@ -1,16 +1,13 @@
-import puppeteer, { ElementHandle } from 'puppeteer';
 import { HttpService } from '@nestjs/axios';
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { isBoolean, isNumber } from 'class-validator';
-import { log, timeStamp } from 'console';
-import { firstValueFrom, map, forkJoin, catchError, tap } from 'rxjs';
+import { isNumber } from 'class-validator';
+import { firstValueFrom, map, forkJoin, catchError } from 'rxjs';
 import { IsNull, Not, Repository } from 'typeorm';
 import { URLSearchParams } from 'url';
 import { Seller } from '../sellers/seller.entity';
 import { departments, provinces } from '../shared/data/departments.list';
 import { Address } from './address.entity';
-import { ConfirmTicketsDto } from './dto/confirm-tickets.dto';
 import { NewsletterAddDto } from './dto/newsletter-add.dto';
 import { PreparTicketsDto } from './dto/prepar-tickets.dto';
 import { SellingInformation } from './selling-information.entity';
@@ -790,11 +787,12 @@ export class TicketsService {
   }
 
   async test() {
-    return 'hello world and comrade v1'
+    return 'hello world and comrade v6'
   }
 
   async poolingTicket(vwId: string, iteration = 0) {
-    const timing = [1000, 5000, 10000, 15000, 250000];
+
+    const timing = [1000, 5000, 10000, 15000, 25000];
 
     const accessToken = await this.getVivaWaletAccessToken();
 
@@ -813,21 +811,30 @@ export class TicketsService {
             return d.data;
           }),
         ),
-    ).catch((e) => {
-      throw new HttpException(
-        {
-          message: ['error transaction not existing'],
-          code: 'transaction-not-existing',
-        },
-        HttpStatus.NOT_FOUND,
-      );
+    )
+    .catch(async (e) => {
+      if (iteration > 3) {
+        throw new HttpException(
+          {
+            message: ['error transaction not existing'],
+            code: 'transaction-not-existing',
+          },
+          HttpStatus.NOT_FOUND,
+        );
+      } else {
+        await new Promise(resolve => setTimeout(resolve, timing[iteration] || timing[4]));
+        return this.poolingTicket(vwId, iteration + 1);
+      }
     });
 
     console.log('the transaction', vwTransaction)
 
-    const linkedOrder = await this.sellingInformationRepository.findOne({
-      where: { clientTransactionId: vwTransaction.merchantTrns },
-    });
+    let linkedOrder = null;
+    if (vwTransaction?.merchantTrns) {
+      linkedOrder = await this.sellingInformationRepository.findOne({
+        where: { clientTransactionId: vwTransaction?.merchantTrns },
+      });
+    }
 
     console.log('link order', linkedOrder)
 
@@ -836,7 +843,7 @@ export class TicketsService {
       return linkedOrder;
     } else {
       // TODO we need to retry, but put some timer, and max one minute
-      await setTimeout(() => {}, timing[iteration]);
+      await new Promise(resolve => setTimeout(resolve, timing[iteration] || timing[4]));
       return this.poolingTicket(vwId, iteration + 1);
     }
   }
