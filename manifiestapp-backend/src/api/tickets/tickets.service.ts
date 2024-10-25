@@ -626,20 +626,6 @@ export class TicketsService {
       );
     });
 
-    findAlreadyUseVwTransactionId = await this.sellingInformationRepository.findOne({
-      where: { vwTransactionId: vivaWalletTransactionId },
-    });
-
-    if (findAlreadyUseVwTransactionId && !avoidVerification) {
-      throw new HttpException(
-        {
-          message: ['error transaction already existing'],
-          code: 'transaction-already-done',
-        },
-        HttpStatus.CONFLICT,
-      );
-    }
-
     const pendingTicket = await this.sellingInformationRepository.findOne({
       where: { clientTransactionId: transactionVerification.merchantTrns },
     });
@@ -804,11 +790,12 @@ export class TicketsService {
   }
 
   async test() {
-    return 'hello world and comrade'
+    return 'hello world and comrade v1'
   }
 
   async poolingTicket(vwId: string, iteration = 0) {
     const timing = [1000, 5000, 10000, 15000, 250000];
+
     const accessToken = await this.getVivaWaletAccessToken();
 
     const vwTransaction = await firstValueFrom(
@@ -842,7 +829,9 @@ export class TicketsService {
       where: { clientTransactionId: vwTransaction.merchantTrns },
     });
 
-    if (linkedOrder.eventsquareReference || iteration >= 5) {
+    console.log('link order', linkedOrder)
+
+    if (linkedOrder?.eventsquareReference || iteration >= 5) {
       // TODO check if it is the return that we want
       return linkedOrder;
     } else {
