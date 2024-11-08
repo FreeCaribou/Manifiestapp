@@ -1,8 +1,8 @@
-# MY MANIFIESTA
+# Manifiestapp - App
 
 ManiFiesta is a festival that takes place every year in September in Belgium, the festival of solidarity, with concerts, debates or artistic activities.
 
-Here is the official mobile app allowing first of all to see the programme more easily and to put your favourites there.
+Here is the official mobile app allowing first of all to see the programme more easily and to put your favourites there. Also used for the selling of the ticket
 
 ## Tech stuff
 
@@ -25,7 +25,7 @@ See the package json file to see automatic script to run, test and build. Inform
 
 ### TODO
 
-Lot of refactor
+Lot of refactor ...
 
 Unit Testing
 

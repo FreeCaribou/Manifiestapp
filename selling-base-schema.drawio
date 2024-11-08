@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0" version="24.8.4">
+  <diagram name="Page-1" id="sBdomRPO_Y2iY3_Jg5uv">
+    <mxGraphModel dx="1050" dy="530" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="583" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-1" value="EventSquare (ticketing)" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="50" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-2" value="&lt;div&gt;Viva Wallet (payment)&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="50" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-3" value="&lt;div&gt;Manifiesta App&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="590" y="210" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-4" value="Manifiesta Backend" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="210" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-5" value="&lt;div&gt;1 - Get the&amp;nbsp;&lt;/div&gt;&lt;div&gt;ticket types&lt;/div&gt;" style="endArrow=none;html=1;rounded=0;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="VVtkjVadPGXg3jLwzzYg-1" target="VVtkjVadPGXg3jLwzzYg-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="210" as="sourcePoint" />
+            <mxPoint x="450" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-6" value="1 - Get the ticket type" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="VVtkjVadPGXg3jLwzzYg-4" target="VVtkjVadPGXg3jLwzzYg-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="210" as="sourcePoint" />
+            <mxPoint x="450" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-7" value="2: Prepare order and payment" style="endArrow=none;html=1;rounded=0;exitX=0.808;exitY=-0.033;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.795;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="VVtkjVadPGXg3jLwzzYg-3" target="VVtkjVadPGXg3jLwzzYg-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="210" as="sourcePoint" />
+            <mxPoint x="450" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-8" value="3: Informs successful payment " style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="VVtkjVadPGXg3jLwzzYg-4" target="VVtkjVadPGXg3jLwzzYg-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="210" as="sourcePoint" />
+            <mxPoint x="450" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-11" value="4: Create tickets" style="endArrow=none;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="VVtkjVadPGXg3jLwzzYg-4" target="VVtkjVadPGXg3jLwzzYg-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="210" as="sourcePoint" />
+            <mxPoint x="450" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-12" value="5: Ask confirmation of everything" style="endArrow=none;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="VVtkjVadPGXg3jLwzzYg-4" target="VVtkjVadPGXg3jLwzzYg-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="400" y="210" as="sourcePoint" />
+            <mxPoint x="450" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-13" value="&lt;b&gt;&lt;font style=&quot;font-size: 21px;&quot;&gt;How a selling ticket work &lt;/font&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="17" width="793" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="VVtkjVadPGXg3jLwzzYg-15" value="&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;1: Event Square is a service of ticketing that Manifiesta uses, we first retrieve all the ticket type for the event of this year. We pass with the backend because we use secret api key for that.&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;2: In the app, the seller prepar the order (with the ticket types, the number, the client information), we also create a id for this order, it&#39;s with the email of the seller and a timestamp. We stock that in our database, it&#39;s useful for the next step&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;3: The client pay with Viva Wallet (QR Code or NFC), when the payment is successful, Viva Wallet send a request to our backend with the order id we created before&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;4: Our backend ask to EventSquare to create the tickets&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;5: In the app we make a pooling of call to our backend to know when everything is ready. After one minute we give up because there is propably an error&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot; align=&quot;left&quot;&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="40" y="290" width="750" height="280" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

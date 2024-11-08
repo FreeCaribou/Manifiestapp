@@ -13,6 +13,11 @@ Backoffice folder is the web app for the Manifiesta admin to check stats about t
 Finish Payment folder is a little web service to intercept the end of transaction of a selling and show information to the user
 
 
+## Some schema
+
+![Selling schema](/selling-base-schema.jpg)
+
+
 ## License
 
 The code is in [GPL-3](https://choosealicense.com/licenses/gpl-3.0/)
