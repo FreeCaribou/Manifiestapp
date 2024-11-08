@@ -21,6 +21,8 @@ export class SellingPostInfoModalComponent implements OnInit {
   @Input()
   finishSellingInfo;
 
+  success = false;
+
   constructor(
     public modalController: ModalController,
     private router: Router
@@ -36,14 +38,14 @@ export class SellingPostInfoModalComponent implements OnInit {
       
     }
     return {
-      numberTicket: ticketSells,
-      fullName: `${this.finishSellingInfo?.order?.customer?.firstname} ${this.finishSellingInfo?.order?.customer?.lastname}`,
-      email: this.finishSellingInfo?.order?.customer?.email,
-      eventSquareRef: this.finishSellingInfo?.order?.reference,
+      fullName: `${this.finishSellingInfo?.clientName} ${this.finishSellingInfo?.clientLastName}`,
+      email: this.finishSellingInfo?.clientEmail,
+      eventSquareRef: this.finishSellingInfo?.eventsquareReference,
     };
   }
 
   ngOnInit(): void {
+    this.success = this.finishSellingInfo?.eventsquareReference;
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
     ).subscribe(r => {

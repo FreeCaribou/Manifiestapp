@@ -6,17 +6,23 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <p>
-    {{"Ticket.PostSellingInfo" | translate:finishSellingInfoDataI18NParam}}
-  </p>
-  <p>
-    Ref: <strong>{{finishSellingInfo?.order?.reference}}</strong>
-  </p>
-  <h6>
-    {{"Ticket.ClientWantProof" | translate}}
-  </h6>
-  <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal" [postSelling]="true">
-  </app-my-selling-little-recap>
+  <div *ngIf="success">
+    <p>
+      {{"Ticket.PostSellingInfo" | translate:finishSellingInfoDataI18NParam}}
+    </p>
+    <p>
+      Ref: <strong>{{finishSellingInfo?.eventsquareReference}}</strong>
+    </p>
+    <h6>
+      {{"Ticket.ClientWantProof" | translate}}
+    </h6>
+  </div>
+  <div *ngIf="!success">
+    <!-- TODO better message here -->
+    <p>Fail, contact app@manifiesta.be</p>
+  </div>
+  <!-- <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal" [postSelling]="true">
+  </app-my-selling-little-recap> -->
   <br>
   <ion-button expand="block" color="success" class="m-top-medium" (click)="closeShowAfterSellingModal()">{{"Ticket.ContinueSelling" | translate}}</ion-button>
   <br>

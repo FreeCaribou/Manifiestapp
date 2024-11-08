@@ -194,7 +194,7 @@
     "BeginSell": "Commencer à vendre",
     "SellerFirstname": "Prénom",
     "SellerLastname": "Nom",
-    "PostSellingInfo": "{{numberTicket}} cartes viennent d'être envoyées à {{fullName}} via l'email {{email}}",
+    "PostSellingInfo": "Les cartes viennent d'être envoyées à {{fullName}} via l'email {{email}}",
     "YetXToSell": "Encore {{restingTicket}} à vendre...",
     "TimeIncreaseGoal": "Temps d'augmenter ton objectif ?",
     "NoNfcAvailable": "Ton smartphone n'a pas de capteur NFC et n'a donc pas la capacité d'accepter des paiements par carte bancaire. Tu pourras uniquement accepter des paiements par QR code (p.ex. Payconiq).",

@@ -194,7 +194,7 @@
     "BeginSell": "Begin met verkopen",
     "SellerFirstname": "Voornaam",
     "SellerLastname": "Naam",
-    "PostSellingInfo": "{{numberTicket}} ticket(s) verzonden naar {{fullName}} e-mail {{email}}",
+    "PostSellingInfo": "Ticket(s) verzonden naar {{fullName}} e-mail {{email}}",
     "YetXToSell": "Nog {{restingTicket}} ticket(s) te gaan voor je doel",
     "TimeIncreaseGoal": "Tijd om je doel te verhogen?",
     "NoNfcAvailable": "Jouw smartphone heeft geen NFC-lezer en kan dus geen betalingen met de bankkaart ontvangen. Je kan enkel betalingen ontvangen via QR code (bv. Payconiq).",
