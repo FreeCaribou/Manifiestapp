@@ -1,10 +1,8 @@
 <app-header [title]="'Programme'"></app-header>
 
 <ion-content class="background-color">
-  <!-- <h5 class="text-align">{{'General.SeeYouLater' | translate}}</h5> -->
   <ion-tabs>
     <ion-tab-bar slot="top">
-      <!-- TODO not direct put sat, check what to do -->
       <ion-tab-button [tab]="'subprogramme/date/sat'" [class.custom-tab-selected]="isTabSelected('date')">
         <ion-label>
           <h1>{{ 'Day.Date' | translate }}</h1>

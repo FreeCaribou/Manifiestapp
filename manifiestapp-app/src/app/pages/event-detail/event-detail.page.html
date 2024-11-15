@@ -35,24 +35,8 @@
         <h6 class="fake-mouse-select primary-color" *ngIf="event.path?.current" (click)="copyToShare()">
           <ion-icon name="share-social-outline" size="small"></ion-icon> {{'General.CopyLinkToShare' | translate}} 
         </h6>
-        <!-- TODO Speaker here -->
-        <!-- <div *ngIf="event.field_speakers?.length > 0">
-          <ion-grid>
-            <ion-row>
-              <ion-col *ngFor="let speaker of event.field_speakers" size-xs="4" size-sm="4" size-lg="3">
-                <ion-card>
-                  <ion-avatar class="m-left-medium m-top-small">
-                    <ion-img [src]="speaker.field_image.field_media_image.image_style_uri.wide"></ion-img>
-                  </ion-avatar>
-                  <ion-card-header>
-                    <ion-card-title [innerHTML]="speaker.title"></ion-card-title>
-                  </ion-card-header>
-                  <ion-card-content [innerHTML]="speaker.field_description"></ion-card-content>
-                </ion-card>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div> -->
+
+        <app-speaker-list [list]="event.speakers"></app-speaker-list>
       </div>
     </div>
   </div>

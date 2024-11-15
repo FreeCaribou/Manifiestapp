@@ -24,6 +24,7 @@ export class SpeakerDetailPage {
         this.id = this.activatedRoute.snapshot.params.id;
         this.programmeService.getSpeaker(this.id).subscribe(data => {
             this.speaker = data;
+            console.log('speaker', this.speaker)
             forkJoin(this.speaker.related_events.map(sre => this.programmeService.getEventsByParentId(sre.uuid))).subscribe(events => {
                 try {
                     events.forEach(e => e.forEach(ee => this.linkedEvents.push(ee)))

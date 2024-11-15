@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { filter, map, mergeMap, switchMap, tap } from 'rxjs/operators'
 import { DayListEventInterface, EventInterface, IEvent, IEventItemDaysList, ILocalisation, ISimpleLocalisation, ISpeaker } from 'src/app/shared/models/Event.interface';
 import { LocalStorageEnum } from 'src/app/shared/models/LocalStorage.enum';
@@ -236,6 +236,12 @@ export class ProgrammeService {
   getEvent(id: string): Observable<IEvent> {
     return this.getEvents().pipe(
       map(list => list.find(e => e.id == id)),
+      switchMap(event => {
+        return forkJoin([of(event), forkJoin(event.speakers.map(s => this.getSpeaker(s.uuid)))]);
+      }),
+      map(data => {
+        return {...data[0], speakers: data[1]};
+      })
     );
   }
 

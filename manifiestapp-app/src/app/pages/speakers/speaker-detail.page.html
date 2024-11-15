@@ -7,9 +7,37 @@
         <div class="p-bt-high">
             <div class="m-right-medium m-left-medium p-top-medium">
                 <h2 class="m-bt-medium null-margin-top secondary-color" [innerHtml]="speaker?.title"></h2>
-                <!-- TODO list of social media -->
                 <p [innerHtml]="speaker.field_description"></p>
-                <app-event-list-card *ngIf="linkedEvents?.length > 0" [list]="linkedEvents" [simpleList]="true" [withBackground]="false"></app-event-list-card>
+
+                <div class="flex-horizontal-space-around">
+                    <a *ngIf="speaker.field_website" [href]="speaker.field_website" alt="website" target="_blank">
+                        <ion-icon name="globe" color="primary" size="large">
+                        </ion-icon>
+                    </a>
+                    <a *ngIf="speaker.field_instagram" [href]="speaker.field_instagram" alt="instagram" target="_blank">
+                        <ion-icon name="logo-instagram" color="instagram" size="large">
+                        </ion-icon>
+                    </a>
+                    <a *ngIf="speaker.field_facebook" [href]="speaker.field_facebook" alt="facebook" target="_blank">
+                        <ion-icon name="logo-facebook" color="facebook" size="large">
+                        </ion-icon>
+                    </a>
+                    <a *ngIf="speaker.field_spotify" [href]="speaker.field_spotify" alt="spotify" target="_blank">
+                        <ion-icon name="musical-notes" color="spotify" size="large">
+                        </ion-icon>
+                    </a>
+                    <a *ngIf="speaker.field_twitter" [href]="speaker.field_twitter" alt="twitter" target="_blank">
+                        <ion-icon name="logo-twitter" color="twitter" size="large">
+                        </ion-icon>
+                    </a>
+                    <a *ngIf="speaker.field_video" [href]="speaker.field_video" alt="video" target="_blank">
+                        <ion-icon name="videocam" color="tertiary" size="large">
+                        </ion-icon>
+                    </a>
+                </div>
+
+                <app-event-list-card *ngIf="linkedEvents?.length > 0" [list]="linkedEvents" [simpleList]="true"
+                    [withBackground]="false"></app-event-list-card>
             </div>
         </div>
     </div>
