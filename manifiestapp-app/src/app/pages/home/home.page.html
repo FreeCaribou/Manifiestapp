@@ -9,7 +9,7 @@
       <a href="https://manifiesta.eventsquare.co">{{ 'About.BuyTicket' | translate }}</a>
     </h2> -->
 
-    <ion-grid *ngIf="!isNow" class="counter m-bt-medium">
+    <ion-grid *ngIf="isEventLater" class="counter m-bt-medium">
       <h3 class="text-align margin-unset">{{'General.ManifiestaComeBack' | translate}}</h3>
 
       <ion-row>
@@ -32,12 +32,21 @@
       </ion-row>
     </ion-grid>
 
-    <div *ngIf="isNow" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
+    <div *ngIf="isEventNow" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
       <h1>{{'General.Welcome' | translate}}</h1>
+    </div>
+
+    <div *ngIf="isEventPast" class="m-right-medium m-left-medium m-top-medium m-bt-medium primary-color text-align">
+      <h1>{{'General.SeeYouNextYear' | translate}}</h1>
     </div>
 
     <app-event-list-card [list]="topProgramme" [simpleList]="true" [withBackground]="false"></app-event-list-card>
     <app-speaker-list [list]="topSpeakers" [simpleList]="true"></app-speaker-list>
+
+    <ion-button *ngIf="!!mapPlanLink" [href]="mapPlanLink" target="_blank" class="m-top-medium m-bt-medium" expand="block" color="tertiary">
+      {{'General.DownloadMapPlan' | translate}}
+      <ion-icon slot="end" icon="map"></ion-icon>
+    </ion-button>
 
   </div>
 

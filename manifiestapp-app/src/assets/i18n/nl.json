@@ -26,7 +26,9 @@
     "Seconds": "S.",
     "FreeTransport": "Gratis vervoer",
     "Sponsor": "Sponsoren",
-    "CopyLinkToShare": "Kopieer de link om te delen!"
+    "CopyLinkToShare": "Kopieer de link om te delen!",
+    "SeeYouNextYear": "Tot volgend jaar!",
+    "DownloadMapPlan": "Download het plan"
   },
   "Day": {
     "sat": "Zaterdag",
@@ -215,6 +217,8 @@
     "NextStepConnexion": "Log in op Viva Wallet",
     "NextStepPayment": "Betaling",
     "PayByQrCode": "Betalen met QR Code",
-    "PayByCard": "Betalen met kaart"
+    "PayByCard": "Betalen met kaart",
+    "HowToSell": "Hoe te verkopen - Doc",
+    "FailContactMail": "Er is een probleem opgetreden, neem contact op met app@manifiesta.be"
   }
 }

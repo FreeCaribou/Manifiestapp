@@ -47,6 +47,8 @@ export class AppComponent implements OnInit {
 
   openLangModal = false;
 
+  generalInfoData = {};
+
   isLoading = true;
   loader;
 
@@ -84,6 +86,11 @@ export class AppComponent implements OnInit {
     this.languageCommunication.langHasChangeEvent.subscribe(l => {
       this.menu.close();
     });
+
+    this.loadingCommunication.changeLoaderTo(true);
+    this.infoListService.getGeneralInfo().subscribe(data => {
+      this.generalInfoData = data;
+    }).add(() => this.loadingCommunication.changeLoaderTo(false));
   }
 
   // We need at the launch of the app to verify if there is update of the schedule of event

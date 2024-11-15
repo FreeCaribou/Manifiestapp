@@ -312,14 +312,6 @@
           </form>
         </ng-container>
 
-        <ion-item class="m-top-medium">
-          <ion-label>
-            {{'Ticket.ClientWantNewsletter' | translate}}
-          </ion-label>
-          <ion-toggle slot="end" [checked]="clientWantNewsletter"
-            (ionChange)="onClientWantNewsletter($event)"></ion-toggle>
-        </ion-item>
-
         <ion-item lass="m-top-medium">
           <ion-label>
             <p [innerHTML]="'Ticket.DataPrivacyClient' | translate">
@@ -327,14 +319,14 @@
           </ion-label>
           <ion-toggle slot="end" [checked]="clientAcceptData" (ionChange)="onClientAcceptData($event)"></ion-toggle>
         </ion-item>
-        
+
         <ion-button (click)="buy(true)" [disabled]="disabledBuyButton" expand="block" color="secondary" size="large">
           <ion-icon name="qr-code"></ion-icon>
           {{"Ticket.PayByQrCode" | translate}}
         </ion-button>
 
         <p *ngIf="!isIos" class="m-bt-medium m-top-medium text-align">{{"General.LineOr" | translate}}</p>
-        
+
         <app-viva-wallet-verification *ngIf="!isIos && !allHardwareOk"></app-viva-wallet-verification>
         <ion-button *ngIf="!isIos && allHardwareOk" (click)="buy()" [disabled]="disabledBuyButton" color="secondary"
           expand="block" size="large">
@@ -345,8 +337,15 @@
       </ion-content>
 
     </ng-container>
-    <a href="https://manifiesta.be/privacy-policy" class="m-right-medium m-left-medium flex-space-between">
-      Privacy Policy
-    </a>
+
+    <ng-container class="m-right-medium m-left-medium m-top-medium">
+      <ion-button [href]="sellingDoc" target="_blank" class="m-top-medium" expand="block" color="tertiary">
+        {{'Ticket.HowToSell' | translate}}
+      </ion-button>
+      <ion-button href="https://manifiesta.be/privacy-policy" target="_blank" class="m-top-medium" expand="block">
+        Privacy Policy
+      </ion-button>
+    </ng-container>
+
   </ion-content>
 </ng-container>

@@ -16,6 +16,8 @@ export class InfoListService implements IInfoListService {
 
   dataUrl = environment.webDataUrl;
 
+  generalInfoStore = null;
+
   constructor(
     private service: InfoListDataService,
     private languageService: LanguageCommunicationService,
@@ -24,6 +26,14 @@ export class InfoListService implements IInfoListService {
     this.languageService.langHasChangeEvent.subscribe(e => {
       this.resetInfoListCache();
     })
+  }
+
+  getGeneralInfo(): Observable<any> {
+    return this.generalInfoStore
+      ? of(this.generalInfoStore) :
+      this.baseService.bypassCors(`${this.dataUrl}general.json`).pipe(
+        tap(data => this.generalInfoStore = data)
+      );
   }
 
   getTransportsInfo(): Observable<ITransportInfo[]> {

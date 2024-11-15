@@ -18,13 +18,16 @@
     </h6>
   </div>
   <div *ngIf="!success">
-    <!-- TODO better message here -->
-    <p>Fail, contact app@manifiesta.be</p>
+    <ion-button href="mailto:app@manifiesta.be" target="_blank" class="m-top-medium" expand="block">
+      {{'Ticket.FailContactMail' | translate}}
+    </ion-button>
   </div>
   <!-- <app-my-selling-little-recap [mySellingInfo]="mySellingInfo" [sellerSellingGoal]="sellerSellingGoal" [postSelling]="true">
   </app-my-selling-little-recap> -->
   <br>
-  <ion-button expand="block" color="success" class="m-top-medium" (click)="closeShowAfterSellingModal()">{{"Ticket.ContinueSelling" | translate}}</ion-button>
+  <ion-button expand="block" color="success" class="m-top-medium"
+    (click)="closeShowAfterSellingModal()">{{"Ticket.ContinueSelling" | translate}}
+  </ion-button>
   <br>
   <a [routerLink]="['/selling/my-details']">
     {{"Ticket.CuriousOfOther" | translate}}

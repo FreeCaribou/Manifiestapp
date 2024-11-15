@@ -56,7 +56,6 @@ export class SellingPage {
   clientTransactionId: string;
 
   clientAcceptData = false;
-  clientWantNewsletter = false;
 
   // for the seller connection
   sellerDepartement: string;
@@ -177,6 +176,12 @@ export class SellingPage {
     return (this.isInApp && this.isIos) || (this.isInApp && !this.vivaWalletVerification.nfcAvailable)
   }
 
+  get sellingDoc(): string {
+    return this.languageService.selectedLanguage === 'nl'
+      ? 'https://docs.google.com/document/d/1F5w7_m6-f78Wuh23NjFJ2EEEDcYdwkdRp6n8tN6yyuY/edit?usp=sharing'
+      : 'https://docs.google.com/document/d/1vtaZcLbIZpmpOUKyBhA0GqQRF1ACQzx6WYcH6PTReoY/edit?usp=sharing';
+  }
+
   ionViewDidLeave() {
     this.destroyer$.next(true);
     this.destroyer$.complete();
@@ -242,7 +247,6 @@ export class SellingPage {
           // if (this.totalAmount > 0) {
           //   this.showClientDetailForm = true;
           //   this.backButtonBlock.addBlockRef(SellingPage.name);
-          //   this.clientWantNewsletter = false;
           //   this.clientAcceptData = false;
           // }
           // this.vivaWalletConnectSuccess();
@@ -358,10 +362,6 @@ export class SellingPage {
     this.showClientDetailForm = false;
     this.backButtonBlock.removeBlockRef(SellingPage.name);
 
-    if (this.clientWantNewsletter) {
-      this.addClientToNewsletter();
-    }
-
     const tmpSellingJson = JSON.parse(localStorage.getItem(LocalStorageEnum.SellingTmp));
 
     this.loadingCommunication.changeLoaderTo(true);
@@ -375,7 +375,6 @@ export class SellingPage {
       this.ticketNumberOfSell = this.ticketTypes.map(t => { return { ticketId: t.id, ticketAmount: 0, ticketPrice: t.price + t.fee } });
       this.transactionId = undefined;
       this.clientTransactionId = undefined;
-      this.clientWantNewsletter = false;
       this.clientAcceptData = false;
       localStorage.removeItem(LocalStorageEnum.SellingTmp);
     }).add(() => { this.loadingCommunication.changeLoaderTo(false); });
@@ -651,14 +650,6 @@ export class SellingPage {
       this.sellerAcceptData = true;
     } else {
       this.sellerAcceptData = false;
-    }
-  }
-
-  onClientWantNewsletter(event) {
-    if (event.detail?.checked) {
-      this.clientWantNewsletter = true;
-    } else {
-      this.clientWantNewsletter = false;
     }
   }
 
