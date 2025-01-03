@@ -1,52 +1,30 @@
 {
-  "name": "manifiesta-tickets-admin",
-  "version": "0.0.0",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "start:prod": "ng serve --configuration=production",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
-  },
-  "engines": {
-    "node": "18.x",
-    "npm": "6.14.15"
-  },
+  "name": "manifiestapp-backoffice",
+  "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
   "dependencies": {
-    "@angular/animations": "^16.2.12",
-    "@angular/cdk": "^15.2.9",
-    "@angular/common": "^16.2.12",
-    "@angular/compiler": "^16.2.12",
-    "@angular/core": "^16.2.12",
-    "@angular/forms": "^16.2.12",
-    "@angular/material": "^15.2.9",
-    "@angular/platform-browser": "^16.2.12",
-    "@angular/platform-browser-dynamic": "^16.2.12",
-    "@angular/router": "^16.2.12",
-    "@canvasjs/angular-charts": "^1.0.3",
-    "@tinymce/tinymce-angular": "^7.0.0",
-    "@types/file-saver-es": "^2.0.1",
-    "file-saver-es": "^2.0.5",
-    "jsonwebtoken": "^9.0.2",
-    "rxjs": "^7.5.7",
-    "tinymce": "^6.6.0",
-    "tslib": "^2.3.0",
-    "xlsx": "^0.18.5",
-    "zone.js": "~0.13.3"
+    "axios": "^1.5.1",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "manifiestapp-backoffice": "file:",
+    "next": "15.0.3",
+    "react": "19.0.0-rc-66855b96-20241106",
+    "react-dom": "19.0.0-rc-66855b96-20241106",
+    "rxjs": "^7.8.1",
+    "sass": "^1.81.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^16.2.12",
-    "@angular/cli": "~16.2.12",
-    "@angular/compiler-cli": "^16.2.12",
-    "@types/jasmine": "~4.0.0",
-    "jasmine-core": "~4.3.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.9.5"
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "15.0.3",
+    "typescript": "^5"
   }
 }
