@@ -23,3 +23,4 @@ Finish Payment folder is a little web service to intercept the end of transactio
 The code is in [GPL-3](https://choosealicense.com/licenses/gpl-3.0/)
 
 The assets and images are under copyright of Manifiesta
+
