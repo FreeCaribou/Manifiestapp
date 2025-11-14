@@ -43,4 +43,5 @@ export default async function FinishPayment({
             <FinishPaymentComponent props={props} />
         </div>
     )
+    
 }
