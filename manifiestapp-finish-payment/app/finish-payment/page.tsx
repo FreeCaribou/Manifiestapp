@@ -10,6 +10,9 @@ export default async function FinishPayment({
     const vivaWalletTransactionId = searchParams?.t;
 
     const ticketData = axios.get(`${process.env.BASE_URL}tickets/finishOrderPending/${vivaWalletTransactionId}`, {
+        headers: {
+            'x-app-key': process.env.FAKE_TICKET_API_KEY
+        },
         httpsAgent: new https.Agent({
             rejectUnauthorized: false
         })
